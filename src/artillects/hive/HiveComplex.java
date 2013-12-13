@@ -11,7 +11,7 @@ import artillects.hive.structure.Structure;
  * a task and set of structure peaces.
  * 
  * @author Dark */
-public class HiveComplex
+public class HiveComplex extends HiveGhost
 {
     protected Vector3 location;
     protected String name;
@@ -24,8 +24,10 @@ public class HiveComplex
         this.location = location;
     }
 
-    public void update()
+    @Override
+    public void updateEntity()
     {
+        super.updateEntity();
         Iterator<Structure> it = peaces.iterator();
         while (it.hasNext())
         {
@@ -49,13 +51,16 @@ public class HiveComplex
         }
     }
 
+    @Override
     public boolean isValid()
     {
         return location != null && peaces != null && !peaces.isEmpty();
     }
 
+    @Override
     public void invalidate()
     {
+        super.invalidate();
         peaces.clear();
     }
 }

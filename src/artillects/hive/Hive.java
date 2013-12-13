@@ -82,7 +82,21 @@ public class Hive implements IScheduledTickHandler
             HiveComplex complex = it.next();
             if (complex.isValid())
             {
-                complex.update();
+                complex.updateEntity();
+            }
+            else
+            {
+                complex.invalidate();
+                it.remove();
+            }
+        }
+        Iterator<Zone> zoneIt = activeZones.iterator();
+        while (it.hasNext())
+        {
+            Zone complex = zoneIt.next();
+            if (complex.isValid())
+            {
+                complex.updateEntity();
             }
             else
             {
