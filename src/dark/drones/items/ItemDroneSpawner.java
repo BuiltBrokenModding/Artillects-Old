@@ -165,7 +165,7 @@ public class ItemDroneSpawner extends ItemBase
             {
                 entity = Drones.values()[id].getNew(world);
 
-                if (entity != null && entity instanceof EntityDrone)
+                if (entity != null && entity instanceof EntityLivingBase)
                 {
                     EntityLiving entityliving = (EntityLiving) entity;
                     entity.setLocationAndAngles(xx, yy, zz, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);

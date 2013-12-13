@@ -90,17 +90,6 @@ public class EntityCombatDisc extends EntityFlyingDrone
                 --this.attackCounter;
             }
         }
-
-        if (!this.worldObj.isRemote)
-        {
-            byte b0 = this.dataWatcher.getWatchableObjectByte(16);
-            byte b1 = (byte) (this.attackCounter > 10 ? 1 : 0);
-
-            if (b0 != b1)
-            {
-                this.dataWatcher.updateObject(16, Byte.valueOf(b1));
-            }
-        }
     }
 
 }
