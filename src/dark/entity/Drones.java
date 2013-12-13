@@ -134,4 +134,12 @@ public enum Drones
     {
         this.builder = builder;
     }
+
+    public void reg()
+    {
+        if (builder != null)
+        {
+            builder.register();
+        }
+    }
 }

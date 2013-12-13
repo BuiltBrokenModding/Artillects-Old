@@ -19,6 +19,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import dark.entity.Drones;
 import dark.hive.Hive;
 
 @Mod(modid = ModDrones.MOD_ID, name = ModDrones.MOD_NAME, version = ModDrones.VERSION, useMetadata = true)
@@ -114,6 +115,10 @@ public class ModDrones
         //Register blocks and tiles
 
         //Reigster entities
+        for(Drones drone: Drones.values())
+        {
+            drone.reg();
+        }
     }
 
     @EventHandler
