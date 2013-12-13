@@ -80,14 +80,14 @@ public enum Artillect
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntityCombatDrone.class, "DroneCombat", ids++, Artillects.instance(), 64, 1, true);
+			EntityRegistry.registerModEntity(EntityDemoDrone.class, "DroneCombat", ids++, Artillects.instance(), 64, 1, true);
 
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			return new EntityCombatDrone(world);
+			return new EntityDemoDrone(world);
 		}
 	}), SEEKER("seeker", new IDroneBuilder()
 	{

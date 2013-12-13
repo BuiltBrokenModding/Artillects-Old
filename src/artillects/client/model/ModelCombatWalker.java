@@ -96,16 +96,16 @@ public class ModelCombatWalker extends ModelDrone
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity)
     {
         //Walking
-        this.rightUpperLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
-        this.leftUpperLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float) Math.PI) * 1.4F * par2;
+        this.rightUpperLeg.rotateAngleX = MathHelper.cos((par1 - 20) * 0.6662F) * 1.4F * par2;
+        this.leftUpperLeg.rotateAngleX = MathHelper.cos((par1 - 20) * 0.6662F + (float) Math.PI) * 1.4F * par2;
         this.rightUpperLeg.rotateAngleY = 0.0F;
         this.leftUpperLeg.rotateAngleY = 0.0F;
-        float rx = (float) (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
-        float ry = (float) (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
-        float lx = (float) (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
-        float ly = (float) (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
-        leftLowwerLeg.setRotationPoint(-4F + rx, 14F, -2F + ry);
-        rightLowwerLeg.setRotationPoint(4F + rx, 14F, -2F+ ry);
+        float rx = (float) (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
+        float ry = (float) (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
+        float lx = (float) (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
+        float ly = (float) (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
+        leftLowwerLeg.setRotationPoint(-4F, 14F + ry, -2F + rx);
+        rightLowwerLeg.setRotationPoint(4F, 14F + ly, -2F + lx);
         this.rightLowwerLeg.rotateAngleX = -MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
         this.leftLowwerLeg.rotateAngleX = -MathHelper.cos(par1 * 0.6662F + (float) Math.PI) * 1.4F * par2;
         this.rightLowwerLeg.rotateAngleY = 0.0F;

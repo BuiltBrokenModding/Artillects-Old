@@ -6,7 +6,7 @@ import artillects.CommonProxy;
 import artillects.client.render.RenderCombatDisc;
 import artillects.client.render.RenderCombatDrone;
 import artillects.entity.EntityCombatDisc;
-import artillects.entity.EntityCombatDrone;
+import artillects.entity.EntityDemoDrone;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
@@ -15,7 +15,7 @@ public class ClientProxy extends CommonProxy
     public void init()
     {
         RenderingRegistry.registerEntityRenderingHandler(EntityCombatDisc.class, new RenderCombatDisc());
-        RenderingRegistry.registerEntityRenderingHandler(EntityCombatDrone.class, new RenderCombatDrone());
+        RenderingRegistry.registerEntityRenderingHandler(EntityDemoDrone.class, new RenderCombatDrone());
     }
 
     @Override

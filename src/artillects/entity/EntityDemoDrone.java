@@ -19,9 +19,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import artillects.entity.ai.EntityDroneSelector;
 
-public class EntityCombatDrone extends EntityArtillectBase implements IRangedAttackMob
+public class EntityDemoDrone extends EntityArtillectBase implements IRangedAttackMob
 {
-	public EntityCombatDrone(World par1World)
+	public EntityDemoDrone(World par1World)
 	{
 		super(par1World);
 		this.tasks.addTask(1, new EntityAISwimming(this));
@@ -34,7 +34,7 @@ public class EntityCombatDrone extends EntityArtillectBase implements IRangedAtt
 																			// fire
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
 		this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
-		this.setSize(1.5f, 2f);
+		this.setSize(1f, 1.5f);
 	}
 
 	@Override
