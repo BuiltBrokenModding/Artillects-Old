@@ -1,12 +1,11 @@
 package artillects.client.render;
 
-import artillects.Artillects;
-import artillects.client.model.ModelCombatDisc;
-import net.minecraft.client.model.ModelSpider;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
+import artillects.Artillects;
+import artillects.client.model.ModelCombatDisc;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
