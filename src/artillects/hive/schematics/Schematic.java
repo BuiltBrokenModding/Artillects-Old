@@ -18,9 +18,11 @@ public class Schematic implements ISaveObject
     public static final String BlockList = "BlockList";
 
     protected String name;
-    protected Vector3 schematicSize, schematicCenter;
+    public Vector3 schematicSize;
 
-    protected HashMap<Vector3, int[]> blocks = new HashMap<Vector3, int[]>();
+    public Vector3 schematicCenter;
+
+    public HashMap<Vector3, int[]> blocks = new HashMap<Vector3, int[]>();
 
     public String getFileName()
     {
