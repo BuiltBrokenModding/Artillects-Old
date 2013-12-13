@@ -45,7 +45,7 @@
 		
 		<copy todir="ModContents">
 			<fileset dir="${dir.mcp}/reobf/minecraft" excludes=".git/**" />
-			<fileset dir="${dir.development}resources">
+			<fileset dir="${dir.development}assets">
 				<exclude name=".git/**"/>
 				<exclude name="**/*.java"/>
 				<exclude name="**/*.xml"/>
