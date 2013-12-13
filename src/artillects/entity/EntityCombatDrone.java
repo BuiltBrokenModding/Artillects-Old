@@ -17,7 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import artillects.ai.EntityDroneSelector;
+import artillects.entity.ai.EntityDroneSelector;
 
 public class EntityCombatDrone extends EntityArtillectBase implements IRangedAttackMob
 {

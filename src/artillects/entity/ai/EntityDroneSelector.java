@@ -1,4 +1,4 @@
-package artillects.ai;
+package artillects.entity.ai;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
