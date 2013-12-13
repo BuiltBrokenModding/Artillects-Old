@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
@@ -20,6 +22,28 @@ public class ItemSchematicCreator extends ItemBase
     public ItemSchematicCreator()
     {
         super("SchematicCreator");
+    }
+
+    @Override
+    public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+    {
+        if (itemStack != null)
+        {
+            if (itemStack.getItemDamage() == 0)
+            {
+                par3List.add("Generates a schematic");
+            }
+        }
+    }
+
+    @Override
+    public String getItemDisplayName(ItemStack par1ItemStack)
+    {
+        if (par1ItemStack.getItemDamage() == 0)
+        {
+            return "Schematic Creator";
+        }
+        return "Unkown Item";
     }
 
     @Override
@@ -111,6 +135,13 @@ public class ItemSchematicCreator extends ItemBase
             }
         }
         return sch;
+    }
+
+    @Override
+    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
+        par3List.add(new ItemStack(this.itemID, 1, 0));
+
     }
 
 }

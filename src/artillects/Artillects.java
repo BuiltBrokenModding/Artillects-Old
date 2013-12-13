@@ -11,8 +11,10 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.entity.Artillect;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
+import artillects.item.ItemBuildingTest;
 import artillects.item.ItemParts;
 import artillects.item.ItemParts.Part;
+import artillects.item.ItemSchematicCreator;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -85,6 +87,8 @@ public class Artillects
 
     public static Item itemArtillectSpawner;
     public static Item itemParts;
+    public static Item itemBuilding;
+    public static Item itemSchematicCreator;
 
     public static Artillects instance()
     {
@@ -124,13 +128,15 @@ public class Artillects
         CONFIGURATION.load();
         itemArtillectSpawner = new ItemArtillectSpawner();
         itemParts = new ItemParts();
+        itemBuilding = new ItemBuildingTest();
+        itemSchematicCreator = new ItemSchematicCreator();
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
 
-        System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, new String[] { "en_US" }));
+        System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
-        // Reigster entities
+        // Register entities
         for (Artillect artillect : Artillect.values())
         {
             artillect.register();
