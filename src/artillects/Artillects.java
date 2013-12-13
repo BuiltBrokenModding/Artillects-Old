@@ -12,6 +12,7 @@ import artillects.entity.Artillect;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemParts;
+import artillects.item.ItemParts.parts;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -83,7 +84,7 @@ public class Artillects
     public static ModMetadata meta;
 
     public static Item itemArtillectSpawner;
-    public static Item itemGear;
+    public static Item itemParts;
 
     public static Artillects instance()
     {
@@ -122,7 +123,7 @@ public class Artillects
         // Register blocks and tiles
         CONFIGURATION.load();
         itemArtillectSpawner = new ItemArtillectSpawner();
-        itemGear = new ItemParts("gear");
+        itemParts = new ItemParts();
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -143,10 +144,10 @@ public class Artillects
     {
         // Load crafting
         // Worker
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, Artillect.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemGear));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, Artillect.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
 
         // Metal Gear
-        GameRegistry.addRecipe(new ShapedOreRecipe(itemGear, "G G", " G ", "G G", 'G', Item.diamond));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, parts.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
 
         proxy.postInit();
     }
