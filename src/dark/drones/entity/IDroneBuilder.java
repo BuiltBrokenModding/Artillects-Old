@@ -1,5 +1,6 @@
 package dark.drones.entity;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
 /** Used only by the drones enum to make it easier to register new drones
@@ -11,5 +12,5 @@ public interface IDroneBuilder
     public void register();
 
     /** Called to create a new instance of the drone */
-    public EntityDrone getNew(World world);
+    public EntityLivingBase getNew(World world);
 }

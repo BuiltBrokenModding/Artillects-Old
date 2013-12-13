@@ -1,5 +1,6 @@
 package dark.drones.entity;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import dark.drones.ModDrones;
@@ -97,15 +98,14 @@ public enum Drones
         @Override
         public void register()
         {
-            // TODO Auto-generated method stub
+            EntityRegistry.registerModEntity(EntityCombatDisc.class, "DroneDiscSmall", ids++, ModDrones.instance(), 64, 1, true);
 
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityLivingBase getNew(World world)
         {
-            // TODO Auto-generated method stub
-            return null;
+            return new EntityCombatDisc(world);
         }
     }),
     ZOMBIE("borg", new IDroneBuilder()
@@ -144,7 +144,7 @@ public enum Drones
         }
     }
 
-    public EntityDrone getNew(World world)
+    public EntityLivingBase getNew(World world)
     {
         if (builder != null)
         {
