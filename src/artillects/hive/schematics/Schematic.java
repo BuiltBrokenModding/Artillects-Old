@@ -3,12 +3,10 @@ package artillects.hive.schematics;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import artillects.Vector3;
 import artillects.hive.ISaveObject;
 
@@ -107,6 +105,39 @@ public class Schematic implements ISaveObject
         {
             e.printStackTrace();
         }
-        return this;
+    }
+
+    public void saveToBaseDirectory(String fileName)
+    {
+        try
+        {
+            NBTTagCompound nbt = new NBTTagCompound();
+            NBTTagCompound blockNBT = nbt.getCompoundTag(BlockList);
+            nbt.setInteger("sizeX", (int) this.schematicSize.x);
+            nbt.setInteger("sizeY", (int) this.schematicSize.y);
+            nbt.setInteger("sizeZ", (int) this.schematicSize.z);
+            nbt.setInteger("centerX", (int) this.schematicCenter.x);
+            nbt.setInteger("centerY", (int) this.schematicCenter.y);
+            nbt.setInteger("centerZ", (int) this.schematicCenter.z);
+            int i = 0;
+
+            for (Entry<Vector3, int[]> entry : blocks.entrySet())
+            {
+                String output = "";
+                output += entry.getValue()[0];
+                output += ":" + entry.getValue()[1];
+                output += ":" + ((int) entry.getKey().x) + ":" + ((int) entry.getKey().y) + ":" + ((int) entry.getKey().z);
+                blockNBT.setString("Block" + i, output);
+                i++;
+            }
+            blockNBT.setInteger("count", i);
+            nbt.setCompoundTag(BlockList, blockNBT);
+
+            NBTFileHandler.saveFile(fileName + ".dat", new File(NBTFileHandler.getBaseFolder(), "schematics"), nbt);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
