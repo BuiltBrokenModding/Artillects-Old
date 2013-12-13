@@ -2,7 +2,8 @@ package artillects;
 
 public class Vector2
 {
-	double x, y;
+	public double x;
+    public double y;
 
 	public Vector2(double x, double y)
 	{
