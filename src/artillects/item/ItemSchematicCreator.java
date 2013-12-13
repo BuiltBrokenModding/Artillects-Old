@@ -9,9 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import artillects.Vector3;
 import artillects.hive.schematics.Schematic;
 

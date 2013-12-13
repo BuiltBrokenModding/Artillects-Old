@@ -6,8 +6,8 @@ import artillects.entity.EntityArtillectBase;
 
 public class ReportPlayer extends Report
 {
-	public ReportPlayer(EntityPlayer player, EntityArtillectBase drone)
-	{
-		super("PF" + System.currentTimeMillis(), "PlayerSpotted", player, drone, new Vector3(player));
-	}
+    public ReportPlayer(EntityPlayer player, EntityArtillectBase drone)
+    {
+        super("PF" + System.currentTimeMillis(), "PlayerSpotted", player, drone, new Vector3(player));
+    }
 }

@@ -5,18 +5,18 @@ import artillects.client.render.Animation;
 
 public abstract class ModelDrone extends ModelBase
 {
-	int frame = 0;
-	Animation animation;
+    int frame = 0;
+    Animation animation;
 
-	public void setFrame(int frame)
-	{
-		this.frame = frame;
-	}
+    public void setFrame(int frame)
+    {
+        this.frame = frame;
+    }
 
-	public void setAnimation(Animation animation)
-	{
-		this.animation = animation;
-	}
+    public void setAnimation(Animation animation)
+    {
+        this.animation = animation;
+    }
 
-	public abstract void render(float f5);
+    public abstract void render(float f5);
 }

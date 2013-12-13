@@ -2,14 +2,13 @@ package artillects.item;
 
 import java.util.List;
 
-import artillects.Artillects;
-import artillects.entity.Artillect;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import artillects.Artillects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** Parts and materials used in the machines.
  * 

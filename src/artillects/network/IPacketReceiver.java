@@ -1,8 +1,8 @@
 package artillects.network;
 
-import com.google.common.io.ByteArrayDataInput;
-
 import net.minecraft.entity.player.EntityPlayer;
+
+import com.google.common.io.ByteArrayDataInput;
 
 /** @author Calclavia, darkguardsman */
 public interface IPacketReceiver

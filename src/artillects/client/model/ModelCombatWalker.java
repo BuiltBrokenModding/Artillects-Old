@@ -6,7 +6,6 @@
 
 package artillects.client.model;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
@@ -100,10 +99,10 @@ public class ModelCombatWalker extends ModelDrone
         this.leftUpperLeg.rotateAngleX = MathHelper.cos((par1 - 20) * 0.6662F + (float) Math.PI) * 1.4F * par2;
         this.rightUpperLeg.rotateAngleY = 0.0F;
         this.leftUpperLeg.rotateAngleY = 0.0F;
-        float rx = (float) (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
-        float ry = (float) (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
-        float lx = (float) (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
-        float ly = (float) (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
+        float rx = (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
+        float ry = (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)));
+        float lx = (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
+        float ly = (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)));
         leftLowwerLeg.setRotationPoint(-4F, 14F + ry, -2F + rx);
         rightLowwerLeg.setRotationPoint(4F, 14F + ly, -2F + lx);
         this.rightLowwerLeg.rotateAngleX = -MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
