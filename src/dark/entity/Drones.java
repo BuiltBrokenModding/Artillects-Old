@@ -1,13 +1,11 @@
 package dark.entity;
 
-import java.awt.Color;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 import dark.ModDrones;
 
 public enum Drones
 {
-    WORKER(new IDroneBuilder()
+    WORKER("drone_worker", new IDroneBuilder()
     {
 
         @Override
@@ -25,7 +23,7 @@ public enum Drones
             return null;
         }
     }),
-    FABRICATOR(new IDroneBuilder()
+    FABRICATOR("fabricator", new IDroneBuilder()
     {
 
         @Override
@@ -42,7 +40,7 @@ public enum Drones
             return null;
         }
     }),
-    CONSTRUCTOR(new IDroneBuilder()
+    CONSTRUCTOR("constructor", new IDroneBuilder()
     {
 
         @Override
@@ -59,7 +57,7 @@ public enum Drones
             return null;
         }
     }),
-    HIVEMIND(new IDroneBuilder()
+    HIVEMIND("hivemind", new IDroneBuilder()
     {
 
         @Override
@@ -76,7 +74,7 @@ public enum Drones
             return null;
         }
     }),
-    COMBAT(new IDroneBuilder()
+    COMBAT("combat_disc", new IDroneBuilder()
     {
 
         @Override
@@ -93,7 +91,7 @@ public enum Drones
             return null;
         }
     }),
-    COMBAT_DISC(new IDroneBuilder()
+    COMBAT_DISC("drone_disc", new IDroneBuilder()
     {
 
         @Override
@@ -110,7 +108,7 @@ public enum Drones
             return null;
         }
     }),
-    ZOMBIE(new IDroneBuilder()
+    ZOMBIE("borg", new IDroneBuilder()
     {
 
         @Override
@@ -130,8 +128,11 @@ public enum Drones
     public static int ids = 54;
     IDroneBuilder builder;
 
-    private Drones(IDroneBuilder builder)
+    public String name;
+
+    private Drones(String name, IDroneBuilder builder)
     {
+        this.name = name;
         this.builder = builder;
     }
 
@@ -141,5 +142,14 @@ public enum Drones
         {
             builder.register();
         }
+    }
+
+    public EntityDrone getNew()
+    {
+        if (builder != null)
+        {
+            return builder.getNew();
+        }
+        return null;
     }
 }
