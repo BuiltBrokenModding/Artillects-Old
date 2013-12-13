@@ -1,6 +1,15 @@
 package artillects.item;
 
+import java.util.List;
+
+import artillects.Artillects;
+import artillects.entity.Artillect;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
 
 /** Parts and materials used in the machines.
  * 
@@ -16,10 +25,46 @@ public class ItemParts extends ItemBase
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        return "item." + parts.values()[itemStack.getItemDamage()].name;
+        if (itemStack.getItemDamage() < Part.values().length)
+        {
+            return "item." + Part.values()[itemStack.getItemDamage()].name;
+        }
+        return super.getUnlocalizedName(itemStack);
     }
 
-    public static enum parts
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    {
+        for (Part part : Part.values())
+        {
+            par3List.add(new ItemStack(this, 1, part.ordinal()));
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Icon getIconFromDamage(int meta)
+    {
+        if (meta < Part.values().length)
+        {
+            return Part.values()[meta].icon;
+        }
+        return this.itemIcon;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        super.registerIcons(par1IconRegister);
+        for (Part part : Part.values())
+        {
+            part.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "dronepart." + part.name);
+        }
+    }
+
+    public static enum Part
     {
         GEARS("gears"),
         MELTED_CICUITS("meltedCircuits"),
@@ -29,9 +74,10 @@ public class ItemParts extends ItemBase
         T2_CICUITS("circuits2"),
         T3_CICUITS("circuits3");
 
-        String name;
+        public final String name;
+        public Icon icon;
 
-        private parts(String name)
+        private Part(String name)
         {
             this.name = name;
         }

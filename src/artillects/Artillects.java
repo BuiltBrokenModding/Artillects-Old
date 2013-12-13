@@ -12,7 +12,7 @@ import artillects.entity.Artillect;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemParts;
-import artillects.item.ItemParts.parts;
+import artillects.item.ItemParts.Part;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -147,7 +147,7 @@ public class Artillects
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, Artillect.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
 
         // Metal Gear
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, parts.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
 
         proxy.postInit();
     }
