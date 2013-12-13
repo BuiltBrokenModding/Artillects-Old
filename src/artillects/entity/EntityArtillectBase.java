@@ -84,4 +84,11 @@ public abstract class EntityArtillectBase extends EntityCreature implements IDro
 	{
 		return this.owner;
 	}
+
+	@Override
+	public void setDead()
+	{
+		Hive.instance().removeDrone(this);
+		super.setDead();
+	}
 }

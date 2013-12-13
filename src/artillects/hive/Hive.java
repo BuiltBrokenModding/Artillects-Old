@@ -109,12 +109,8 @@ public class Hive implements IScheduledTickHandler
 		return 5;
 	}
 
-	@ForgeSubscribe
-	public void onDroneDeathEvent(LivingDeathEvent event)
+	public void onDroneDeathEvent(EntityArtillectBase entity)
 	{
-		if (event.entityLiving instanceof EntityArtillectBase)
-		{
-			// TODO remove from list and issue report for new drone
-		}
+
 	}
 }
