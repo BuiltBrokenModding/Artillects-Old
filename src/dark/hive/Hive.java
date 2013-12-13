@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
-
 import dark.entity.EntityDrone;
 
 /** Hive collection that the drones use for logic and collection feed back
@@ -19,6 +21,8 @@ public class Hive implements IScheduledTickHandler
     private static Hive mainHive;
     /** All active drones loaded by this hive instance */
     private List<EntityDrone> activeDrones = new ArrayList<EntityDrone>();
+    private List<Report> inboxReports = new ArrayList<Report>();
+    private List<Zone> activeZones = new ArrayList<Zone>();
 
     private long ticks = 0;
 
@@ -30,6 +34,17 @@ public class Hive implements IScheduledTickHandler
             mainHive = new Hive();
         }
         return mainHive;
+    }
+
+    /** Called by a drone or the hive itself to load a report into the system waiting to be processed
+     * into a task */
+    public void issueReport(Report report)
+    {
+        //TODO add validation system to reject reports 
+        if (report != null && !this.inboxReports.contains(report))
+        {
+            this.inboxReports.add(report);
+        }
     }
 
     /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
@@ -87,5 +102,14 @@ public class Hive implements IScheduledTickHandler
     public int nextTickSpacing()
     {
         return 5;
+    }
+
+    @ForgeSubscribe
+    public void onDroneDeathEvent(LivingDeathEvent event)
+    {
+        if (event.entityLiving instanceof EntityDrone)
+        {
+            //TODO remove from list and issue report for new drone
+        }
     }
 }

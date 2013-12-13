@@ -6,6 +6,7 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -16,6 +17,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
+import dark.hive.Hive;
 
 @Mod(modid = ModDrones.MOD_ID, name = ModDrones.MOD_NAME, version = ModDrones.VERSION, useMetadata = true)
 @NetworkMod(channels = { ModDrones.CHANNEL }, clientSideRequired = true, serverSideRequired = false)
@@ -100,6 +104,8 @@ public class ModDrones
         ModDrones.CONFIGURATION.save();
 
         //Register event handlers
+        TickRegistry.registerScheduledTickHandler(Hive.instance(), Side.SERVER);
+        MinecraftForge.EVENT_BUS.register(Hive.instance());
     }
 
     @EventHandler

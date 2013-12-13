@@ -17,4 +17,17 @@ public class Zone
         this.start = start;
         this.end = end;
     }
+
+    public boolean isValid()
+    {
+        return true;
+    }
+
+    /** Called when the zone is invalid or the hive just wants to wipe it out */
+    public void invalidate()
+    {
+        start = null;
+        end = null;
+        name = null;
+    }
 }
