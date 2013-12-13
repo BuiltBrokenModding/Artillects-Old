@@ -1,6 +1,7 @@
 package dark.drones.entity;
 
 import dark.drones.ai.EntityDroneSelector;
+import dark.drones.hive.Hive;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityLivingData;
@@ -26,16 +27,10 @@ public class EntityDrone extends EntityCreature
     /** Owner of the drone either hive or player */
     protected Object owner;
 
-    public EntityDrone(World par1World)
+    public EntityDrone(World world)
     {
-        super(par1World);
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D, false));
-        this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(5, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));//TODO remove friendly fire
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
+        super(world);              
+        Hive.instance().addDrone(this);
     }
 
     @Override

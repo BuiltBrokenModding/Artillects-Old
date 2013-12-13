@@ -5,9 +5,10 @@ import net.minecraft.world.World;
 public class EntityCombatDisc extends EntityDrone
 {
 
-    public EntityCombatDisc(World par1World)
+    public EntityCombatDisc(World world)
     {
-        super(par1World);
+        super(world);
+        this.setSize(0.7f, 0.3f);
     }
 
 }

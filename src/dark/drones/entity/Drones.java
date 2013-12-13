@@ -81,15 +81,14 @@ public enum Drones
         @Override
         public void register()
         {
-            // TODO Auto-generated method stub
+            EntityRegistry.registerModEntity(EntityCombatDrone.class, "DroneCombat", ids++, ModDrones.instance(), 64, 1, true);
 
         }
 
         @Override
         public EntityDrone getNew(World world)
         {
-            // TODO Auto-generated method stub
-            return null;
+            return new EntityCombatDrone(world);
         }
     }),
     COMBAT_DISC("drone_disc", new IDroneBuilder()
