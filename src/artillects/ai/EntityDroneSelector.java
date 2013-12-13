@@ -1,6 +1,6 @@
 package artillects.ai;
 
-import artillects.entity.EntityArtillect;
+import artillects.entity.EntityArtillectBase;
 import artillects.entity.IDrone;
 import artillects.hive.Hive;
 import net.minecraft.command.IEntitySelector;
@@ -42,9 +42,9 @@ public class EntityDroneSelector implements IEntitySelector
                     return true;
                 }
                 //Attack enemy drones
-                if (entity instanceof EntityArtillect)
+                if (entity instanceof EntityArtillectBase)
                 {
-                    if (drone.getOwner() instanceof Hive && ((EntityArtillect) entity).getOwner() instanceof EntityPlayer || ((EntityArtillect) entity).getOwner() instanceof Hive && drone.getOwner() instanceof EntityPlayer)
+                    if (drone.getOwner() instanceof Hive && ((EntityArtillectBase) entity).getOwner() instanceof EntityPlayer || ((EntityArtillectBase) entity).getOwner() instanceof Hive && drone.getOwner() instanceof EntityPlayer)
                     {
                         return true;
                     }

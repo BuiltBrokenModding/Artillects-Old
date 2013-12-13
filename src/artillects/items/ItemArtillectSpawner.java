@@ -3,7 +3,7 @@ package artillects.items;
 import java.util.List;
 
 import artillects.entity.Arillect;
-import artillects.entity.EntityArtillect;
+import artillects.entity.EntityArtillectBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -23,177 +23,177 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/** Debug tool use to spawn drones in the same way that monster spawn eggs do.
+/**
+ * Debug tool use to spawn drones in the same way that monster spawn eggs do.
  * 
- * @author Dark */
+ * @author Dark
+ */
 public class ItemArtillectSpawner extends ItemBase
 {
-    public ItemArtillectSpawner()
-    {
-        super("artillectSpawner");
-        this.setHasSubtypes(true);
-    }
+	public ItemArtillectSpawner()
+	{
+		super("artillectSpawner");
+		this.setHasSubtypes(true);
+	}
 
-    @Override
-    public String getItemDisplayName(ItemStack stack)
-    {
-        String itemName = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String entityName = Arillect.values()[stack.getItemDamage()].name;
+	@Override
+	public String getUnlocalizedName(ItemStack itemStack)
+	{
+		return super.getUnlocalizedName(itemStack) + "." + Arillect.values()[itemStack.getItemDamage()].name;
+	}
 
-        if (entityName != null)
-        {
-            itemName = itemName + " " + StatCollector.translateToLocal("entity." + entityName + ".name");
-        }
+	/**
+	 * Callback for item usage. If the item does something special on right clicking, he will have
+	 * one of those. Return True if something happen and false if it don't. This is for ITEMS, not
+	 * BLOCKS
+	 */
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
+	{
+		if (world.isRemote)
+		{
+			return true;
+		}
+		else
+		{
+			int i1 = world.getBlockId(par4, par5, par6);
+			par4 += Facing.offsetsXForSide[par7];
+			par5 += Facing.offsetsYForSide[par7];
+			par6 += Facing.offsetsZForSide[par7];
+			double d0 = 0.0D;
 
-        return itemName;
-    }
+			if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
+			{
+				d0 = 0.5D;
+			}
 
-    /** Callback for item usage. If the item does something special on right clicking, he will have
-     * one of those. Return True if something happen and false if it don't. This is for ITEMS, not
-     * BLOCKS */
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
-    {
-        if (world.isRemote)
-        {
-            return true;
-        }
-        else
-        {
-            int i1 = world.getBlockId(par4, par5, par6);
-            par4 += Facing.offsetsXForSide[par7];
-            par5 += Facing.offsetsYForSide[par7];
-            par6 += Facing.offsetsZForSide[par7];
-            double d0 = 0.0D;
+			Entity entity = spawnCreature(world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
 
-            if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
-            {
-                d0 = 0.5D;
-            }
+			if (entity != null)
+			{
+				if (entity instanceof EntityLivingBase && stack.hasDisplayName())
+				{
+					((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+				}
 
-            Entity entity = spawnCreature(world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
+				if (!player.capabilities.isCreativeMode)
+				{
+					--stack.stackSize;
+				}
+			}
 
-            if (entity != null)
-            {
-                if (entity instanceof EntityLivingBase && stack.hasDisplayName())
-                {
-                    ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
-                }
+			return true;
+		}
+	}
 
-                if (!player.capabilities.isCreativeMode)
-                {
-                    --stack.stackSize;
-                }
-            }
+	/**
+	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack,
+	 * world, entityPlayer
+	 */
+	@Override
+	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		if (par2World.isRemote)
+		{
+			return par1ItemStack;
+		}
+		else
+		{
+			MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
 
-            return true;
-        }
-    }
+			if (movingobjectposition == null)
+			{
+				return par1ItemStack;
+			}
+			else
+			{
+				if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
+				{
+					int i = movingobjectposition.blockX;
+					int j = movingobjectposition.blockY;
+					int k = movingobjectposition.blockZ;
 
-    /** Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack,
-     * world, entityPlayer */
-    @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        if (par2World.isRemote)
-        {
-            return par1ItemStack;
-        }
-        else
-        {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, par3EntityPlayer, true);
+					if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
+					{
+						return par1ItemStack;
+					}
 
-            if (movingobjectposition == null)
-            {
-                return par1ItemStack;
-            }
-            else
-            {
-                if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE)
-                {
-                    int i = movingobjectposition.blockX;
-                    int j = movingobjectposition.blockY;
-                    int k = movingobjectposition.blockZ;
+					if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
+					{
+						return par1ItemStack;
+					}
 
-                    if (!par2World.canMineBlock(par3EntityPlayer, i, j, k))
-                    {
-                        return par1ItemStack;
-                    }
+					if (par2World.getBlockMaterial(i, j, k) == Material.water)
+					{
+						Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), i, j, k);
 
-                    if (!par3EntityPlayer.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
-                    {
-                        return par1ItemStack;
-                    }
+						if (entity != null)
+						{
+							if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
+							{
+								((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
+							}
 
-                    if (par2World.getBlockMaterial(i, j, k) == Material.water)
-                    {
-                        Entity entity = spawnCreature(par2World, par1ItemStack.getItemDamage(), i, j, k);
+							if (!par3EntityPlayer.capabilities.isCreativeMode)
+							{
+								--par1ItemStack.stackSize;
+							}
+						}
+					}
+				}
 
-                        if (entity != null)
-                        {
-                            if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
-                            {
-                                ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
-                            }
+				return par1ItemStack;
+			}
+		}
+	}
 
-                            if (!par3EntityPlayer.capabilities.isCreativeMode)
-                            {
-                                --par1ItemStack.stackSize;
-                            }
-                        }
-                    }
-                }
+	/**
+	 * Spawns the creature specified by the egg's type in the location specified by the last three
+	 * parameters. Parameters: world, entityID, x, y, z.
+	 */
+	public static Entity spawnCreature(World world, int id, double xx, double yy, double zz)
+	{
+		if (id >= Arillect.values().length || Arillect.values()[id].getNew(world) == null)
+		{
+			return null;
+		}
+		else
+		{
+			Entity entity = null;
 
-                return par1ItemStack;
-            }
-        }
-    }
+			for (int j = 0; j < 1; ++j)
+			{
+				entity = Arillect.values()[id].getNew(world);
 
-    /** Spawns the creature specified by the egg's type in the location specified by the last three
-     * parameters. Parameters: world, entityID, x, y, z. */
-    public static Entity spawnCreature(World world, int id, double xx, double yy, double zz)
-    {
-        if (id >= Arillect.values().length || Arillect.values()[id].getNew(world) == null)
-        {
-            return null;
-        }
-        else
-        {
-            Entity entity = null;
+				if (entity != null && entity instanceof EntityLivingBase)
+				{
+					EntityLiving entityliving = (EntityLiving) entity;
+					entity.setLocationAndAngles(xx, yy, zz, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+					entityliving.rotationYawHead = entityliving.rotationYaw;
+					entityliving.renderYawOffset = entityliving.rotationYaw;
+					world.spawnEntityInWorld(entity);
+					entityliving.playLivingSound();
+				}
+			}
 
-            for (int j = 0; j < 1; ++j)
-            {
-                entity = Arillect.values()[id].getNew(world);
+			return entity;
+		}
+	}
 
-                if (entity != null && entity instanceof EntityLivingBase)
-                {
-                    EntityLiving entityliving = (EntityLiving) entity;
-                    entity.setLocationAndAngles(xx, yy, zz, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
-                    entityliving.rotationYawHead = entityliving.rotationYaw;
-                    entityliving.renderYawOffset = entityliving.rotationYaw;
-                    world.spawnEntityInWorld(entity);
-                    entityliving.playLivingSound();
-                }
-            }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	{
+		for (Arillect drone : Arillect.values())
+		{
+			par3List.add(new ItemStack(this, 1, drone.ordinal()));
+		}
+	}
 
-            return entity;
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (Arillect drone : Arillect.values())
-        {
-            par3List.add(new ItemStack(this, 1, drone.ordinal()));
-        }
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
-    {
-        super.registerIcons(par1IconRegister);
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister par1IconRegister)
+	{
+		super.registerIcons(par1IconRegister);
+	}
 }

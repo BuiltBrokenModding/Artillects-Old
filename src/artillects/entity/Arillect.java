@@ -7,22 +7,22 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 
 public enum Arillect
 {
-    WORKER("drone_worker", new IDroneBuilder()
+    WORKER("worker", new IDroneBuilder()
     {
 
         @Override
         public void register()
         {
             //EntityRegistry.registerGlobalEntityID(EntityDroneWorker.class, "DroneWorker", EntityRegistry.findGlobalUniqueEntityId());
-            EntityRegistry.registerModEntity(EntityDroneWorker.class, "DroneWorker", ids++, Artillects.instance(), 64, 1, true);
+            EntityRegistry.registerModEntity(EntityWorker.class, "DroneWorker", ids++, Artillects.instance(), 64, 1, true);
             //EntityRegistry.addSpawn(Entity.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.forest, BiomeGenBase.river);
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             // TODO Auto-generated method stub
-            return new EntityDroneWorker(world);
+            return new EntityWorker(world);
         }
     }),
     FABRICATOR("fabricator", new IDroneBuilder()
@@ -36,7 +36,7 @@ public enum Arillect
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -53,7 +53,7 @@ public enum Arillect
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -70,13 +70,13 @@ public enum Arillect
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
         }
     }),
-    COMBAT("combat_drone", new IDroneBuilder()
+    DEMOLISHER("demolisher", new IDroneBuilder()
     {
 
         @Override
@@ -87,12 +87,12 @@ public enum Arillect
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             return new EntityCombatDrone(world);
         }
     }),
-    COMBAT_DISC("drone_disc", new IDroneBuilder()
+    SEEKER("seeker", new IDroneBuilder()
     {
 
         @Override
@@ -119,12 +119,13 @@ public enum Arillect
         }
 
         @Override
-        public EntityArtillect getNew(World world)
+        public EntityArtillectBase getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
         }
     });
+    
     public static int ids = 54;
     IDroneBuilder builder;
 

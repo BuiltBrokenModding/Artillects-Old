@@ -2,7 +2,7 @@ package artillects.entity;
 
 import net.minecraft.world.World;
 
-public class EntityConstructor extends EntityArtillect
+public class EntityConstructor extends EntityArtillectBase
 {
 
     public EntityConstructor(World par1World)
