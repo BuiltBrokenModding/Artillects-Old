@@ -3,7 +3,7 @@ package artillects.entity;
 import net.minecraft.world.World;
 
 /**
- * Essentially a zombie by which has been taken over by the hivemind.
+ * Borg enough said
  * 
  * @author Dark
  */
