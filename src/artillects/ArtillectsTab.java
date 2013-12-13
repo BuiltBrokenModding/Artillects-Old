@@ -6,36 +6,36 @@ import net.minecraft.item.ItemStack;
 
 public class ArtillectsTab extends CreativeTabs
 {
-    private static ArtillectsTab instance;
-    public static ItemStack itemStack;
+	private static ArtillectsTab instance;
+	public static ItemStack itemStack;
 
-    public ArtillectsTab()
-    {
-        super("artillects");
-    }
+	public ArtillectsTab()
+	{
+		super("artillects");
+	}
 
-    public static ArtillectsTab instance()
-    {
-        if (instance == null)
-        {
-            instance = new ArtillectsTab();
-        }
-        return instance;
-    }
+	public static ArtillectsTab instance()
+	{
+		if (instance == null)
+		{
+			instance = new ArtillectsTab();
+		}
+		return instance;
+	}
 
-    @Override
-    public ItemStack getIconItemStack()
-    {
-        if (itemStack == null)
-        {
-            itemStack = new ItemStack(Item.ingotIron);
-        }
-        return ArtillectsTab.itemStack;
-    }
+	@Override
+	public ItemStack getIconItemStack()
+	{
+		if (itemStack == null)
+		{
+			itemStack = new ItemStack(Item.ingotIron);
+		}
+		return ArtillectsTab.itemStack;
+	}
 
-    public static void setIconItemStack(ItemStack stack)
-    {
-        ArtillectsTab.itemStack = stack;
-    }
+	public static void setIconItemStack(ItemStack stack)
+	{
+		ArtillectsTab.itemStack = stack;
+	}
 
 }

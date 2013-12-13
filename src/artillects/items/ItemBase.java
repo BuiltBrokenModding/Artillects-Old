@@ -1,8 +1,8 @@
 package artillects.items;
 
-import artillects.ArtillectsTab;
-import artillects.Artillects;
 import net.minecraft.item.Item;
+import artillects.Artillects;
+import artillects.ArtillectsTab;
 
 /**
  * Base item for all items in this mod
