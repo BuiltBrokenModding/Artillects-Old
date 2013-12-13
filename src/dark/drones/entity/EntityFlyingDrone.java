@@ -5,7 +5,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityFlyingDrone extends EntityFlying
+public class EntityFlyingDrone extends EntityFlying implements IDrone
 {
     public int courseChangeCooldown;
     public double waypointX;
@@ -77,5 +77,12 @@ public class EntityFlyingDrone extends EntityFlying
         }
 
         return true;
+    }
+
+    @Override
+    public Object getOwner()
+    {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

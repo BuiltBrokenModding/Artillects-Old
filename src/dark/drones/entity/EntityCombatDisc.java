@@ -1,6 +1,12 @@
 package dark.drones.entity;
 
+import java.util.List;
+
+import dark.drones.Vector3;
+import dark.drones.ai.EntityDroneSelector;
+
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.Vec3;
@@ -36,7 +42,7 @@ public class EntityCombatDisc extends EntityFlyingDrone
 
         if (this.targetedEntity == null || this.aggroCooldown-- <= 0)
         {
-            this.targetedEntity = this.worldObj.getClosestVulnerablePlayerToEntity(this, 100.0D);
+            this.targetedEntity = this.getTarget(100.0D);
 
             if (this.targetedEntity != null)
             {
@@ -92,4 +98,22 @@ public class EntityCombatDisc extends EntityFlyingDrone
         }
     }
 
+    public EntityLivingBase getTarget(double range)
+    {
+        EntityLivingBase entity = null;
+        EntityDroneSelector selector = new EntityDroneSelector(this);
+        List<EntityLivingBase> entityList = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.boundingBox.expand(range, range, range));
+
+        double distance = range * range;
+        for (EntityLivingBase currentEntity : entityList)
+        {
+            double d = new Vector3(this).distance(new Vector3(currentEntity));
+            if (selector.isEntityApplicable(currentEntity) && d < distance)
+            {
+                distance = d;
+                entity = currentEntity;
+            }
+        }
+        return entity;
+    }
 }

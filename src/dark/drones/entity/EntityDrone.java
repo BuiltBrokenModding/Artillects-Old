@@ -1,27 +1,14 @@
 package dark.drones.entity;
 
-import dark.drones.ai.EntityDroneSelector;
-import dark.drones.hive.Hive;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EntityLivingData;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import dark.drones.hive.Hive;
 
-public class EntityDrone extends EntityCreature
+public class EntityDrone extends EntityCreature implements IDrone
 {
     protected int armorSetting = 5;
     /** Owner of the drone either hive or player */
@@ -29,7 +16,7 @@ public class EntityDrone extends EntityCreature
 
     public EntityDrone(World world)
     {
-        super(world);              
+        super(world);
         Hive.instance().addDrone(this);
     }
 

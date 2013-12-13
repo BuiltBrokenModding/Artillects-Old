@@ -6,23 +6,24 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import dark.drones.entity.EntityDrone;
+import dark.drones.entity.IDrone;
 import dark.drones.hive.Hive;
 
 public class EntityDroneSelector implements IEntitySelector
 {
-    EntityDrone drone;
+    IDrone drone;
 
-    public EntityDroneSelector(EntityDrone drone)
+    public EntityDroneSelector(IDrone drone)
     {
         this.drone = drone;
     }
 
-    /** Return whether the specified entity is applicable to this filter. */
+    @Override
     public boolean isEntityApplicable(Entity entity)
     {
         if (entity instanceof EntityLivingBase)
         {
-            if (entity.isEntityAlive())
+            if (entity.isEntityAlive() && !entity.isInvisible())
             {
                 //Attack players if hive drone TODO change to hostile only system later
                 if (drone.getOwner() instanceof Hive)
