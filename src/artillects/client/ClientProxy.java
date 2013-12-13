@@ -5,8 +5,8 @@ import net.minecraft.world.World;
 import artillects.CommonProxy;
 import artillects.client.render.RenderCombatDisc;
 import artillects.client.render.RenderCombatDrone;
-import artillects.entity.EntityCombatDisc;
-import artillects.entity.EntityDemoDrone;
+import artillects.entity.combat.EntityCombatDisc;
+import artillects.entity.combat.EntityDemoDrone;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy

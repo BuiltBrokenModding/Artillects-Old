@@ -1,4 +1,4 @@
-package artillects.entity;
+package artillects.entity.combat;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
+import artillects.entity.EntityFlyingDrone;
 import artillects.entity.ai.EntityDroneSelector;
 
 public class EntityCombatDisc extends EntityFlyingDrone

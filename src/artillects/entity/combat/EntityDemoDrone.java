@@ -1,4 +1,4 @@
-package artillects.entity;
+package artillects.entity.combat;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentThorns;
@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import artillects.entity.EntityArtillectBase;
 import artillects.entity.ai.EntityDroneSelector;
 
 public class EntityDemoDrone extends EntityArtillectBase implements IRangedAttackMob

@@ -3,6 +3,8 @@ package artillects.entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Artillects;
+import artillects.entity.combat.EntityCombatDisc;
+import artillects.entity.combat.EntityDemoDrone;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public enum Artillect

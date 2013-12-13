@@ -1,5 +1,6 @@
-package artillects.entity;
+package artillects.entity.boss;
 
+import artillects.entity.EntityArtillectBase;
 import net.minecraft.world.World;
 
 public class EntityHivemind extends EntityArtillectBase
