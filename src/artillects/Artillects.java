@@ -7,10 +7,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.MinecraftForge;
-import artillects.entity.Arillect;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import artillects.entity.Artillect;
 import artillects.hive.Hive;
-import artillects.items.ItemArtillectSpawner;
+import artillects.item.ItemArtillectSpawner;
+import artillects.item.ItemParts;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -25,6 +26,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -80,7 +82,8 @@ public class Artillects
 	@Metadata(Artillects.ID)
 	public static ModMetadata meta;
 
-	public static Item itemDroneSpawner;
+	public static Item itemArtillectSpawner;
+	public static Item itemGear;
 
 	public static Artillects instance()
 	{
@@ -110,25 +113,25 @@ public class Artillects
 
 		// Register event handlers
 		TickRegistry.registerScheduledTickHandler(Hive.instance(), Side.SERVER);
-		MinecraftForge.EVENT_BUS.register(Hive.instance());
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
 		// Register blocks and tiles
-		Artillects.CONFIGURATION.load();
-		Artillects.itemDroneSpawner = new ItemArtillectSpawner();
-		Artillects.CONFIGURATION.save();
+		CONFIGURATION.load();
+		itemArtillectSpawner = new ItemArtillectSpawner();
+		itemGear = new ItemParts("gear");
+		CONFIGURATION.save();
 
-		ArtillectsTab.itemStack = new ItemStack(itemDroneSpawner);
+		ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
 
 		System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, new String[] { "en_US" }));
 
 		// Reigster entities
-		for (Arillect drone : Arillect.values())
+		for (Artillect artillect : Artillect.values())
 		{
-			drone.reg();
+			artillect.register();
 		}
 	}
 
@@ -136,6 +139,11 @@ public class Artillects
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		// Load crafting
+		// Worker
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, Artillect.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemGear));
+
+		// Metal Gear
+		GameRegistry.addRecipe(new ShapedOreRecipe(itemGear, "G G", " G ", "G G", 'G', Item.diamond));
 	}
 
 	/**

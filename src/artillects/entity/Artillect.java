@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public enum Arillect
+public enum Artillect
 {
 	WORKER("worker", new IDroneBuilder()
 	{
@@ -127,13 +127,13 @@ public enum Arillect
 
 	public String name;
 
-	private Arillect(String name, IDroneBuilder builder)
+	private Artillect(String name, IDroneBuilder builder)
 	{
 		this.name = name;
 		this.builder = builder;
 	}
 
-	public void reg()
+	public void register()
 	{
 		if (builder != null)
 		{

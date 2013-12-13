@@ -1,4 +1,4 @@
-package artillects.items;
+package artillects.item;
 
 import net.minecraft.item.Item;
 import artillects.Artillects;

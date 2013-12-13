@@ -1,4 +1,4 @@
-package artillects.machines;
+package artillects.machine;
 
 public class BlockConstructor
 {

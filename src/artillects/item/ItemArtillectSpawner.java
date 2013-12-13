@@ -1,4 +1,4 @@
-package artillects.items;
+package artillects.item;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import artillects.entity.Arillect;
+import artillects.entity.Artillect;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -36,7 +36,7 @@ public class ItemArtillectSpawner extends ItemBase
 	@Override
 	public String getUnlocalizedName(ItemStack itemStack)
 	{
-		return super.getUnlocalizedName(itemStack) + "." + Arillect.values()[itemStack.getItemDamage()].name;
+		return super.getUnlocalizedName(itemStack) + "." + Artillect.values()[itemStack.getItemDamage()].name;
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class ItemArtillectSpawner extends ItemBase
 	 */
 	public static Entity spawnCreature(World world, int id, double xx, double yy, double zz)
 	{
-		if (id >= Arillect.values().length || Arillect.values()[id].getNew(world) == null)
+		if (id >= Artillect.values().length || Artillect.values()[id].getNew(world) == null)
 		{
 			return null;
 		}
@@ -160,7 +160,7 @@ public class ItemArtillectSpawner extends ItemBase
 
 			for (int j = 0; j < 1; ++j)
 			{
-				entity = Arillect.values()[id].getNew(world);
+				entity = Artillect.values()[id].getNew(world);
 
 				if (entity != null && entity instanceof EntityLivingBase)
 				{
@@ -181,7 +181,7 @@ public class ItemArtillectSpawner extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
 	{
-		for (Arillect drone : Arillect.values())
+		for (Artillect drone : Artillect.values())
 		{
 			par3List.add(new ItemStack(this, 1, drone.ordinal()));
 		}
