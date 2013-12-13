@@ -1,14 +1,13 @@
 package dark.drones.entity;
 
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumEntitySize;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -16,7 +15,6 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
@@ -28,14 +26,14 @@ public class EntityCombatDrone extends EntityDrone implements IRangedAttackMob
     {
         super(par1World);
         this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D, false));
+        //this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D, false));
         this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));//TODO remove friendly fire
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
-        this.targetTasks.addTask(2, new EntityAIArrowAttack(this, 2.0D, 20, 60, 5.0F));
-        this.setSize(3f, 3.5f);
+        this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
+        this.setSize(1.5f, 2f);
     }
 
     @Override
@@ -52,7 +50,7 @@ public class EntityCombatDrone extends EntityDrone implements IRangedAttackMob
         this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(120.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.23000000417232513D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
         this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(3.0D);
     }
 
@@ -147,27 +145,9 @@ public class EntityCombatDrone extends EntityDrone implements IRangedAttackMob
     }
 
     @Override
-    public void attackEntityWithRangedAttack(EntityLivingBase entitylivingbase, float f)
+    public void attackEntityWithRangedAttack(EntityLivingBase entity, float f)
     {
-        EntityArrow entityarrow = new EntityArrow(this.worldObj, this, entitylivingbase, 1.6F, (float) (14 - this.worldObj.difficultySetting * 4));
-        int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItem());
-        int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItem());
-        entityarrow.setDamage((double) (f * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.worldObj.difficultySetting * 0.11F));
-
-        if (i > 0)
-        {
-            entityarrow.setDamage(entityarrow.getDamage() + (double) i * 0.5D + 0.5D);
-        }
-
-        if (j > 0)
-        {
-            entityarrow.setKnockbackStrength(j);
-        }
-        entityarrow.setFire(100);
-
-        this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-        this.worldObj.spawnEntityInWorld(entityarrow);
-
+        entity.attackEntityFrom(DamageSource.generic, 5);
     }
 
 }
