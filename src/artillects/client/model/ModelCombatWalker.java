@@ -100,10 +100,10 @@ public class ModelCombatWalker extends ModelDrone
         this.leftUpperLeg.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float) Math.PI) * 1.4F * par2;
         this.rightUpperLeg.rotateAngleY = 0.0F;
         this.leftUpperLeg.rotateAngleY = 0.0F;
-        float rx = (float) (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (-.4) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (-.1));
-        float ry = (float) (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (-.4) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (-.1));
-        float lx = (float) (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (-.4) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (-.1));
-        float ly = (float) (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (-.4) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (-.1));
+        float rx = (float) (MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
+        float ry = (float) (MathHelper.sin((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.rightUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
+        float lx = (float) (MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) - MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
+        float ly = (float) (MathHelper.sin((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (6) + MathHelper.cos((float) (this.leftUpperLeg.rotateAngleX * 0.0174532925)) * (2.5));
         leftLowwerLeg.setRotationPoint(-4F + rx, 14F, -2F + ry);
         rightLowwerLeg.setRotationPoint(4F + rx, 14F, -2F+ ry);
         this.rightLowwerLeg.rotateAngleX = -MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
