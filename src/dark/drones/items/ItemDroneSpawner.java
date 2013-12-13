@@ -153,7 +153,7 @@ public class ItemDroneSpawner extends ItemBase
      * parameters. Parameters: world, entityID, x, y, z. */
     public static Entity spawnCreature(World world, int id, double xx, double yy, double zz)
     {
-        if (id >= Drones.values().length || Drones.values()[id].getNew() == null)
+        if (id >= Drones.values().length || Drones.values()[id].getNew(world) == null)
         {
             return null;
         }
@@ -163,7 +163,7 @@ public class ItemDroneSpawner extends ItemBase
 
             for (int j = 0; j < 1; ++j)
             {
-                entity = Drones.values()[id].getNew();
+                entity = Drones.values()[id].getNew(world);
 
                 if (entity != null && entity instanceof EntityDrone)
                 {

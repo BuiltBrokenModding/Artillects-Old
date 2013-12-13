@@ -1,5 +1,6 @@
 package dark.drones.entity;
 
+import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import dark.drones.ModDrones;
 
@@ -11,16 +12,16 @@ public enum Drones
         @Override
         public void register()
         {
-            EntityRegistry.registerGlobalEntityID(EntityDroneWorker.class, "DroneWorker", EntityRegistry.findGlobalUniqueEntityId());
+            //EntityRegistry.registerGlobalEntityID(EntityDroneWorker.class, "DroneWorker", EntityRegistry.findGlobalUniqueEntityId());
             EntityRegistry.registerModEntity(EntityDroneWorker.class, "DroneWorker", ids++, ModDrones.instance(), 64, 1, true);
             //EntityRegistry.addSpawn(Entity.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.forest, BiomeGenBase.river);
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
-            return null;
+            return new EntityDroneWorker(world);
         }
     }),
     FABRICATOR("fabricator", new IDroneBuilder()
@@ -34,7 +35,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -51,7 +52,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -68,13 +69,13 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
         }
     }),
-    COMBAT("combat_disc", new IDroneBuilder()
+    COMBAT("combat_drone", new IDroneBuilder()
     {
 
         @Override
@@ -85,7 +86,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -102,7 +103,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -119,7 +120,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew()
+        public EntityDrone getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -144,11 +145,11 @@ public enum Drones
         }
     }
 
-    public EntityDrone getNew()
+    public EntityDrone getNew(World world)
     {
         if (builder != null)
         {
-            return builder.getNew();
+            return builder.getNew(world);
         }
         return null;
     }

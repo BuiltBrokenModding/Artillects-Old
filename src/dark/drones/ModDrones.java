@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.Metadata;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
@@ -37,13 +38,13 @@ public class ModDrones
     public static final String VERSION = MAJOR_VERSION + "." + MINOR_VERSION + "." + REVIS_VERSION + "." + BUILD_VERSION;
 
     // @Mod
-    public static final String MOD_ID = "DarkCore";
-    public static final String MOD_NAME = "Darks CoreMachine";
+    public static final String MOD_ID = "Artillects";
+    public static final String MOD_NAME = "Artillects";
 
     @SidedProxy(clientSide = "dark.drones.client.ClientProxy", serverSide = "dark.drones.CommonProxy")
     public static CommonProxy proxy;
 
-    public static final String CHANNEL = "DarkPackets";
+    public static final String CHANNEL = "Artillects";
 
     public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Dark/Artillects.cfg"));
 
@@ -69,6 +70,7 @@ public class ModDrones
     public static int BLOCK_ID_PRE = 3856;
     public static int ITEM_ID_PREFIX = 15966;
 
+    @Instance(ModDrones.MOD_ID)
     private static ModDrones instance;
 
     @Metadata(ModDrones.MOD_ID)
