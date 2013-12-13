@@ -10,6 +10,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 
+/** Uses to handle loading and saving of NBT files
+ * 
+ * @author Dark */
 public class NBTFileHandler
 {
     public static boolean saveFile(String filename, File directory, NBTTagCompound data)
