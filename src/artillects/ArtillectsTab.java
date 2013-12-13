@@ -4,21 +4,21 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class DroneTab extends CreativeTabs
+public class ArtillectsTab extends CreativeTabs
 {
-    private static DroneTab instance;
-    private static ItemStack itemStack;
+    private static ArtillectsTab instance;
+    public static ItemStack itemStack;
 
-    public DroneTab()
+    public ArtillectsTab()
     {
-        super("Drones");
+        super("artillects");
     }
 
-    public static DroneTab instance()
+    public static ArtillectsTab instance()
     {
         if (instance == null)
         {
-            instance = new DroneTab();
+            instance = new ArtillectsTab();
         }
         return instance;
     }
@@ -30,12 +30,12 @@ public class DroneTab extends CreativeTabs
         {
             itemStack = new ItemStack(Item.ingotIron);
         }
-        return DroneTab.itemStack;
+        return ArtillectsTab.itemStack;
     }
 
     public static void setIconItemStack(ItemStack stack)
     {
-        DroneTab.itemStack = stack;
+        ArtillectsTab.itemStack = stack;
     }
 
 }

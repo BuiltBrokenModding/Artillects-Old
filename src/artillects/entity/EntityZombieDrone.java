@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 /** Essentially a zombie by which has been taken over by the hivemind.
  * 
  * @author Dark */
-public class EntityZombieDrone extends EntityDrone
+public class EntityZombieDrone extends EntityArtillect
 {
 
     public EntityZombieDrone(World par1World)

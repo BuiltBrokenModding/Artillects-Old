@@ -8,13 +8,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 
-public class EntityDrone extends EntityCreature implements IDrone
+public class EntityArtillect extends EntityCreature implements IDrone
 {
     protected int armorSetting = 5;
     /** Owner of the drone either hive or player */
     protected Object owner;
 
-    public EntityDrone(World world)
+    public EntityArtillect(World world)
     {
         super(world);
         Hive.instance().addDrone(this);

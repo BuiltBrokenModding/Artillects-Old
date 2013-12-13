@@ -2,7 +2,7 @@ package artillects.entity;
 
 import net.minecraft.world.World;
 
-public class EntityHivemind extends EntityDrone
+public class EntityHivemind extends EntityArtillect
 {
 
     public EntityHivemind(World par1World)

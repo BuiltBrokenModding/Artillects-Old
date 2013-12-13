@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import artillects.entity.EntityDrone;
+import artillects.entity.EntityArtillect;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import cpw.mods.fml.common.IScheduledTickHandler;
@@ -19,7 +19,7 @@ public class Hive implements IScheduledTickHandler
     /** Main hive instance */
     private static Hive mainHive;
     /** All active drones loaded by this hive instance */
-    private List<EntityDrone> activeDrones = new ArrayList<EntityDrone>();
+    private List<EntityArtillect> activeDrones = new ArrayList<EntityArtillect>();
     private List<Report> inboxReports = new ArrayList<Report>();
     private List<Zone> activeZones = new ArrayList<Zone>();
 
@@ -47,7 +47,7 @@ public class Hive implements IScheduledTickHandler
     }
 
     /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
-    public void addDrone(EntityDrone drone)
+    public void addDrone(EntityArtillect drone)
     {
         if (drone != null && !activeDrones.contains(drone))
         {
@@ -56,7 +56,7 @@ public class Hive implements IScheduledTickHandler
     }
 
     /** Called to remove a drone from the hive. Normal when it dies or gets unloaded by the world */
-    public void removeDrone(EntityDrone drone)
+    public void removeDrone(EntityArtillect drone)
     {
         if (drone != null)
         {
@@ -106,7 +106,7 @@ public class Hive implements IScheduledTickHandler
     @ForgeSubscribe
     public void onDroneDeathEvent(LivingDeathEvent event)
     {
-        if (event.entityLiving instanceof EntityDrone)
+        if (event.entityLiving instanceof EntityArtillect)
         {
             //TODO remove from list and issue report for new drone
         }

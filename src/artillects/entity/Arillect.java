@@ -5,7 +5,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public enum Drones
+public enum Arillect
 {
     WORKER("drone_worker", new IDroneBuilder()
     {
@@ -19,7 +19,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             // TODO Auto-generated method stub
             return new EntityDroneWorker(world);
@@ -36,7 +36,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -53,7 +53,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -70,7 +70,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -87,7 +87,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             return new EntityCombatDrone(world);
         }
@@ -119,7 +119,7 @@ public enum Drones
         }
 
         @Override
-        public EntityDrone getNew(World world)
+        public EntityArtillect getNew(World world)
         {
             // TODO Auto-generated method stub
             return null;
@@ -130,7 +130,7 @@ public enum Drones
 
     public String name;
 
-    private Drones(String name, IDroneBuilder builder)
+    private Arillect(String name, IDroneBuilder builder)
     {
         this.name = name;
         this.builder = builder;

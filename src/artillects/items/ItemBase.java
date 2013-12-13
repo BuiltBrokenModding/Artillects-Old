@@ -1,6 +1,6 @@
 package artillects.items;
 
-import artillects.DroneTab;
+import artillects.ArtillectsTab;
 import artillects.Artillects;
 import net.minecraft.item.Item;
 
@@ -14,7 +14,7 @@ public class ItemBase extends Item
     {
         super(Artillects.CONFIGURATION.getItem(name, Artillects.nextItemID()).getInt());
         this.setUnlocalizedName("name");
-        this.setCreativeTab(DroneTab.instance());
+        this.setCreativeTab(ArtillectsTab.instance());
     }
 
 }

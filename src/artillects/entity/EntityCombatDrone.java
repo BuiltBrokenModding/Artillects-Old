@@ -20,7 +20,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityCombatDrone extends EntityDrone implements IRangedAttackMob
+public class EntityCombatDrone extends EntityArtillect implements IRangedAttackMob
 {
     public EntityCombatDrone(World par1World)
     {

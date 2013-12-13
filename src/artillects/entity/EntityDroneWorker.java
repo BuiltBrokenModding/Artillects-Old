@@ -2,7 +2,7 @@ package artillects.entity;
 
 import net.minecraft.world.World;
 
-public class EntityDroneWorker extends EntityDrone
+public class EntityDroneWorker extends EntityArtillect
 {
 
     public EntityDroneWorker(World par1World)

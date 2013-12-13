@@ -5,11 +5,12 @@ import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import artillects.entity.Drones;
+import artillects.entity.Arillect;
 import artillects.hive.Hive;
-import artillects.items.ItemDroneSpawner;
+import artillects.items.ItemArtillectSpawner;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -95,8 +96,8 @@ public class Artillects
 		// Load meta
 		meta.modId = MOD_ID;
 		meta.name = MOD_NAME;
-		meta.description = "There is an evil that stares at you from the dark, and makes things go bump in the night. Well this is not a that evil but is a nightmare on its own. From Built Broken Studios i bring you Artillects a robotic hive mind waitng to consume your world";
-		meta.url = "www.BuiltBroken.com";
+		meta.description = "Alien in nature, it is unknown how these Artillects to exist. What is do know is that they seem to be focused on stripping the planet of its resources...";
+		meta.url = "www.universalelectricity.com/artillects";
 
 		meta.logoFile = TEXTURE_DIRECTORY + "Drone_Banner.png";
 		meta.version = VERSION;
@@ -114,11 +115,13 @@ public class Artillects
 	{
 		// Register blocks and tiles
 		Artillects.CONFIGURATION.load();
-		Artillects.itemDroneSpawner = new ItemDroneSpawner();
+		Artillects.itemDroneSpawner = new ItemArtillectSpawner();
 		Artillects.CONFIGURATION.save();
 
+		ArtillectsTab.itemStack = new ItemStack(itemDroneSpawner);
+
 		// Reigster entities
-		for (Drones drone : Drones.values())
+		for (Arillect drone : Arillect.values())
 		{
 			drone.reg();
 		}

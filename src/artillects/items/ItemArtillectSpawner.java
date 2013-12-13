@@ -2,8 +2,8 @@ package artillects.items;
 
 import java.util.List;
 
-import artillects.entity.Drones;
-import artillects.entity.EntityDrone;
+import artillects.entity.Arillect;
+import artillects.entity.EntityArtillect;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -26,11 +26,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 /** Debug tool use to spawn drones in the same way that monster spawn eggs do.
  * 
  * @author Dark */
-public class ItemDroneSpawner extends ItemBase
+public class ItemArtillectSpawner extends ItemBase
 {
-    public ItemDroneSpawner()
+    public ItemArtillectSpawner()
     {
-        super("DroneSpawner");
+        super("artillectSpawner");
         this.setHasSubtypes(true);
     }
 
@@ -38,7 +38,7 @@ public class ItemDroneSpawner extends ItemBase
     public String getItemDisplayName(ItemStack stack)
     {
         String itemName = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String entityName = Drones.values()[stack.getItemDamage()].name;
+        String entityName = Arillect.values()[stack.getItemDamage()].name;
 
         if (entityName != null)
         {
@@ -153,7 +153,7 @@ public class ItemDroneSpawner extends ItemBase
      * parameters. Parameters: world, entityID, x, y, z. */
     public static Entity spawnCreature(World world, int id, double xx, double yy, double zz)
     {
-        if (id >= Drones.values().length || Drones.values()[id].getNew(world) == null)
+        if (id >= Arillect.values().length || Arillect.values()[id].getNew(world) == null)
         {
             return null;
         }
@@ -163,7 +163,7 @@ public class ItemDroneSpawner extends ItemBase
 
             for (int j = 0; j < 1; ++j)
             {
-                entity = Drones.values()[id].getNew(world);
+                entity = Arillect.values()[id].getNew(world);
 
                 if (entity != null && entity instanceof EntityLivingBase)
                 {
@@ -184,7 +184,7 @@ public class ItemDroneSpawner extends ItemBase
     @SideOnly(Side.CLIENT)
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (Drones drone : Drones.values())
+        for (Arillect drone : Arillect.values())
         {
             par3List.add(new ItemStack(this, 1, drone.ordinal()));
         }
