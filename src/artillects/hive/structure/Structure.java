@@ -41,9 +41,11 @@ public class Structure extends HiveGhost
     public void load(NBTTagCompound nbt)
     {
         name = nbt.getName();
-        if(nbt.hasKey("design"))
+        if (nbt.hasKey("design"))
         {
-            
+            Schematic shem = new Schematic();
+            shem.getFromResourceFolder(nbt.getString("design"));
+            this.setSchematic(shem);
         }
     }
 }
