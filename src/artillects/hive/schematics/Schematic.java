@@ -37,7 +37,7 @@ public class Schematic implements ISaveObject
             this.init = true;
             this.schematicCenter = new Vector3();
             this.schematicCenter.x = this.schematicSize.x / 2;
-            this.schematicCenter.y = this.schematicSize.y / 2;
+            //this.schematicCenter.y = this.schematicSize.y / 2;
             this.schematicCenter.z = this.schematicSize.z / 2;
         }
     }

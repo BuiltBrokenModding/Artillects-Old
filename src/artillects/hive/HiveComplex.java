@@ -24,6 +24,11 @@ public class HiveComplex extends HiveGhost
         this.location = location;
     }
 
+    public void loadTunnelTest()
+    {
+        
+    }
+
     @Override
     public void updateEntity()
     {
