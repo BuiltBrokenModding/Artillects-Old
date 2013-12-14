@@ -18,7 +18,7 @@ public class ItemBuildingGenerator extends ItemBase
 	{
 		super("buildingGenerator");
 		this.setHasSubtypes(true);
-		this.setTextureName(Artillects.PREFIX + "BuildingTest");
+		this.setTextureName(Artillects.PREFIX + "buildingGenerator");
 	}
 
 	@Override
