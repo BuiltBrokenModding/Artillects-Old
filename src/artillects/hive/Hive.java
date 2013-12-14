@@ -90,6 +90,7 @@ public class Hive implements IScheduledTickHandler
         {
             ticks = 0;
         }
+        System.out.println("Hive AI update tick");
         Iterator<HiveComplex> it = activeComplexs.iterator();
         while (it.hasNext())
         {
@@ -105,7 +106,7 @@ public class Hive implements IScheduledTickHandler
             }
         }
         Iterator<Zone> zoneIt = activeZones.iterator();
-        while (it.hasNext())
+        while (zoneIt.hasNext())
         {
             Zone complex = zoneIt.next();
             if (complex.isValid())
@@ -141,7 +142,7 @@ public class Hive implements IScheduledTickHandler
     @Override
     public int nextTickSpacing()
     {
-        return 5;
+        return 10;
     }
 
     public void onDroneDeathEvent(EntityArtillectBase entity)
