@@ -11,14 +11,26 @@ import artillects.entity.ai.EntityAIMining;
 
 public class EntityWorker extends EntityArtillectBase
 {
+	public enum EnumWorkerType
+	{
+		HARVESTER;
+	}
+
 	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
+
+	public static final int DATA_TYPE_ID = 12;
 
 	public EntityWorker(World par1World)
 	{
 		super(par1World);
-		// this.getNavigator();
 		this.tasks.addTask(0, new EntityAIMining(this, 1));
 		this.tasks.addTask(1, new EntityAIWander(this, 0.5f));
+	}
+
+	protected void entityInit()
+	{
+		super.entityInit();
+		this.dataWatcher.addObject(DATA_TYPE_ID, (byte) EnumWorkerType.HARVESTER.ordinal());
 	}
 
 	/** @return True if the Worker's inventory is full. (See EntityAIMining) */

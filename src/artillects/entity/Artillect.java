@@ -3,7 +3,7 @@ package artillects.entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.entity.combat.EntityCombatDisc;
+import artillects.entity.combat.EntitySeeker;
 import artillects.entity.combat.EntityDemoDrone;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
@@ -102,14 +102,14 @@ public enum Artillect
         @Override
         public void register()
         {
-            EntityRegistry.registerModEntity(EntityCombatDisc.class, "DroneDiscSmall", ids++, Artillects.instance(), 64, 1, true);
+            EntityRegistry.registerModEntity(EntitySeeker.class, "DroneDiscSmall", ids++, Artillects.instance(), 64, 1, true);
 
         }
 
         @Override
         public EntityLivingBase getNew(World world)
         {
-            return new EntityCombatDisc(world);
+            return new EntitySeeker(world);
         }
     }),
     ZOMBIE("borg", new IDroneBuilder()

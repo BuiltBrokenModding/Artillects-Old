@@ -12,7 +12,7 @@ import artillects.Vector3;
 import artillects.entity.EntityFlyingDrone;
 import artillects.entity.ai.EntityDroneSelector;
 
-public class EntityCombatDisc extends EntityFlyingDrone
+public class EntitySeeker extends EntityFlyingDrone
 {
     private Entity targetedEntity;
 
@@ -24,7 +24,7 @@ public class EntityCombatDisc extends EntityFlyingDrone
     /** The explosion radius of spawned fireballs. */
     private int explosionStrength = 1;
 
-    public EntityCombatDisc(World world)
+    public EntitySeeker(World world)
     {
         super(world);
         this.setSize(0.7f, 0.3f);
