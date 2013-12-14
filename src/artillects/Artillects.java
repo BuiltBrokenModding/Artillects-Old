@@ -128,7 +128,7 @@ public class Artillects
 	}
 
 	//Moved these here for now ~Archelf
-	public static Block blockCommunication;
+	public static Block blockSymbol1, blockSymbol2, blockSymbol3;
 	public static Block blockWall1;
 	public static Block blockWall2;
 	public static Block blockLight;
@@ -144,7 +144,9 @@ public class Artillects
 		itemSchematicCreator = new ItemSchematicCreator();
 		
 		//I've left these non sub-type just in case you need to do anything with them ~Archelf
-		blockCommunication = new BlockBaseDecor("decorCom_anim");
+		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
+		blockSymbol2 = new BlockBaseDecor("decorSymbol2");
+		blockSymbol3 = new BlockBaseDecor("decorSymbol3");
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
 		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
@@ -162,7 +164,9 @@ public class Artillects
 
 		proxy.init();
 		
-		GameRegistry.registerBlock(blockCommunication, "blockCommunication");
+		GameRegistry.registerBlock(blockSymbol1, "blockSymbol1");
+		GameRegistry.registerBlock(blockSymbol2, "blockSymbol2");
+		GameRegistry.registerBlock(blockSymbol3, "blockSymbol3");
 		GameRegistry.registerBlock(blockWall1, "blockWall1");
 		GameRegistry.registerBlock(blockWall2, "blockWall2");
 		GameRegistry.registerBlock(blockLight, "blockLight");
