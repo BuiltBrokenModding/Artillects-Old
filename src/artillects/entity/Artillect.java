@@ -3,8 +3,8 @@ package artillects.entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.entity.combat.EntitySeeker;
 import artillects.entity.combat.EntityDemoDrone;
+import artillects.entity.combat.EntitySeeker;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public enum Artillect
@@ -107,7 +107,7 @@ public enum Artillect
         }
 
         @Override
-        public EntityLivingBase getNew(World world)
+		public EntityLivingBase getNew(World world)
         {
             return new EntitySeeker(world);
         }

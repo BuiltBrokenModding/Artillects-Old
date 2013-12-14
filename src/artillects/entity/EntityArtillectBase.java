@@ -7,88 +7,92 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import artillects.hive.Hive;
+import artillects.hive.Zone;
 
 public abstract class EntityArtillectBase extends EntityCreature implements IDrone
 {
-    protected int armorSetting = 5;
-    /** Owner of the drone either hive or player */
-    protected Object owner;
+	protected int armorSetting = 5;
 
-    public EntityArtillectBase(World world)
-    {
-        super(world);
-        Hive.instance().addDrone(this);
-    }
+	public Zone zone;
 
-    @Override
-    public int getTotalArmorValue()
-    {
-        return armorSetting;
-    }
+	/** Owner of the drone either hive or player */
+	public Object owner;
 
-    @Override
-    protected boolean isAIEnabled()
-    {
-        return true;
-    }
+	public EntityArtillectBase(World world)
+	{
+		super(world);
+		Hive.instance().addDrone(this);
+	}
 
-    @Override
-    protected int getDropItemId()
-    {
-        return Item.ingotIron.itemID;
-    }
+	@Override
+	public int getTotalArmorValue()
+	{
+		return armorSetting;
+	}
 
-    @Override
-    protected void dropRareDrop(int par1)
-    {
-        // TODO small chance to drop intact parts
-    }
+	@Override
+	protected boolean isAIEnabled()
+	{
+		return true;
+	}
 
-    @Override
-    public void onKillEntity(EntityLivingBase entityKilled)
-    {
-        super.onKillEntity(entityKilled);
+	@Override
+	protected int getDropItemId()
+	{
+		return Item.ingotIron.itemID;
+	}
 
-        if (this.worldObj.difficultySetting >= 2 && entityKilled instanceof EntityZombie)
-        {
-            if (this.worldObj.difficultySetting == 2 && this.rand.nextBoolean())
-            {
-                return;
-            }
+	@Override
+	protected void dropRareDrop(int par1)
+	{
+		// TODO small chance to drop intact parts
+	}
 
-            // TODO spawn zombie drone, eg borg
-            EntityZombie entityzombie = new EntityZombie(this.worldObj);
-            entityzombie.copyLocationAndAnglesFrom(entityKilled);
-            this.worldObj.removeEntity(entityKilled);
+	@Override
+	public void onKillEntity(EntityLivingBase entityKilled)
+	{
+		super.onKillEntity(entityKilled);
 
-            this.worldObj.spawnEntityInWorld(entityzombie);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
-        }
-    }
+		if (this.worldObj.difficultySetting >= 2 && entityKilled instanceof EntityZombie)
+		{
+			if (this.worldObj.difficultySetting == 2 && this.rand.nextBoolean())
+			{
+				return;
+			}
 
-    @Override
-    public boolean interact(EntityPlayer par1EntityPlayer)
-    {
-        // TODO if player owned open GUI
-        return super.interact(par1EntityPlayer);
-    }
+			// TODO spawn zombie drone, eg borg
+			EntityZombie entityzombie = new EntityZombie(this.worldObj);
+			entityzombie.copyLocationAndAnglesFrom(entityKilled);
+			this.worldObj.removeEntity(entityKilled);
 
-    @Override
-    protected boolean canDespawn()
-    {
-        return false;
-    }
+			this.worldObj.spawnEntityInWorld(entityzombie);
+			this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+		}
+	}
 
-    @Override
-    public Object getOwner()
-    {
-        return this.owner;
-    }
+	@Override
+	public boolean interact(EntityPlayer par1EntityPlayer)
+	{
+		// TODO if player owned open GUI
+		return super.interact(par1EntityPlayer);
+	}
 
-    @Override
-    public void setDead()
-    {
-        Hive.instance().removeDrone(this);
-        super.setDead();
-    }
+	@Override
+	protected boolean canDespawn()
+	{
+		return false;
+	}
+
+	@Override
+	public Object getOwner()
+	{
+		return this.owner;
+	}
+
+	@Override
+	public void setDead()
+	{
+		Hive.instance().removeDrone(this);
+		super.setDead();
+	}
 }
