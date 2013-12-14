@@ -23,6 +23,8 @@ public class EntityAIMining extends EntityAIBase
 	private int breakingTime;
 	private float maxBreakTime = 60;
 
+	private int lastMoveTime = 0;
+
 	public EntityAIMining(EntityWorker entity, double par2)
 	{
 		this.entity = entity;
@@ -41,7 +43,7 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedSortedPositions.isEmpty() && !this.entity.isInventoryFull();
+		return entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */
@@ -56,6 +58,7 @@ public class EntityAIMining extends EntityAIBase
 	public void resetTask()
 	{
 		this.breakingTime = 0;
+
 	}
 
 	/** Updates the task */
@@ -77,20 +80,24 @@ public class EntityAIMining extends EntityAIBase
 				}
 			}
 
+			if (this.lastMoveTime-- <= 0)
+			{
+				this.entity.getNavigator().tryMoveToXYZ(targetPosition.x, targetPosition.y, targetPosition.z, this.moveSpeed);
+				this.lastMoveTime = 40;
+			}
+
 			MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.toVec3(), false, false);
 
 			if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
 			{
 				Vector3 breakPosition = new Vector3(mop.blockX, mop.blockY, mop.blockZ);
 
-				this.entity.getNavigator().tryMoveToXYZ(breakPosition.x, breakPosition.y, breakPosition.z, this.moveSpeed);
-
 				int blockID = this.world.getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
 
 				if (blockID != 0)
 				{
 					this.breakingTime++;
-
+					System.out.println(this.breakingTime);
 					if (this.breakingTime >= this.maxBreakTime)
 					{
 						List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
@@ -111,6 +118,7 @@ public class EntityAIMining extends EntityAIBase
 
 						this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
 					}
+
 				}
 			}
 		}
