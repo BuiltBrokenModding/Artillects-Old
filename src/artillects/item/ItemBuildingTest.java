@@ -3,11 +3,14 @@ package artillects.item;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import artillects.Artillects;
 import artillects.Vector3;
+import artillects.hive.HiveComplex;
 import artillects.hive.schematics.Schematic;
 
 public class ItemBuildingTest extends ItemBase
@@ -16,7 +19,7 @@ public class ItemBuildingTest extends ItemBase
     {
         super("BuildingTest");
         this.setHasSubtypes(true);
-        this.setTextureName("BuildingTest");
+        this.setTextureName(Artillects.PREFIX + "BuildingTest");
     }
 
     @Override
@@ -24,13 +27,21 @@ public class ItemBuildingTest extends ItemBase
     {
         if (!world.isRemote && itemStack != null && itemStack.getItemDamage() < Building.values().length)
         {
+            if (itemStack.getItemDamage() == 0)
+            {
+                HiveComplex complex = new HiveComplex("TestHive", new Vector3(x, y, z));
+                complex.loadTunnelTest();
+            }
             Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
             if (schematic != null && schematic.blocks != null)
             {
                 for (Entry<Vector3, int[]> entry : schematic.blocks.entrySet())
                 {
-                    Vector3 setPos = new Vector3(x, y, z).subtract(schematic.schematicCenter).add(entry.getKey());
-                    setPos.setBlock(world, entry.getValue()[0], entry.getValue()[1]);
+                    if (entry.getValue()[0] != Block.sponge.blockID)
+                    {
+                        Vector3 setPos = new Vector3(x, y, z).subtract(schematic.schematicCenter).add(entry.getKey());
+                        setPos.setBlock(world, entry.getValue()[0], entry.getValue()[1]);
+                    }
                 }
             }
         }
@@ -60,7 +71,10 @@ public class ItemBuildingTest extends ItemBase
     public static enum Building
     {
         TEST("Test"),
-        TUNNEL("Tunnel");
+        TUNNELZ("ZTunnel"),
+        TUNNELX("XTunnel"),
+        TUNNELY("YTunnel"),
+        TUNNELC("CTunnel");
         public String name;
         public Schematic schematic;
 
