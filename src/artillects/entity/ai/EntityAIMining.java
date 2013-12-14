@@ -60,11 +60,11 @@ public class EntityAIMining extends EntityAIBase
     @Override
     public void updateTask()
     {
-        if (this.scannedBlocks.scannedPositions.size() > 0)
+        if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
         {
-            int breakX = (int) this.scannedBlocks.scannedPositions.get(0).x;
-            int breakY = (int) this.scannedBlocks.scannedPositions.get(0).y;
-            int breakZ = (int) this.scannedBlocks.scannedPositions.get(0).z;
+            int breakX = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).x;
+            int breakY = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).y;
+            int breakZ = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).z;
 
             this.entity.getNavigator().tryMoveToXYZ(breakX, breakY, breakZ, this.moveSpeed);
 
