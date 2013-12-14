@@ -14,6 +14,7 @@ import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemParts;
+import artillects.item.ItemWeapon;
 import artillects.item.ItemParts.Part;
 import artillects.item.ItemSchematicCreator;
 import artillects.network.PacketHandler;
@@ -93,6 +94,7 @@ public class Artillects
 	public static Item itemParts;
 	public static Item itemBuilding;
 	public static Item itemSchematicCreator;
+	public static Item weaponTommygun;
 	
 	public static Artillects instance()
 	{
@@ -142,6 +144,7 @@ public class Artillects
 		itemParts = new ItemParts();
 		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
+		weaponTommygun = new ItemWeapon();
 		
 		//I've left these non sub-type just in case you need to do anything with them ~Archelf
 		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
