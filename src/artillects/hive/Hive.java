@@ -72,6 +72,15 @@ public class Hive implements IScheduledTickHandler
         }
     }
 
+    public void addZone(Zone zone)
+    {
+        if (zone != null && !activeZones.contains(zone))
+        {
+            activeZones.add(zone);
+        }
+
+    }
+
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData)
     {

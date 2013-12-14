@@ -14,7 +14,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 {
 	protected int armorSetting = 5;
 
-	private Zone zone;
+	public Zone zone;
 
 	/** Owner of the drone either hive or player */
 	public Object owner;

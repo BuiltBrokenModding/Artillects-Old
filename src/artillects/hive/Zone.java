@@ -18,6 +18,7 @@ public class Zone extends HiveGhost
         this.world = world;
         this.start = new Vector3(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
         this.end = new Vector3(Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
+        Hive.instance().addZone(this);
     }
 
     @Override
