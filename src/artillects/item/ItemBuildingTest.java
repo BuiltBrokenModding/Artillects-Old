@@ -31,8 +31,11 @@ public class ItemBuildingTest extends ItemBase
                 HiveComplex complex = new HiveComplex("TestHive", new VectorWorld(world, x, y, z));
                 complex.loadTunnelTest();
             }
-            Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
-            schematic.build(new VectorWorld(world, x, y, z));
+            else
+            {
+                Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
+                schematic.build(new VectorWorld(world, x, y, z));
+            }
         }
         return true;
     }
