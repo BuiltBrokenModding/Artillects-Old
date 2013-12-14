@@ -1,7 +1,7 @@
 package artillects.hive.structure;
 
 import net.minecraft.nbt.NBTTagCompound;
-import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.hive.HiveGhost;
 import artillects.hive.schematics.Schematic;
 
@@ -10,17 +10,28 @@ import artillects.hive.schematics.Schematic;
  * @author DarkGuardsman */
 public class Structure extends HiveGhost
 {
-    public Building name;
-    protected Vector3 location;
+    public Building building;
+    protected VectorWorld location;
 
     Schematic buildingDesign;
 
     protected boolean generated = false;
 
-    public Structure(Building building, Vector3 location)
+    public Structure(Building building, VectorWorld location)
     {
-        this.name = building;
+        this.building = building;
         this.location = location;
+    }
+
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
+        if (!this.generated)
+        {
+            this.generated = true;
+            buildingDesign.build(location);
+        }
     }
 
     public void setSchematic(Schematic design)
@@ -31,7 +42,7 @@ public class Structure extends HiveGhost
     @Override
     public void save(NBTTagCompound nbt)
     {
-        nbt.setInteger("buildingID", name.ordinal());
+        nbt.setInteger("buildingID", building.ordinal());
         if (buildingDesign != null && buildingDesign.getFileName() != null)
         {
             nbt.setString("design", buildingDesign.getFileName());
@@ -41,7 +52,7 @@ public class Structure extends HiveGhost
     @Override
     public void load(NBTTagCompound nbt)
     {
-        name = Building.values()[nbt.getInteger("buildingID")];
+        building = Building.values()[nbt.getInteger("buildingID")];
         if (nbt.hasKey("design"))
         {
             Schematic shem = new Schematic();

@@ -25,6 +25,14 @@ public class Vector3 extends Vector2
 		this.z = 0;
 	}
 
+	public Vector3 add(double x, double y, double z)
+	{
+		this.x += x;
+		this.y += y;
+		this.z += z;
+		return this;
+	}
+
 	public Vector3 add(Vector3 par1)
 	{
 		this.x += par1.x;

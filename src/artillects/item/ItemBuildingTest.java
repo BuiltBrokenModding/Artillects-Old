@@ -1,15 +1,13 @@
 package artillects.item;
 
 import java.util.List;
-import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.hive.HiveComplex;
 import artillects.hive.schematics.Schematic;
 import artillects.hive.structure.Building;
@@ -30,11 +28,11 @@ public class ItemBuildingTest extends ItemBase
         {
             if (itemStack.getItemDamage() == 0)
             {
-                HiveComplex complex = new HiveComplex("TestHive", new Vector3(x, y, z));
+                HiveComplex complex = new HiveComplex("TestHive", new VectorWorld(world, x, y, z));
                 complex.loadTunnelTest();
             }
             Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
-            schematic.build(world, new Vector3(x, y, z));
+            schematic.build(new VectorWorld(world, x, y, z));
         }
         return true;
     }
