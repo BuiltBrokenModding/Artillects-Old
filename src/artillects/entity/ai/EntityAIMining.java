@@ -75,13 +75,12 @@ public class EntityAIMining extends EntityAIBase
 
 			this.entity.getNavigator().tryMoveToXYZ(breakBlock.x, breakBlock.y, breakBlock.z, this.moveSpeed);
 
-			this.breakingTime++;
-			System.out.println(breakBlock + " : " + this.breakingTime);
-
 			int blockID = this.world.getBlockId((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z);
 
 			if (blockID != 0)
 			{
+				this.breakingTime++;
+				System.out.println(this.breakingTime);
 				if (this.breakingTime >= this.maxBreakTime)
 				{
 					List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, this.world.getBlockMetadata((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z), 0);
@@ -99,6 +98,7 @@ public class EntityAIMining extends EntityAIBase
 				else
 				{
 					int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
+
 					this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, i);
 				}
 			}

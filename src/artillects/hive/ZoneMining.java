@@ -41,7 +41,7 @@ public class ZoneMining extends Zone
 
 		for (int x = (int) start.x; x < (int) end.x; x++)
 		{
-			for (int y = (int) start.y; x < (int) end.y; x++)
+			for (int y = (int) start.y; y < (int) end.y; y++)
 			{
 				for (int z = (int) start.z; z < (int) end.z; z++)
 				{
