@@ -17,29 +17,50 @@ public class EntityWorker extends EntityArtillectBase
 	{
 		super(par1World);
 		// this.getNavigator();
-		this.tasks.addTask(0, new EntityAIWander(this, 0.5f));
-		this.tasks.addTask(1, new EntityAIMining(this, 1));
+		this.tasks.addTask(0, new EntityAIMining(this, 1));
+		this.tasks.addTask(1, new EntityAIWander(this, 0.5f));
 	}
 
 	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
 	public boolean isInventoryFull()
 	{
-		//TODO: Fix this.
-		return false;
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			ItemStack itemStack = inventory.getStackInSlot(i);
+
+			if (itemStack != null)
+			{
+				if (itemStack.stackSize < 64)
+				{
+					return false;
+				}
+
+				continue;
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	/** @param stack */
 	public void increaseStackSize(ItemStack stack)
 	{
-		ItemStack itemStack = this.inventory.getStackInSlot(0);
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			ItemStack itemStack = inventory.getStackInSlot(i);
 
-		if (itemStack == null)
-		{
-			this.inventory.setInventorySlotContents(0, stack);
-		}
-		else if (itemStack.isItemEqual(stack))
-		{
-			itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
+			if (itemStack == null)
+			{
+				this.inventory.setInventorySlotContents(i, stack);
+				return;
+			}
+			else if (itemStack.isItemEqual(stack))
+			{
+				itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
+				return;
+			}
 		}
 	}
 
