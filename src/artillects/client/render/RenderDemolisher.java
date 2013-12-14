@@ -10,11 +10,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderCombatDrone extends RenderLiving
+public class RenderDemolisher extends RenderLiving
 {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, "/textures/models/128x128.png");
 
-    public RenderCombatDrone()
+    public RenderDemolisher()
     {
         super(new ModelCombatWalker(), 1.0F);
     }

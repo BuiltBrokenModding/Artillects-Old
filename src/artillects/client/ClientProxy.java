@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.CommonProxy;
 import artillects.client.gui.GuiWorker;
-import artillects.client.render.RenderCombatDrone;
+import artillects.client.render.RenderDemolisher;
 import artillects.client.render.RenderSeeker;
 import artillects.entity.EntityWorker;
 import artillects.entity.combat.EntitySeeker;
@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy
 	public void init()
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeeker.class, new RenderSeeker());
-		RenderingRegistry.registerEntityRenderingHandler(EntityDemoDrone.class, new RenderCombatDrone());
+		RenderingRegistry.registerEntityRenderingHandler(EntityDemoDrone.class, new RenderDemolisher());
 	}
 
 	@Override
