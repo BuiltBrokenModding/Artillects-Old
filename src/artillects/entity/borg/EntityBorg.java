@@ -5,9 +5,9 @@ import artillects.entity.EntityArtillectBase;
 
 public class EntityBorg extends EntityArtillectBase
 {
-    public EntityBorg(World world)
-    {
-        super(world);
-        this.armorSetting = 0;
-    }
+	public EntityBorg(World world)
+	{
+		super(world);
+		this.armorSetting = 0;
+	}
 }

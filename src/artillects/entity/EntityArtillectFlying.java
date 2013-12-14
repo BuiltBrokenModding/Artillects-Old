@@ -1,11 +1,11 @@
 package artillects.entity;
 
-import artillects.hive.Zone;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import artillects.hive.Zone;
 
 public class EntityArtillectFlying extends EntityFlying implements IArtillect
 {

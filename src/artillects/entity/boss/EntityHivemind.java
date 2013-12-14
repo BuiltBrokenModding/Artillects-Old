@@ -6,10 +6,10 @@ import artillects.entity.EntityArtillectBase;
 public class EntityHivemind extends EntityArtillectBase
 {
 
-    public EntityHivemind(World par1World)
-    {
-        super(par1World);
-        // TODO Auto-generated constructor stub
-    }
+	public EntityHivemind(World par1World)
+	{
+		super(par1World);
+		// TODO Auto-generated constructor stub
+	}
 
 }

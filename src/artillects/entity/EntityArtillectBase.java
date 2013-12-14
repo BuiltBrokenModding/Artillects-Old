@@ -6,7 +6,6 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
-import artillects.Vector3;
 import artillects.hive.Hive;
 import artillects.hive.Zone;
 

@@ -121,7 +121,7 @@ public class Artillects
 
 		// Register event handlers
 		TickRegistry.registerScheduledTickHandler(Hive.instance(), Side.SERVER);
-		NetworkRegistry.instance().registerGuiHandler(this, this.proxy);
+		NetworkRegistry.instance().registerGuiHandler(this, Artillects.proxy);
 
 		proxy.preInit();
 	}

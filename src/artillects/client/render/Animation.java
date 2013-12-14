@@ -1,15 +1,17 @@
 package artillects.client.render;
 
-/** These will be complex manually created files for animation using dual arrays to trace frame to
+/**
+ * These will be complex manually created files for animation using dual arrays to trace frame to
  * part position
  * 
- * @author Dark */
+ * @author Dark
+ */
 public class Animation
 {
-    Part[] parts;
+	Part[] parts;
 
-    public Animation(int parts)
-    {
-        // TODO find a way to load in txt files for animations
-    }
+	public Animation(int parts)
+	{
+		// TODO find a way to load in txt files for animations
+	}
 }
