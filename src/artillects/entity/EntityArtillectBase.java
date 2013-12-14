@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import artillects.hive.Hive;
 import artillects.hive.Zone;
 
-public abstract class EntityArtillectBase extends EntityCreature implements IDrone
+public abstract class EntityArtillectBase extends EntityCreature implements IArtillect
 {
 	protected int armorSetting = 5;
 
@@ -81,6 +81,12 @@ public abstract class EntityArtillectBase extends EntityCreature implements IDro
 	protected boolean canDespawn()
 	{
 		return false;
+	}
+
+	@Override
+	public void setOwner(EntityPlayer player)
+	{
+		this.owner = player;
 	}
 
 	@Override

@@ -6,14 +6,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import artillects.entity.EntityArtillectBase;
-import artillects.entity.IDrone;
+import artillects.entity.IArtillect;
 import artillects.hive.Hive;
 
 public class EntityDroneSelector implements IEntitySelector
 {
-    IDrone drone;
+    IArtillect drone;
 
-    public EntityDroneSelector(IDrone drone)
+    public EntityDroneSelector(IArtillect drone)
     {
         this.drone = drone;
     }

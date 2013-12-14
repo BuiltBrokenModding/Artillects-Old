@@ -17,7 +17,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import artillects.entity.Artillect;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.IArtillect;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -163,15 +163,20 @@ public class ItemArtillectSpawner extends ItemBase
 			{
 				entity = Artillect.values()[id].getNew(world);
 
-				if (entity != null && entity instanceof EntityArtillectBase)
+				if (entity != null && entity instanceof EntityLivingBase)
 				{
-					EntityArtillectBase entityliving = (EntityArtillectBase) entity;
+					EntityLivingBase entityliving = (EntityLivingBase) entity;
 					entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 					entityliving.rotationYawHead = entityliving.rotationYaw;
 					entityliving.renderYawOffset = entityliving.rotationYaw;
-					entityliving.owner = player;
+
+					if (entityliving instanceof IArtillect)
+					{
+						((IArtillect) entityliving).setOwner(player);
+					}
+
 					world.spawnEntityInWorld(entity);
-					entityliving.playLivingSound();
+					//entityliving.playLivingSound();
 				}
 			}
 

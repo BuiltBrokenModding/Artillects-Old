@@ -9,10 +9,10 @@ import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
-import artillects.entity.EntityFlyingDrone;
+import artillects.entity.EntityArtillectFlying;
 import artillects.entity.ai.EntityDroneSelector;
 
-public class EntitySeeker extends EntityFlyingDrone
+public class EntitySeeker extends EntityArtillectFlying
 {
     private Entity targetedEntity;
 
