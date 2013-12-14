@@ -133,7 +133,7 @@ public class EntityWorker extends EntityArtillectBase
 
 		NBTTagList nbttaglist = new NBTTagList();
 
-		for (int i = 2; i < this.inventory.getSizeInventory(); ++i)
+		for (int i = 0; i < this.inventory.getSizeInventory(); ++i)
 		{
 			ItemStack itemstack = this.inventory.getStackInSlot(i);
 
@@ -162,7 +162,7 @@ public class EntityWorker extends EntityArtillectBase
 			NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.tagAt(i);
 			int j = nbttagcompound1.getByte("Slot") & 255;
 
-			if (j >= 2 && j < this.inventory.getSizeInventory())
+			if (j < this.inventory.getSizeInventory())
 			{
 				this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
 			}
