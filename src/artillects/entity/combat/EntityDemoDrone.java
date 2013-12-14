@@ -26,15 +26,15 @@ public class EntityDemoDrone extends EntityArtillectBase implements IRangedAttac
     {
         super(par1World);
         this.tasks.addTask(1, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
         // this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D,
         // false));
         this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(5, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly
-                                                                          // fire
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly fire
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
-        this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
+       
         this.setSize(1f, 1.5f);
     }
 

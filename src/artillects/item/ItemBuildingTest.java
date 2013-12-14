@@ -16,6 +16,7 @@ public class ItemBuildingTest extends ItemBase
     {
         super("BuildingTest");
         this.setHasSubtypes(true);
+        this.setTextureName("BuildingTest");
     }
 
     @Override
@@ -49,13 +50,17 @@ public class ItemBuildingTest extends ItemBase
     @Override
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(this.itemID, 1, 0));
+        for (Building building : Building.values())
+        {
+            par3List.add(new ItemStack(this, 1, building.ordinal()));
+        }
 
     }
 
     public static enum Building
     {
-        TEST("Test");
+        TEST("Test"),
+        TUNNEL("Tunnel");
         public String name;
         public Schematic schematic;
 
