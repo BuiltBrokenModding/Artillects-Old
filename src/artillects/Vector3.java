@@ -1,6 +1,7 @@
 package artillects;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class Vector3 extends Vector2
@@ -90,6 +91,11 @@ public class Vector3 extends Vector2
 	public void setBlock(World world, int i, int j)
 	{
 		world.setBlock((int) x, (int) y, (int) z, i, j, 3);
+	}
+
+	public Vec3 toVec3()
+	{
+		return Vec3.createVectorHelper(x, y, z);
 	}
 
 	@Override

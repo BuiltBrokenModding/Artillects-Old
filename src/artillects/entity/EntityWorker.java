@@ -1,6 +1,7 @@
 package artillects.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -31,8 +32,9 @@ public class EntityWorker extends EntityArtillectBase
 	public EntityWorker(World par1World)
 	{
 		super(par1World);
-		this.tasks.addTask(0, new EntityAIMining(this, 1));
-		this.tasks.addTask(1, new EntityAIWander(this, 0.5f));
+		this.tasks.addTask(0, new EntityAISwimming(this));
+		this.tasks.addTask(1, new EntityAIMining(this, 1));
+		this.tasks.addTask(2, new EntityAIWander(this, 0.5f));
 	}
 
 	@Override

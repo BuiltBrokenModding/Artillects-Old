@@ -5,6 +5,9 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.EntityWorker;
@@ -25,6 +28,7 @@ public class EntityAIMining extends EntityAIBase
 		this.entity = entity;
 		this.world = entity.worldObj;
 		this.moveSpeed = par2;
+		this.setMutexBits(4);
 	}
 
 	@Override
@@ -60,46 +64,53 @@ public class EntityAIMining extends EntityAIBase
 	{
 		if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
 		{
-			Vector3 breakBlock = null;
+			Vector3 targetPosition = null;
 
 			/**
 			 * Find closest resource block to mine for.
 			 */
 			for (Vector3 checkVec : ((ZoneMining) entity.zone).scannedBlocks)
 			{
-				if (breakBlock == null || checkVec.distance(new Vector3(this.entity)) < breakBlock.distance(new Vector3(this.entity)))
+				if (targetPosition == null || checkVec.distance(new Vector3(this.entity)) < targetPosition.distance(new Vector3(this.entity)))
 				{
-					breakBlock = checkVec;
+					targetPosition = checkVec;
 				}
 			}
 
-			this.entity.getNavigator().tryMoveToXYZ(breakBlock.x, breakBlock.y, breakBlock.z, this.moveSpeed);
+			MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.toVec3(), false, false);
 
-			int blockID = this.world.getBlockId((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z);
-
-			if (blockID != 0)
+			if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
 			{
-				this.breakingTime++;
-				System.out.println(this.breakingTime);
-				if (this.breakingTime >= this.maxBreakTime)
-				{
-					List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, this.world.getBlockMetadata((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z), 0);
+				Vector3 breakPosition = new Vector3(mop.blockX, mop.blockY, mop.blockZ);
 
-					for (ItemStack stack : droppedStacks)
+				this.entity.getNavigator().tryMoveToXYZ(breakPosition.x, breakPosition.y, breakPosition.z, this.moveSpeed);
+
+				int blockID = this.world.getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+
+				if (blockID != 0)
+				{
+					this.breakingTime++;
+
+					if (this.breakingTime >= this.maxBreakTime)
 					{
-						this.entity.increaseStackSize(stack);
+						List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
+
+						for (ItemStack stack : droppedStacks)
+						{
+							this.entity.increaseStackSize(stack);
+						}
+
+						this.world.setBlockToAir((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+						this.world.playAuxSFX(1012, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, 0);
+						this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, -1);
+						this.resetTask();
 					}
+					else
+					{
+						int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
 
-					this.world.setBlockToAir((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z);
-					this.world.playAuxSFX(1012, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, 0);
-					this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, -1);
-					this.resetTask();
-				}
-				else
-				{
-					int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
-
-					this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, i);
+						this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
+					}
 				}
 			}
 		}
