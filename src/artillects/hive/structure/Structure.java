@@ -10,14 +10,16 @@ import artillects.hive.schematics.Schematic;
  * @author DarkGuardsman */
 public class Structure extends HiveGhost
 {
-    public String name;
+    public Building name;
     protected Vector3 location;
 
     Schematic buildingDesign;
 
-    public Structure(String name, Vector3 location)
+    protected boolean generated = false;
+
+    public Structure(Building building, Vector3 location)
     {
-        this.name = name;
+        this.name = building;
         this.location = location;
     }
 
@@ -29,7 +31,7 @@ public class Structure extends HiveGhost
     @Override
     public void save(NBTTagCompound nbt)
     {
-        nbt.setString("name", name);
+        nbt.setInteger("buildingID", name.ordinal());
         if (buildingDesign != null && buildingDesign.getFileName() != null)
         {
             nbt.setString("design", buildingDesign.getFileName());
@@ -39,7 +41,7 @@ public class Structure extends HiveGhost
     @Override
     public void load(NBTTagCompound nbt)
     {
-        name = nbt.getName();
+        name = Building.values()[nbt.getInteger("buildingID")];
         if (nbt.hasKey("design"))
         {
             Schematic shem = new Schematic();
