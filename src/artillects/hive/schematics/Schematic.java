@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.hive.ISaveObject;
 
 /** File that represents all the data loaded from a schematic data file
@@ -44,7 +44,7 @@ public class Schematic implements ISaveObject
         }
     }
 
-    public void build(World world, Vector3 spot)
+    public void build(VectorWorld spot)
     {
         if (this.blocks != null)
         {
@@ -53,7 +53,7 @@ public class Schematic implements ISaveObject
                 if (entry.getValue()[0] != Block.sponge.blockID)
                 {
                     Vector3 setPos = spot.clone().subtract(this.schematicCenter).add(entry.getKey());
-                    setPos.setBlock(world, entry.getValue()[0], entry.getValue()[1]);
+                    setPos.setBlock(spot.world, entry.getValue()[0], entry.getValue()[1]);
                 }
             }
         }
