@@ -3,7 +3,6 @@ package artillects.hive.structure;
 import net.minecraft.nbt.NBTTagCompound;
 import artillects.VectorWorld;
 import artillects.hive.HiveGhost;
-import artillects.hive.schematics.Schematic;
 
 /** Entity that represents a structure peace in a hive complex
  * 

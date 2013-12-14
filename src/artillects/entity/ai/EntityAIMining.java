@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import artillects.entity.BlockScanner;
 import artillects.entity.EntityWorker;
 
 public class EntityAIMining extends EntityAIBase
@@ -22,7 +21,7 @@ public class EntityAIMining extends EntityAIBase
 	private int breakingTime;
 	private int maxBreakTime = -1;
 
-	private BlockScanner scannedBlocks;
+	private BlockSelector scannedBlocks;
 
 	public EntityAIMining(EntityWorker entity, double par2)
 	{
@@ -34,7 +33,7 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public void startExecuting()
 	{
-		this.scannedBlocks = new BlockScanner(this.world, this.entity.getZone(), Block.oreIron, Block.oreCoal, Block.oreRedstone);
+		this.scannedBlocks = new BlockSelector(this.world, this.entity.getZone(), Block.oreIron, Block.oreCoal, Block.oreRedstone);
 		this.scannedBlocks.calculate();
 	}
 
