@@ -1,14 +1,12 @@
 package artillects.client;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import artillects.CommonProxy;
-import artillects.CommonProxy.GuiIDs;
 import artillects.client.gui.GuiWorker;
 import artillects.client.render.RenderCombatDrone;
 import artillects.client.render.RenderSeeker;
-import artillects.container.ContainerWorker;
+import artillects.entity.EntityWorker;
 import artillects.entity.combat.EntityCombatDisc;
 import artillects.entity.combat.EntityDemoDrone;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -27,7 +25,7 @@ public class ClientProxy extends CommonProxy
 	{
 		if (id == GuiIDs.WORKER.ordinal())
 		{
-			return new GuiWorker(new ContainerWorker(player));
+			return new GuiWorker((EntityWorker) world.getEntityByID(x), player);
 		}
 
 		return null;

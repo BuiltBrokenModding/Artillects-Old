@@ -13,10 +13,16 @@ import net.minecraft.item.ItemStack;
 public class ContainerBase extends Container
 {
 	protected IInventory inventory;
-	protected int xInventoryDisplacement = 0;
-	protected int yHotBarDisplacement = 0;
-	protected int yInventoryDisplacement = 0;
+	protected int xInventoryDisplacement = 8;
+	protected int yInventoryDisplacement = 110;
+	protected int yHotBarDisplacement = yInventoryDisplacement + 58;
 	protected int slotCount = 0;
+
+	public ContainerBase(IInventory inventory)
+	{
+		this.inventory = inventory;
+		this.slotCount = inventory.getSizeInventory();
+	}
 
 	@Override
 	public void onContainerClosed(EntityPlayer entityplayer)

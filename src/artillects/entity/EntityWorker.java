@@ -11,7 +11,7 @@ import artillects.entity.ai.EntityAIMining;
 
 public class EntityWorker extends EntityArtillectBase
 {
-	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 1);
+	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
 
 	public EntityWorker(World par1World)
 	{
@@ -24,6 +24,7 @@ public class EntityWorker extends EntityArtillectBase
 	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
 	public boolean isInventoryFull()
 	{
+		//TODO: Fix this.
 		return false;
 	}
 
@@ -45,7 +46,7 @@ public class EntityWorker extends EntityArtillectBase
 	@Override
 	public boolean interact(EntityPlayer entityPlayer)
 	{
-		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.WORKER.ordinal(), this.worldObj, (int) this.posX, (int) this.posY, (int) this.posZ);
+		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.WORKER.ordinal(), this.worldObj, this.entityId, 0, 0);
 		return true;
 	}
 }

@@ -3,6 +3,7 @@ package artillects;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.container.ContainerWorker;
+import artillects.entity.EntityWorker;
 import cpw.mods.fml.common.network.IGuiHandler;
 
 public class CommonProxy implements IGuiHandler
@@ -32,7 +33,7 @@ public class CommonProxy implements IGuiHandler
 	{
 		if (id == GuiIDs.WORKER.ordinal())
 		{
-			return new ContainerWorker(player);
+			return new ContainerWorker((EntityWorker) world.getEntityByID(x), player);
 		}
 
 		return null;
