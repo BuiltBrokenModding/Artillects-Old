@@ -8,7 +8,7 @@ import net.minecraft.world.World;
  * 
  * @author Dark
  */
-public interface IDroneBuilder
+public interface IArtillectSpawnHandler
 {
 	/** Called to register everything that is need for the drone to be loaded into the game */
 	public void register();

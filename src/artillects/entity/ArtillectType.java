@@ -7,9 +7,9 @@ import artillects.entity.combat.EntityDemoDrone;
 import artillects.entity.combat.EntitySeeker;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public enum Artillect
+public enum ArtillectType
 {
-    WORKER("worker", new IDroneBuilder()
+    WORKER("worker", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -29,7 +29,7 @@ public enum Artillect
             return new EntityWorker(world);
         }
     }),
-    FABRICATOR("fabricator", new IDroneBuilder()
+    FABRICATOR("fabricator", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -46,7 +46,7 @@ public enum Artillect
             return null;
         }
     }),
-    CONSTRUCTOR("constructor", new IDroneBuilder()
+    CONSTRUCTOR("constructor", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -63,7 +63,7 @@ public enum Artillect
             return null;
         }
     }),
-    HIVEMIND("hivemind", new IDroneBuilder()
+    HIVEMIND("hivemind", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -80,7 +80,7 @@ public enum Artillect
             return null;
         }
     }),
-    DEMOLISHER("demolisher", new IDroneBuilder()
+    DEMOLISHER("demolisher", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -96,7 +96,7 @@ public enum Artillect
             return new EntityDemoDrone(world);
         }
     }),
-    SEEKER("seeker", new IDroneBuilder()
+    SEEKER("seeker", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -112,7 +112,7 @@ public enum Artillect
             return new EntitySeeker(world);
         }
     }),
-    ZOMBIE("borg", new IDroneBuilder()
+    ZOMBIE("borg", new IArtillectSpawnHandler()
     {
 
         @Override
@@ -131,11 +131,11 @@ public enum Artillect
     });
 
     public static int ids = 54;
-    IDroneBuilder builder;
+    IArtillectSpawnHandler builder;
 
     public String name;
 
-    private Artillect(String name, IDroneBuilder builder)
+    private ArtillectType(String name, IArtillectSpawnHandler builder)
     {
         this.name = name;
         this.builder = builder;

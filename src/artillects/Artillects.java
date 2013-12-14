@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import artillects.entity.Artillect;
+import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingTest;
@@ -142,7 +142,7 @@ public class Artillects
 		System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
 		// Register entities
-		for (Artillect artillect : Artillect.values())
+		for (ArtillectType artillect : ArtillectType.values())
 		{
 			artillect.register();
 		}
@@ -155,7 +155,7 @@ public class Artillects
 	{
 		// Load crafting
 		// Worker
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, Artillect.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectType.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
 
 		// Metal Gear
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
