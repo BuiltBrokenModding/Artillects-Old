@@ -21,7 +21,7 @@ public class NBTFileHandler
         {
             File tempFile = new File(directory, filename + "_tmp");
             File file = new File(directory, filename);
-
+            file.mkdirs();
             CompressedStreamTools.writeCompressed(data, new FileOutputStream(tempFile));
 
             if (file.exists())

@@ -23,21 +23,45 @@ public class Schematic implements ISaveObject
 
     public HashMap<Vector3, int[]> blocks = new HashMap<Vector3, int[]>();
 
+    public boolean init = false;
+
     public String getFileName()
     {
         return this.name;
     }
 
+    public void init()
+    {
+        if (this.schematicSize != null)
+        {
+            this.init = true;
+            this.schematicCenter = new Vector3();
+            this.schematicCenter.x = this.schematicSize.x / 2;
+            this.schematicCenter.y = this.schematicSize.y / 2;
+            this.schematicCenter.z = this.schematicSize.z / 2;
+        }
+    }
+
     @Override
     public void save(NBTTagCompound nbt)
     {
+        if (!init)
+        {
+            this.init();
+        }
         NBTTagCompound blockNBT = nbt.getCompoundTag(BlockList);
-        nbt.setInteger("sizeX", (int) this.schematicSize.x);
-        nbt.setInteger("sizeY", (int) this.schematicSize.y);
-        nbt.setInteger("sizeZ", (int) this.schematicSize.z);
-        nbt.setInteger("centerX", (int) this.schematicCenter.x);
-        nbt.setInteger("centerY", (int) this.schematicCenter.y);
-        nbt.setInteger("centerZ", (int) this.schematicCenter.z);
+        if (this.schematicSize != null)
+        {
+            nbt.setInteger("sizeX", (int) this.schematicSize.x);
+            nbt.setInteger("sizeY", (int) this.schematicSize.y);
+            nbt.setInteger("sizeZ", (int) this.schematicSize.z);
+        }
+        if (this.schematicCenter != null)
+        {
+            nbt.setInteger("centerX", (int) this.schematicCenter.x);
+            nbt.setInteger("centerY", (int) this.schematicCenter.y);
+            nbt.setInteger("centerZ", (int) this.schematicCenter.z);
+        }
         int i = 0;
 
         for (Entry<Vector3, int[]> entry : blocks.entrySet())
@@ -101,6 +125,11 @@ public class Schematic implements ISaveObject
             }
         }
 
+        if (!init)
+        {
+            this.init();
+        }
+
     }
 
     public void getFromResourceFolder(String fileName)
@@ -109,6 +138,7 @@ public class Schematic implements ISaveObject
         {
             this.load(CompressedStreamTools.readCompressed(Schematic.class.getResource("/assets/artillects/schematics/" + fileName + ".dat").openStream()));
             this.name = fileName;
+            this.init();
         }
         catch (Exception e)
         {

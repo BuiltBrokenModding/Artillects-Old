@@ -22,6 +22,7 @@ public class ItemSchematicCreator extends ItemBase
     public ItemSchematicCreator()
     {
         super("SchematicCreator");
+        this.setHasSubtypes(true);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ItemSchematicCreator extends ItemBase
     {
         if (par1ItemStack.getItemDamage() == 0)
         {
-            return "Schematic Creator";
+            return "[Dev]Schematic Creator";
         }
         return "Unkown Item";
     }
@@ -49,45 +50,40 @@ public class ItemSchematicCreator extends ItemBase
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
     {
-        if (!world.isRemote && player != null)
+        player.sendChatToPlayer(ChatMessageComponent.createFromText("Click"));
+        String user = player.username;
+        Vector3 pos = null;
+        Vector3 pos2 = null;
+        Schematic schematic = null;
+        if (playerPointSelection.containsKey(user) && playerPointSelection.get(user) != null)
         {
-            String user = player.username;
-            Vector3 pos = null;
-            Vector3 pos2 = null;
-            Schematic schematic = null;
-            if (playerPointSelection.containsKey(user) && playerPointSelection.get(user) != null)
-            {
-                pos = playerPointSelection.get(user)[0];
-                pos2 = playerPointSelection.get(user)[1];
-            }
-            if (playerSchematic.containsKey(user))
-            {
-                schematic = playerSchematic.get(user);
-            }
-            if (pos == null)
-            {
-                pos = new Vector3(x, y, z);
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos one set to " + pos.toString()));
-            }
-            else if (pos2 == null)
-            {
-                pos2 = new Vector3(x, y, z);
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos2 one set to " + pos2.toString()));
-            }
-            if (pos != null && pos2 != null)
-            {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh.mm.ss");
-                String name = user + "_Schematic_" + dateFormat.format(new Date());
-                schematic = this.loadWorldSelection(world, pos, pos2);
-
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("Saved Schematic  " + name));
-                pos = null;
-                pos2 = null;
-                playerSchematic.put(user, schematic);
-                schematic.saveToBaseDirectory(name);
-            }
-            playerPointSelection.put(user, new Vector3[] { pos, pos2 });
+            pos = playerPointSelection.get(user)[0];
+            pos2 = playerPointSelection.get(user)[1];
         }
+        if (pos == null)
+        {
+            pos = new Vector3(x, y, z);
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos one set to " + pos.toString()));
+        }
+        else if (pos2 == null)
+        {
+            pos2 = new Vector3(x, y, z);
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos2 one set to " + pos2.toString()));
+        }
+        if (pos != null && pos2 != null)
+        {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh.mm.ss");
+            String name = user + "_Schematic_" + dateFormat.format(new Date());
+            schematic = this.loadWorldSelection(world, pos, pos2);
+
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("Saved Schematic  " + name));
+            pos = null;
+            pos2 = null;
+            playerSchematic.put(user, schematic);
+            schematic.saveToBaseDirectory(name);
+        }
+        playerPointSelection.put(user, new Vector3[] { pos, pos2 });
+
         return true;
     }
 
