@@ -17,7 +17,6 @@ public class EntityPlasma extends Entity implements IProjectile {
 	}
 
 	public void onUpdate() {
-		this.onUpdate();
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		if(lifetime > 50) {
 			this.worldObj.createExplosion(this, posX, posY, posZ, 2, false);
