@@ -12,11 +12,11 @@ import artillects.hive.HiveComplex;
 import artillects.hive.schematics.Schematic;
 import artillects.hive.structure.Building;
 
-public class ItemBuildingTest extends ItemBase
+public class ItemBuildingGenerator extends ItemBase
 {
-    public ItemBuildingTest()
+    public ItemBuildingGenerator()
     {
-        super("BuildingTest");
+        super("buildingGenerator");
         this.setHasSubtypes(true);
         this.setTextureName(Artillects.PREFIX + "BuildingTest");
     }

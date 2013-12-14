@@ -10,7 +10,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 
-public class ModelCombatWalker extends ModelDrone
+public class ModelCombatWalker extends ModelArtillect
 {
     //fields
     ModelRenderer Body;

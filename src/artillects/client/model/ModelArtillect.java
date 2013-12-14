@@ -3,7 +3,7 @@ package artillects.client.model;
 import net.minecraft.client.model.ModelBase;
 import artillects.client.render.Animation;
 
-public abstract class ModelDrone extends ModelBase
+public abstract class ModelArtillect extends ModelBase
 {
     int frame = 0;
     Animation animation;

@@ -5,7 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import artillects.Artillects;
-import artillects.client.model.ModelCombatDisc;
+import artillects.client.model.ModelArtillect;
+import artillects.client.model.ModelSeeker;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -13,10 +14,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderSeeker extends RenderLiving
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, Artillects.MODEL_DIRECTORY + "128x128Blank.png");
+	public static final ModelArtillect MODEL = new ModelSeeker();
 
 	public RenderSeeker()
 	{
-		super(new ModelCombatDisc(), 1.0F);
+		super(MODEL, 1.0F);
 	}
 
 	@Override

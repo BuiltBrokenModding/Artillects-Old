@@ -9,7 +9,7 @@ package artillects.client.model;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelCombatDisc extends ModelDrone
+public class ModelSeeker extends ModelArtillect
 {
     //fields
     ModelRenderer disc;
@@ -26,7 +26,7 @@ public class ModelCombatDisc extends ModelDrone
     ModelRenderer weaponBody;
     ModelRenderer weaponBarrel;
 
-    public ModelCombatDisc()
+    public ModelSeeker()
     {
         textureWidth = 128;
         textureHeight = 128;

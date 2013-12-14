@@ -11,7 +11,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
-import artillects.item.ItemBuildingTest;
+import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemParts;
 import artillects.item.ItemParts.Part;
 import artillects.item.ItemSchematicCreator;
@@ -133,7 +133,7 @@ public class Artillects
 		CONFIGURATION.load();
 		itemArtillectSpawner = new ItemArtillectSpawner();
 		itemParts = new ItemParts();
-		itemBuilding = new ItemBuildingTest();
+		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
 		CONFIGURATION.save();
 
