@@ -144,7 +144,7 @@ public class Artillects
 		itemSchematicCreator = new ItemSchematicCreator();
 		
 		//I've left these non sub-type just in case you need to do anything with them ~Archelf
-		blockCommunication = new BlockBaseDecor("decorCom");
+		blockCommunication = new BlockBaseDecor("decorCom_anim");
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
 		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
