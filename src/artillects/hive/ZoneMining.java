@@ -3,6 +3,7 @@ package artillects.hive;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
@@ -11,6 +12,7 @@ import artillects.Vector3;
 public class ZoneMining extends Zone
 {
     public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
+    public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
     public ZoneMining(World world, Vector3 start, Vector3 end)
     {
@@ -31,7 +33,8 @@ public class ZoneMining extends Zone
     {
         Vector3 start = this.start;
         Vector3 end = this.end;
-
+        this.scannedBlocks.clear();
+        this.scannedSortedPositions.clear();
         for (int x = (int) start.x; x < (int) end.x; x++)
         {
             for (int y = (int) start.y; x < (int) end.y; x++)
