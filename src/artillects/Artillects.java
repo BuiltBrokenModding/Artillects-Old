@@ -93,10 +93,6 @@ public class Artillects
 	public static Item itemParts;
 	public static Item itemBuilding;
 	public static Item itemSchematicCreator;
-
-	public static Block blockCommunication;
-	public static Block blockWall1;
-	public static Block blockWall2;
 	
 	public static Artillects instance()
 	{
@@ -131,6 +127,11 @@ public class Artillects
 		proxy.preInit();
 	}
 
+	//Moved these here for now ~Archelf
+	public static Block blockCommunication;
+	public static Block blockWall1;
+	public static Block blockWall2;
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
@@ -141,7 +142,7 @@ public class Artillects
 		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
 		
-		//I've left these non sub-type just in case you need to do anything with them
+		//I've left these non sub-type just in case you need to do anything with them ~Archelf
 		blockCommunication = new BlockBaseDecor("decorCom");
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
