@@ -101,4 +101,10 @@ public class Vector3 extends Vector2
 
 		return false;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Vector3 [" + this.x + "," + this.y + "," + this.z + "]";
+	}
 }

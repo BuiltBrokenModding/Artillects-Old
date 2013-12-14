@@ -1,5 +1,6 @@
 package artillects.entity;
 
+import artillects.hive.Zone;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
@@ -13,6 +14,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
 	public double waypointY;
 	public double waypointZ;
 	public Object owner;
+	private Zone zone;
 
 	public EntityArtillectFlying(World world)
 	{
@@ -91,5 +93,17 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
 	public void setOwner(EntityPlayer player)
 	{
 		this.owner = player;
+	}
+
+	@Override
+	public Zone getZone()
+	{
+		return this.zone;
+	}
+
+	@Override
+	public void setZone(Zone zone)
+	{
+		this.zone = zone;
 	}
 }

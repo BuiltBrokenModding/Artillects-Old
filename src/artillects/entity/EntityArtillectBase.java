@@ -14,7 +14,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 {
 	protected int armorSetting = 5;
 
-	public Zone zone;
+	private Zone zone;
 
 	/** Owner of the drone either hive or player */
 	public Object owner;
@@ -22,9 +22,13 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	public EntityArtillectBase(World world)
 	{
 		super(world);
-		// TODO: Remove this.
-		this.zone = new Zone("defaultZone", new Vector3(this).add(-5), new Vector3(this).add(5));
 		Hive.instance().addDrone(this);
+	}
+
+	@Override
+	protected void entityInit()
+	{
+		super.entityInit();
 	}
 
 	@Override
@@ -96,6 +100,18 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	public Object getOwner()
 	{
 		return this.owner;
+	}
+
+	@Override
+	public Zone getZone()
+	{
+		return this.zone;
+	}
+
+	@Override
+	public void setZone(Zone zone)
+	{
+		this.zone = zone;
 	}
 
 	@Override

@@ -16,8 +16,10 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import artillects.Vector3;
 import artillects.entity.ArtillectType;
 import artillects.entity.IArtillect;
+import artillects.hive.Zone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -173,10 +175,11 @@ public class ItemArtillectSpawner extends ItemBase
 					if (entityliving instanceof IArtillect)
 					{
 						((IArtillect) entityliving).setOwner(player);
+						((IArtillect) entityliving).setZone(new Zone("defaultZone", new Vector3(x, y, z).add(-5), new Vector3(x, y, z).add(5)));
 					}
 
 					world.spawnEntityInWorld(entity);
-					//entityliving.playLivingSound();
+					// entityliving.playLivingSound();
 				}
 			}
 

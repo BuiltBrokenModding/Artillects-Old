@@ -31,6 +31,13 @@ public class EntityAIMining extends EntityAIBase
 		this.moveSpeed = par2;
 	}
 
+	@Override
+	public void startExecuting()
+	{
+		this.scannedBlocks = new BlockScanner(this.world, this.entity.getZone(), Block.oreIron, Block.oreCoal, Block.oreRedstone);
+		this.scannedBlocks.calculate();
+	}
+
 	/** Returns whether the EntityAIBase should begin execution. */
 	@Override
 	public boolean shouldExecute()
@@ -45,20 +52,13 @@ public class EntityAIMining extends EntityAIBase
 		return this.scannedBlocks.scannedPositions.size() > 0 && !this.entity.isInventoryFull();
 	}
 
-	@Override
-	public void startExecuting()
-	{
-		this.scannedBlocks = new BlockScanner(this.world, entity.zone, Block.oreIron, Block.oreCoal, Block.oreRedstone);
-		this.scannedBlocks.calculate();
-	}
-
 	/** Resets the task */
 	@Override
 	public void resetTask()
 	{
 		this.breakingTime = 0;
 		this.scannedBlocks.calculate();
-		System.out.println("reset"+this.scannedBlocks.scannedPositions.size());
+		System.out.println("reset" + this.scannedBlocks.scannedPositions.size());
 	}
 
 	/** Updates the task */
