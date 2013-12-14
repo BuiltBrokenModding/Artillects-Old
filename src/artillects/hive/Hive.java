@@ -84,7 +84,6 @@ public class Hive implements IScheduledTickHandler
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData)
     {
-        // TODO loop threw updates
         ticks++;
         if (ticks >= Long.MAX_VALUE - 10)
         {
