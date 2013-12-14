@@ -1,6 +1,7 @@
 package artillects;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.world.World;
 
 public class Vector3 extends Vector2
 {
@@ -76,6 +77,11 @@ public class Vector3 extends Vector2
     public Vector3 clone()
     {
         return new Vector3(x, y, z);
+    }
+
+    public void setBlock(World world, int i, int j)
+    {
+        world.setBlock((int) x, (int) y, (int) z, i, j, 3);
     }
 
 }
