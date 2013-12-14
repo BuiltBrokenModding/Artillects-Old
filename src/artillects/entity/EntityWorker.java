@@ -44,7 +44,7 @@ public class EntityWorker extends EntityArtillectBase
         if (!init)
         {
             init = true;
-            this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-5), new Vector3(this).add(5)));
+            this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
         }
     }
 

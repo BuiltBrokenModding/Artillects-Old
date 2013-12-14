@@ -23,6 +23,7 @@ public class ZoneMining extends Zone
     public void updateEntity()
     {
         super.updateEntity();
+        System.out.println("Mining zone update");
         if (ticks % 10 == 0)
         {
             this.scan();
@@ -61,10 +62,6 @@ public class ZoneMining extends Zone
 
     public boolean canMine(Block block)
     {
-        if (block == Block.oreIron)
-        {
-            return true;
-        }
-        return false;
+        return block == Block.oreIron;
     }
 }
