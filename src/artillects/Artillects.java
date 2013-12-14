@@ -8,8 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import artillects.block.BlockCommunication;
-import artillects.block.BlockDecWall;
+import artillects.block.BlockBaseDecor;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -96,7 +95,8 @@ public class Artillects
 	public static Item itemSchematicCreator;
 
 	public static Block blockCommunication;
-	public static Block blockWall;
+	public static Block blockWall1;
+	public static Block blockWall2;
 	
 	public static Artillects instance()
 	{
@@ -142,8 +142,9 @@ public class Artillects
 		itemSchematicCreator = new ItemSchematicCreator();
 		
 		//I've left these non subtype just in case you need to do anything with them
-		blockCommunication = new BlockCommunication();
-		blockWall = new BlockDecWall();
+		blockCommunication = new BlockBaseDecor("decorCom");
+		blockWall1 = new BlockBaseDecor("decorWall1");
+		blockWall2 = new BlockBaseDecor("decorWall2");
 		CONFIGURATION.save();
 
 		ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -159,7 +160,8 @@ public class Artillects
 		proxy.init();
 		
 		GameRegistry.registerBlock(blockCommunication, "blockCommunication");
-		GameRegistry.registerBlock(blockWall, "blockWall");
+		GameRegistry.registerBlock(blockWall1, "blockWall1");
+		GameRegistry.registerBlock(blockWall2, "blockWall2");
 	}
 
 	@EventHandler
