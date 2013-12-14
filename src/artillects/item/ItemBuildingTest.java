@@ -19,9 +19,9 @@ public class ItemBuildingTest extends ItemBase
     }
 
     @Override
-    public boolean onItemUseFirst(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int par7, float par8, float par9, float par10)
     {
-        if (itemStack != null && itemStack.getItemDamage() < Building.values().length)
+        if (!world.isRemote && itemStack != null && itemStack.getItemDamage() < Building.values().length)
         {
             Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
             if (schematic != null && schematic.blocks != null)
@@ -44,12 +44,6 @@ public class ItemBuildingTest extends ItemBase
             par3List.add("Generates a building");
             par3List.add("Building: " + Building.values()[itemStack.getItemDamage()]);
         }
-    }
-
-    @Override
-    public String getItemDisplayName(ItemStack par1ItemStack)
-    {
-        return "Building";
     }
 
     @Override
