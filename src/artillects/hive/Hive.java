@@ -95,7 +95,7 @@ public class Hive implements IScheduledTickHandler
 		{
 			ticks = 0;
 		}
-		System.out.println("Hive AI update tick");
+
 		Iterator<HiveComplex> it = activeComplexs.iterator();
 		while (it.hasNext())
 		{

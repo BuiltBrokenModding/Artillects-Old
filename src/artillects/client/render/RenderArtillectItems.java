@@ -30,9 +30,10 @@ public class RenderArtillectItems implements IItemRenderer
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data)
 	{
+		GL11.glRotatef(180, 0, 0, 1);
 		if (type == ItemRenderType.INVENTORY)
 		{
-			GL11.glTranslatef(0, -0.7f, 0);
+			GL11.glTranslatef(0, -0.9f, 0);
 		}
 
 		switch (ArtillectType.values()[item.getItemDamage()])

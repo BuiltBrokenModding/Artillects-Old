@@ -12,6 +12,8 @@ import artillects.Vector3;
 public class ZoneMining extends Zone
 {
 	public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
+
+	// List of blocks sorted based on distance. Closer the block, the lower the get-ID.
 	public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
 	public ZoneMining(World world, Vector3 start, Vector3 end)
@@ -23,7 +25,7 @@ public class ZoneMining extends Zone
 	public void updateEntity()
 	{
 		super.updateEntity();
-		System.out.println("Mining zone update");
+
 		if (ticks % 10 == 0)
 		{
 			this.scan();
@@ -36,6 +38,7 @@ public class ZoneMining extends Zone
 		Vector3 end = this.end;
 		this.scannedBlocks.clear();
 		this.scannedSortedPositions.clear();
+
 		for (int x = (int) start.x; x < (int) end.x; x++)
 		{
 			for (int y = (int) start.y; x < (int) end.y; x++)
@@ -47,11 +50,17 @@ public class ZoneMining extends Zone
 
 					if (block != null && this.canMine(block))
 					{
+						Vector3 position = new Vector3(x, y, z);
+
 						HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
+
 						if (vecs == null)
 						{
 							vecs = new HashSet<Vector3>();
 						}
+
+						this.scannedBlocks.add(position);
+						vecs.add(position);
 
 						this.scannedSortedPositions.put(block, vecs);
 					}
@@ -62,6 +71,6 @@ public class ZoneMining extends Zone
 
 	public boolean canMine(Block block)
 	{
-		return block == Block.oreIron;
+		return block.blockID == Block.oreIron.blockID;
 	}
 }

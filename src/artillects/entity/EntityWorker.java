@@ -1,9 +1,14 @@
 package artillects.entity;
 
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
@@ -97,5 +102,49 @@ public class EntityWorker extends EntityArtillectBase
 	{
 		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.WORKER.ordinal(), this.worldObj, this.entityId, 0, 0);
 		return true;
+	}
+
+	@Override
+	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.writeEntityToNBT(par1NBTTagCompound);
+
+		NBTTagList nbttaglist = new NBTTagList();
+
+		for (int i = 2; i < this.inventory.getSizeInventory(); ++i)
+		{
+			ItemStack itemstack = this.inventory.getStackInSlot(i);
+
+			if (itemstack != null)
+			{
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte) i);
+				itemstack.writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
+
+		par1NBTTagCompound.setTag("Items", nbttaglist);
+
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+	{
+		super.readEntityFromNBT(par1NBTTagCompound);
+
+		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+
+		for (int i = 0; i < nbttaglist.tagCount(); ++i)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.tagAt(i);
+			int j = nbttagcompound1.getByte("Slot") & 255;
+
+			if (j >= 2 && j < this.inventory.getSizeInventory())
+			{
+				this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
+			}
+		}
+
 	}
 }

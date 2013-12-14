@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import artillects.Vector3;
 import artillects.entity.EntityWorker;
 import artillects.hive.ZoneMining;
 
@@ -17,6 +18,7 @@ public class EntityAIMining extends EntityAIBase
 	/** The speed the creature moves at during mining behavior. */
 	private double moveSpeed;
 	private int breakingTime;
+	private float maxBreakTime = 60;
 
 	public EntityAIMining(EntityWorker entity, double par2)
 	{
@@ -58,31 +60,46 @@ public class EntityAIMining extends EntityAIBase
 	{
 		if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
 		{
-			int breakX = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).x;
-			int breakY = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).y;
-			int breakZ = (int) ((ZoneMining) entity.zone).scannedBlocks.get(0).z;
+			Vector3 breakBlock = null;
 
-			this.entity.getNavigator().tryMoveToXYZ(breakX, breakY, breakZ, this.moveSpeed);
+			/**
+			 * Find closest resource block to mine for.
+			 */
+			for (Vector3 checkVec : ((ZoneMining) entity.zone).scannedBlocks)
+			{
+				if (breakBlock == null || checkVec.distance(new Vector3(this.entity)) < breakBlock.distance(new Vector3(this.entity)))
+				{
+					breakBlock = checkVec;
+				}
+			}
+
+			this.entity.getNavigator().tryMoveToXYZ(breakBlock.x, breakBlock.y, breakBlock.z, this.moveSpeed);
 
 			this.breakingTime++;
+			System.out.println(breakBlock + " : " + this.breakingTime);
 
-			int blockID = this.world.getBlockId(breakX, breakY, breakZ);
+			int blockID = this.world.getBlockId((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z);
 
 			if (blockID != 0)
 			{
-				if (this.breakingTime == 45)
+				if (this.breakingTime >= this.maxBreakTime)
 				{
-					List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, breakX, breakY, breakZ, this.world.getBlockMetadata(breakX, breakY, breakZ), 0);
+					List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, this.world.getBlockMetadata((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z), 0);
 
 					for (ItemStack stack : droppedStacks)
 					{
 						this.entity.increaseStackSize(stack);
 					}
 
-					this.world.setBlockToAir(breakX, breakY, breakZ);
-					this.world.playAuxSFX(1012, breakX, breakY, breakZ, 0);
-
+					this.world.setBlockToAir((int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z);
+					this.world.playAuxSFX(1012, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, 0);
+					this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, -1);
 					this.resetTask();
+				}
+				else
+				{
+					int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
+					this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakBlock.x, (int) breakBlock.y, (int) breakBlock.z, i);
 				}
 			}
 		}
