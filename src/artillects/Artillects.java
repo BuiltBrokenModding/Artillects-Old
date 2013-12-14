@@ -141,7 +141,7 @@ public class Artillects
 		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
 		
-		//I've left these non subtype just in case you need to do anything with them
+		//I've left these non sub-type just in case you need to do anything with them
 		blockCommunication = new BlockBaseDecor("decorCom");
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
