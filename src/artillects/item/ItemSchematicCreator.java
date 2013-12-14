@@ -21,7 +21,7 @@ public class ItemSchematicCreator extends ItemBase
 
     public ItemSchematicCreator()
     {
-        super("SchematicCreator");
+        super("schematicCreator");
         this.setHasSubtypes(true);
     }
 
@@ -35,16 +35,6 @@ public class ItemSchematicCreator extends ItemBase
                 par3List.add("Generates a schematic");
             }
         }
-    }
-
-    @Override
-    public String getItemDisplayName(ItemStack par1ItemStack)
-    {
-        if (par1ItemStack.getItemDamage() == 0)
-        {
-            return "[Dev]Schematic Creator";
-        }
-        return "Unkown Item";
     }
 
     @Override
