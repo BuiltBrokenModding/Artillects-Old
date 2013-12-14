@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.hive.ISaveObject;
 
@@ -39,6 +41,21 @@ public class Schematic implements ISaveObject
             this.schematicCenter.x = this.schematicSize.x / 2;
             //this.schematicCenter.y = this.schematicSize.y / 2;
             this.schematicCenter.z = this.schematicSize.z / 2;
+        }
+    }
+
+    public void build(World world, Vector3 spot)
+    {
+        if (this.blocks != null)
+        {
+            for (Entry<Vector3, int[]> entry : this.blocks.entrySet())
+            {
+                if (entry.getValue()[0] != Block.sponge.blockID)
+                {
+                    Vector3 setPos = spot.clone().subtract(this.schematicCenter).add(entry.getKey());
+                    setPos.setBlock(world, entry.getValue()[0], entry.getValue()[1]);
+                }
+            }
         }
     }
 

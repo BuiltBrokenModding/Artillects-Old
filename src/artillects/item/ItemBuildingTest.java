@@ -12,6 +12,7 @@ import artillects.Artillects;
 import artillects.Vector3;
 import artillects.hive.HiveComplex;
 import artillects.hive.schematics.Schematic;
+import artillects.hive.structure.Building;
 
 public class ItemBuildingTest extends ItemBase
 {
@@ -33,17 +34,7 @@ public class ItemBuildingTest extends ItemBase
                 complex.loadTunnelTest();
             }
             Schematic schematic = Building.values()[itemStack.getItemDamage()].getSchematic();
-            if (schematic != null && schematic.blocks != null)
-            {
-                for (Entry<Vector3, int[]> entry : schematic.blocks.entrySet())
-                {
-                    if (entry.getValue()[0] != Block.sponge.blockID)
-                    {
-                        Vector3 setPos = new Vector3(x, y, z).subtract(schematic.schematicCenter).add(entry.getKey());
-                        setPos.setBlock(world, entry.getValue()[0], entry.getValue()[1]);
-                    }
-                }
-            }
+            schematic.build(world, new Vector3(x, y, z));
         }
         return true;
     }
@@ -66,31 +57,5 @@ public class ItemBuildingTest extends ItemBase
             par3List.add(new ItemStack(this, 1, building.ordinal()));
         }
 
-    }
-
-    public static enum Building
-    {
-        TEST("Test"),
-        TUNNELZ("ZTunnel"),
-        TUNNELX("XTunnel"),
-        TUNNELY("YTunnel"),
-        TUNNELC("CTunnel");
-        public String name;
-        public Schematic schematic;
-
-        private Building(String name)
-        {
-            this.name = name;
-        }
-
-        public Schematic getSchematic()
-        {
-            if (schematic == null)
-            {
-                schematic = new Schematic();
-                schematic.getFromResourceFolder(name);
-            }
-            return schematic;
-        }
     }
 }

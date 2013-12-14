@@ -64,6 +64,14 @@ public class Hive implements IScheduledTickHandler
         }
     }
 
+    public void addHiveComplex(HiveComplex hiveComplex)
+    {
+        if (hiveComplex != null && !activeComplexs.contains(hiveComplex))
+        {
+            activeComplexs.add(hiveComplex);
+        }
+    }
+
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData)
     {
@@ -131,4 +139,5 @@ public class Hive implements IScheduledTickHandler
     {
 
     }
+
 }
