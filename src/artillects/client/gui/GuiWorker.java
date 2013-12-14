@@ -27,7 +27,7 @@ public class GuiWorker extends GuiBase
 	{
 		super.initGui();
 		this.buttonList.clear();
-		this.buttonList.add(this.switchTaskButton = new GuiButton(0, this.width / 2 - 80, this.height / 4, 80, 20, I18n.getString("gui.switchTask")));
+		this.buttonList.add(this.switchTaskButton = new GuiButton(0, this.width / 2 - 78, this.height / 4 - 10, 80, 20, I18n.getString("gui.switchTask")));
 	}
 
 	@Override
