@@ -1,11 +1,10 @@
 package artillects.entity;
 
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.attributes.AttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -102,6 +101,29 @@ public class EntityWorker extends EntityArtillectBase
 	{
 		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.WORKER.ordinal(), this.worldObj, this.entityId, 0, 0);
 		return true;
+	}
+
+	@Override
+	protected void dropEquipment(boolean par1, int par2)
+	{
+		super.dropEquipment(par1, par2);
+		this.dropItemsInChest(this.inventory);
+	}
+
+	private void dropItemsInChest(IInventory inventory)
+	{
+		if (inventory != null && !this.worldObj.isRemote)
+		{
+			for (int i = 0; i < inventory.getSizeInventory(); ++i)
+			{
+				ItemStack itemstack = inventory.getStackInSlot(i);
+
+				if (itemstack != null)
+				{
+					this.entityDropItem(itemstack, 0.0F);
+				}
+			}
+		}
 	}
 
 	@Override
