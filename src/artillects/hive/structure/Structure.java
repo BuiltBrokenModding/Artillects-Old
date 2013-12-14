@@ -34,7 +34,6 @@ public class Structure extends HiveGhost
         {
             nbt.setString("design", buildingDesign.getFileName());
         }
-
     }
 
     @Override
