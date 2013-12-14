@@ -17,7 +17,7 @@ public class EntityWorker extends EntityArtillectBase
 	}
 
 	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
-	
+
 	public static final int DATA_TYPE_ID = 12;
 
 	public EntityWorker(World par1World)

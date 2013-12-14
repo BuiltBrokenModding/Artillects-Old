@@ -6,6 +6,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
+import artillects.Vector3;
 import artillects.hive.Hive;
 import artillects.hive.Zone;
 
@@ -21,6 +22,8 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	public EntityArtillectBase(World world)
 	{
 		super(world);
+		// TODO: Remove this.
+		this.zone = new Zone("defaultZone", new Vector3(this).add(-5), new Vector3(this).add(5));
 		Hive.instance().addDrone(this);
 	}
 

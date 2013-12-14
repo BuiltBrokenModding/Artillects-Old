@@ -1,8 +1,10 @@
 package artillects.entity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
@@ -16,17 +18,23 @@ import artillects.hive.Zone;
 public class BlockScanner
 {
 	private World world;
-	public HashMap<Block, HashSet<Vector3>> blockPositions = new HashMap<Block, HashSet<Vector3>>();
+	public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
+	public final ArrayList<Vector3> scannedPositions = new ArrayList<Vector3>();
 	private Zone zone;
 
-	public BlockScanner(World world, Zone zone, Set<Block> searchBlocks)
+	public BlockScanner(World world, Zone zone, Block... searchBlocks)
+	{
+		this(world, zone, Arrays.asList(searchBlocks));
+	}
+
+	public BlockScanner(World world, Zone zone, List<Block> searchBlocks)
 	{
 		this.world = world;
 		this.zone = zone;
 
 		for (Block block : searchBlocks)
 		{
-			this.blockPositions.put(block, new HashSet<Vector3>());
+			this.scannedSortedPositions.put(block, new HashSet<Vector3>());
 		}
 	}
 
@@ -44,9 +52,10 @@ public class BlockScanner
 					int blockID = this.world.getBlockId(x, y, z);
 					Block block = Block.blocksList[blockID];
 
-					if (block != null && this.blockPositions.containsKey(block))
+					if (block != null && this.scannedSortedPositions.containsKey(block))
 					{
-						this.blockPositions.get(block).add(new Vector3(x, y, z));
+						this.scannedPositions.add(new Vector3(x, y, z));
+						this.scannedSortedPositions.get(block).add(new Vector3(x, y, z));
 					}
 				}
 			}
