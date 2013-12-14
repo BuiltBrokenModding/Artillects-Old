@@ -131,6 +131,7 @@ public class Artillects
 	public static Block blockCommunication;
 	public static Block blockWall1;
 	public static Block blockWall2;
+	public static Block blockLight;
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event)
@@ -146,6 +147,7 @@ public class Artillects
 		blockCommunication = new BlockBaseDecor("decorCom");
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
+		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
 		CONFIGURATION.save();
 
 		ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -163,6 +165,7 @@ public class Artillects
 		GameRegistry.registerBlock(blockCommunication, "blockCommunication");
 		GameRegistry.registerBlock(blockWall1, "blockWall1");
 		GameRegistry.registerBlock(blockWall2, "blockWall2");
+		GameRegistry.registerBlock(blockLight, "blockLight");
 	}
 
 	@EventHandler
