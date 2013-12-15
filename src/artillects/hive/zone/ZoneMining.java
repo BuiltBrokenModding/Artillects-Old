@@ -7,70 +7,98 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import artillects.Pair;
 import artillects.Vector3;
 
 public class ZoneMining extends Zone
 {
-	public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
+    public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
 
-	// List of blocks sorted based on distance. Closer the block, the lower the get-ID.
-	public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
+    // List of blocks sorted based on distance. Closer the block, the lower the get-ID.
+    public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
-	public ZoneMining(World world, Vector3 start, Vector3 end)
-	{
-		super(world, start, end);
-	}
+    public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();
 
-	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
+    static
+    {
+        addBlockToMiningList(Block.oreCoal);
+        addBlockToMiningList(Block.oreIron);
+        addBlockToMiningList(Block.oreGold);
+        addBlockToMiningList(Block.oreEmerald);
+        addBlockToMiningList(Block.oreRedstone);
+        addBlockToMiningList(Block.oreRedstoneGlowing);
+        addBlockToMiningList(Block.oreNetherQuartz);
+        addBlockToMiningList(Block.oreLapis);
+        addBlockToMiningList(Block.oreDiamond);
+    }
 
-		if (ticks % 10 == 0)
-		{
-			this.scan();
-		}
-	}
+    public static void addBlockToMiningList(Block block)
+    {
+        if (block != null)
+        {
+            Pair<Integer, Integer> ore = new Pair<Integer, Integer>(block.blockID, -1);
+            if (!oreList.contains(ore))
+            {
+                oreList.add(ore);
+            }
+        }
+    }
 
-	public void scan()
-	{
-		Vector3 start = this.start;
-		Vector3 end = this.end;
-		this.scannedBlocks.clear();
-		this.scannedSortedPositions.clear();
+    public ZoneMining(World world, Vector3 start, Vector3 end)
+    {
+        super(world, start, end);
+    }
 
-		for (int x = (int) start.x; x < (int) end.x; x++)
-		{
-			for (int y = (int) start.y; y < (int) end.y; y++)
-			{
-				for (int z = (int) start.z; z < (int) end.z; z++)
-				{
-					int blockID = this.world.getBlockId(x, y, z);
-					Block block = Block.blocksList[blockID];
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
 
-					if (block != null && this.canMine(block))
-					{
-						Vector3 position = new Vector3(x, y, z);
+        if (ticks % 10 == 0)
+        {
+            this.scan();
+        }
+    }
 
-						HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
+    public void scan()
+    {
+        Vector3 start = this.start;
+        Vector3 end = this.end;
+        this.scannedBlocks.clear();
+        this.scannedSortedPositions.clear();
 
-						if (vecs == null)
-						{
-							vecs = new HashSet<Vector3>();
-						}
+        for (int x = (int) start.x; x < (int) end.x; x++)
+        {
+            for (int y = (int) start.y; y < (int) end.y; y++)
+            {
+                for (int z = (int) start.z; z < (int) end.z; z++)
+                {
+                    int blockID = this.world.getBlockId(x, y, z);
+                    Block block = Block.blocksList[blockID];
 
-						this.scannedBlocks.add(position);
-						vecs.add(position);
+                    if (block != null && this.canMine(blockID, this.world.getBlockMetadata(x, y, z)))
+                    {
+                        Vector3 position = new Vector3(x, y, z);
 
-						this.scannedSortedPositions.put(block, vecs);
-					}
-				}
-			}
-		}
-	}
+                        HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
 
-	public boolean canMine(Block block)
-	{
-		return block.blockID == Block.oreIron.blockID;
-	}
+                        if (vecs == null)
+                        {
+                            vecs = new HashSet<Vector3>();
+                        }
+
+                        this.scannedBlocks.add(position);
+                        vecs.add(position);
+
+                        this.scannedSortedPositions.put(block, vecs);
+                    }
+                }
+            }
+        }
+    }
+
+    public boolean canMine(int id, int meta)
+    {
+        return this.oreList.contains(new Pair<Integer, Integer>(id, -1)) || this.oreList.contains(new Pair<Integer, Integer>(id, meta));
+    }
 }
