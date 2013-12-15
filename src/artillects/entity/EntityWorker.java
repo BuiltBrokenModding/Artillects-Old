@@ -39,6 +39,8 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 
 	private List<ItemStack> cachedInventory;
 
+	public static final int interactionDistance = 2;
+
 	public static final int DATA_TYPE_ID = 12;
 
 	public EntityWorker(World par1World)
@@ -80,39 +82,12 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
 	public boolean isInventoryFull()
 	{
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
-		{
-			ItemStack itemStack = inventory.getStackInSlot(i);
-
-			if (itemStack != null)
-			{
-				if (itemStack.stackSize < 64)
-				{
-					return false;
-				}
-
-				continue;
-			}
-
-			return false;
-		}
-
-		return true;
+		return InventoryHelper.isInventoryFull(this.inventory);
 	}
 
 	public boolean isInventoryEmpty()
 	{
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
-		{
-			ItemStack itemStack = inventory.getStackInSlot(i);
-
-			if (itemStack != null)
-			{
-				return false;
-			}
-		}
-
-		return true;
+		return InventoryHelper.isInventoryEmpty(this.inventory);
 	}
 
 	/**

@@ -26,7 +26,6 @@ public class EntityAIBlacksmith extends EntityAIBase
 	/** The speed the creature moves at during mining behavior. */
 	private double moveSpeed;
 	private TileEntityChest lastUseChest;
-	private int interactionDistance = 2;
 	private int idleTime = 0;
 	private final int maxIdleTime = 20;
 
@@ -143,7 +142,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= this.interactionDistance)
+									if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
 									{
 										this.entity.getNavigator().clearPathEntity();
 										chest.setInventorySlotContents(i, stackInEntity);
@@ -155,7 +154,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= this.interactionDistance)
+									if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
 									{
 										int originalStackSize = itemStack.stackSize;
 										itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());
@@ -241,7 +240,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 						{
 							if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 							{
-								if (chestPosition.distance(new Vector3(this.entity)) <= interactionDistance)
+								if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
 								{
 									this.entity.getNavigator().clearPathEntity();
 
@@ -274,7 +273,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 		{
 			if (this.entity.tryToWalkNextTo(position, this.moveSpeed))
 			{
-				if (position.distance(new Vector3(this.entity)) <= this.interactionDistance)
+				if (position.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
 				{
 					this.entity.getNavigator().clearPathEntity();
 					ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.entity.getInventoryAsList());
