@@ -1,9 +1,12 @@
 package artillects.hive;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -30,7 +33,7 @@ public class Hive implements IScheduledTickHandler
     private List<IArtillect> droneAwaitingOrders = new ArrayList<IArtillect>();
     private List<Report> inboxReports = new ArrayList<Report>();
     private List<Zone> activeZones = new ArrayList<Zone>();
-    private List<HiveComplex> activeComplexs = new ArrayList<HiveComplex>();
+    private HashMap<String, HiveComplex> activeComplexs = new HashMap<String, HiveComplex>();
 
     private long ticks = 0;
 
@@ -93,9 +96,9 @@ public class Hive implements IScheduledTickHandler
 
     public void addHiveComplex(HiveComplex hiveComplex)
     {
-        if (hiveComplex != null && !activeComplexs.contains(hiveComplex))
+        if (hiveComplex != null && !activeComplexs.containsKey(hiveComplex.name))
         {
-            activeComplexs.add(hiveComplex);
+            activeComplexs.put(hiveComplex.name, hiveComplex);
         }
     }
 
@@ -119,18 +122,19 @@ public class Hive implements IScheduledTickHandler
 
         synchronized (activeComplexs)
         {
-            Iterator<HiveComplex> it = activeComplexs.iterator();
-            while (it.hasNext())
+            for (Entry<String, HiveComplex> entry : activeComplexs.entrySet())
             {
-                HiveComplex complex = it.next();
-                if (complex.isValid())
+                if (entry.getValue() != null)
                 {
-                    complex.updateEntity();
-                }
-                else
-                {
-                    complex.invalidate();
-                    it.remove();
+                    if (entry.getValue().isValid())
+                    {
+                        entry.getValue().updateEntity();
+                    }
+                    else
+                    {
+                        entry.getValue().invalidate();
+                        activeComplexs.remove(entry.getKey());
+                    }
                 }
             }
         }
@@ -227,15 +231,13 @@ public class Hive implements IScheduledTickHandler
         synchronized (activeComplexs)
         {
             System.out.println("Saving hive to map int world: " + event.world.provider.dimensionId);
-            Iterator<HiveComplex> it = activeComplexs.iterator();
-            while (it.hasNext())
+            for (Entry<String, HiveComplex> entry : activeComplexs.entrySet())
             {
-                HiveComplex complex = it.next();
-                if (complex.isValid() && event.world.equals(complex.location.world))
+                if (entry.getValue().isValid() && event.world.equals(entry.getValue().location.world))
                 {
                     NBTTagCompound nbt = new NBTTagCompound();
-                    complex.save(nbt);
-                    NBTFileHandler.saveFile(complex.name, NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), nbt);
+                    entry.getValue().save(nbt);
+                    NBTFileHandler.saveFile("complex.dat", new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().name), nbt);
                 }
             }
         }
@@ -247,14 +249,12 @@ public class Hive implements IScheduledTickHandler
         synchronized (activeComplexs)
         {
             System.out.println("unloading hive peaces from world: " + event.world.provider.dimensionId);
-            Iterator<HiveComplex> it = activeComplexs.iterator();
-            while (it.hasNext())
+            for (Entry<String, HiveComplex> entry : activeComplexs.entrySet())
             {
-                HiveComplex complex = it.next();
-                if (event.world.equals(complex.location.world))
+                if (event.world.equals(entry.getValue().location.world))
                 {
-                    it.remove();
-                    complex.invalidate();
+                    entry.getValue().invalidate();
+                    activeComplexs.remove(entry.getKey());
                 }
             }
         }
@@ -263,5 +263,33 @@ public class Hive implements IScheduledTickHandler
     @ForgeSubscribe
     public void onWorldLoad(WorldEvent.Load event)
     {
+        this.loadObjectsForDim(event.world.provider.dimensionId);
+    }
+
+    /** Temp loads all the villages from file so the manager can record what villages exist */
+    public void loadObjectsForDim(int dim)
+    {
+        File villageFolder = new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
+        if (villageFolder.exists())
+        {
+            for (File fileEntry : villageFolder.listFiles())
+            {
+                if (fileEntry.isDirectory() && fileEntry.getName().startsWith("complex"))
+                {
+                    for (File subFile : fileEntry.listFiles())
+                    {
+                        if (subFile.getName().equalsIgnoreCase("complex.dat"))
+                        {
+                            NBTTagCompound tag = NBTFileHandler.loadFile(subFile);
+
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            villageFolder.mkdirs();
+        }
     }
 }
