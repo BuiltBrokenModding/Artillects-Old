@@ -19,10 +19,6 @@ public class BlockHiveTeleporterShape extends BlockBase
 		this.blkShape = shape;
 	}
 	
-	public boolean hasTileEntity() {
-		return true;
-	}
-	
 	public TileEntity createTileEntity(World world, int metadata) {
 		return new TileHiveTeleporterShape(this.blkShape);
 	}

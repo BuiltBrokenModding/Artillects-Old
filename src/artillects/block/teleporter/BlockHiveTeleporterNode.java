@@ -19,11 +19,6 @@ public class BlockHiveTeleporterNode extends BlockBase
 		super("teleporterNode", Material.iron);
 	}
 
-	public boolean hasTileEntity()
-	{
-		return true;
-	}
-	
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3) {
 		TileEntity tile = world.getBlockTileEntity(x, y, z);
 		if(tile instanceof TileHiveTNode) {
