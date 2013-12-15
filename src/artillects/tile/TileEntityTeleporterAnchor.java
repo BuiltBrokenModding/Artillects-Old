@@ -75,7 +75,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 			if (block instanceof BlockGlyph)
 			{
 				int metadata = this.worldObj.getBlockMetadata((int) position.x, (int) position.y, (int) position.z);
-				frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 2) * (metadata + 1);
+				frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 2) * metadata;
 			}
 			else
 			{
