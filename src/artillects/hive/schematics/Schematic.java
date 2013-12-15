@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.VectorWorld;
@@ -211,5 +212,51 @@ public class Schematic implements ISaveObject
         {
             e.printStackTrace();
         }
+    }
+
+    public Schematic loadWorldSelection(World world, Vector3 pos, Vector3 pos2)
+    {
+        int deltaX, deltaY, deltaZ;
+        Vector3 start = new Vector3(pos.x > pos2.x ? pos2.x : pos.x, pos.y > pos2.y ? pos2.y : pos.y, pos.z > pos2.z ? pos2.z : pos.z);
+
+        Schematic sch = new Schematic();
+        if (pos.x < pos2.x)
+        {
+            deltaX = (int) (pos2.x - pos.x + 1);
+        }
+        else
+        {
+            deltaX = (int) (pos.x - pos2.x + 1);
+        }
+        if (pos.y < pos2.y)
+        {
+            deltaY = (int) (pos2.y - pos.y + 1);
+        }
+        else
+        {
+            deltaY = (int) (pos.y - pos2.y + 1);
+        }
+        if (pos.z < pos2.z)
+        {
+            deltaZ = (int) (pos2.z - pos.z + 1);
+        }
+        else
+        {
+            deltaZ = (int) (pos.z - pos2.z + 1);
+        }
+        sch.schematicSize = new Vector3(deltaX, deltaY, deltaZ);
+        for (int x = 0; x < deltaX; ++x)
+        {
+            for (int y = 0; y < deltaY; ++y)
+            {
+                for (int z = 0; z < deltaZ; ++z)
+                {
+                    int blockID = world.getBlockId((int) start.x + x, (int) start.y + y, (int) start.z + z);
+                    int blockMeta = world.getBlockMetadata((int) start.x + x, (int) start.y + y, (int) start.z + z);
+                    sch.blocks.put(new Vector3(x, y, z), new int[] { blockID, blockMeta });
+                }
+            }
+        }
+        return sch;
     }
 }
