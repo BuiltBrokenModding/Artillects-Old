@@ -15,10 +15,10 @@ public class InventoryHelper
 {
 	public static boolean hasItem(IInventory inventory, ItemStack... itemStacks)
 	{
-		return getItem(inventory, itemStacks) != null;
+		return getItemIfExistsInSlot(inventory, itemStacks) != -1;
 	}
 
-	public static ItemStack getItem(IInventory inventory, ItemStack... itemStacks)
+	public static int getItemIfExistsInSlot(IInventory inventory, ItemStack... itemStacks)
 	{
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
@@ -26,12 +26,12 @@ public class InventoryHelper
 			{
 				if (inventory.getStackInSlot(i) != null && itemStack.isItemEqual(inventory.getStackInSlot(i)))
 				{
-					return inventory.getStackInSlot(i);
+					return i;
 				}
 			}
 		}
 
-		return null;
+		return -1;
 	}
 
 	public static List<ItemStack> getInventoryAsList(IInventory inventory)
