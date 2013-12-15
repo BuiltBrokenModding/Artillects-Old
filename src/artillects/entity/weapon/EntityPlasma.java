@@ -1,4 +1,4 @@
-package artillects.item;
+package artillects.entity.weapon;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +10,8 @@ import net.minecraft.world.World;
 
 public class EntityPlasma extends EntityThrowable {
 
+	private int lifetime = 0;
+	
 	public EntityPlasma(World par1World, EntityLivingBase par2EntityLivingBase) {
 		super(par1World, par2EntityLivingBase);
 	}
@@ -19,5 +21,4 @@ public class EntityPlasma extends EntityThrowable {
 		this.worldObj.createExplosion(this, posX, posY, posZ, 1, false);
 		this.setDead();
 	}
-
 }

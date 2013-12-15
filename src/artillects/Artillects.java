@@ -14,6 +14,7 @@ import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemParts;
+import artillects.item.ItemWeaponBattery;
 import artillects.item.ItemParts.Part;
 import artillects.item.ItemPlasmaLauncher;
 import artillects.item.ItemSchematicCreator;
@@ -89,12 +90,6 @@ public class Artillects
 
 	@Metadata(Artillects.ID)
 	public static ModMetadata meta;
-
-	public static Item itemArtillectSpawner;
-	public static Item itemParts;
-	public static Item itemBuilding;
-	public static Item itemSchematicCreator;
-	public static Item weaponTommygun;
 	
 	public static Artillects instance()
 	{
@@ -134,6 +129,15 @@ public class Artillects
 	public static Block blockWall1;
 	public static Block blockWall2;
 	public static Block blockLight;
+	public static Block blockGravity_Slow;
+	public static Block blockGravity_Lift;
+
+	public static Item itemArtillectSpawner;
+	public static Item itemParts;
+	public static Item itemBuilding;
+	public static Item itemSchematicCreator;
+	public static Item weaponTommygun;
+	public static Item plasmaBattery;
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event)
@@ -145,6 +149,7 @@ public class Artillects
 		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
 		weaponTommygun = new ItemPlasmaLauncher();
+		plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
 		
 		//I've left these non sub-type just in case you need to do anything with them ~Archelf
 		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
@@ -153,6 +158,8 @@ public class Artillects
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
 		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
+		blockGravity_Slow = new BlockGravitySlow();
+		blockGravity_Lift = new BlockGravityLift();
 		CONFIGURATION.save();
 
 		ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -166,6 +173,10 @@ public class Artillects
 		}
 
 		proxy.init();
+		
+		GameRegistry.addRecipe(new ItemStack(plasmaBattery, 1), new Object[] {
+			"X", Character.valueOf('X'), Block.glowStone
+		});
 		
 		GameRegistry.registerBlock(blockSymbol1, "blockSymbol1");
 		GameRegistry.registerBlock(blockSymbol2, "blockSymbol2");
