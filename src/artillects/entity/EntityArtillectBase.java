@@ -2,13 +2,13 @@ package artillects.entity;
 
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -16,9 +16,9 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.Artillects;
+import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
-import artillects.CommonProxy.GuiIDs;
 import artillects.hive.Hive;
 import artillects.hive.Zone;
 
@@ -42,12 +42,6 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	{
 		super(world);
 		Hive.instance().addDrone((IArtillect) this);
-	}
-
-	@Override
-	protected void entityInit()
-	{
-		super.entityInit();
 	}
 
 	@Override
@@ -98,6 +92,24 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	protected void dropRareDrop(int par1)
 	{
 
+	}
+
+	@Override
+	public void setLastAttacker(Entity par1Entity)
+	{
+		// TODO: This doesn't get called properly.
+		super.setLastAttacker(par1Entity);
+
+		if (this.ticksExisted - this.getLastAttackerTime() >= 60)
+		{
+			this.playSoundEffect(0);
+		}
+	}
+
+	public void playSoundEffect(int id)
+	{
+		String[] soundNames = new String[] { "voice-agressionDetected", "voice-intruderAlert", "voice-pleaseDisarmYourself", "voice-theHiveIsUnderAttack" };
+		this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + soundNames[id], 1f, 1f);
 	}
 
 	@Override

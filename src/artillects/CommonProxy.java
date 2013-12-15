@@ -1,5 +1,6 @@
 package artillects;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.container.ContainerWorker;
@@ -33,7 +34,12 @@ public class CommonProxy implements IGuiHandler
 	{
 		if (id == GuiIDs.ARTILLECT_ENTITY.ordinal())
 		{
-			return new ContainerWorker((EntityWorker) world.getEntityByID(x), player);
+			Entity entity = world.getEntityByID(x);
+
+			if (entity instanceof EntityWorker)
+			{
+				return new ContainerWorker((EntityWorker) entity, player);
+			}
 		}
 
 		return null;

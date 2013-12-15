@@ -1,5 +1,6 @@
 package artillects.client;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -34,7 +35,12 @@ public class ClientProxy extends CommonProxy
 	{
 		if (id == GuiIDs.ARTILLECT_ENTITY.ordinal())
 		{
-			return new GuiWorker((EntityWorker) world.getEntityByID(x), player);
+			Entity entity = world.getEntityByID(x);
+
+			if (entity instanceof EntityWorker)
+			{
+				return new GuiWorker((EntityWorker) world.getEntityByID(x), player);
+			}
 		}
 
 		return null;
