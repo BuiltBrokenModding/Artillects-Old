@@ -1,9 +1,8 @@
 package artillects.tile;
 
-import java.util.Iterator;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.TeleportManager;
 import artillects.Vector3;
@@ -18,14 +17,20 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 	@Override
 	public void validate()
 	{
-		TeleportManager.addAnchor(this);
+		if(!worldObj.isRemote) {
+			TeleportManager.addAnchor(this);
+			for(TileEntityTeleporterAnchor te : TeleportManager.getConnectedAnchors()) System.out.println(te);
+		}
 		super.validate();
 	}
 
 	@Override
 	public void invalidate()
 	{
-		TeleportManager.remAnchor(this);
+		if(!worldObj.isRemote) {
+			TeleportManager.remAnchor(this);
+			for(TileEntityTeleporterAnchor te : TeleportManager.getConnectedAnchors()) System.out.println(te);
+		}
 		super.invalidate();
 	}
 
@@ -81,5 +86,9 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 		}
 
 		return frequency;
+	}
+	
+	public void writeToNBT(NBTTagCompound tag) {
+		
 	}
 }
