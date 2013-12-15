@@ -12,7 +12,9 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
 import artillects.block.BlockGravitySlow;
 import artillects.block.teleporter.BlockHiveTeleporterNode;
+import artillects.block.teleporter.BlockHiveTeleporterShape;
 import artillects.block.teleporter.tile.TileHiveTNode;
+import artillects.block.teleporter.util.Shape;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -142,6 +144,10 @@ public class Artillects
     public static Block blockLight;
     public static Block blockGravity_Slow;
     public static Block blockHiveTeleporterNode;
+    public static Block blockTeleporterShape_Square,
+    					blockTeleporterShape_Pentagon,
+    					blockTeleporterShape_Circle,
+    					blockTeleporterShape_Cross;
 
     public static Item itemArtillectSpawner;
     public static Item itemParts;
@@ -173,6 +179,10 @@ public class Artillects
         
         //Teleporter Blocks
         blockHiveTeleporterNode = new BlockHiveTeleporterNode();
+        blockTeleporterShape_Square = new BlockHiveTeleporterShape(Shape.SQUARE);
+        blockTeleporterShape_Pentagon = new BlockHiveTeleporterShape(Shape.PENTAGON);
+        blockTeleporterShape_Circle = new BlockHiveTeleporterShape(Shape.CIRCLE);
+        blockTeleporterShape_Cross = new BlockHiveTeleporterShape(Shape.CROSS);
         
         CONFIGURATION.save();
 
@@ -198,6 +208,11 @@ public class Artillects
         GameRegistry.registerBlock(blockLight, "blockLight");
         GameRegistry.registerBlock(blockGravity_Slow, "blockGravity_Slow");
         GameRegistry.registerBlock(blockHiveTeleporterNode, "blockHiveTeleporterNode");
+        GameRegistry.registerBlock(blockTeleporterShape_Square, "blockTeleporterShape_Square");
+        GameRegistry.registerBlock(blockTeleporterShape_Pentagon, "blockTeleporterShape_Pentagon");
+        GameRegistry.registerBlock(blockTeleporterShape_Circle, "blockTeleporterShape_Circle");
+        GameRegistry.registerBlock(blockTeleporterShape_Cross, "blockTeleporterShape_Cross");
+
 
         GameRegistry.registerTileEntity(TileHiveTNode.class, "tileHiveTeleporterNode");
     }
