@@ -6,18 +6,21 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.block.BlockBase;
 
-public class BlockGravityElev extends BlockBase {
-
-	public BlockGravityElev() {
+public class BlockGravityElev extends BlockBase
+{
+	public BlockGravityElev()
+	{
 		super("gravityElev", Material.iron);
 		setTextureName(Artillects.PREFIX + "gravityElev");
 	}
-	
-	public boolean hasTileEntity() {
+
+	public boolean hasTileEntity()
+	{
 		return true;
 	}
 
-	public TileEntity createTileEntity(World world, int metadata) {
+	public TileEntity createTileEntity(World world, int metadata)
+	{
 		return new TileGravityElev();
 	}
 }

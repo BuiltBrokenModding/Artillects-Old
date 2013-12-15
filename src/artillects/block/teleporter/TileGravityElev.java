@@ -14,22 +14,30 @@ import artillects.block.teleporter.util.Shape;
  * 
  * @author Archadia
  */
-public class TileGravityElev extends TileEntity {
-
+public class TileGravityElev extends TileEntity
+{
 	TeleporterCode shapeCode;
 	Vector3 vecThis = new Vector3(this);
-	
-	public TileGravityElev() {
+
+	public TileGravityElev()
+	{
 		shapeCode = new TeleporterCode(Shape.NOTHING, Shape.NOTHING, Shape.NOTHING, Shape.NOTHING);
 	}
-	
+
 	@Override
-	public void updateEntity() {
-		if(!worldObj.isRemote) {
-			if(!Artillects.teleporters.containsKey(shapeCode)) {
+	public void updateEntity()
+	{
+		if (!worldObj.isRemote)
+		{
+			/*
+			if (!Artillects.teleporters.containsKey(shapeCode))
+			{
 				Artillects.teleporters.put(shapeCode, new Pair().setLeft(vecThis));
 			}
-			else if(Artillects.teleporters.containsKey(shapeCode))
+			else if (Artillects.teleporters.containsKey(shapeCode))
+			{
+
+			}*/
 		}
 	}
 }
