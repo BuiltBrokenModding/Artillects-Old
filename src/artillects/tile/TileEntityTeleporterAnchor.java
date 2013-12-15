@@ -51,7 +51,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 	}
 	
 	public void updateEntity() {
-		if(worldObj.getWorldTime()%2400==0) {
+		if(worldObj.getWorldTime()%600==0) {
 			refresh();
 		}
 	}
