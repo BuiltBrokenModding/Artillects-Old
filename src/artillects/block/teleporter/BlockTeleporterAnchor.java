@@ -1,4 +1,4 @@
-package artillects.block;
+package artillects.block.teleporter;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import artillects.Artillects;
+import artillects.block.BlockBase;
 import artillects.tile.TileEntityTeleporterAnchor;
 
 public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider
@@ -36,6 +37,7 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 				else
 				{
 					player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+					((TileEntityTeleporterAnchor) tile).doTeleport(player);
 				}
 			}
 		}

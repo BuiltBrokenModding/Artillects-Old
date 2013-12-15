@@ -1,4 +1,4 @@
-package artillects.block;
+package artillects.block.teleporter;
 
 import net.minecraft.item.ItemBlock;
 

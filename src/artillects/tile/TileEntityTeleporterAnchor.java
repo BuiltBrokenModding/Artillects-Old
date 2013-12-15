@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.Vector3;
-import artillects.block.BlockGlyph;
+import artillects.block.teleporter.BlockGlyph;
 
 /**
  * 
@@ -44,15 +44,17 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 		{
 			for (TileEntityTeleporterAnchor teleporter : teleporters)
 			{
-				if (teleporter.getFrequency() == frequency)
-				{
-					if (entity.worldObj != teleporter.worldObj)
+				if(teleporter != this) {
+					if (teleporter.getFrequency() == frequency)
 					{
-						entity.travelToDimension(teleporter.worldObj.provider.dimensionId);
+						if (entity.worldObj != teleporter.worldObj)
+						{
+							entity.travelToDimension(teleporter.worldObj.provider.dimensionId);
+						}
+		
+						entity.setPosition(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
+						return;
 					}
-
-					entity.setPosition(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
-					return;
 				}
 			}
 		}
