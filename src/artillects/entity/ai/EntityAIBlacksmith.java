@@ -1,11 +1,11 @@
 package artillects.entity.ai;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.EntityWorker;
@@ -20,6 +20,8 @@ public class EntityAIBlacksmith extends EntityAIBase
 	/** The speed the creature moves at during mining behavior. */
 	private double moveSpeed;
 	private boolean takeOperation;
+	private TileEntityChest lastUseChest;
+	private int interactionDistance = 3;
 
 	public EntityAIBlacksmith(EntityWorker entity, double par2)
 	{
@@ -61,34 +63,176 @@ public class EntityAIBlacksmith extends EntityAIBase
 	{
 		if (((ZoneProcessing) entity.zone).chestPositions.size() > 0 && ((ZoneProcessing) entity.zone).furnacePositions.size() > 0)
 		{
-			if (takeOperation)
+			if (this.lastUseChest != null)
 			{
-				for (Vector3 chestPosition : ((ZoneProcessing) entity.zone).chestPositions)
+				this.lastUseChest.numUsingPlayers--;
+			}
+
+			if (!this.entity.isInventoryFull())
+			{
+				this.takeResources();
+			}
+			else
+			{
+				if (!this.dumpToBeProcessed())
 				{
-					TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+					this.dumpProcessed();
+				}
+			}
 
-					if (tileEntity instanceof TileEntityChest)
+			if (this.takeOperation)
+			{
+			}
+			else
+			{
+
+				this.resetTask();
+			}
+		}
+	}
+
+	private boolean dumpProcessed()
+	{
+		/*
+		 * for (Vector3 chestPosition : ((ZoneProcessing) entity.zone).chestPositions) { TileEntity
+		 * tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y,
+		 * (int) chestPosition.z);
+		 * 
+		 * if (tileEntity instanceof TileEntityChest) { TileEntityChest chest = ((TileEntityChest)
+		 * tileEntity);
+		 * 
+		 * for (int i = 0; i < chest.getSizeInventory(); i++) { ItemStack itemStack =
+		 * chest.getStackInSlot(i);
+		 * 
+		 * if (itemStack != null) { if (itemStack.isItemEqual(new ItemStack(Item.coal))) { if
+		 * (this.entity.getNavigator().tryMoveToXYZ(chestPosition.x, chestPosition.y,
+		 * chestPosition.z, this.moveSpeed)) { if (chestPosition.distance(new Vector3(this.entity))
+		 * <= interactionDistance) { this.entity.increaseStackSize(itemStack.splitStack(1));
+		 * 
+		 * if (itemStack.stackSize <= 0) { chest.setInventorySlotContents(i, null); }
+		 * 
+		 * chest.numUsingPlayers++;
+		 * 
+		 * this.lastUseChest = chest; this.takeOperation = false; }
+		 * 
+		 * return true; } } } } } }
+		 */
+		return false;
+	}
+
+	private boolean dumpToBeProcessed()
+	{
+		boolean hasIron = this.entity.hasItem(new ItemStack(Item.ingotIron));
+		boolean hasCoal = this.entity.hasItem(new ItemStack(Item.coal));
+
+		if (hasIron || hasCoal)
+		{
+			for (Vector3 furnacePosition : ((ZoneProcessing) entity.zone).furnacePositions)
+			{
+				boolean didDump = false;
+				TileEntity tileEntity = this.world.getBlockTileEntity((int) furnacePosition.x, (int) furnacePosition.y, (int) furnacePosition.z);
+
+				if (tileEntity instanceof TileEntityFurnace)
+				{
+					TileEntityFurnace furnace = ((TileEntityFurnace) tileEntity);
+
+					ItemStack topSlot = furnace.getStackInSlot(0);
+
+					if (hasIron && (topSlot == null || (topSlot.isItemEqual(new ItemStack(Item.ingotIron)) && topSlot.stackSize < topSlot.getMaxStackSize())))
 					{
-						TileEntityChest chest = ((TileEntityChest) tileEntity);
-
-						for (int i = 0; i < chest.getSizeInventory(); i++)
+						if (this.entity.getNavigator().tryMoveToXYZ(furnacePosition.x, furnacePosition.y, furnacePosition.z, this.moveSpeed))
 						{
-							ItemStack itemStack = chest.getStackInSlot(i);
-
-							if (itemStack != null)
+							if (furnacePosition.distance(new Vector3(this.entity)) <= interactionDistance)
 							{
-								if (itemStack.isItemEqual(new ItemStack(Item.coal)))
+								if (topSlot == null)
 								{
-									if (this.entity.getNavigator().tryMoveToXYZ(chestPosition.x, chestPosition.y, chestPosition.z, this.moveSpeed))
-									{
-										break;
-									}
+									furnace.setInventorySlotContents(0, new ItemStack(Item.ingotIron));
 								}
+
+								furnace.getStackInSlot(0).stackSize++;
+								this.entity.decreaseStackSize(new ItemStack(Item.ingotIron));
+								didDump = true;
+							}
+						}
+					}
+
+					ItemStack bottomSlot = furnace.getStackInSlot(2);
+
+					if (hasCoal && (bottomSlot == null || (bottomSlot.isItemEqual(new ItemStack(Item.coal)) && bottomSlot.stackSize < bottomSlot.getMaxStackSize())))
+					{
+						if (this.entity.getNavigator().tryMoveToXYZ(furnacePosition.x, furnacePosition.y, furnacePosition.z, this.moveSpeed))
+						{
+							if (furnacePosition.distance(new Vector3(this.entity)) <= interactionDistance)
+							{
+								if (bottomSlot == null)
+								{
+									furnace.setInventorySlotContents(2, new ItemStack(Item.coal));
+								}
+
+								furnace.getStackInSlot(2).stackSize++;
+								this.entity.decreaseStackSize(new ItemStack(Item.coal));
+								didDump = true;
+							}
+						}
+					}
+
+					ItemStack outputSlot = furnace.getStackInSlot(1);
+
+					if (outputSlot != null)
+					{
+						furnace.setInventorySlotContents(1, this.entity.increaseStackSize(outputSlot));
+					}
+
+					return didDump;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean takeResources()
+	{
+		for (Vector3 chestPosition : ((ZoneProcessing) entity.zone).chestPositions)
+		{
+			TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+
+			if (tileEntity instanceof TileEntityChest)
+			{
+				TileEntityChest chest = ((TileEntityChest) tileEntity);
+
+				for (int i = 0; i < chest.getSizeInventory(); i++)
+				{
+					ItemStack itemStack = chest.getStackInSlot(i);
+
+					if (itemStack != null)
+					{
+						if (itemStack.isItemEqual(new ItemStack(Item.coal)) || itemStack.isItemEqual(new ItemStack(Item.ingotIron)))
+						{
+							if (this.entity.getNavigator().tryMoveToXYZ(chestPosition.x, chestPosition.y, chestPosition.z, this.moveSpeed))
+							{
+								if (chestPosition.distance(new Vector3(this.entity)) <= interactionDistance)
+								{
+									this.entity.increaseStackSize(itemStack.splitStack(1));
+
+									if (itemStack.stackSize <= 0)
+									{
+										chest.setInventorySlotContents(i, null);
+									}
+
+									chest.numUsingPlayers++;
+
+									this.lastUseChest = chest;
+									this.takeOperation = false;
+								}
+
+								return true;
 							}
 						}
 					}
 				}
 			}
 		}
+		return false;
 	}
 }

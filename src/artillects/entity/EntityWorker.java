@@ -15,6 +15,7 @@ import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAIMining;
 import artillects.hive.ZoneMining;
+import artillects.hive.ZoneProcessing;
 import artillects.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -31,8 +32,6 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
 
 	public static final int DATA_TYPE_ID = 12;
-
-	public boolean init = false;
 
 	public EntityWorker(World par1World)
 	{
@@ -54,10 +53,17 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	public void onEntityUpdate()
 	{
 		super.onEntityUpdate();
-		if (!init)
+
+		if (this.getZone() == null)
 		{
-			init = true;
-			this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
+			if (this.getType() == EnumWorkerType.HARVESTER)
+			{
+				this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
+			}
+			else
+			{
+				this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
+			}
 		}
 	}
 
@@ -84,24 +90,42 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		return true;
 	}
 
-	/** @param stack */
-	public void increaseStackSize(ItemStack stack)
+	/**
+	 * Adds a stack into the inventory.
+	 * 
+	 * @param stack - The stack to add
+	 * @return - The remaining stack.
+	 */
+	public ItemStack increaseStackSize(ItemStack stack)
 	{
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
+			if (stack.stackSize <= 0)
+			{
+				stack = null;
+			}
+
+			if (stack == null)
+			{
+				break;
+			}
+
 			ItemStack itemStack = inventory.getStackInSlot(i);
 
 			if (itemStack == null)
 			{
 				this.inventory.setInventorySlotContents(i, stack);
-				return;
+				stack = null;
 			}
 			else if (itemStack.isItemEqual(stack))
 			{
+				int originalStackSize = itemStack.stackSize;
 				itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
-				return;
+				stack.stackSize -= itemStack.stackSize - originalStackSize;
 			}
 		}
+
+		return stack;
 	}
 
 	public EnumWorkerType getType()
@@ -124,6 +148,8 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	@Override
 	public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
 	{
+		// TODO: REMOVE THIS;
+		this.setZone(null);
 		this.setType(EnumWorkerType.values()[data.readByte()]);
 	}
 
@@ -201,6 +227,36 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		}
 
 		this.setType(EnumWorkerType.values()[nbt.getByte("type")]);
+	}
+
+	public boolean hasItem(ItemStack... itemStacks)
+	{
+		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
+		{
+			for (ItemStack itemStack : itemStacks)
+			{
+				if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public boolean decreaseStackSize(ItemStack itemStack)
+	{
+		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
+		{
+			if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
+			{
+				this.inventory.decrStackSize(i, itemStack.stackSize);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }
