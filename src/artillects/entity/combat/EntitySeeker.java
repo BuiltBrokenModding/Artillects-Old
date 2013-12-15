@@ -8,14 +8,8 @@ public class EntitySeeker extends EntityArtillectFlying
 {
     private EntityLivingBase targetedEntity;
 
-    /** Cooldown time between target loss and new target aquirement. */
-    private int aggroCooldown;
-    public int prevAttackCounter;
     public int attackCounter;
     protected int targetingRange = 100;
-
-    /** The explosion radius of spawned fireballs. */
-    private int explosionStrength = 1;
 
     public EntitySeeker(World world)
     {
@@ -27,20 +21,14 @@ public class EntitySeeker extends EntityArtillectFlying
     protected void updateEntityActionState()
     {
         super.updateEntityActionState();
-        this.prevAttackCounter = this.attackCounter;
         if (this.targetedEntity != null && this.targetedEntity.isDead)
         {
             this.targetedEntity = null;
         }
 
-        if (this.targetedEntity == null || this.aggroCooldown-- <= 0)
+        if (this.targetedEntity == null)
         {
             this.targetedEntity = this.getTarget(targetingRange);
-
-            if (this.targetedEntity != null)
-            {
-                this.aggroCooldown = 20;
-            }
         }
 
         if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < targetingRange * targetingRange)
@@ -50,7 +38,7 @@ public class EntitySeeker extends EntityArtillectFlying
             {
                 ++this.attackCounter;
 
-                if (this.attackCounter == 20)
+                if (this.attackCounter >= 20)
                 {
                     this.launchFireBall(this.targetedEntity, 2, 1);
                     this.attackCounter = -40;

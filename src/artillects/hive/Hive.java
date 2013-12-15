@@ -5,8 +5,15 @@ import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.world.WorldEvent.Save;
+import net.minecraftforge.event.world.WorldEvent.Unload;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.IArtillect;
+import artillects.hive.schematics.NBTFileHandler;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -214,9 +221,47 @@ public class Hive implements IScheduledTickHandler
         return 10;
     }
 
-    public void onDroneDeathEvent(EntityArtillectBase entity)
+    @ForgeSubscribe
+    public void onWorldSave(Save event)
     {
-
+        synchronized (activeComplexs)
+        {
+            System.out.println("Saving hive to map int world: " + event.world.provider.dimensionId);
+            Iterator<HiveComplex> it = activeComplexs.iterator();
+            while (it.hasNext())
+            {
+                HiveComplex complex = it.next();
+                if (complex.isValid() && event.world.equals(complex.location.world))
+                {
+                    NBTTagCompound nbt = new NBTTagCompound();
+                    complex.save(nbt);
+                    NBTFileHandler.saveFile(complex.name, NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), nbt);
+                }
+            }
+        }
     }
 
+    @ForgeSubscribe
+    public void onWorldunLoad(Unload event)
+    {
+        synchronized (activeComplexs)
+        {
+            System.out.println("unloading hive peaces from world: " + event.world.provider.dimensionId);
+            Iterator<HiveComplex> it = activeComplexs.iterator();
+            while (it.hasNext())
+            {
+                HiveComplex complex = it.next();
+                if (event.world.equals(complex.location.world))
+                {
+                    it.remove();
+                    complex.invalidate();
+                }
+            }
+        }
+    }
+
+    @ForgeSubscribe
+    public void onWorldLoad(WorldEvent.Load event)
+    {
+    }
 }
