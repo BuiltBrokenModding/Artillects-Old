@@ -22,8 +22,6 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3)
 	{
-		if (!world.isRemote)
-		{
 			TileEntity tile = world.getBlockTileEntity(x, y, z);
 
 			if (tile instanceof TileEntityTeleporterAnchor)
@@ -36,11 +34,12 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 				}
 				else
 				{
-					player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+					if(player.isSneaking()) {
+						player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+					}
 					((TileEntityTeleporterAnchor) tile).doTeleport(player);
 				}
 			}
-		}
 
 		return true;
 	}

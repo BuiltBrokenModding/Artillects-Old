@@ -1,10 +1,11 @@
 package artillects.tile;
 
-import java.util.HashSet;
+import java.util.Iterator;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeDirection;
+import artillects.TeleportManager;
 import artillects.Vector3;
 import artillects.block.teleporter.BlockGlyph;
 
@@ -14,19 +15,17 @@ import artillects.block.teleporter.BlockGlyph;
  */
 public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 {
-	public static final HashSet<TileEntityTeleporterAnchor> teleporters = new HashSet<TileEntityTeleporterAnchor>();
-
 	@Override
 	public void validate()
 	{
-		teleporters.add(this);
+		TeleportManager.addAnchor(this);
 		super.validate();
 	}
 
 	@Override
 	public void invalidate()
 	{
-		teleporters.remove(this);
+		TeleportManager.remAnchor(this);
 		super.invalidate();
 	}
 
@@ -42,21 +41,17 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 
 		if (frequency > 0)
 		{
-			for (TileEntityTeleporterAnchor teleporter : teleporters)
+			for (TileEntityTeleporterAnchor teleporter : TeleportManager.getConnectedAnchors())
 			{
 				if(teleporter != this) {
 					if (teleporter.getFrequency() == frequency)
-					{
-						/*if (entity.worldObj != teleporter.worldObj)
-						{
-							entity.travelToDimension(teleporter.worldObj.provider.dimensionId);
-						}*/
-		
-						entity.setPosition(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
-						return;
+					{		
+						entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
+						System.out.println("Entity Pos: " + entity.posX + ", " + entity.posY + ", " + entity.posZ);
+						break;
 					}
 				}
-			}
+			}			
 		}
 	}
 
