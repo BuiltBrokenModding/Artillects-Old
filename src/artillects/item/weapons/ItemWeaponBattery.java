@@ -43,4 +43,25 @@ public class ItemWeaponBattery extends ItemBase {
         	par3List.add("\u00a7bCharge Stored\u00a77: " + itemStack.getTagCompound().getInteger("currentStored"));
     	}
     }
+    
+    public void drain(ItemStack itemStack) {
+    	if (itemStack.stackTagCompound == null) {
+			itemStack.setTagCompound(new NBTTagCompound());
+		}
+
+    	int storedNow = itemStack.getTagCompound().getInteger("currentStored");
+    	
+    	itemStack.getTagCompound().setInteger("currentStored", storedNow - 1);
+    }
+    
+    public boolean isEmpty(ItemStack itemStack) {
+    	if (itemStack.stackTagCompound == null) {
+			itemStack.setTagCompound(new NBTTagCompound());
+		}
+    	if(itemStack.getTagCompound().getInteger("currentStored") > 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
 }

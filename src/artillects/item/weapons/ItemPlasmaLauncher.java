@@ -26,7 +26,12 @@ public class ItemPlasmaLauncher extends ItemBase {
 				}
 			}
 		}
-
+		
+		if(!battery.isEmpty(new ItemStack(battery))) {
+			par2World.spawnEntityInWorld(new EntityPlasma(par2World, player));
+			battery.drain(new ItemStack(battery));
+		}
+		
 		return par1ItemStack;
 	}
 }
