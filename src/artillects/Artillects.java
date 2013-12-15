@@ -220,7 +220,7 @@ public class Artillects
 
 		// Metal Gear
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
-
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockWall1, 1), "PGP", "G G", "PGP", 'P', new ItemStack(itemParts, 1, ItemParts.Part.METAL_PLATE.ordinal()),'G', new ItemStack(itemParts, 1, ItemParts.Part.GEARS.ordinal())));
 		proxy.postInit();
 	}
 

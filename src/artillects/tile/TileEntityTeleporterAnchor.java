@@ -3,7 +3,12 @@ package artillects.tile;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.ForgeDirection;
+import artillects.Artillects;
 import artillects.TeleportManager;
 import artillects.Vector3;
 import artillects.block.teleporter.BlockGlyph;
@@ -13,7 +18,7 @@ import artillects.block.teleporter.BlockGlyph;
  * @author Archadia
  */
 public class TileEntityTeleporterAnchor extends TileEntityAdvanced
-{
+{	
 	@Override
 	public void validate()
 	{
@@ -34,10 +39,21 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 		super.invalidate();
 	}
 
+	public void refresh() {
+		this.invalidate();
+		this.validate();
+	}
+	
 	@Override
 	public boolean canUpdate()
 	{
-		return false;
+		return true;
+	}
+	
+	public void updateEntity() {
+		if(worldObj.getWorldTime()%2400==0) {
+			refresh();
+		}
 	}
 
 	public void doTeleport(Entity entity)
