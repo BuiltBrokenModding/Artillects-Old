@@ -170,7 +170,10 @@ public class Artillects
         blockWall2 = new BlockBaseDecor("decorWall2");
         blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
         blockGravity_Slow = new BlockGravitySlow();
+        
+        //Teleporter Blocks
         blockHiveTeleporterNode = new BlockHiveTeleporterNode();
+        
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
