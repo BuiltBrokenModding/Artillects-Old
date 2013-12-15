@@ -1,5 +1,6 @@
 package artillects.block;
 
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,7 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.tile.TileEntityTeleporterAnchor;
 
-public class BlockTeleporterAnchor extends BlockBase
+public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider
 {
 	public Icon iconTop, iconSide, iconBot;
 
@@ -34,7 +35,7 @@ public class BlockTeleporterAnchor extends BlockBase
 				}
 				else
 				{
-					player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + frequency);
+					player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
 				}
 			}
 		}
@@ -43,7 +44,7 @@ public class BlockTeleporterAnchor extends BlockBase
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, int metadata)
+	public TileEntity createNewTileEntity(World world)
 	{
 		return new TileEntityTeleporterAnchor();
 	}
@@ -68,4 +69,5 @@ public class BlockTeleporterAnchor extends BlockBase
 		this.iconSide = ir.registerIcon(Artillects.PREFIX + "teleporterNode_side");
 		this.iconBot = ir.registerIcon(Artillects.PREFIX + "decorWall1");
 	}
+
 }

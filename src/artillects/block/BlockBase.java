@@ -12,6 +12,7 @@ public class BlockBase extends Block
 	{
 		super(Artillects.CONFIGURATION.getBlock(name, Artillects.nextBlockID()).getInt(), material);
 		this.setUnlocalizedName(Artillects.PREFIX + name);
+		this.setTextureName(Artillects.PREFIX + name);
 		this.setCreativeTab(ArtillectsTab.instance());
 	}
 

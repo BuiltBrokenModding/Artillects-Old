@@ -5,9 +5,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.Artillects;
 
-public class BlockBaseDecor extends BlockBase
+public class BlockDecoration extends BlockBase
 {
-	public BlockBaseDecor(String name)
+	public BlockDecoration(String name)
 	{
 		super(name, Material.rock);
 		this.setHardness(32F);

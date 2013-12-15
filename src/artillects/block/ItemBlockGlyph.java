@@ -13,4 +13,10 @@ public class ItemBlockGlyph extends ItemBlock
 	{
 		super(par1);
 	}
+
+	@Override
+	public int getMetadata(int par1)
+	{
+		return par1;
+	}
 }

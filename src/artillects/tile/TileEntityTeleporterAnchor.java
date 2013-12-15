@@ -65,7 +65,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 	{
 		int frequency = 0;
 
-		for (int i = 1; i < 6; i++)
+		for (int i = 2; i < 6; i++)
 		{
 			ForgeDirection direction = ForgeDirection.getOrientation(i);
 			Vector3 position = new Vector3(this.xCoord + direction.offsetX, this.yCoord + direction.offsetY, this.zCoord + direction.offsetZ);
@@ -75,7 +75,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 			if (block instanceof BlockGlyph)
 			{
 				int metadata = this.worldObj.getBlockMetadata((int) position.x, (int) position.y, (int) position.z);
-				frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 1) * metadata;
+				frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 2) * (metadata + 1);
 			}
 			else
 			{

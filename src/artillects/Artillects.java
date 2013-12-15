@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import artillects.block.BlockBaseDecor;
+import artillects.block.BlockDecoration;
 import artillects.block.BlockGlyph;
 import artillects.block.BlockGravitySlow;
 import artillects.block.BlockTeleporterAnchor;
@@ -166,13 +166,13 @@ public class Artillects
 		weaponTommygun = new ItemPlasmaLauncher();
 		plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
 
-		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
-		blockSymbol2 = new BlockBaseDecor("decorSymbol2");
-		blockSymbol3 = new BlockBaseDecor("decorSymbol3");
+		blockSymbol1 = new BlockDecoration("decorSymbol1");
+		blockSymbol2 = new BlockDecoration("decorSymbol2");
+		blockSymbol3 = new BlockDecoration("decorSymbol3");
 
-		blockWall1 = new BlockBaseDecor("decorWall1");
-		blockWall2 = new BlockBaseDecor("decorWall2");
-		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
+		blockWall1 = new BlockDecoration("decorWall1");
+		blockWall2 = new BlockDecoration("decorWall2");
+		blockLight = new BlockDecoration("decorLight").setLightValue(1F);
 
 		blockGlyph = new BlockGlyph();
 
@@ -208,7 +208,7 @@ public class Artillects
 		GameRegistry.registerBlock(blockHiveTeleporterNode, "blockHiveTeleporterNode");
 		GameRegistry.registerBlock(blockGlyph, ItemBlockGlyph.class, "blockGlyph");
 
-		GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterNode");
+		GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 	}
 
 	@EventHandler
