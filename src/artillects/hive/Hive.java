@@ -103,7 +103,7 @@ public class Hive implements IScheduledTickHandler
         {
             ticks = 0;
         }
-        // System.out.println("[Hive] Tick");
+        System.out.println("[Hive] Tick. HiveComplex: " + activeComplexs.size() + " Drones:" + activeDrones.size() + " Zones:" + activeZones.size());
         synchronized (activeComplexs)
         {
             for (Entry<String, HiveComplex> entry : activeComplexs.entrySet())
