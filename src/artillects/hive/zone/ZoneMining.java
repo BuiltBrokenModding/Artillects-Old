@@ -19,6 +19,8 @@ public class ZoneMining extends Zone
 
     public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();
 
+    public boolean clearAll = false;
+
     static
     {
         addBlockToMiningList(Block.oreCoal);
@@ -47,6 +49,12 @@ public class ZoneMining extends Zone
     public ZoneMining(World world, Vector3 start, Vector3 end)
     {
         super(world, start, end);
+    }
+
+    public ZoneMining clearAll()
+    {
+        this.clearAll = true;
+        return this;
     }
 
     @Override
@@ -99,6 +107,6 @@ public class ZoneMining extends Zone
 
     public boolean canMine(int id, int meta)
     {
-        return this.oreList.contains(new Pair<Integer, Integer>(id, -1)) || this.oreList.contains(new Pair<Integer, Integer>(id, meta));
+        return this.clearAll || this.oreList.contains(new Pair<Integer, Integer>(id, -1)) || this.oreList.contains(new Pair<Integer, Integer>(id, meta));
     }
 }
