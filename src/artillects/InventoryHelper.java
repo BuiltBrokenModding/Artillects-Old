@@ -22,28 +22,30 @@ public class InventoryHelper
 	{
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
-			if (stack == null)
+			if (stack != null)
 			{
-				break;
-			}
+				if (stack.stackSize <= 0)
+				{
+					return null;
+				}
 
-			if (stack.stackSize <= 0)
-			{
-				stack = null;
-			}
+				ItemStack itemStack = inventory.getStackInSlot(i);
 
-			ItemStack itemStack = inventory.getStackInSlot(i);
-
-			if (itemStack == null)
-			{
-				inventory.setInventorySlotContents(i, stack);
-				stack = null;
+				if (itemStack == null)
+				{
+					inventory.setInventorySlotContents(i, stack);
+					stack = null;
+				}
+				else if (itemStack.isItemEqual(stack))
+				{
+					int originalStackSize = itemStack.stackSize;
+					itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
+					stack.stackSize -= itemStack.stackSize - originalStackSize;
+				}
 			}
-			else if (itemStack.isItemEqual(stack))
+			else
 			{
-				int originalStackSize = itemStack.stackSize;
-				itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
-				stack.stackSize -= itemStack.stackSize - originalStackSize;
+				return null;
 			}
 		}
 
