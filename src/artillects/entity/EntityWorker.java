@@ -257,11 +257,11 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	{
 		if (this.cachedInventory == null)
 		{
-			List<ItemStack> list = new ArrayList<ItemStack>();
+			this.cachedInventory = new ArrayList<ItemStack>();
 
 			for (int i = 0; i < this.inventory.getSizeInventory(); i++)
 			{
-				list.add(this.inventory.getStackInSlot(i));
+				this.cachedInventory.add(this.inventory.getStackInSlot(i));
 			}
 		}
 
