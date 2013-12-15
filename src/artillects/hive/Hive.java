@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import artillects.entity.EntityArtillectBase;
+import artillects.entity.IArtillect;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 
@@ -18,7 +19,8 @@ public class Hive implements IScheduledTickHandler
     /** Main hive instance */
     private static Hive mainHive;
     /** All active drones loaded by this hive instance */
-    private List<EntityArtillectBase> activeDrones = new ArrayList<EntityArtillectBase>();
+    private List<IArtillect> activeDrones = new ArrayList<IArtillect>();
+    private List<IArtillect> droneAwaitingOrders = new ArrayList<IArtillect>();
     private List<Report> inboxReports = new ArrayList<Report>();
     private List<Zone> activeZones = new ArrayList<Zone>();
     private List<HiveComplex> activeComplexs = new ArrayList<HiveComplex>();
@@ -46,7 +48,7 @@ public class Hive implements IScheduledTickHandler
         }
     }
 
-    /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
+    @Deprecated
     public void addDrone(EntityArtillectBase drone)
     {
         if (drone != null && !activeDrones.contains(drone))
@@ -55,8 +57,26 @@ public class Hive implements IScheduledTickHandler
         }
     }
 
-    /** Called to remove a drone from the hive. Normal when it dies or gets unloaded by the world */
+    @Deprecated
     public void removeDrone(EntityArtillectBase drone)
+    {
+        if (drone != null)
+        {
+            activeDrones.remove(drone);
+        }
+    }
+
+    /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
+    public void addDrone(IArtillect drone)
+    {
+        if (drone != null && !activeDrones.contains(drone))
+        {
+            activeDrones.add(drone);
+        }
+    }
+
+    /** Called to remove a drone from the hive. Normal when it dies or gets unloaded by the world */
+    public void removeDrone(IArtillect drone)
     {
         if (drone != null)
         {
@@ -90,32 +110,62 @@ public class Hive implements IScheduledTickHandler
             ticks = 0;
         }
 
-        Iterator<HiveComplex> it = new ArrayList(activeComplexs).iterator();
-        while (it.hasNext())
+        synchronized (activeComplexs)
         {
-            HiveComplex complex = it.next();
-            if (complex.isValid())
+            Iterator<HiveComplex> it = activeComplexs.iterator();
+            while (it.hasNext())
             {
-                complex.updateEntity();
-            }
-            else
-            {
-                complex.invalidate();
-                it.remove();
+                HiveComplex complex = it.next();
+                if (complex.isValid())
+                {
+                    complex.updateEntity();
+                }
+                else
+                {
+                    complex.invalidate();
+                    it.remove();
+                }
             }
         }
-        Iterator<Zone> zoneIt = new ArrayList(activeZones).iterator();
-        while (zoneIt.hasNext())
+        synchronized (activeZones)
         {
-            Zone complex = zoneIt.next();
-            if (complex.isValid())
+            Iterator<Zone> zoneIt = activeZones.iterator();
+            while (zoneIt.hasNext())
             {
-                complex.updateEntity();
+                Zone complex = zoneIt.next();
+                if (complex.isValid())
+                {
+                    complex.updateEntity();
+                }
+                else
+                {
+                    complex.invalidate();
+                    zoneIt.remove();
+                }
             }
-            else
+        }
+        synchronized (activeDrones)
+        {
+            Iterator<IArtillect> droneIt = activeDrones.iterator();
+            while (droneIt.hasNext())
             {
-                complex.invalidate();
-                it.remove();
+                IArtillect drone = droneIt.next();
+                if (drone.getOwner() != this)
+                {
+                    droneIt.remove();
+                }
+                else
+                {
+                    if (!activeZones.contains(drone.getZone()))
+                    {
+                        drone.setZone(null);
+                    }
+                    if (drone.getZone() == null)
+                    {
+                        if (!this.droneAwaitingOrders.contains(drone))
+                            this.droneAwaitingOrders.add(drone);
+                    }
+                }
             }
         }
     }

@@ -1,8 +1,10 @@
 package artillects.hive.structure;
 
 import net.minecraft.nbt.NBTTagCompound;
+import artillects.Vector3;
 import artillects.VectorWorld;
 import artillects.hive.HiveGhost;
+import artillects.hive.ZoneProcessing;
 
 /** Entity that represents a structure peace in a hive complex
  * 
@@ -28,8 +30,11 @@ public class Structure extends HiveGhost
         {
             this.generated = true;
             building.getSchematic().build(location);
-
-            System.out.println("Generating Schematic @ " + location.toString());
+            //System.out.println("Generating Schematic @ " + location.toString());
+            if (building == Building.PROCESSORROOM)
+            {
+                new ZoneProcessing(location.world, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
+            }
         }
     }
 

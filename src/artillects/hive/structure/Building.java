@@ -12,7 +12,8 @@ public enum Building
     TUNNELC("5x5CTunnel"),
     FLOOR("5x5Floor"),
     SKYLIGHT("5x5SkyLight"),
-    NODE("5x5TunnelNode");
+    NODE("5x5TunnelNode"),
+    PROCESSORROOM("processorBuilding");
     public String name;
     public Schematic schematic;
 
