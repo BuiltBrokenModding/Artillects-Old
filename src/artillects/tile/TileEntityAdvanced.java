@@ -1,4 +1,4 @@
-package artillects.block;
+package artillects.tile;
 
 import net.minecraft.tileentity.TileEntity;
 

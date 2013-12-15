@@ -1,4 +1,4 @@
-package artillects.block.teleporter;
+package artillects.block;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -7,25 +7,36 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.block.BlockBase;
-import artillects.block.teleporter.tile.TileHiveTNode;
+import artillects.tile.TileEntityTeleporterAnchor;
 
-public class BlockHiveTeleporterNode extends BlockBase
+public class BlockTeleporterAnchor extends BlockBase
 {
 	public Icon iconTop, iconSide, iconBot;
 
-	public BlockHiveTeleporterNode()
+	public BlockTeleporterAnchor()
 	{
-		super("teleporterNode", Material.iron);
+		super("teleporterAnchor", Material.iron);
 	}
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3)
 	{
-		TileEntity tile = world.getBlockTileEntity(x, y, z);
-
-		if (tile instanceof TileHiveTNode)
+		if (!world.isRemote)
 		{
-			System.out.println(((TileHiveTNode) tile).shapeCode);
+			TileEntity tile = world.getBlockTileEntity(x, y, z);
+
+			if (tile instanceof TileEntityTeleporterAnchor)
+			{
+				int frequency = ((TileEntityTeleporterAnchor) tile).getFrequency();
+
+				if (frequency == -1)
+				{
+					player.addChatMessage(Artillects.getLocal("msg.teleporter.setup"));
+				}
+				else
+				{
+					player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + frequency);
+				}
+			}
 		}
 
 		return true;
@@ -34,7 +45,7 @@ public class BlockHiveTeleporterNode extends BlockBase
 	@Override
 	public TileEntity createTileEntity(World world, int metadata)
 	{
-		return new TileHiveTNode();
+		return new TileEntityTeleporterAnchor();
 	}
 
 	public Icon getIcon(int side, int metadata)

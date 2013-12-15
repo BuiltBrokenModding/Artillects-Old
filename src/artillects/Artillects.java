@@ -10,12 +10,10 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
+import artillects.block.BlockGlyph;
 import artillects.block.BlockGravitySlow;
-import artillects.block.teleporter.BlockHiveTeleporterNode;
-import artillects.block.teleporter.BlockHiveTeleporterShape;
-import artillects.block.teleporter.tile.TileHiveTNode;
-import artillects.block.teleporter.tile.TileHiveTeleporterShape;
-import artillects.block.teleporter.util.Shape;
+import artillects.block.BlockTeleporterAnchor;
+import artillects.block.ItemBlockGlyph;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -28,6 +26,7 @@ import artillects.item.ItemWeaponBattery;
 import artillects.network.PacketEntity;
 import artillects.network.PacketHandler;
 import artillects.network.PacketTile;
+import artillects.tile.TileEntityTeleporterAnchor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -139,14 +138,14 @@ public class Artillects
 	}
 
 	// Moved these here for now ~Archelf
-	public static Block blockSymbol1, blockSymbol2, blockSymbol3;
+	public static Block blockGlyph;
 	public static Block blockWall1;
 	public static Block blockWall2;
 	public static Block blockLight;
 	public static Block blockGravity_Slow;
 	public static Block blockHiveTeleporterNode;
-	public static Block blockTeleporterShape_Square, blockTeleporterShape_Pentagon,
-			blockTeleporterShape_Circle, blockTeleporterShape_Cross;
+
+	public static Block blockSymbol1, blockSymbol2, blockSymbol3;
 
 	public static Item itemArtillectSpawner;
 	public static Item itemParts;
@@ -167,25 +166,24 @@ public class Artillects
 		weaponTommygun = new ItemPlasmaLauncher();
 		plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
 
-		// I've left these non sub-type just in case you need to do anything with them ~Archelf
 		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
 		blockSymbol2 = new BlockBaseDecor("decorSymbol2");
 		blockSymbol3 = new BlockBaseDecor("decorSymbol3");
+
 		blockWall1 = new BlockBaseDecor("decorWall1");
 		blockWall2 = new BlockBaseDecor("decorWall2");
 		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
-		blockGravity_Slow = new BlockGravitySlow();
+
+		blockGlyph = new BlockGlyph();
 
 		// Teleporter Blocks
-		blockHiveTeleporterNode = new BlockHiveTeleporterNode();
-		blockTeleporterShape_Square = new BlockHiveTeleporterShape(Shape.SQUARE);
-		blockTeleporterShape_Pentagon = new BlockHiveTeleporterShape(Shape.PENTAGON);
-		blockTeleporterShape_Circle = new BlockHiveTeleporterShape(Shape.CIRCLE);
-		blockTeleporterShape_Cross = new BlockHiveTeleporterShape(Shape.CROSS);
+		blockHiveTeleporterNode = new BlockTeleporterAnchor();
+
+		blockGravity_Slow = new BlockGravitySlow();
 
 		CONFIGURATION.save();
 
-		ArtillectsTab.itemStack = new ItemStack(blockSymbol1);
+		ArtillectsTab.itemStack = new ItemStack(blockGlyph);
 
 		System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
@@ -202,18 +200,15 @@ public class Artillects
 		GameRegistry.registerBlock(blockSymbol1, "blockSymbol1");
 		GameRegistry.registerBlock(blockSymbol2, "blockSymbol2");
 		GameRegistry.registerBlock(blockSymbol3, "blockSymbol3");
+
 		GameRegistry.registerBlock(blockWall1, "blockWall1");
 		GameRegistry.registerBlock(blockWall2, "blockWall2");
 		GameRegistry.registerBlock(blockLight, "blockLight");
 		GameRegistry.registerBlock(blockGravity_Slow, "blockGravity_Slow");
 		GameRegistry.registerBlock(blockHiveTeleporterNode, "blockHiveTeleporterNode");
-		GameRegistry.registerBlock(blockTeleporterShape_Square, "blockTeleporterShape_Square");
-		GameRegistry.registerBlock(blockTeleporterShape_Pentagon, "blockTeleporterShape_Pentagon");
-		GameRegistry.registerBlock(blockTeleporterShape_Circle, "blockTeleporterShape_Circle");
-		GameRegistry.registerBlock(blockTeleporterShape_Cross, "blockTeleporterShape_Cross");
+		GameRegistry.registerBlock(blockGlyph, ItemBlockGlyph.class, "blockGlyph");
 
-		GameRegistry.registerTileEntity(TileHiveTNode.class, "tileHiveTeleporterNode");
-		GameRegistry.registerTileEntity(TileHiveTeleporterShape.class, "tileHiveTeleporterShape");
+		GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterNode");
 	}
 
 	@EventHandler
