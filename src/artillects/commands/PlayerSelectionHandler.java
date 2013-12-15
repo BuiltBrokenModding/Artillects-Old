@@ -1,4 +1,4 @@
-package artillects.hive;
+package artillects.commands;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -59,7 +59,7 @@ public class PlayerSelectionHandler
         return hasPointOne(player) && hasPointTwo(player);
     }
 
-    public void loadWorldSelection(EntityPlayer player, String name)
+    public static void loadWorldSelection(EntityPlayer player)
     {
         if (hasBothPoints(player))
         {
@@ -67,12 +67,7 @@ public class PlayerSelectionHandler
             VectorWorld pointTwo = PlayerSelectionHandler.playerPointSelection.get(player.username)[1];
             if (pointOne.world == pointTwo.world)
             {
-                if (name == null)
-                {
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh.mm.ss");
-                    name = player.username + "_Schematic_" + dateFormat.format(new Date());
 
-                }
                 Schematic schematic = new Schematic().loadWorldSelection(pointOne.world, pointOne, pointTwo);
                 playerSchematic.put(player.username, schematic);
 
@@ -83,5 +78,29 @@ public class PlayerSelectionHandler
                 player.sendChatToPlayer(ChatMessageComponent.createFromText("Selection points must be in the same world"));
             }
         }
+    }
+
+    public static void saveWorldSelection(EntityPlayer player, String name)
+    {
+        if (hasSchematicLoaded(player))
+        {
+            if (name == null)
+            {
+                DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh.mm.ss");
+                name = player.username + "_Schematic_" + dateFormat.format(new Date());
+            }
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("Schematic saved to .minecraft/schematics/" + name));
+            getSchematic(player).saveToBaseDirectory(name);
+        }
+    }
+
+    public static boolean hasSchematicLoaded(EntityPlayer player)
+    {
+        return player != null && playerSchematic.get(player.username) != null;
+    }
+
+    public static Schematic getSchematic(EntityPlayer player)
+    {
+        return player != null ? playerSchematic.get(player.username) : null;
     }
 }

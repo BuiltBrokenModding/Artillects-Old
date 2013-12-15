@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.VectorWorld;
-import artillects.hive.PlayerSelectionHandler;
+import artillects.commands.PlayerSelectionHandler;
 
 public class ItemSchematicCreator extends ItemBase
 {
