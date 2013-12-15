@@ -36,7 +36,7 @@ public class Zone extends HiveGhost
         while (droneIt.hasNext())
         {
             IArtillect drone = droneIt.next();
-            if (drone.getZone() != this || ((EntityLivingBase)drone).isDead)
+            if (drone.getZone() != this || ((EntityLivingBase) drone).isDead)
                 droneIt.remove();
         }
     }

@@ -10,77 +10,80 @@ import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 
-/**
- * Uses to handle loading and saving of NBT files
+/** Uses to handle loading and saving of NBT files
  * 
- * @author Dark
- */
+ * @author Dark */
 public class NBTFileHandler
 {
-	public static boolean saveFile(String filename, File directory, NBTTagCompound data)
-	{
-		try
-		{
-			File tempFile = new File(directory, filename + "_tmp");
-			File file = new File(directory, filename);
-			file.mkdirs();
-			CompressedStreamTools.writeCompressed(data, new FileOutputStream(tempFile));
+    public static boolean saveFile(String filename, File directory, NBTTagCompound data)
+    {
+        try
+        {
+            File tempFile = new File(directory, filename + "_tmp");
+            File file = new File(directory, filename);
+            file.mkdirs();
+            CompressedStreamTools.writeCompressed(data, new FileOutputStream(tempFile));
 
-			if (file.exists())
-			{
-				file.delete();
-			}
+            if (file.exists())
+            {
+                file.delete();
+            }
 
-			tempFile.renameTo(file);
-			return true;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-	}
+            tempFile.renameTo(file);
+            return true;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-	public static NBTTagCompound loadFile(File saveDirectory, String filename)
-	{
-		try
-		{
-			File file = new File(saveDirectory, filename);
-			if (file.exists())
-			{
-				return CompressedStreamTools.readCompressed(new FileInputStream(file));
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
+    public static NBTTagCompound loadFile(File saveDirectory, String filename)
+    {
+        return loadFile(new File(saveDirectory, filename));
+    }
 
-		}
-		return null;
-	}
+    public static NBTTagCompound loadFile(File file)
+    {
+        try
+        {
+            if (file.exists())
+            {
+                return CompressedStreamTools.readCompressed(new FileInputStream(file));
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
 
-	public static File getWorldSaveFolder(String worldName)
-	{
-		File parent = getBaseFolder();
+        }
+        return null;
+    }
 
-		if (FMLCommonHandler.instance().getSide().isClient())
-		{
-			parent = new File(getBaseFolder(), "saves" + File.separator);
-		}
+    public static File getWorldSaveFolder(String worldName)
+    {
+        File parent = getBaseFolder();
 
-		return new File(parent, worldName + File.separator);
-	}
+        if (FMLCommonHandler.instance().getSide().isClient())
+        {
+            parent = new File(getBaseFolder(), "saves" + File.separator);
+        }
 
-	public static File getBaseFolder()
-	{
-		if (FMLCommonHandler.instance().getSide().isClient())
-		{
-			FMLClientHandler.instance().getClient();
-			return Minecraft.getMinecraft().mcDataDir;
-		}
-		else
-		{
-			return new File(".");
-		}
-	}
+        return new File(parent, worldName + File.separator);
+    }
+
+    public static File getBaseFolder()
+    {
+        if (FMLCommonHandler.instance().getSide().isClient())
+        {
+            FMLClientHandler.instance().getClient();
+            return Minecraft.getMinecraft().mcDataDir;
+        }
+        else
+        {
+            return new File(".");
+        }
+    }
+
 }

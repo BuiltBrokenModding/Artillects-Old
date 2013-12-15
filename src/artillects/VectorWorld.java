@@ -1,6 +1,8 @@
 package artillects;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.common.DimensionManager;
 
 public class VectorWorld extends Vector3
 {
@@ -10,6 +12,12 @@ public class VectorWorld extends Vector3
     {
         super(x, y, z);
         this.world = world;
+    }
+
+    public VectorWorld(NBTTagCompound nbt)
+    {
+        super(nbt);
+        this.world = DimensionManager.getWorld(nbt.getInteger("d"));
     }
 
     @Override
@@ -23,5 +31,12 @@ public class VectorWorld extends Vector3
     public VectorWorld clone()
     {
         return new VectorWorld(world, x, y, z);
+    }
+
+    public NBTTagCompound save(NBTTagCompound nbt)
+    {
+        super.save(nbt);
+        nbt.setInteger("d", this.world.provider.dimensionId);
+        return nbt;
     }
 }

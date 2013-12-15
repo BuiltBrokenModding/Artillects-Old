@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.VectorWorld;
 import artillects.hive.structure.Building;
@@ -188,5 +189,19 @@ public class HiveComplex extends HiveGhost
     {
         super.invalidate();
         peaces.clear();
+    }
+
+    @Override
+    public void save(NBTTagCompound nbt)
+    {
+        nbt.setCompoundTag("location", this.location.save(new NBTTagCompound()));
+
+    }
+
+    @Override
+    public void load(NBTTagCompound nbt)
+    {
+        this.location = new VectorWorld(nbt.getCompoundTag("location"));
+
     }
 }
