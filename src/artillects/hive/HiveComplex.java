@@ -31,6 +31,7 @@ public class HiveComplex extends HiveGhost
     {
         final int width = 3;
         final int height = 4;
+        final int tunnelSpacing = 12;
         for (int floor = 0; floor <= height; floor++)
         {
             VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
@@ -60,17 +61,57 @@ public class HiveComplex extends HiveGhost
 
             if (floor != height)
             {
-                //Tunnels out from room
-                this.loadTunnel(floorBase.clone().add(0, 0, -12), ForgeDirection.NORTH, width);
-                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -12 - (6 * width))));
-                this.loadTunnel(floorBase.clone().add(0, 0, +12), ForgeDirection.SOUTH, width);
-                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, +12 + (6 * width))));
-                this.loadTunnel(floorBase.clone().add(+12, 0, 0), ForgeDirection.EAST, width);
-                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(+12 + (6 * width), 0, 0)));
-                this.loadTunnel(floorBase.clone().add(-12, 0, 0), ForgeDirection.WEST, width);
-                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-12 - (6 * width), 0, 0)));
+                //NorthTunnel
+                this.loadTunnel(floorBase.clone().add(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -tunnelSpacing - (6 * width))));
+                this.loadTunnel(floorBase.clone().add(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width - 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width - 1);
+                //SouthTunnel
+                this.loadTunnel(floorBase.clone().add(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, +tunnelSpacing + (6 * width))));
+                this.loadTunnel(floorBase.clone().add(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width - 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width - 1);
+                //EastTunnel
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 0)));
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width - 1);
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
+                //WestTunnel
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 0)));
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width - 1);
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
             }
         }
+    }
+
+    public void loadRoom(VectorWorld start, int expand)
+    {
+        //First Peace
+        peaces.add(new Structure(Building.TUNNELC, start.clone().add(0, 0, 0)));
+
+        for (int i = 0; i < expand; i++)
+        {
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(0, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(0, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(6, 0, 0)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(-6, 0, 0)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(6, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(-6, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(-6, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(6, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, start.clone().add(6, 0, 6)));
+        }
+
+        peaces.add(new Structure(Building.WALLX, start.clone().add(10, 1, 6)));
+        peaces.add(new Structure(Building.WALLZ, start.clone().add(6, 1, 10)));
+        peaces.add(new Structure(Building.WALLX, start.clone().add(-10, 1, 6)));
+        peaces.add(new Structure(Building.WALLZ, start.clone().add(-6, 1, 10)));
+        peaces.add(new Structure(Building.WALLX, start.clone().add(10, 1, -6)));
+        peaces.add(new Structure(Building.WALLZ, start.clone().add(6, 1, -10)));
+        peaces.add(new Structure(Building.WALLX, start.clone().add(-10, 1, -6)));
+        peaces.add(new Structure(Building.WALLZ, start.clone().add(-6, 1, -10)));
+
     }
 
     public void loadTunnel(VectorWorld start, ForgeDirection direction, int tunnelPeaces)
