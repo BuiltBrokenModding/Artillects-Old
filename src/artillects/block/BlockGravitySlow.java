@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-public class BlockGravitySlow extends BlockBase
+public class BlockGravitySlow extends BlockBase implements IHiveBlock
 {
 
 	public BlockGravitySlow()

@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.Artillects;
 
-public class BlockDecoration extends BlockBase
+public class BlockDecoration extends BlockBase implements IHiveBlock
 {
 	public BlockDecoration(String name)
 	{

@@ -9,9 +9,10 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.block.BlockBase;
+import artillects.block.IHiveBlock;
 import artillects.tile.TileEntityTeleporterAnchor;
 
-public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider
+public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider, IHiveBlock
 {
 	public Icon iconTop, iconSide, iconBot;
 

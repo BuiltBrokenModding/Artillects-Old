@@ -9,10 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import artillects.Artillects;
 import artillects.block.BlockBase;
+import artillects.block.IHiveBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockGlyph extends BlockBase
+public class BlockGlyph extends BlockBase implements IHiveBlock
 {
 	public static final int MAX_GLYPH = 4;
 	public static final Icon[] icons = new Icon[MAX_GLYPH];
