@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
+import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAIMining;
@@ -122,34 +123,7 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	 */
 	public ItemStack increaseStackSize(ItemStack stack)
 	{
-		for (int i = 0; i < inventory.getSizeInventory(); i++)
-		{
-			if (stack == null)
-			{
-				break;
-			}
-
-			if (stack.stackSize <= 0)
-			{
-				stack = null;
-			}
-
-			ItemStack itemStack = inventory.getStackInSlot(i);
-
-			if (itemStack == null)
-			{
-				this.inventory.setInventorySlotContents(i, stack);
-				stack = null;
-			}
-			else if (itemStack.isItemEqual(stack))
-			{
-				int originalStackSize = itemStack.stackSize;
-				itemStack.stackSize = Math.min(itemStack.stackSize + stack.stackSize, itemStack.getMaxStackSize());
-				stack.stackSize -= itemStack.stackSize - originalStackSize;
-			}
-		}
-
-		return stack;
+		return InventoryHelper.addStackToInventory(this.inventory, stack);
 	}
 
 	public EnumWorkerType getType()

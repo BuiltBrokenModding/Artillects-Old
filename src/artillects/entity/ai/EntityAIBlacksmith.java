@@ -1,7 +1,6 @@
 package artillects.entity.ai;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.minecraft.block.Block;
@@ -13,6 +12,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
+import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityWorker;
 import artillects.entity.EntityWorker.EnumWorkerType;
@@ -182,8 +182,8 @@ public class EntityAIBlacksmith extends EntityAIBase
 
 	private boolean dumpToBeProcessed()
 	{
-		boolean containsInput = listContainsStack(this.stacksToSmelt, this.entity.getInventoryAsList());
-		boolean containsFuel = listContainsStack(this.stacksForFuel, this.entity.getInventoryAsList());
+		boolean containsInput = InventoryHelper.listContainsStack(this.stacksToSmelt, this.entity.getInventoryAsList());
+		boolean containsFuel = InventoryHelper.listContainsStack(this.stacksForFuel, this.entity.getInventoryAsList());
 
 		for (Vector3 furnacePosition : ((ZoneProcessing) entity.zone).furnacePositions)
 		{
@@ -237,7 +237,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 
 					if (itemStack != null)
 					{
-						if (this.listContainsStack(this.stacksToSmelt, itemStack) || this.listContainsStack(this.stacksForFuel, itemStack))
+						if (InventoryHelper.listContainsStack(this.stacksToSmelt, itemStack) || InventoryHelper.listContainsStack(this.stacksForFuel, itemStack))
 						{
 							if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 							{
@@ -270,14 +270,14 @@ public class EntityAIBlacksmith extends EntityAIBase
 	{
 		ItemStack tentativeStack = inventory.getStackInSlot(slotID);
 
-		if (tentativeStack == null || (listContainsStack(checkStacks, tentativeStack) && tentativeStack.stackSize < tentativeStack.getMaxStackSize()))
+		if (tentativeStack == null || (InventoryHelper.listContainsStack(checkStacks, tentativeStack) && tentativeStack.stackSize < tentativeStack.getMaxStackSize()))
 		{
 			if (this.entity.tryToWalkNextTo(position, this.moveSpeed))
 			{
 				if (position.distance(new Vector3(this.entity)) <= this.interactionDistance)
 				{
 					this.entity.getNavigator().clearPathEntity();
-					ItemStack stackToSet = getListContainsStack(checkStacks, this.entity.getInventoryAsList());
+					ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.entity.getInventoryAsList());
 					this.entity.decreaseStackSize(stackToSet);
 
 					if (tentativeStack != null && tentativeStack.isItemEqual(stackToSet))
@@ -292,42 +292,5 @@ public class EntityAIBlacksmith extends EntityAIBase
 		}
 
 		return false;
-	}
-
-	private boolean listContainsStack(Set<ItemStack> compareStacks, ItemStack stack)
-	{
-		return getListContainsStack(compareStacks, stack) != null;
-	}
-
-	private ItemStack getListContainsStack(Set<ItemStack> compareStacks, ItemStack stack)
-	{
-		for (ItemStack checkStack : compareStacks)
-		{
-			if (checkStack.isItemEqual(stack))
-			{
-				return stack;
-			}
-		}
-		return null;
-	}
-
-	private boolean listContainsStack(Set<ItemStack> compareStacks, List<ItemStack> checkStacks)
-	{
-		return this.getListContainsStack(compareStacks, checkStacks) != null;
-	}
-
-	private ItemStack getListContainsStack(Set<ItemStack> compareStacks, List<ItemStack> checkStacks)
-	{
-		for (ItemStack compareStack : compareStacks)
-		{
-			for (ItemStack check : checkStacks)
-			{
-				if (check != null && check.isItemEqual(compareStack))
-				{
-					return check;
-				}
-			}
-		}
-		return null;
 	}
 }
