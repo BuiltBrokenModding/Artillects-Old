@@ -8,9 +8,11 @@ import artillects.CommonProxy;
 import artillects.client.gui.GuiWorker;
 import artillects.client.render.RenderArtillectItems;
 import artillects.client.render.RenderDemolisher;
+import artillects.client.render.RenderFabricator;
 import artillects.client.render.RenderSeeker;
+import artillects.entity.EntityFabricator;
 import artillects.entity.EntityWorker;
-import artillects.entity.combat.EntityDemoDrone;
+import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -20,9 +22,9 @@ public class ClientProxy extends CommonProxy
 	public void init()
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntitySeeker.class, new RenderSeeker());
-		RenderingRegistry.registerEntityRenderingHandler(EntityDemoDrone.class, new RenderDemolisher());
+		RenderingRegistry.registerEntityRenderingHandler(EntityDemolisher.class, new RenderDemolisher());
+		RenderingRegistry.registerEntityRenderingHandler(EntityFabricator.class, new RenderFabricator());
 		MinecraftForgeClient.registerItemRenderer(Artillects.itemArtillectSpawner.itemID, new RenderArtillectItems());
-
 	}
 
 	@Override

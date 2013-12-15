@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.ai.EntityDroneSelector;
 
-public class EntityDemoDrone extends EntityArtillectBase implements IRangedAttackMob
+public class EntityDemolisher extends EntityArtillectBase implements IRangedAttackMob
 {
-	public EntityDemoDrone(World par1World)
+	public EntityDemolisher(World par1World)
 	{
 		super(par1World);
 		this.tasks.addTask(1, new EntityAISwimming(this));

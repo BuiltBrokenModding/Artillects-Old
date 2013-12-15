@@ -38,6 +38,13 @@ public class RenderArtillectItems implements IItemRenderer
 
 		switch (ArtillectType.values()[item.getItemDamage()])
 		{
+			case FABRICATOR:
+			{
+				FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderFabricator.TEXTURE);
+				RenderFabricator.MODEL.setRotationAngles(0, 0, 0, 0, 0, 0, null);
+				RenderFabricator.MODEL.render(0.0625f);
+				break;
+			}
 			case SEEKER:
 			{
 				FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderSeeker.TEXTURE);

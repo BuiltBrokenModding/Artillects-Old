@@ -3,7 +3,7 @@ package artillects.entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.entity.combat.EntityDemoDrone;
+import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
@@ -16,7 +16,7 @@ public enum ArtillectType
 		{
 			// EntityRegistry.registerGlobalEntityID(EntityDroneWorker.class, "DroneWorker",
 			// EntityRegistry.findGlobalUniqueEntityId());
-			EntityRegistry.registerModEntity(EntityWorker.class, "ArtillectWorker", ids++, Artillects.instance(), 64, 1, true);
+			EntityRegistry.registerModEntity(EntityWorker.class, "worker", ids++, Artillects.instance(), 64, 1, true);
 			// EntityRegistry.addSpawn(Entity.class, 3, 1, 10, EnumCreatureType.creature,
 			// BiomeGenBase.forest, BiomeGenBase.river);
 		}
@@ -24,7 +24,6 @@ public enum ArtillectType
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			// TODO Auto-generated method stub
 			return new EntityWorker(world);
 		}
 	}), FABRICATOR("fabricator", new IArtillectSpawnHandler()
@@ -33,62 +32,52 @@ public enum ArtillectType
 		@Override
 		public void register()
 		{
-			// TODO Auto-generated method stub
-
+			EntityRegistry.registerModEntity(EntityFabricator.class, "fabricator", ids++, Artillects.instance(), 64, 1, true);
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return new EntityFabricator(world);
 		}
 	}), CONSTRUCTOR("constructor", new IArtillectSpawnHandler()
 	{
-
 		@Override
 		public void register()
 		{
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}), HIVEMIND("hivemind", new IArtillectSpawnHandler()
 	{
-
 		@Override
 		public void register()
 		{
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}), DEMOLISHER("demolisher", new IArtillectSpawnHandler()
 	{
-
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntityDemoDrone.class, "DroneCombat", ids++, Artillects.instance(), 64, 1, true);
-
+			EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance(), 64, 1, true);
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			return new EntityDemoDrone(world);
+			return new EntityDemolisher(world);
 		}
 	}), SEEKER("seeker", new IArtillectSpawnHandler()
 	{
@@ -96,8 +85,7 @@ public enum ArtillectType
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntitySeeker.class, "DroneDiscSmall", ids++, Artillects.instance(), 64, 1, true);
-
+			EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance(), 64, 1, true);
 		}
 
 		@Override
@@ -111,14 +99,12 @@ public enum ArtillectType
 		@Override
 		public void register()
 		{
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public EntityArtillectBase getNew(World world)
 		{
-			// TODO Auto-generated method stub
 			return null;
 		}
 	});
@@ -126,7 +112,7 @@ public enum ArtillectType
 	public static int ids = 54;
 	IArtillectSpawnHandler builder;
 
-	public String name;
+	public final String name;
 
 	private ArtillectType(String name, IArtillectSpawnHandler builder)
 	{
