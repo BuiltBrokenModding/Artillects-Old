@@ -1,9 +1,10 @@
-package artillects.block.teleporter;
+package artillects.block.teleporter.tile;
 
 import net.minecraft.tileentity.TileEntity;
 import artillects.Vector3;
 import artillects.block.teleporter.util.Pair;
 import artillects.block.teleporter.util.Shape;
+import artillects.block.teleporter.util.TeleporterCode;
 import artillects.block.teleporter.util.TeleporterHandler;
 
 /**

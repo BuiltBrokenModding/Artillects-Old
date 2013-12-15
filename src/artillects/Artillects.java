@@ -12,7 +12,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
 import artillects.block.BlockGravitySlow;
 import artillects.block.teleporter.BlockHiveTeleporterNode;
-import artillects.block.teleporter.TileHiveTNode;
+import artillects.block.teleporter.tile.TileHiveTNode;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;

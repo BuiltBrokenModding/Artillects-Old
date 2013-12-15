@@ -5,6 +5,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.block.BlockBase;
+import artillects.block.teleporter.tile.TileHiveTNode;
 
 public class BlockHiveTeleporterNode extends BlockBase
 {

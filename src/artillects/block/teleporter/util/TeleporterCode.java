@@ -1,6 +1,5 @@
-package artillects.block.teleporter;
+package artillects.block.teleporter.util;
 
-import artillects.block.teleporter.util.Shape;
 
 public class TeleporterCode
 {
