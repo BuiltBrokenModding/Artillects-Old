@@ -47,10 +47,10 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 				if(teleporter != this) {
 					if (teleporter.getFrequency() == frequency)
 					{
-						if (entity.worldObj != teleporter.worldObj)
+						/*if (entity.worldObj != teleporter.worldObj)
 						{
 							entity.travelToDimension(teleporter.worldObj.provider.dimensionId);
-						}
+						}*/
 		
 						entity.setPosition(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
 						return;
