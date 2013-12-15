@@ -6,11 +6,10 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 
 public class BlockBaseDecor extends BlockBase {
-	
-	private boolean lightPos = true;
-	
+		
 	public BlockBaseDecor(String name) {
 		super(name, Material.rock);
 		setTextureName(Artillects.PREFIX + name);
+		setHardness(32F);
 	}
 }

@@ -2,6 +2,7 @@ package artillects;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -9,15 +10,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
+import artillects.block.BlockGravitySlow;
+import artillects.block.teleporter.BlockGravityElev;
+import artillects.block.teleporter.TeleporterCode;
+import artillects.block.teleporter.TileGravityElev;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemParts;
-import artillects.item.ItemWeaponBattery;
 import artillects.item.ItemParts.Part;
 import artillects.item.ItemPlasmaLauncher;
 import artillects.item.ItemSchematicCreator;
+import artillects.item.ItemWeaponBattery;
 import artillects.network.PacketHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -130,7 +135,7 @@ public class Artillects
 	public static Block blockWall2;
 	public static Block blockLight;
 	public static Block blockGravity_Slow;
-	public static Block blockGravity_Lift;
+	public static Block blockGravity_Elev;
 
 	public static Item itemArtillectSpawner;
 	public static Item itemParts;
@@ -138,6 +143,8 @@ public class Artillects
 	public static Item itemSchematicCreator;
 	public static Item weaponTommygun;
 	public static Item plasmaBattery;
+	
+	public static HashMap<TeleporterCode, Vector3> teleporters = new HashMap<TeleporterCode, Vector3>();
 	
 	@EventHandler
 	public void init(FMLInitializationEvent event)
@@ -159,7 +166,7 @@ public class Artillects
 		blockWall2 = new BlockBaseDecor("decorWall2");
 		blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
 		blockGravity_Slow = new BlockGravitySlow();
-		blockGravity_Lift = new BlockGravityLift();
+		blockGravity_Elev = new BlockGravityElev();
 		CONFIGURATION.save();
 
 		ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -184,6 +191,10 @@ public class Artillects
 		GameRegistry.registerBlock(blockWall1, "blockWall1");
 		GameRegistry.registerBlock(blockWall2, "blockWall2");
 		GameRegistry.registerBlock(blockLight, "blockLight");
+		GameRegistry.registerBlock(blockGravity_Slow, "blockGravity_Slow");
+		GameRegistry.registerBlock(blockGravity_Elev, "blockGravity_Elev");
+		
+		GameRegistry.registerTileEntity(TileGravityElev.class, "tileGravityElev");
 	}
 
 	@EventHandler

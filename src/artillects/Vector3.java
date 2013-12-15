@@ -1,6 +1,7 @@
 package artillects;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -18,6 +19,12 @@ public class Vector3 extends Vector2
 	{
 		super(entity.posX, entity.posY);
 		this.z = entity.posZ;
+	}
+	
+	public Vector3(TileEntity tileentity)
+	{
+		super(tileentity.xCoord, tileentity.yCoord);
+		this.z = tileentity.zCoord;
 	}
 
 	public Vector3()
