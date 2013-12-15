@@ -4,7 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import artillects.Vector3;
 import artillects.VectorWorld;
 import artillects.hive.HiveGhost;
-import artillects.hive.ZoneProcessing;
+import artillects.hive.zone.ZoneProcessing;
 
 /** Entity that represents a structure peace in a hive complex
  * 

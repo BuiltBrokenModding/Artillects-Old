@@ -1,4 +1,4 @@
-package artillects.hive;
+package artillects.hive.zone;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +8,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.IArtillect;
+import artillects.hive.Hive;
+import artillects.hive.HiveGhost;
 
 /**
  * Class used by the hive mind to ID an area by which a task is to be operated in

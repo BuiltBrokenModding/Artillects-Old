@@ -1,4 +1,4 @@
-package artillects.hive;
+package artillects.hive.zone;
 
 import java.util.ArrayList;
 import java.util.List;

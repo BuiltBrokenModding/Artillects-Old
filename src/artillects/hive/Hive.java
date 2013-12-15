@@ -17,6 +17,7 @@ import net.minecraftforge.event.world.WorldEvent.Unload;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.IArtillect;
 import artillects.hive.schematics.NBTFileHandler;
+import artillects.hive.zone.Zone;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 

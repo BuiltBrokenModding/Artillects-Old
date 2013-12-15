@@ -1,22 +1,22 @@
-package artillects.hive;
+package artillects.hive.zone;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import artillects.Vector3;
 
-public class ZoneBuilding extends Zone
+public class ZoneMining extends Zone
 {
-	public final HashMap<Vector3, ItemStack> buildPosition = new HashMap<Vector3, ItemStack>();
+	public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
 
-	/**
-	 * The location in which a chest with resource is provided.
-	 */
-	public Vector3 resourceLocation;
+	// List of blocks sorted based on distance. Closer the block, the lower the get-ID.
+	public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
-	public ZoneBuilding(World world, Vector3 start, Vector3 end)
+	public ZoneMining(World world, Vector3 start, Vector3 end)
 	{
 		super(world, start, end);
 	}
@@ -36,8 +36,8 @@ public class ZoneBuilding extends Zone
 	{
 		Vector3 start = this.start;
 		Vector3 end = this.end;
-
-		this.buildPosition.clear();
+		this.scannedBlocks.clear();
+		this.scannedSortedPositions.clear();
 
 		for (int x = (int) start.x; x < (int) end.x; x++)
 		{
@@ -51,7 +51,18 @@ public class ZoneBuilding extends Zone
 					if (block != null && this.canMine(block))
 					{
 						Vector3 position = new Vector3(x, y, z);
-						// TODO: Load schematic here.
+
+						HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
+
+						if (vecs == null)
+						{
+							vecs = new HashSet<Vector3>();
+						}
+
+						this.scannedBlocks.add(position);
+						vecs.add(position);
+
+						this.scannedSortedPositions.put(block, vecs);
 					}
 				}
 			}

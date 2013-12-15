@@ -20,8 +20,8 @@ import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAIMining;
-import artillects.hive.ZoneMining;
-import artillects.hive.ZoneProcessing;
+import artillects.hive.zone.ZoneMining;
+import artillects.hive.zone.ZoneProcessing;
 import artillects.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;

@@ -15,7 +15,7 @@ import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
 import artillects.entity.EntityWorker.EnumWorkerType;
-import artillects.hive.ZoneMining;
+import artillects.hive.zone.ZoneMining;
 
 public class EntityAIMining extends EntityAIBase
 {

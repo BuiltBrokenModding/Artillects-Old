@@ -13,7 +13,7 @@ import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityFabricator;
-import artillects.hive.ZoneBuilding;
+import artillects.hive.zone.ZoneBuilding;
 
 public class EntityAIBuilding extends EntityAIBase
 {

@@ -17,7 +17,7 @@ import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
 import artillects.entity.EntityWorker.EnumWorkerType;
-import artillects.hive.ZoneProcessing;
+import artillects.hive.zone.ZoneProcessing;
 
 public class EntityAIBlacksmith extends EntityAIBase
 {

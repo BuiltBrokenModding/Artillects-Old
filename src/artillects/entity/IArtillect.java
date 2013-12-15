@@ -1,7 +1,7 @@
 package artillects.entity;
 
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.hive.Zone;
+import artillects.hive.zone.Zone;
 
 public interface IArtillect
 {

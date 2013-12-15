@@ -20,7 +20,7 @@ import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.hive.Hive;
-import artillects.hive.Zone;
+import artillects.hive.zone.Zone;
 
 public abstract class EntityArtillectBase extends EntityCreature implements IArtillect
 {
