@@ -1,4 +1,4 @@
-package artillects.item;
+package artillects.item.weapons;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import artillects.Artillects;
+import artillects.item.ItemBase;
 
 public class ItemWeaponBattery extends ItemBase {
 

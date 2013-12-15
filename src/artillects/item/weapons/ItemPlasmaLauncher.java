@@ -1,10 +1,11 @@
-package artillects.item;
+package artillects.item.weapons;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.entity.weapon.EntityPlasma;
+import artillects.item.ItemBase;
 
 
 public class ItemPlasmaLauncher extends ItemBase {
