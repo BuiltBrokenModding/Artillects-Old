@@ -14,12 +14,13 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import artillects.entity.EntityArtillectBase;
 import artillects.entity.IArtillect;
 import artillects.hive.schematics.NBTFileHandler;
 import artillects.hive.zone.Zone;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** Hive collection that the drones use for logic and collection feed back
  * 
@@ -209,6 +210,7 @@ public class Hive implements IScheduledTickHandler
     }
 
     @ForgeSubscribe
+    @SideOnly(Side.SERVER)
     public void onWorldSave(Save event)
     {
         try
@@ -235,6 +237,7 @@ public class Hive implements IScheduledTickHandler
     }
 
     @ForgeSubscribe
+    @SideOnly(Side.SERVER)
     public void onWorldunLoad(Unload event)
     {
         try
@@ -259,6 +262,7 @@ public class Hive implements IScheduledTickHandler
     }
 
     @ForgeSubscribe
+    @SideOnly(Side.SERVER)
     public void onWorldLoad(WorldEvent.Load event)
     {
         try
