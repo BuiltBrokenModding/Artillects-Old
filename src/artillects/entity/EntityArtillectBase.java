@@ -2,6 +2,7 @@ package artillects.entity;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -21,7 +22,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	public EntityArtillectBase(World world)
 	{
 		super(world);
-		Hive.instance().addDrone(this);
+		Hive.instance().addDrone((IArtillect)this);
 	}
 
 	@Override
@@ -29,6 +30,17 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	{
 		super.entityInit();
 	}
+	
+	@Override
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(1.0D);
+    }
 
 	@Override
 	public int getTotalArmorValue()
