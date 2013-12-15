@@ -1,4 +1,4 @@
-package artillects.block.teleporter;
+package artillects.block.teleporter.util;
 
 public enum Shape {
 	NOTHING(null, 0),

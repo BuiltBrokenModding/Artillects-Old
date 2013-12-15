@@ -14,6 +14,7 @@ import artillects.block.BlockGravitySlow;
 import artillects.block.teleporter.BlockGravityElev;
 import artillects.block.teleporter.TeleporterCode;
 import artillects.block.teleporter.TileGravityElev;
+import artillects.block.teleporter.util.Pair;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -143,9 +144,7 @@ public class Artillects
 	public static Item itemSchematicCreator;
 	public static Item weaponTommygun;
 	public static Item plasmaBattery;
-	
-	public static HashMap<TeleporterCode, Vector3> teleporters = new HashMap<TeleporterCode, Vector3>();
-	
+		
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{

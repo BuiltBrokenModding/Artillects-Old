@@ -1,5 +1,7 @@
 package artillects.block.teleporter;
 
+import artillects.block.teleporter.util.Shape;
+
 public class TeleporterCode {
 
 	public Shape shape1;
