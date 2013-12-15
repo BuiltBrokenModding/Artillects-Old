@@ -11,5 +11,6 @@ public class BlockDecoration extends BlockBase
 	{
 		super(name, Material.rock);
 		this.setHardness(32F);
+		this.setResistance(1000F);
 	}
 }

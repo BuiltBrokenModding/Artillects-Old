@@ -20,6 +20,8 @@ public class BlockGlyph extends BlockBase
 	public BlockGlyph()
 	{
 		super("glyph", Material.iron);
+		this.setHardness(32F);
+		this.setResistance(1000F);
 	}
 
 	@SideOnly(Side.CLIENT)
