@@ -97,7 +97,7 @@ public class EntityAIMining extends EntityAIBase
 				if (blockID != 0)
 				{
 					this.breakingTime++;
-					System.out.println(this.breakingTime);
+
 					if (this.breakingTime >= this.maxBreakTime)
 					{
 						List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
