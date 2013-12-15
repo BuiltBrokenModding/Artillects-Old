@@ -1,12 +1,10 @@
-package artillects.entity.ai;
+package artillects.entity;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.entity.EntityArtillectBase;
-import artillects.entity.IArtillect;
 import artillects.hive.Hive;
 
 public class EntityDroneSelector implements IEntitySelector

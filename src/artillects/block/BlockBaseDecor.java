@@ -5,9 +5,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.Artillects;
 
-public class BlockBaseDecor extends BlockBase {
-		
-	public BlockBaseDecor(String name) {
+public class BlockBaseDecor extends BlockBase
+{
+
+	public BlockBaseDecor(String name)
+	{
 		super(name, Material.rock);
 		setTextureName(Artillects.PREFIX + name);
 		setHardness(32F);

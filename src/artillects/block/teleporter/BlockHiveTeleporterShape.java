@@ -11,15 +11,16 @@ import artillects.block.teleporter.util.Shape;
 public class BlockHiveTeleporterShape extends BlockBase
 {
 	private Shape blkShape;
-	
+
 	public BlockHiveTeleporterShape(Shape shape)
 	{
 		super("teleporterShape." + shape.ordinal(), Material.iron);
 		setTextureName(Artillects.PREFIX + "teleporterShape_" + shape.ordinal());
 		this.blkShape = shape;
 	}
-	
-	public TileEntity createTileEntity(World world, int metadata) {
+
+	public TileEntity createTileEntity(World world, int metadata)
+	{
 		return new TileHiveTeleporterShape(this.blkShape);
 	}
 }

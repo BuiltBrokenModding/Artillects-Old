@@ -11,7 +11,6 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
-import artillects.entity.ai.EntityDroneSelector;
 import artillects.hive.Zone;
 
 public class EntityArtillectFlying extends EntityFlying implements IArtillect

@@ -18,7 +18,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import artillects.entity.EntityArtillectBase;
-import artillects.entity.ai.EntityDroneSelector;
+import artillects.entity.EntityDroneSelector;
 
 public class EntityDemolisher extends EntityArtillectBase implements IRangedAttackMob
 {
