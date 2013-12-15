@@ -151,7 +151,7 @@ public class Artillects
 	public static Item itemParts;
 	public static Item itemBuilding;
 	public static Item itemSchematicCreator;
-	public static Item weaponTommygun;
+	public static Item weaponPlasmaLauncher;
 	public static Item plasmaBattery;
 
 	@EventHandler
@@ -163,7 +163,7 @@ public class Artillects
 		itemParts = new ItemParts();
 		itemBuilding = new ItemBuildingGenerator();
 		itemSchematicCreator = new ItemSchematicCreator();
-		weaponTommygun = new ItemPlasmaLauncher();
+		weaponPlasmaLauncher = new ItemPlasmaLauncher();
 		plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
 
 		blockSymbol1 = new BlockDecoration("decorSymbol1");
