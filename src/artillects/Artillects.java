@@ -2,7 +2,6 @@ package artillects;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -12,9 +11,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
 import artillects.block.BlockGravitySlow;
 import artillects.block.teleporter.BlockGravityElev;
-import artillects.block.teleporter.TeleporterCode;
 import artillects.block.teleporter.TileGravityElev;
-import artillects.block.teleporter.util.Pair;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -24,7 +21,9 @@ import artillects.item.ItemParts.Part;
 import artillects.item.ItemPlasmaLauncher;
 import artillects.item.ItemSchematicCreator;
 import artillects.item.ItemWeaponBattery;
+import artillects.network.PacketEntity;
 import artillects.network.PacketHandler;
+import artillects.network.PacketTile;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -91,12 +90,16 @@ public class Artillects
 	public static int BLOCK_ID_PRE = 3856;
 	public static int ITEM_ID_PREFIX = 15966;
 
+	/** Packet Types */
+	public static final PacketTile PACKET_TILE = new PacketTile();
+	public static final PacketEntity PACKET_ENTITY = new PacketEntity();
+
 	@Instance(Artillects.ID)
 	private static Artillects instance;
 
 	@Metadata(Artillects.ID)
 	public static ModMetadata meta;
-	
+
 	public static Artillects instance()
 	{
 		if (instance == null)
@@ -130,7 +133,7 @@ public class Artillects
 		proxy.preInit();
 	}
 
-	//Moved these here for now ~Archelf
+	// Moved these here for now ~Archelf
 	public static Block blockSymbol1, blockSymbol2, blockSymbol3;
 	public static Block blockWall1;
 	public static Block blockWall2;
@@ -144,7 +147,7 @@ public class Artillects
 	public static Item itemSchematicCreator;
 	public static Item weaponTommygun;
 	public static Item plasmaBattery;
-		
+
 	@EventHandler
 	public void init(FMLInitializationEvent event)
 	{
@@ -156,8 +159,8 @@ public class Artillects
 		itemSchematicCreator = new ItemSchematicCreator();
 		weaponTommygun = new ItemPlasmaLauncher();
 		plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
-		
-		//I've left these non sub-type just in case you need to do anything with them ~Archelf
+
+		// I've left these non sub-type just in case you need to do anything with them ~Archelf
 		blockSymbol1 = new BlockBaseDecor("decorSymbol1");
 		blockSymbol2 = new BlockBaseDecor("decorSymbol2");
 		blockSymbol3 = new BlockBaseDecor("decorSymbol3");
@@ -179,11 +182,9 @@ public class Artillects
 		}
 
 		proxy.init();
-		
-		GameRegistry.addRecipe(new ItemStack(plasmaBattery, 1), new Object[] {
-			"X", Character.valueOf('X'), Block.glowStone
-		});
-		
+
+		GameRegistry.addRecipe(new ItemStack(plasmaBattery, 1), new Object[] { "X", Character.valueOf('X'), Block.glowStone });
+
 		GameRegistry.registerBlock(blockSymbol1, "blockSymbol1");
 		GameRegistry.registerBlock(blockSymbol2, "blockSymbol2");
 		GameRegistry.registerBlock(blockSymbol3, "blockSymbol3");
@@ -192,7 +193,7 @@ public class Artillects
 		GameRegistry.registerBlock(blockLight, "blockLight");
 		GameRegistry.registerBlock(blockGravity_Slow, "blockGravity_Slow");
 		GameRegistry.registerBlock(blockGravity_Elev, "blockGravity_Elev");
-		
+
 		GameRegistry.registerTileEntity(TileGravityElev.class, "tileGravityElev");
 	}
 

@@ -43,8 +43,8 @@ public class GuiWorker extends GuiBase
 	{
 		if (guiButton.id == this.switchTaskButton.id)
 		{
-			byte type = this.worker.getDataWatcher().getWatchableObjectByte(EntityWorker.DATA_TYPE_ID);
-			this.worker.getDataWatcher().updateObject(EntityWorker.DATA_TYPE_ID, (byte) (type++ % EnumWorkerType.values().length));
+			byte type = (byte) this.worker.getType().ordinal();
+			this.worker.setType(EnumWorkerType.values()[++type % (EnumWorkerType.values().length)]);
 		}
 	}
 

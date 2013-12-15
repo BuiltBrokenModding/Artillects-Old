@@ -11,6 +11,7 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.EntityWorker;
+import artillects.entity.EntityWorker.EnumWorkerType;
 import artillects.hive.ZoneMining;
 
 public class EntityAIMining extends EntityAIBase
@@ -43,7 +44,7 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
+		return this.entity.getType() == EnumWorkerType.HARVESTER && entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */

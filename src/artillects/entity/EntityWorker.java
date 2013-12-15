@@ -1,6 +1,5 @@
 package artillects.entity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,14 +12,20 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
 import artillects.Vector3;
+import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAIMining;
 import artillects.hive.ZoneMining;
+import artillects.network.IPacketReceiver;
 
-public class EntityWorker extends EntityArtillectBase
+import com.google.common.io.ByteArrayDataInput;
+
+import cpw.mods.fml.common.network.PacketDispatcher;
+
+public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 {
 	public enum EnumWorkerType
 	{
-		HARVESTER;
+		HARVESTER, BLACKSMITH;
 	}
 
 	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
@@ -34,6 +39,7 @@ public class EntityWorker extends EntityArtillectBase
 		super(par1World);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIMining(this, 1));
+		this.tasks.addTask(1, new EntityAIBlacksmith(this, 1));
 		this.tasks.addTask(2, new EntityAIWander(this, 0.5f));
 	}
 
@@ -98,6 +104,29 @@ public class EntityWorker extends EntityArtillectBase
 		}
 	}
 
+	public EnumWorkerType getType()
+	{
+		return EnumWorkerType.values()[this.getDataWatcher().getWatchableObjectByte(EntityWorker.DATA_TYPE_ID)];
+	}
+
+	public void setType(EnumWorkerType type)
+	{
+		if (this.worldObj.isRemote)
+		{
+			PacketDispatcher.sendPacketToServer(Artillects.PACKET_ENTITY.getPacket(this, (byte) type.ordinal()));
+		}
+		else
+		{
+			this.getDataWatcher().updateObject(EntityWorker.DATA_TYPE_ID, (byte) (type.ordinal()));
+		}
+	}
+
+	@Override
+	public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
+	{
+		this.setType(EnumWorkerType.values()[data.readByte()]);
+	}
+
 	@Override
 	public boolean interact(EntityPlayer entityPlayer)
 	{
@@ -129,9 +158,9 @@ public class EntityWorker extends EntityArtillectBase
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+	public void writeEntityToNBT(NBTTagCompound nbt)
 	{
-		super.writeEntityToNBT(par1NBTTagCompound);
+		super.writeEntityToNBT(nbt);
 
 		NBTTagList nbttaglist = new NBTTagList();
 
@@ -148,16 +177,17 @@ public class EntityWorker extends EntityArtillectBase
 			}
 		}
 
-		par1NBTTagCompound.setTag("Items", nbttaglist);
+		nbt.setTag("Items", nbttaglist);
 
+		nbt.setByte("type", (byte) this.getType().ordinal());
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+	public void readEntityFromNBT(NBTTagCompound nbt)
 	{
-		super.readEntityFromNBT(par1NBTTagCompound);
+		super.readEntityFromNBT(nbt);
 
-		NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Items");
+		NBTTagList nbttaglist = nbt.getTagList("Items");
 
 		for (int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
@@ -170,5 +200,7 @@ public class EntityWorker extends EntityArtillectBase
 			}
 		}
 
+		this.setType(EnumWorkerType.values()[nbt.getByte("type")]);
 	}
+
 }
