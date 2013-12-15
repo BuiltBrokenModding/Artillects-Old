@@ -67,6 +67,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 				if(teleporter != this) {
 					if (teleporter.getFrequency() == frequency)
 					{		
+					    worldObj.markBlockForUpdate(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
 						entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
 						System.out.println("Entity Pos: " + entity.posX + ", " + entity.posY + ", " + entity.posZ);
 						break;
