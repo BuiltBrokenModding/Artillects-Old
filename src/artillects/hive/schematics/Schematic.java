@@ -33,9 +33,9 @@ public class Schematic implements ISaveObject
     {
         registerSaveBlock("wall1", Artillects.blockWall1);
         registerSaveBlock("wall2", Artillects.blockWall2);
-        registerSaveBlock("symbol1", Artillects.blockSymbol1);
-        registerSaveBlock("symbol2", Artillects.blockSymbol2);
-        registerSaveBlock("symbol3", Artillects.blockSymbol3);
+        registerSaveBlock("symbol1", Artillects.blockSymbol);
+        registerSaveBlock("symbol2", Artillects.blockSymbol);
+        registerSaveBlock("symbol3", Artillects.blockSymbol);
         registerSaveBlock("light", Artillects.blockLight);
     }
 

@@ -278,7 +278,6 @@ public class Hive implements IScheduledTickHandler
     /** Temp loads all the villages from file so the manager can record what villages exist */
     public void loadObjectsForDim(int dim)
     {
-
         File hiveFolder = new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
         if (hiveFolder.exists())
         {
