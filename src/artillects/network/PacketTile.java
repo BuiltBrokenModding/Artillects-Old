@@ -1,5 +1,8 @@
 package artillects.network;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.tileentity.TileEntity;
@@ -9,9 +12,20 @@ import com.google.common.io.ByteArrayDataInput;
 /** @author Calclavia */
 public class PacketTile extends PacketType
 {
-	public Packet getPacket(TileEntity tileEntity, Object... arg)
+	public Packet getPacket(TileEntity tileEntity, Object... args)
 	{
-		return super.getPacket(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, arg);
+		List newArgs = new ArrayList();
+
+		newArgs.add(tileEntity.xCoord);
+		newArgs.add(tileEntity.yCoord);
+		newArgs.add(tileEntity.zCoord);
+
+		for (Object obj : args)
+		{
+			newArgs.add(obj);
+		}
+
+		return super.getPacket(newArgs.toArray());
 	}
 
 	@Override
