@@ -3,6 +3,7 @@ package artillects.client;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import artillects.Artillects;
 import artillects.CommonProxy;
 import artillects.client.gui.GuiWorker;
@@ -25,12 +26,13 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityDemolisher.class, new RenderDemolisher());
 		RenderingRegistry.registerEntityRenderingHandler(EntityFabricator.class, new RenderFabricator());
 		MinecraftForgeClient.registerItemRenderer(Artillects.itemArtillectSpawner.itemID, new RenderArtillectItems());
+		MinecraftForge.EVENT_BUS.register(new SoundHandler());
 	}
 
 	@Override
 	public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
 	{
-		if (id == GuiIDs.WORKER.ordinal())
+		if (id == GuiIDs.ARTILLECT_ENTITY.ordinal())
 		{
 			return new GuiWorker((EntityWorker) world.getEntityByID(x), player);
 		}
