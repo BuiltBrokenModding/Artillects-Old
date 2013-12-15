@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraftforge.common.ForgeDirection;
+
+import artillects.Vector3;
 import artillects.VectorWorld;
 import artillects.hive.structure.Building;
 import artillects.hive.structure.Structure;
@@ -26,42 +29,58 @@ public class HiveComplex extends HiveGhost
         Hive.instance().addHiveComplex(this);
     }
 
-    public void loadTunnelTest()
+    public void loadGeneralBuilding()
     {
-        //Center room
-        peaces.add(new Structure(Building.TUNNELC, location.clone()));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(0, 0, 6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(0, 0, -6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(6, 0, 0)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(-6, 0, 0)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(6, 0, 6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(-6, 0, -6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(-6, 0, 6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(6, 0, -6)));
-        peaces.add(new Structure(Building.TUNNELC, location.clone().add(6, 0, 6)));
-        peaces.add(new Structure(Building.WALLX, location.clone().add(10, 1, 6)));
-        peaces.add(new Structure(Building.WALLZ, location.clone().add(6, 1, 10)));
-        peaces.add(new Structure(Building.WALLX, location.clone().add(-10, 1, 6)));
-        peaces.add(new Structure(Building.WALLZ, location.clone().add(-6, 1, 10)));
-        peaces.add(new Structure(Building.WALLX, location.clone().add(10, 1, -6)));
-        peaces.add(new Structure(Building.WALLZ, location.clone().add(6, 1, -10)));
-        peaces.add(new Structure(Building.WALLX, location.clone().add(-10, 1, -6)));
-        peaces.add(new Structure(Building.WALLZ, location.clone().add(-6, 1, -10)));
+        final int width = 3;
+        final int height = 4;
+        for (int floor = 0; floor <= height; floor++)
+        {
+            VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
+            //Center room
+            peaces.add(new Structure(Building.NODE, floorBase.clone()));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 0)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, 0)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, 6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, -6)));
+            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 6)));
+            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(10, 1, 6)));
+            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(6, 1, 10)));
+            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(-10, 1, 6)));
+            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(-6, 1, 10)));
+            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(10, 1, -6)));
+            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(6, 1, -10)));
+            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(-10, 1, -6)));
+            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(-6, 1, -10)));
 
-        //NorthTunnel
-        for (int i = 0; i < 3; i++)
-            peaces.add(new Structure(Building.TUNNELZ, location.clone().add(0, 0, -12 - (6 * i))));
+            if (floor != height)
+            {
+                //Tunnels out from room
+                for (int i = 0; i < width; i++)
+                {
+                    peaces.add(new Structure(Building.TUNNELZ, floorBase.clone().add(0, 0, -12 - (6 * i))));
+                    peaces.add(new Structure(Building.TUNNELZ, floorBase.clone().add(0, 0, 12 + (6 * i))));
+                    peaces.add(new Structure(Building.TUNNELX, floorBase.clone().add(-12 - (6 * i), 0, 0)));
+                    peaces.add(new Structure(Building.TUNNELX, floorBase.clone().add(12 + (6 * i), 0, 0)));
+                }
 
-        //SouthTunnel
-        for (int i = 0; i < 3; i++)
-            peaces.add(new Structure(Building.TUNNELZ, location.clone().add(0, 0, 12 + (6 * i))));
-        //EastTunnel
-        //for (int i = 0; i < 3; i++)
-            //peaces.add(new Structure(Building.TUNNELZ, location.clone().add(-12 - (6 * i), 0, 0)));
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -12 - (6 * width))));
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, +12 + (6 * width))));
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-12 - (6 * width), 0, 0)));
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(+12 + (6 * width), 0, 0)));
+            }
+        }
+    }
 
-        //WestTunnel
-        for (int i = 0; i < 3; i++)
-            peaces.add(new Structure(Building.TUNNELZ, location.clone().add(12 + (6 * i), 0, 0)));
+    public void loadTunnel(VectorWorld start, ForgeDirection direction, int tunnelPeaces)
+    {
+        for (int i = 0; i < tunnelPeaces; i++)
+        {
+            peaces.add(new Structure(Building.TUNNELZ, start.clone().add(direction.offsetX * 6, direction.offsetX * 6, direction.offsetX * 6)));
+        }
     }
 
     @Override

@@ -29,7 +29,7 @@ public class ItemBuildingGenerator extends ItemBase
 			if (itemStack.getItemDamage() == 0)
 			{
 				HiveComplex complex = new HiveComplex("TestHive", new VectorWorld(world, x, y, z));
-				complex.loadTunnelTest();
+				complex.loadGeneralBuilding();
 			}
 			else
 			{

@@ -9,7 +9,10 @@ public enum Building
     TUNNELX("5x5XTunnel"),
     WALLZ("5x5ZWall"),
     WALLX("5x5XWall"),
-    TUNNELC("5x5CTunnel");
+    TUNNELC("5x5CTunnel"),
+    FLOOR("5x5Floor"),
+    SKYLIGHT("5x5SkyLight"),
+    NODE("5x5TunnelNode");
     public String name;
     public Schematic schematic;
 
