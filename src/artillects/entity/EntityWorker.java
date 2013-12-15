@@ -1,5 +1,8 @@
 package artillects.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +11,9 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
 import artillects.Vector3;
@@ -30,6 +35,8 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	}
 
 	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
+
+	private List<ItemStack> cachedInventory;
 
 	public static final int DATA_TYPE_ID = 12;
 
@@ -65,6 +72,8 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 				this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
 			}
 		}
+
+		this.cachedInventory = null;
 	}
 
 	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
@@ -90,6 +99,21 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		return true;
 	}
 
+	public boolean isInventoryEmpty()
+	{
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			ItemStack itemStack = inventory.getStackInSlot(i);
+
+			if (itemStack != null)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	/**
 	 * Adds a stack into the inventory.
 	 * 
@@ -100,14 +124,14 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	{
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
-			if (stack.stackSize <= 0)
-			{
-				stack = null;
-			}
-
 			if (stack == null)
 			{
 				break;
+			}
+
+			if (stack.stackSize <= 0)
+			{
+				stack = null;
 			}
 
 			ItemStack itemStack = inventory.getStackInSlot(i);
@@ -229,13 +253,28 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		this.setType(EnumWorkerType.values()[nbt.getByte("type")]);
 	}
 
+	public List<ItemStack> getInventoryAsList()
+	{
+		if (this.cachedInventory == null)
+		{
+			List<ItemStack> list = new ArrayList<ItemStack>();
+
+			for (int i = 0; i < this.inventory.getSizeInventory(); i++)
+			{
+				list.add(this.inventory.getStackInSlot(i));
+			}
+		}
+
+		return this.cachedInventory;
+	}
+
 	public boolean hasItem(ItemStack... itemStacks)
 	{
 		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
 		{
 			for (ItemStack itemStack : itemStacks)
 			{
-				if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
+				if (this.inventory.getStackInSlot(i) != null && itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
 				{
 					return true;
 				}
@@ -259,4 +298,19 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		return false;
 	}
 
+	public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
+	{
+		for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
+		{
+			PathEntity path = this.getNavigator().getPathToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ);
+
+			if (path != null)
+			{
+				this.getNavigator().tryMoveToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ, moveSpeed);
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

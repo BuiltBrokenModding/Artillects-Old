@@ -83,7 +83,7 @@ public class EntityAIMining extends EntityAIBase
 
 			if (this.lastMoveTime-- <= 0)
 			{
-				this.entity.getNavigator().tryMoveToXYZ(targetPosition.x, targetPosition.y, targetPosition.z, this.moveSpeed);
+				this.entity.tryToWalkNextTo(targetPosition, this.moveSpeed);
 				this.lastMoveTime = 40;
 			}
 
