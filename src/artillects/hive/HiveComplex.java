@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraftforge.common.ForgeDirection;
-
-import artillects.Vector3;
 import artillects.VectorWorld;
 import artillects.hive.structure.Building;
 import artillects.hive.structure.Structure;
@@ -38,6 +36,10 @@ public class HiveComplex extends HiveGhost
             VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
             //Center room
             peaces.add(new Structure(Building.NODE, floorBase.clone()));
+            if (floor == 0)
+            {
+                peaces.add(new Structure(Building.FLOOR, floorBase.clone()));
+            }
             peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, 6)));
             peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -6)));
             peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 0)));
@@ -59,18 +61,14 @@ public class HiveComplex extends HiveGhost
             if (floor != height)
             {
                 //Tunnels out from room
-                for (int i = 0; i < width; i++)
-                {
-                    peaces.add(new Structure(Building.TUNNELZ, floorBase.clone().add(0, 0, -12 - (6 * i))));
-                    peaces.add(new Structure(Building.TUNNELZ, floorBase.clone().add(0, 0, 12 + (6 * i))));
-                    peaces.add(new Structure(Building.TUNNELX, floorBase.clone().add(-12 - (6 * i), 0, 0)));
-                    peaces.add(new Structure(Building.TUNNELX, floorBase.clone().add(12 + (6 * i), 0, 0)));
-                }
-
+                this.loadTunnel(floorBase.clone().add(0, 0, -12), ForgeDirection.NORTH, width);
                 peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -12 - (6 * width))));
+                this.loadTunnel(floorBase.clone().add(0, 0, +12), ForgeDirection.SOUTH, width);
                 peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, +12 + (6 * width))));
-                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-12 - (6 * width), 0, 0)));
+                this.loadTunnel(floorBase.clone().add(+12, 0, 0), ForgeDirection.EAST, width);
                 peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(+12 + (6 * width), 0, 0)));
+                this.loadTunnel(floorBase.clone().add(-12, 0, 0), ForgeDirection.WEST, width);
+                peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-12 - (6 * width), 0, 0)));
             }
         }
     }
@@ -79,7 +77,23 @@ public class HiveComplex extends HiveGhost
     {
         for (int i = 0; i < tunnelPeaces; i++)
         {
-            peaces.add(new Structure(Building.TUNNELZ, start.clone().add(direction.offsetX * 6, direction.offsetX * 6, direction.offsetX * 6)));
+            VectorWorld spot = start.clone().add(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
+            if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH)
+            {
+                peaces.add(new Structure(Building.TUNNELZ, spot));
+            }
+            else if (direction == ForgeDirection.EAST || direction == ForgeDirection.WEST)
+            {
+                peaces.add(new Structure(Building.TUNNELX, spot));
+            }
+            else if (direction == ForgeDirection.UP || direction == ForgeDirection.DOWN)
+            {
+                peaces.add(new Structure(Building.NODE, spot));
+                peaces.add(new Structure(Building.WALLX, spot.clone().add(3, 1, 0)));
+                peaces.add(new Structure(Building.WALLZ, spot.clone().add(-3, 1, 0)));
+                peaces.add(new Structure(Building.WALLX, spot.clone().add(0, 1, -3)));
+                peaces.add(new Structure(Building.WALLZ, spot.clone().add(0, 1, 3)));
+            }
         }
     }
 
