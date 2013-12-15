@@ -50,7 +50,7 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
+		//this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(120.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);

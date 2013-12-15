@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.World;
 import artillects.InventoryHelper;
 import artillects.Vector3;
+import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
 import artillects.entity.EntityWorker.EnumWorkerType;
 import artillects.hive.ZoneProcessing;
@@ -79,18 +80,17 @@ public class EntityAIBlacksmith extends EntityAIBase
 	@Override
 	public void updateTask()
 	{
+		if (this.lastUseChest != null)
+		{
+			this.lastUseChest.closeChest();
+			this.lastUseChest = null;
+		}
+
 		if (((ZoneProcessing) entity.zone).chestPositions.size() > 0 && ((ZoneProcessing) entity.zone).furnacePositions.size() > 0)
 		{
 			this.idleTime--;
-
 			if (this.idleTime <= 0)
 			{
-				if (this.lastUseChest != null)
-				{
-					this.lastUseChest.closeChest();
-					this.lastUseChest = null;
-				}
-
 				boolean doDump = false;
 
 				if (this.entity.isInventoryEmpty())
@@ -142,7 +142,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
+									if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
 									{
 										this.entity.getNavigator().clearPathEntity();
 										chest.setInventorySlotContents(i, stackInEntity);
@@ -154,7 +154,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
+									if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
 									{
 										int originalStackSize = itemStack.stackSize;
 										itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());
@@ -240,7 +240,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 						{
 							if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 							{
-								if (chestPosition.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
+								if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
 								{
 									this.entity.getNavigator().clearPathEntity();
 
@@ -273,7 +273,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 		{
 			if (this.entity.tryToWalkNextTo(position, this.moveSpeed))
 			{
-				if (position.distance(new Vector3(this.entity)) <= EntityWorker.interactionDistance)
+				if (position.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
 				{
 					this.entity.getNavigator().clearPathEntity();
 					ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.entity.getInventoryAsList());

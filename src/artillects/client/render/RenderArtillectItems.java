@@ -8,11 +8,14 @@ import org.lwjgl.opengl.GL11;
 import artillects.Artillects;
 import artillects.entity.ArtillectType;
 import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author Calclavia
  * 
  */
+@SideOnly(Side.CLIENT)
 public class RenderArtillectItems implements IItemRenderer
 {
 	@Override

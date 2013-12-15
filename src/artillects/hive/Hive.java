@@ -62,24 +62,6 @@ public class Hive implements IScheduledTickHandler
 		}
 	}
 
-	@Deprecated
-	public void addDrone(EntityArtillectBase drone)
-	{
-		if (drone != null && !activeDrones.contains(drone))
-		{
-			activeDrones.add(drone);
-		}
-	}
-
-	@Deprecated
-	public void removeDrone(EntityArtillectBase drone)
-	{
-		if (drone != null)
-		{
-			activeDrones.remove(drone);
-		}
-	}
-
 	/**
 	 * Called when a drone is created or activated. Then needs to be loaded into the hive collection
 	 */

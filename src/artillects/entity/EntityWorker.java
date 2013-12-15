@@ -35,14 +35,6 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		HARVESTER, BLACKSMITH;
 	}
 
-	public InventoryBasic inventory = new InventoryBasic("gui.worker", false, 9);
-
-	private List<ItemStack> cachedInventory;
-
-	public static final int interactionDistance = 2;
-
-	public static final int DATA_TYPE_ID = 12;
-
 	public EntityWorker(World par1World)
 	{
 		super(par1World);
@@ -56,7 +48,7 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(DATA_TYPE_ID, (byte) EnumWorkerType.HARVESTER.ordinal());
+		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) EnumWorkerType.HARVESTER.ordinal());
 	}
 
 	@Override
@@ -79,31 +71,9 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		this.cachedInventory = null;
 	}
 
-	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
-	public boolean isInventoryFull()
-	{
-		return InventoryHelper.isInventoryFull(this.inventory);
-	}
-
-	public boolean isInventoryEmpty()
-	{
-		return InventoryHelper.isInventoryEmpty(this.inventory);
-	}
-
-	/**
-	 * Adds a stack into the inventory.
-	 * 
-	 * @param stack - The stack to add
-	 * @return - The remaining stack.
-	 */
-	public ItemStack increaseStackSize(ItemStack stack)
-	{
-		return InventoryHelper.addStackToInventory(this.inventory, stack);
-	}
-
 	public EnumWorkerType getType()
 	{
-		return EnumWorkerType.values()[this.getDataWatcher().getWatchableObjectByte(EntityWorker.DATA_TYPE_ID)];
+		return EnumWorkerType.values()[this.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID)];
 	}
 
 	public void setType(EnumWorkerType type)
@@ -114,7 +84,7 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 		}
 		else
 		{
-			this.getDataWatcher().updateObject(EntityWorker.DATA_TYPE_ID, (byte) (type.ordinal()));
+			this.getDataWatcher().updateObject(EntityArtillectBase.DATA_TYPE_ID, (byte) (type.ordinal()));
 		}
 	}
 
@@ -127,57 +97,9 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	}
 
 	@Override
-	public boolean interact(EntityPlayer entityPlayer)
-	{
-		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.WORKER.ordinal(), this.worldObj, this.entityId, 0, 0);
-		return true;
-	}
-
-	@Override
-	protected void dropEquipment(boolean par1, int par2)
-	{
-		super.dropEquipment(par1, par2);
-		this.dropItemsInChest(this.inventory);
-	}
-
-	private void dropItemsInChest(IInventory inventory)
-	{
-		if (inventory != null && !this.worldObj.isRemote)
-		{
-			for (int i = 0; i < inventory.getSizeInventory(); ++i)
-			{
-				ItemStack itemstack = inventory.getStackInSlot(i);
-
-				if (itemstack != null)
-				{
-					this.entityDropItem(itemstack, 0.0F);
-				}
-			}
-		}
-	}
-
-	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt)
 	{
 		super.writeEntityToNBT(nbt);
-
-		NBTTagList nbttaglist = new NBTTagList();
-
-		for (int i = 0; i < this.inventory.getSizeInventory(); ++i)
-		{
-			ItemStack itemstack = this.inventory.getStackInSlot(i);
-
-			if (itemstack != null)
-			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte) i);
-				itemstack.writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-
-		nbt.setTag("Items", nbttaglist);
-
 		nbt.setByte("type", (byte) this.getType().ordinal());
 	}
 
@@ -185,81 +107,6 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	public void readEntityFromNBT(NBTTagCompound nbt)
 	{
 		super.readEntityFromNBT(nbt);
-
-		NBTTagList nbttaglist = nbt.getTagList("Items");
-
-		for (int i = 0; i < nbttaglist.tagCount(); ++i)
-		{
-			NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.tagAt(i);
-			int j = nbttagcompound1.getByte("Slot") & 255;
-
-			if (j < this.inventory.getSizeInventory())
-			{
-				this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
-			}
-		}
-
 		this.setType(EnumWorkerType.values()[nbt.getByte("type")]);
-	}
-
-	public List<ItemStack> getInventoryAsList()
-	{
-		if (this.cachedInventory == null)
-		{
-			this.cachedInventory = new ArrayList<ItemStack>();
-
-			for (int i = 0; i < this.inventory.getSizeInventory(); i++)
-			{
-				this.cachedInventory.add(this.inventory.getStackInSlot(i));
-			}
-		}
-
-		return this.cachedInventory;
-	}
-
-	public boolean hasItem(ItemStack... itemStacks)
-	{
-		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
-		{
-			for (ItemStack itemStack : itemStacks)
-			{
-				if (this.inventory.getStackInSlot(i) != null && itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
-				{
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	public boolean decreaseStackSize(ItemStack itemStack)
-	{
-		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
-		{
-			if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
-			{
-				this.inventory.decrStackSize(i, itemStack.stackSize);
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
-	{
-		for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
-		{
-			PathEntity path = this.getNavigator().getPathToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ);
-
-			if (path != null)
-			{
-				this.getNavigator().tryMoveToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ, moveSpeed);
-				return true;
-			}
-		}
-
-		return false;
 	}
 }

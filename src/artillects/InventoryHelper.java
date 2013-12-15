@@ -1,5 +1,6 @@
 package artillects;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,39 @@ import net.minecraft.item.ItemStack;
  */
 public class InventoryHelper
 {
+	public static boolean hasItem(IInventory inventory, ItemStack... itemStacks)
+	{
+		return getItem(inventory, itemStacks) != null;
+	}
+
+	public static ItemStack getItem(IInventory inventory, ItemStack... itemStacks)
+	{
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			for (ItemStack itemStack : itemStacks)
+			{
+				if (inventory.getStackInSlot(i) != null && itemStack.isItemEqual(inventory.getStackInSlot(i)))
+				{
+					return inventory.getStackInSlot(i);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	public static List<ItemStack> getInventoryAsList(IInventory inventory)
+	{
+		ArrayList<ItemStack> inventoryList = new ArrayList<ItemStack>();
+
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			inventoryList.add(inventory.getStackInSlot(i));
+		}
+
+		return inventoryList;
+	}
+
 	/**
 	 * Adds stack to inventory
 	 * 

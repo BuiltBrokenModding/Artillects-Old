@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import artillects.container.ContainerWorker;
+import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
 import artillects.entity.EntityWorker.EnumWorkerType;
 
@@ -35,7 +36,7 @@ public class GuiWorker extends GuiBase
 	{
 		super.drawGuiContainerForegroundLayer(x, y);
 		this.fontRenderer.drawString("Worker", this.xSize / 2 - 15, -18, 4210752);
-		this.fontRenderer.drawString("Task: " + EnumWorkerType.values()[this.worker.getDataWatcher().getWatchableObjectByte(EntityWorker.DATA_TYPE_ID)].name(), 9, 0, 4210752);
+		this.fontRenderer.drawString("Task: " + EnumWorkerType.values()[this.worker.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID)].name(), 9, 0, 4210752);
 	}
 
 	@Override
