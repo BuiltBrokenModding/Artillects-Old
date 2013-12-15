@@ -96,7 +96,7 @@ public class Hive implements IScheduledTickHandler
 
     public void addHiveComplex(HiveComplex hiveComplex)
     {
-        if (hiveComplex != null && !activeComplexs.containsKey(hiveComplex.name))
+        if (hiveComplex != null && activeComplexs.get(hiveComplex.name) == null)
         {
             activeComplexs.put(hiveComplex.name, hiveComplex);
         }
@@ -119,7 +119,7 @@ public class Hive implements IScheduledTickHandler
         {
             ticks = 0;
         }
-
+        System.out.println("[Hive] Tick");
         synchronized (activeComplexs)
         {
             for (Entry<String, HiveComplex> entry : activeComplexs.entrySet())
