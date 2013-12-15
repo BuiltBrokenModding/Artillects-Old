@@ -19,7 +19,7 @@ public abstract class PacketType
 
 	public PacketType()
 	{
-		id = PacketHandler.registeredPackets.size();
+		this.id = PacketHandler.registeredPackets.size();
 		PacketHandler.registeredPackets.add(this);
 	}
 
@@ -30,9 +30,11 @@ public abstract class PacketType
 			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 			DataOutputStream data = new DataOutputStream(bytes);
 
+			this.writeData(data, this.id);
+
 			for (Object obj : arg)
 			{
-				this.loadData(data, obj);
+				this.writeData(data, obj);
 			}
 
 			Packet250CustomPayload packet = new Packet250CustomPayload();
@@ -49,8 +51,8 @@ public abstract class PacketType
 		return null;
 	}
 
-	/** Called to allow for customer data types to be encoded */
-	public void loadData(DataOutputStream data, Object obj)
+	/** Called to allow for custom data types to be encoded */
+	public void writeData(DataOutputStream data, Object obj)
 	{
 		try
 		{
