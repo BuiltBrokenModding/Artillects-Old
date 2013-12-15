@@ -132,14 +132,34 @@ public class Hive implements IScheduledTickHandler
             Iterator<Zone> zoneIt = activeZones.iterator();
             while (zoneIt.hasNext())
             {
-                Zone complex = zoneIt.next();
-                if (complex.isValid())
+                Zone zone = zoneIt.next();
+                if (zone.isValid())
                 {
-                    complex.updateEntity();
+                    zone.updateEntity();
+                    if (zone.doesZoneNeedWorkers())
+                    {
+                        Iterator<IArtillect> droneIterator = this.droneAwaitingOrders.iterator();
+                        while (droneIterator.hasNext())
+                        {
+                            IArtillect drone = droneIterator.next();
+                            if (zone.canAssignDrone(drone))
+                            {
+                                zone.assignDrone(drone);
+                                if (drone.getZone() == zone)
+                                {
+                                    droneIterator.remove();
+                                }
+                            }
+                            if (!zone.doesZoneNeedWorkers())
+                            {
+                                break;
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    complex.invalidate();
+                    zone.invalidate();
                     zoneIt.remove();
                 }
             }
