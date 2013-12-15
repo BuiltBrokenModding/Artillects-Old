@@ -2,6 +2,7 @@ package artillects.block.teleporter;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
@@ -22,11 +23,20 @@ public class BlockHiveTeleporterNode extends BlockBase
 	{
 		return true;
 	}
-
-	public TileEntity createTileEntity(World world, int metadata)
-	{
-		return new TileHiveTNode();
+	
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3) {
+		TileEntity tile = world.getBlockTileEntity(x, y, z);
+		if(tile instanceof TileHiveTNode) {
+			System.out.println(((TileHiveTNode)tile).shapeCode);
+		}
+		return true;
 	}
+	
+    @Override
+    public TileEntity createTileEntity(World world, int metadata)
+    {
+        return new TileHiveTNode();
+    }
 	
 	public Icon getIcon(int side, int metadata) {
 		if(side == 0) return iconBot;

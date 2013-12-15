@@ -11,12 +11,13 @@ import artillects.block.teleporter.util.TeleporterCode;
  */
 public class TileHiveTNode extends TileEntity
 {
-	TeleporterCode shapeCode;
+	public TeleporterCode shapeCode;
 	Vector3 vecThis = new Vector3(this);
 
 	public TileHiveTNode()
 	{
 		shapeCode = new TeleporterCode(Shape.NOTHING, Shape.NOTHING, Shape.NOTHING, Shape.NOTHING);
+		System.out.println("TILE MADE");
 	}
 
 	@Override

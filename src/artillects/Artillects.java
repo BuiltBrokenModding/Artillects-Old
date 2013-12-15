@@ -14,6 +14,7 @@ import artillects.block.BlockGravitySlow;
 import artillects.block.teleporter.BlockHiveTeleporterNode;
 import artillects.block.teleporter.BlockHiveTeleporterShape;
 import artillects.block.teleporter.tile.TileHiveTNode;
+import artillects.block.teleporter.tile.TileHiveTeleporterShape;
 import artillects.block.teleporter.util.Shape;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
@@ -215,6 +216,7 @@ public class Artillects
 
 
         GameRegistry.registerTileEntity(TileHiveTNode.class, "tileHiveTeleporterNode");
+        GameRegistry.registerTileEntity(TileHiveTeleporterShape.class, "tileHiveTeleporterShape");
     }
 
     @EventHandler
