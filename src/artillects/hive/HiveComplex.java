@@ -41,23 +41,7 @@ public class HiveComplex extends HiveGhost
             {
                 peaces.add(new Structure(Building.FLOOR, floorBase.clone()));
             }
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, 6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(0, 0, -6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 0)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, 0)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, -6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(-6, 0, 6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, -6)));
-            peaces.add(new Structure(Building.TUNNELC, floorBase.clone().add(6, 0, 6)));
-            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(10, 1, 6)));
-            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(6, 1, 10)));
-            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(-10, 1, 6)));
-            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(-6, 1, 10)));
-            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(10, 1, -6)));
-            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(6, 1, -10)));
-            peaces.add(new Structure(Building.WALLX, floorBase.clone().add(-10, 1, -6)));
-            peaces.add(new Structure(Building.WALLZ, floorBase.clone().add(-6, 1, -10)));
+            this.load3x3Room(floorBase);
 
             if (floor != height)
             {
@@ -85,7 +69,7 @@ public class HiveComplex extends HiveGhost
         }
     }
 
-    public void load3x3Room(VectorWorld start, int expand)
+    public void load3x3Room(VectorWorld start)
     {
         //First Peace
         peaces.add(new Structure(Building.TUNNELC, start.clone().add(0, 0, 0)));
