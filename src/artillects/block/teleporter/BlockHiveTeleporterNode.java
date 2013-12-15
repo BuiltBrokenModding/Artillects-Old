@@ -6,12 +6,12 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.block.BlockBase;
 
-public class BlockGravityElev extends BlockBase
+public class BlockHiveTeleporterNode extends BlockBase
 {
-	public BlockGravityElev()
+	public BlockHiveTeleporterNode()
 	{
-		super("gravityElev", Material.iron);
-		setTextureName(Artillects.PREFIX + "gravityElev");
+		super("teleporterNode", Material.iron);
+		setTextureName(Artillects.PREFIX + "teleporterNode");
 	}
 
 	public boolean hasTileEntity()
@@ -21,6 +21,6 @@ public class BlockGravityElev extends BlockBase
 
 	public TileEntity createTileEntity(World world, int metadata)
 	{
-		return new TileGravityElev();
+		return new TileHiveTNode();
 	}
 }

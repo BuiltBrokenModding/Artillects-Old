@@ -11,8 +11,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockBaseDecor;
 import artillects.block.BlockGravitySlow;
-import artillects.block.teleporter.BlockGravityElev;
-import artillects.block.teleporter.TileGravityElev;
+import artillects.block.teleporter.BlockHiveTeleporterNode;
+import artillects.block.teleporter.TileHiveTNode;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
 import artillects.item.ItemArtillectSpawner;
@@ -141,7 +141,7 @@ public class Artillects
     public static Block blockWall2;
     public static Block blockLight;
     public static Block blockGravity_Slow;
-    public static Block blockGravity_Elev;
+    public static Block blockHiveTeleporterNode;
 
     public static Item itemArtillectSpawner;
     public static Item itemParts;
@@ -170,7 +170,7 @@ public class Artillects
         blockWall2 = new BlockBaseDecor("decorWall2");
         blockLight = new BlockBaseDecor("decorLight").setLightValue(1F);
         blockGravity_Slow = new BlockGravitySlow();
-        blockGravity_Elev = new BlockGravityElev();
+        blockHiveTeleporterNode = new BlockHiveTeleporterNode();
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(itemArtillectSpawner);
@@ -194,9 +194,9 @@ public class Artillects
         GameRegistry.registerBlock(blockWall2, "blockWall2");
         GameRegistry.registerBlock(blockLight, "blockLight");
         GameRegistry.registerBlock(blockGravity_Slow, "blockGravity_Slow");
-        GameRegistry.registerBlock(blockGravity_Elev, "blockGravity_Elev");
+        GameRegistry.registerBlock(blockHiveTeleporterNode, "blockHiveTeleporterNode");
 
-        GameRegistry.registerTileEntity(TileGravityElev.class, "tileGravityElev");
+        GameRegistry.registerTileEntity(TileHiveTNode.class, "tileHiveTeleporterNode");
     }
 
     @EventHandler
