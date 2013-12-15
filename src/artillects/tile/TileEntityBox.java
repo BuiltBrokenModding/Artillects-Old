@@ -18,6 +18,7 @@ public class TileEntityBox extends TileEntity implements IInventory
         return this.inventoryContents[par1];
     }
 
+    @Override
     public void readFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readFromNBT(par1NBTTagCompound);
@@ -36,7 +37,7 @@ public class TileEntityBox extends TileEntity implements IInventory
         }
     }
 
-    /** Writes a tile entity to NBT. */
+    @Override
     public void writeToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeToNBT(par1NBTTagCompound);
