@@ -30,14 +30,15 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 
 				if (frequency == -1)
 				{
-					player.addChatMessage(Artillects.getLocal("msg.teleporter.setup"));
+					if(!world.isRemote) player.addChatMessage(Artillects.getLocal("msg.teleporter.setup"));
 				}
 				else
 				{
 					if(player.isSneaking()) {
-						player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+						if(!world.isRemote) player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+					} else {
+						((TileEntityTeleporterAnchor) tile).doTeleport(player);
 					}
-					((TileEntityTeleporterAnchor) tile).doTeleport(player);
 				}
 			}
 
