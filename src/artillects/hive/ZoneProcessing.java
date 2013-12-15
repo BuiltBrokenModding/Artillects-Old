@@ -34,7 +34,8 @@ public class ZoneProcessing extends Zone
 	{
 		Vector3 start = this.start;
 		Vector3 end = this.end;
-		this.chestPositions.clear();
+		this.chestPositions.clear();		
+		
 
 		for (int x = (int) start.x; x < (int) end.x; x++)
 		{
