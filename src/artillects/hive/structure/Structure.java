@@ -37,7 +37,7 @@ public class Structure extends HiveGhost
         if (this.worldGenerated && !this.generated && building.getSchematic() != null)
         {
             this.generated = true;
-            building.getSchematic().build(location);
+            building.getSchematic().build(location, false);
             //System.out.println("Generating Schematic @ " + location.toString());
             if (building == Building.PROCESSORROOM)
             {

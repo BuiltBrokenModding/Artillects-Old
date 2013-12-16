@@ -67,12 +67,12 @@ public class Schematic implements ISaveObject
         }
     }
 
-    public void build(VectorWorld spot)
+    public void build(VectorWorld spot, boolean doWorldCheck)
     {
         if (this.blocks != null)
         {
             HashMap<Vector3, ItemStack> blocksToPlace = new HashMap();
-            this.getBlocksToPlace(spot, blocksToPlace, true);
+            this.getBlocksToPlace(spot, blocksToPlace, doWorldCheck);
             for (Entry<Vector3, ItemStack> entry : blocksToPlace.entrySet())
             {
                 Vector3 setPos = spot.clone().subtract(this.schematicCenter).add(entry.getKey());
