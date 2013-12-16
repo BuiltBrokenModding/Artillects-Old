@@ -34,7 +34,6 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World par1World, int x, int y, int z, Random par5Random)
 	{
-		System.out.println("TICK");
 		int l = par1World.getBlockMetadata(x, y, z);
 		double spawnX = x + 0.5f;
 		double spawnY = y + 0.7f + par5Random.nextFloat() * 2.5f;
