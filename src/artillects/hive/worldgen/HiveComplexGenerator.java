@@ -9,7 +9,7 @@ import artillects.hive.Hive;
 import artillects.hive.HiveComplex;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class HiveComplexGeneradtor implements IWorldGenerator
+public class HiveComplexGenerator implements IWorldGenerator
 {
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider)

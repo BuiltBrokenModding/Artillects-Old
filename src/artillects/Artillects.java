@@ -27,7 +27,7 @@ import artillects.block.teleporter.TileEntityTeleporterAnchor;
 import artillects.commands.CommandTool;
 import artillects.hive.ArtillectEntityType;
 import artillects.hive.Hive;
-import artillects.hive.worldgen.HiveComplexGeneradtor;
+import artillects.hive.worldgen.HiveComplexGenerator;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemParts;
@@ -211,7 +211,7 @@ public class Artillects implements IConnectionHandler
 
 		if (Artillects.enableHiveComplexGenerator)
 		{
-			GameRegistry.registerWorldGenerator(new HiveComplexGeneradtor());
+			GameRegistry.registerWorldGenerator(new HiveComplexGenerator());
 		}
 		proxy.init();
 	}
