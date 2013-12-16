@@ -1,5 +1,6 @@
 package artillects.commands;
 
+import java.io.File;
 import java.util.List;
 
 import net.minecraft.command.CommandBase;
@@ -7,6 +8,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import artillects.hive.Hive;
+import artillects.hive.schematics.NBTFileHandler;
 
 public class CommandTool extends CommandBase
 {
@@ -47,7 +49,51 @@ public class CommandTool extends CommandBase
                     }
                     else if (args.length >= 2 && args[1].equalsIgnoreCase("load"))
                     {
-                        PlayerSelectionHandler.loadWorldSelection(player);
+                        if (args.length >= 3)
+                        {
+                            File file = new File(NBTFileHandler.getBaseFolder(), "schematics/" + args[2] + ".dat");
+                            if (file.exists())
+                            {
+                                PlayerSelectionHandler.getSchematic(player, file);
+                            }
+                            else
+                            {
+                                player.sendChatToPlayer(ChatMessageComponent.createFromText("File not found! .mincraft/schematics/" + args[2] + ".dat"));
+                            }
+                        }
+                        else
+                        {
+                            PlayerSelectionHandler.loadWorldSelection(player);
+                        }
+                    }
+                    else if (args.length >= 2 && args[1].equalsIgnoreCase("build"))
+                    {
+                        if (PlayerSelectionHandler.hasSchematicLoaded(player))
+                        {
+                            if (args.length >= 3 && args[2].equalsIgnoreCase("pointone"))
+                            {
+
+                            }
+                            else if (args.length >= 3 && args[2].equalsIgnoreCase("pointone"))
+                            {
+
+                            }
+                            else if (args.length >= 5)
+                            {
+                                try
+                                {
+
+                                }
+                                catch (Exception e)
+                                {
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a schematic loaded!"));
+                        }
                     }
                     else
                     {

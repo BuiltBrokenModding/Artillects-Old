@@ -1,11 +1,15 @@
 package artillects.commands;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatMessageComponent;
 import artillects.VectorWorld;
 import artillects.hive.schematics.Schematic;
@@ -106,5 +110,24 @@ public class PlayerSelectionHandler
     public static Schematic getSchematic(EntityPlayer player)
     {
         return player != null ? playerSchematic.get(player.username) : null;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void getSchematic(EntityPlayer player, File file)
+    {
+        if (file.exists())
+        {
+            try
+            {
+                Schematic schematic = new Schematic();
+                schematic.load(CompressedStreamTools.readCompressed(file.toURL().openStream()));
+                playerSchematic.put(player.username, schematic);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                player.sendChatToPlayer(ChatMessageComponent.createFromText("Error loading schematic from file see  game logs for details"));
+            }
+        }
     }
 }
