@@ -12,53 +12,54 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockSymbol extends BlockDecoration
 {
-    public BlockSymbol()
-    {
-        super("decorSymbol");
-    }
+	public static enum SymbolType
+	{
+		ZHUANG, GU, ZHI;
+		public Icon icon;
+	}
 
-    @Override
-    public int damageDropped(int par1)
-    {
-        return par1;
-    }
+	public BlockSymbol()
+	{
+		super("symbol");
+	}
 
-    @Override
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for (DroneSymbol data : DroneSymbol.values())
-        {
-            par3List.add(new ItemStack(this, 1, data.ordinal()));
-        }
-    }
+	@Override
+	public int damageDropped(int par1)
+	{
+		return par1;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
-    {
-        for (DroneSymbol data : DroneSymbol.values())
-        {
-            data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "symbol." + data.name());
-        }
-    }
+	@Override
+	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
+	{
+		for (SymbolType data : SymbolType.values())
+		{
+			par3List.add(new ItemStack(this, 1, data.ordinal()));
+		}
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public Icon getIcon(int side, int metadata)
-    {
-        if (metadata < DroneSymbol.values().length)
-        {
-            return DroneSymbol.values()[metadata].icon;
-        }
-        return DroneSymbol.zhuang.icon;
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerIcons(IconRegister par1IconRegister)
+	{
+		for (SymbolType data : SymbolType.values())
+		{
+			data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "symbol." + data.name().toLowerCase());
+		}
 
-    public static enum DroneSymbol
-    {
-        zhuang(),
-        gu(),
-        zhi();
-        public Icon icon;
-    }
+		this.blockIcon = SymbolType.ZHUANG.icon;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Icon getIcon(int side, int metadata)
+	{
+		if (metadata < SymbolType.values().length)
+		{
+			return SymbolType.values()[metadata].icon;
+		}
+
+		return SymbolType.ZHUANG.icon;
+	}
 
 }

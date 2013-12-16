@@ -95,7 +95,7 @@ public class Schematic implements ISaveObject
                 {
                     if (blockID == Artillects.blockSymbol.blockID)
                     {
-                        meta = spot.world.rand.nextInt(BlockSymbol.DroneSymbol.values().length - 1);
+                        meta = spot.world.rand.nextInt(BlockSymbol.SymbolType.values().length - 1);
                     }
                     if (meta > 15)
                     {

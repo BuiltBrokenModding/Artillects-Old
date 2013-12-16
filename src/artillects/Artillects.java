@@ -17,7 +17,7 @@ import artillects.block.BlockGravitySlow;
 import artillects.block.BlockSymbol;
 import artillects.block.teleporter.BlockGlyph;
 import artillects.block.teleporter.BlockTeleporterAnchor;
-import artillects.block.teleporter.ItemBlockGlyph;
+import artillects.block.teleporter.ItemBlockMetadata;
 import artillects.block.teleporter.TileEntityTeleporterAnchor;
 import artillects.commands.CommandTool;
 import artillects.entity.ArtillectType;
@@ -180,7 +180,7 @@ public class Artillects
 
 		CONFIGURATION.save();
 
-		ArtillectsTab.itemStack = new ItemStack(blockWall1);
+		ArtillectsTab.itemStack = new ItemStack(blockSymbol);
 
 		System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
@@ -194,13 +194,12 @@ public class Artillects
 
 		GameRegistry.addRecipe(new ItemStack(plasmaBattery, 1), new Object[] { "X", Character.valueOf('X'), Block.glowStone });
 
-		GameRegistry.registerBlock(blockSymbol, "blockSymbol");
-
 		GameRegistry.registerBlock(blockWall1, "blockWall1");
 		GameRegistry.registerBlock(blockWall2, "blockWall2");
 		GameRegistry.registerBlock(blockLight, "blockLight");
 		GameRegistry.registerBlock(blockHiveTeleporterNode, "blockHiveTeleporterNode");
-		GameRegistry.registerBlock(blockGlyph, ItemBlockGlyph.class, "blockGlyph");
+		GameRegistry.registerBlock(blockSymbol, ItemBlockMetadata.class, "blockSymbol");
+		GameRegistry.registerBlock(blockGlyph, ItemBlockMetadata.class, "blockGlyph");
 
 		GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 	}
