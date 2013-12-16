@@ -16,22 +16,8 @@ public class ItemPlasmaLauncher extends ItemBase {
 	}
 	
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer player) {
-		ItemWeaponBattery battery = null;
 		
-		for(ItemStack stack : player.inventory.mainInventory) {
-			if(stack != null) {
-				if(stack.getItem() == Artillects.plasmaBattery) {
-					battery = (ItemWeaponBattery) stack.getItem();
-					break;
-				}
-			}
-		}
-		
-		if(!battery.isEmpty(new ItemStack(battery))) {
-			par2World.spawnEntityInWorld(new EntityPlasma(par2World, player));
-			battery.drain(new ItemStack(battery));
-		}
-		
+		par2World.spawnEntityInWorld(new EntityPlasma(par2World, player));
 		return par1ItemStack;
 	}
 }
