@@ -2,12 +2,11 @@ package artillects.commands;
 
 import java.util.List;
 
-import artillects.hive.Hive;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
+import artillects.hive.Hive;
 
 public class CommandTool extends CommandBase
 {
@@ -46,6 +45,14 @@ public class CommandTool extends CommandBase
                     {
                         PlayerSelectionHandler.saveWorldSelection(player, args.length >= 3 ? args[2] : null);
                     }
+                    else if (args.length >= 2 && args[1].equalsIgnoreCase("load"))
+                    {
+                        PlayerSelectionHandler.loadWorldSelection(player);
+                    }
+                    else
+                    {
+                        player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool help"));
+                    }
                 }
                 else if (args.length >= 1 && args[0].equalsIgnoreCase("zone"))
                 {
@@ -53,6 +60,10 @@ public class CommandTool extends CommandBase
                     {
                         player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + Hive.instance().activeZones.size() + " zones part of the hive."));
                     }
+                }
+                else
+                {
+                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool help"));
                 }
             }
         }

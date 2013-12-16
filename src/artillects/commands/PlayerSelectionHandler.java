@@ -92,6 +92,10 @@ public class PlayerSelectionHandler
             player.sendChatToPlayer(ChatMessageComponent.createFromText("Schematic saved to .minecraft/schematics/" + name));
             getSchematic(player).saveToBaseDirectory(name);
         }
+        else
+        {
+            player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't save! Load a selection first"));
+        }
     }
 
     public static boolean hasSchematicLoaded(EntityPlayer player)
