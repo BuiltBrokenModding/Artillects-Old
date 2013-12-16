@@ -1,10 +1,13 @@
 package artillects.block.teleporter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import net.minecraft.world.World;
-
+import artillects.Vector3;
 import artillects.VectorWorld;
 
 public class TeleportManager
@@ -54,12 +57,23 @@ public class TeleportManager
         return teleporters.contains(anch);
     }
 
-    public TileEntityTeleporterAnchor getClosestWithFrequency(VectorWorld vec, int frequency)
+    public static TileEntityTeleporterAnchor getClosestWithFrequency(VectorWorld vec, int frequency, TileEntityTeleporterAnchor... anchors)
     {
         TileEntityTeleporterAnchor tele = null;
-        for (TileEntityTeleporterAnchor teleporter : teleporters)
+        List<TileEntityTeleporterAnchor> ignore = new ArrayList<TileEntityTeleporterAnchor>();
+        if (anchors != null)
         {
-
+            ignore.addAll(Arrays.asList(anchors));
+        }
+        for (TileEntityTeleporterAnchor teleporter : TeleportManager.getConnectedAnchors(vec.world))
+        {
+            if (!ignore.contains(teleporter) && teleporter.getFrequency() == frequency)
+            {
+                if (tele == null || new Vector3(tele).distance(vec) < new Vector3(teleporter).distance(vec))
+                {
+                    tele = teleporter;
+                }
+            }
         }
         return tele;
     }

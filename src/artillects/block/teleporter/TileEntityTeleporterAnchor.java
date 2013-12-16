@@ -3,13 +3,9 @@ package artillects.block.teleporter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.ChunkCoordIntPair;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.ForgeChunkManager.Ticket;
-import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.ForgeDirection;
-import artillects.Artillects;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.tile.TileEntityAdvanced;
 
 /** @author Archadia */
@@ -57,22 +53,15 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 
     public void doTeleport(Entity entity)
     {
-        int frequency = this.getFrequency();
 
-        if (frequency > 0)
+        if (this.getFrequency() > 0)
         {
-            for (TileEntityTeleporterAnchor teleporter : TeleportManager.getConnectedAnchors(this.worldObj))
+            TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
+            if (teleporter != null)
             {
-                if (teleporter != this)
-                {
-                    if (teleporter.getFrequency() == frequency)
-                    {
-                        worldObj.markBlockForUpdate(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
-                        entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
-                        System.out.println("Entity Pos: " + entity.posX + ", " + entity.posY + ", " + entity.posZ);
-                        break;
-                    }
-                }
+                worldObj.markBlockForUpdate(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
+                entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
+                System.out.println("Entity Pos: " + entity.posX + ", " + entity.posY + ", " + entity.posZ);
             }
         }
     }

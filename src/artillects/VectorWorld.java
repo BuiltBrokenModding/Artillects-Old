@@ -2,6 +2,7 @@ package artillects;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 
@@ -25,6 +26,12 @@ public class VectorWorld extends Vector3
     {
         super(entity);
         this.world = entity.worldObj;
+    }
+
+    public VectorWorld(TileEntity tile)
+    {
+        super(tile);
+        this.world = tile.worldObj;
     }
 
     @Override
