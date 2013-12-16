@@ -71,7 +71,7 @@ public class EntityAIMining extends EntityAIBase
 	public void updateTask()
 	{
 		if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
-		{
+		{System.out.println("WORKER");
 			if (!this.entity.isInventoryFull())
 			{
 				Vector3 targetPosition = null;

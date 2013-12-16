@@ -13,6 +13,23 @@ import net.minecraft.item.ItemStack;
  */
 public class InventoryHelper
 {
+	public static boolean decreaseStackSize(IInventory inventory, ItemStack itemStack)
+	{
+		for (int i = 0; i < inventory.getSizeInventory(); i++)
+		{
+			if (inventory.getStackInSlot(i) != null)
+			{
+				if (itemStack.isItemEqual(inventory.getStackInSlot(i)))
+				{
+					inventory.decrStackSize(i, itemStack.stackSize);
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean hasItem(IInventory inventory, ItemStack... itemStacks)
 	{
 		return getItemIfExistsInSlot(inventory, itemStacks) != -1;
