@@ -247,24 +247,45 @@ public class HiveComplex extends HiveGhost
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(+6, 0, 12)));
         //North
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -6)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -12)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, -12)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(+6, 0, -12)));
         //East
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 0)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 0)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, -6)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 6)));
         //West
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 0)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 0)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, -6)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 6)));
         //Corners
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 6)));
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, -6)));
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 6)));
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, -6)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 12)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, -12)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 12)));
+        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, -12)));
         //Walls
-        peaces.add(new Structure(this, Building.WALLX, start.clone().add(10, 1, 6)));
-        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, 10)));
-        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-10, 1, 6)));
-        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, 10)));
-        peaces.add(new Structure(this, Building.WALLX, start.clone().add(10, 1, -6)));
-        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, -10)));
-        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-10, 1, -6)));
-        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, -10)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, 6)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, 16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, 6)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, 16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, -6)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, -16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, -6)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, -16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, 12)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(12, 1, 16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, 12)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-12, 1, 16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, -12)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(12, 1, -16)));
+        peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, -12)));
+        peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-12, 1, -16)));
 
         if (worldGen)
         {
