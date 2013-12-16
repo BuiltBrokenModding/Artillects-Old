@@ -1,8 +1,6 @@
 package artillects.commands;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +16,16 @@ public class PlayerSelectionHandler
 {
     private static HashMap<String, VectorWorld[]> playerPointSelection = new HashMap<String, VectorWorld[]>();
     private static HashMap<String, Schematic> playerSchematic = new HashMap<String, Schematic>();
+
+    public static VectorWorld getPointOne(EntityPlayer player)
+    {
+        return playerPointSelection.get(player.username) != null ? playerPointSelection.get(player.username)[0] : null;
+    }
+
+    public static VectorWorld getPointTwo(EntityPlayer player)
+    {
+        return playerPointSelection.get(player.username) != null ? playerPointSelection.get(player.username)[1] : null;
+    }
 
     public static void setPointOne(EntityPlayer player, VectorWorld point)
     {
