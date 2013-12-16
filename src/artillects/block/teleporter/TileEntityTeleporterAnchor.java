@@ -14,14 +14,14 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
     private long lastFrequencyCheck = 0;
     private int frequency = 0;
     private boolean forceXYZ = false;
-    private Vector3 xyz = null;
+    private Vector3 teleportSpot = null;
 
     public void setTeleportLocation(Vector3 location)
     {
         if (location != null)
         {
             this.forceXYZ = true;
-            this.xyz = location;
+            this.teleportSpot = location;
         }
     }
 
@@ -69,15 +69,18 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 
     public void doTeleport(Entity entity)
     {
-
-        if (this.getFrequency() > 0)
+        if (this.forceXYZ && this.teleportSpot != null)
+        {
+            worldObj.markBlockForUpdate((int) teleportSpot.x, (int) teleportSpot.y, (int) teleportSpot.z);
+            entity.setPosition((int) teleportSpot.x + 0.5, (int) teleportSpot.y + 0.5, (int) teleportSpot.z + 0.5);
+        }
+        else if (this.getFrequency() > 0)
         {
             TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
             if (teleporter != null)
             {
                 worldObj.markBlockForUpdate(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
                 entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
-                System.out.println("Entity Pos: " + entity.posX + ", " + entity.posY + ", " + entity.posZ);
             }
         }
     }
@@ -85,7 +88,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
     /** @return -1 if the teleporter is unable to teleport. */
     public int getFrequency()
     {
-        if (this.lastFrequencyCheck - System.currentTimeMillis() > 10)
+        if (System.currentTimeMillis() - this.lastFrequencyCheck > 10)
         {
             this.lastFrequencyCheck = System.currentTimeMillis();
             for (int i = 2; i < 6; i++)
@@ -113,9 +116,9 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        if (this.xyz != null)
+        if (this.teleportSpot != null)
         {
-            nbt.setCompoundTag("teleportLocation", this.xyz.save(new NBTTagCompound()));
+            nbt.setCompoundTag("teleportLocation", this.teleportSpot.save(new NBTTagCompound()));
         }
     }
 
@@ -125,7 +128,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
         super.writeToNBT(nbt);
         if (nbt.hasKey("teleportLocation"))
         {
-            this.xyz = new Vector3(nbt.getCompoundTag("teleportLocation"));
+            this.teleportSpot = new Vector3(nbt.getCompoundTag("teleportLocation"));
             this.forceXYZ = true;
         }
     }
