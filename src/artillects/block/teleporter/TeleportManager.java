@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.world.World;
@@ -65,8 +66,10 @@ public class TeleportManager
         {
             ignore.addAll(Arrays.asList(anchors));
         }
-        for (TileEntityTeleporterAnchor teleporter : TeleportManager.getConnectedAnchors(vec.world))
+        Iterator<TileEntityTeleporterAnchor> it = new ArrayList(TeleportManager.getConnectedAnchors(vec.world)).iterator();
+        while (it.hasNext())
         {
+            TileEntityTeleporterAnchor teleporter = it.next();
             if (!ignore.contains(teleporter) && teleporter.getFrequency() == frequency)
             {
                 if (tele == null || new Vector3(tele).distance(vec) < new Vector3(teleporter).distance(vec))

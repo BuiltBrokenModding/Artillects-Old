@@ -63,7 +63,6 @@ public class ItemSchematicCreator extends ItemBase
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
         par3List.add(new ItemStack(this.itemID, 1, 0));
-
     }
 
 }
