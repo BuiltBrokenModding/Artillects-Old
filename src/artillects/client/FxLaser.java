@@ -127,8 +127,8 @@ public class FxLaser extends EntityFX
 		GL11.glEnable(2884);
 		GL11.glBlendFunc(770, 1);
 		GL11.glDepthMask(false);
-		
-        float xx = (float) (this.prevPosX + (this.posX - this.prevPosX) * f - interpPosX);
+
+		float xx = (float) (this.prevPosX + (this.posX - this.prevPosX) * f - interpPosX);
 		float yy = (float) (this.prevPosY + (this.posY - this.prevPosY) * f - interpPosY);
 		float zz = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * f - interpPosZ);
 		GL11.glTranslated(xx, yy, zz);
@@ -143,8 +143,32 @@ public class FxLaser extends EntityFX
 		double var17 = 0.15D * size;
 		double var44b = -0.15D * size * this.endModifier;
 		double var17b = 0.15D * size * this.endModifier;
-		
-		
+
+		GL11.glRotatef(rot, 0.0F, 1.0F, 0.0F);
+
+		for (int t = 0; t < 3; t++)
+		{
+			double var29 = this.length * size * var9;
+			double var31 = 0.0D;
+			double var33 = 1.0D;
+			double var35 = -1.0F + var12 + t / 3.0F;
+			double var37 = this.length * size * var9 + var35;
+
+			GL11.glRotatef(60.0F, 0.0F, 1.0F, 0.0F);
+			tessellator.startDrawingQuads();
+			tessellator.setBrightness(200);
+			tessellator.setColorRGBA_F(this.particleRed, this.particleGreen, this.particleBlue, op);
+			tessellator.addVertexWithUV(var44b, var29, 0.0D, var33, var37);
+			tessellator.addVertexWithUV(var44, 0.0D, 0.0D, var33, var35);
+			tessellator.addVertexWithUV(var17, 0.0D, 0.0D, var31, var35);
+			tessellator.addVertexWithUV(var17b, var29, 0.0D, var31, var37);
+			tessellator.draw();
+		}
+
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		GL11.glDepthMask(true);
+		GL11.glDisable(3042);
+		GL11.glEnable(2884);
 
 		GL11.glPopMatrix();
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(FMLClientHandler.instance().getClient().renderEngine.getResourceLocation(0));

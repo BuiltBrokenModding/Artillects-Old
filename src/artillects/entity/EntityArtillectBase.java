@@ -24,270 +24,278 @@ import artillects.hive.zone.Zone;
 
 public abstract class EntityArtillectBase extends EntityCreature implements IArtillect
 {
-    public InventoryBasic inventory = new InventoryBasic("gui.artillect", false, 9);
-    protected List<ItemStack> cachedInventory;
+	public InventoryBasic inventory = new InventoryBasic("gui.artillect", false, 9);
+	protected List<ItemStack> cachedInventory;
 
-    protected int armorSetting = 5;
+	protected int armorSetting = 5;
 
-    public Zone zone;
+	public Zone zone;
 
-    /** Owner of the drone either hive or player */
-    public Object owner;
+	/** Owner of the drone either hive or player */
+	public Object owner;
 
-    public static final int DATA_TYPE_ID = 12;
+	public static final int DATA_TYPE_ID = 12;
 
-    public static final int interactionDistance = 2;
+	public static final int interactionDistance = 2;
 
-    public EntityArtillectBase(World world)
-    {
-        super(world);
-        Hive.instance().addDrone((IArtillect) this);
-    }
+	public EntityArtillectBase(World world)
+	{
+		super(world);
+		Hive.instance().addDrone((IArtillect) this);
+	}
 
-    @Override
-    public void setDead()
-    {
-        Hive.instance().removeDrone(this);
-        super.setDead();
-    }
+	@Override
+	public boolean canBreatheUnderwater()
+	{
+		return true;
+	}
 
-    @Override
-    public boolean interact(EntityPlayer entityPlayer)
-    {
-        entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
-        return true;
-    }
+	@Override
+	public void setDead()
+	{
+		Hive.instance().removeDrone(this);
+		super.setDead();
+	}
 
-    @Override
-    protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(1.0D);
-    }
+	@Override
+	public boolean interact(EntityPlayer entityPlayer)
+	{
+		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
+		return true;
+	}
 
-    @Override
-    public int getTotalArmorValue()
-    {
-        return armorSetting;
-    }
+	@Override
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(1.0D);
+	}
 
-    @Override
-    protected boolean isAIEnabled()
-    {
-        return true;
-    }
+	@Override
+	public int getTotalArmorValue()
+	{
+		return armorSetting;
+	}
 
-    @Override
-    protected int getDropItemId()
-    {
-        // TODO: Drop some kind of circuit
-        return Artillects.itemParts.itemID;
-    }
+	@Override
+	protected boolean isAIEnabled()
+	{
+		return true;
+	}
 
-    @Override
-    protected void dropRareDrop(int par1)
-    {
+	@Override
+	protected int getDropItemId()
+	{
+		// TODO: Drop some kind of circuit
+		return Artillects.itemParts.itemID;
+	}
 
-    }
+	@Override
+	protected void dropRareDrop(int par1)
+	{
 
-    @Override
-    public void setLastAttacker(Entity par1Entity)
-    {
-        // TODO: This doesn't get called properly.
-        super.setLastAttacker(par1Entity);
+	}
 
-        if (this.ticksExisted - this.getLastAttackerTime() >= 60)
-        {
-            this.playSoundEffect(0);
-        }
-    }
+	@Override
+	public void setLastAttacker(Entity par1Entity)
+	{
+		// TODO: This doesn't get called properly.
+		super.setLastAttacker(par1Entity);
 
-    public void playSoundEffect(int id)
-    {
-        String[] soundNames = new String[] { "voice-agressionDetected", "voice-intruderAlert", "voice-pleaseDisarmYourself", "voice-theHiveIsUnderAttack" };
-        this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + soundNames[id], 1f, 1f);
-    }
+		if (this.ticksExisted - this.getLastAttackerTime() >= 60)
+		{
+			this.playSoundEffect(0);
+		}
+	}
 
-    @Override
-    public void onKillEntity(EntityLivingBase entityKilled)
-    {
-        super.onKillEntity(entityKilled);
+	public void playSoundEffect(int id)
+	{
+		String[] soundNames = new String[] { "voice-agressionDetected", "voice-intruderAlert", "voice-pleaseDisarmYourself", "voice-theHiveIsUnderAttack" };
+		this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + soundNames[id], 1f, 1f);
+	}
 
-        if (this.worldObj.difficultySetting >= 2 && entityKilled instanceof EntityZombie)
-        {
-            if (this.worldObj.difficultySetting == 2 && this.rand.nextBoolean())
-            {
-                return;
-            }
+	@Override
+	public void onKillEntity(EntityLivingBase entityKilled)
+	{
+		super.onKillEntity(entityKilled);
 
-            // TODO spawn zombie drone, eg borg
-            EntityZombie entityzombie = new EntityZombie(this.worldObj);
-            entityzombie.copyLocationAndAnglesFrom(entityKilled);
-            this.worldObj.removeEntity(entityKilled);
+		if (this.worldObj.difficultySetting >= 2 && entityKilled instanceof EntityZombie)
+		{
+			if (this.worldObj.difficultySetting == 2 && this.rand.nextBoolean())
+			{
+				return;
+			}
 
-            this.worldObj.spawnEntityInWorld(entityzombie);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
-        }
-    }
+			// TODO spawn zombie drone, eg borg
+			EntityZombie entityzombie = new EntityZombie(this.worldObj);
+			entityzombie.copyLocationAndAnglesFrom(entityKilled);
+			this.worldObj.removeEntity(entityKilled);
 
-    @Override
-    protected boolean canDespawn()
-    {
-        return false;
-    }
+			this.worldObj.spawnEntityInWorld(entityzombie);
+			this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+		}
+	}
 
-    @Override
-    public void setOwner(Object player)
-    {
-        this.owner = player;
-    }
+	@Override
+	protected boolean canDespawn()
+	{
+		return false;
+	}
 
-    @Override
-    public Object getOwner()
-    {
-        return this.owner;
-    }
+	@Override
+	public void setOwner(Object player)
+	{
+		this.owner = player;
+	}
 
-    @Override
-    public Zone getZone()
-    {
-        return this.zone;
-    }
+	@Override
+	public Object getOwner()
+	{
+		return this.owner;
+	}
 
-    @Override
-    public void setZone(Zone zone)
-    {
-        this.zone = zone;
-    }
+	@Override
+	public Zone getZone()
+	{
+		return this.zone;
+	}
 
-    /** INVENTORY FUNCTIONS */
-    /** @return True if the Worker's inventory is full. (See EntityAIMining) */
-    public boolean isInventoryFull()
-    {
-        return InventoryHelper.isInventoryFull(this.inventory);
-    }
+	@Override
+	public void setZone(Zone zone)
+	{
+		this.zone = zone;
+	}
 
-    public boolean isInventoryEmpty()
-    {
-        return InventoryHelper.isInventoryEmpty(this.inventory);
-    }
+	/** INVENTORY FUNCTIONS */
+	/** @return True if the Worker's inventory is full. (See EntityAIMining) */
+	public boolean isInventoryFull()
+	{
+		return InventoryHelper.isInventoryFull(this.inventory);
+	}
 
-    /** Adds a stack into the inventory.
-     * 
-     * @param stack - The stack to add
-     * @return - The remaining stack. */
-    public ItemStack increaseStackSize(ItemStack stack)
-    {
-        return InventoryHelper.addStackToInventory(this.inventory, stack);
-    }
+	public boolean isInventoryEmpty()
+	{
+		return InventoryHelper.isInventoryEmpty(this.inventory);
+	}
 
-    @Override
-    protected void dropEquipment(boolean par1, int par2)
-    {
-        super.dropEquipment(par1, par2);
-        if (inventory != null && !this.worldObj.isRemote)
-        {
-            for (int i = 0; i < inventory.getSizeInventory(); ++i)
-            {
-                ItemStack itemstack = inventory.getStackInSlot(i);
+	/**
+	 * Adds a stack into the inventory.
+	 * 
+	 * @param stack - The stack to add
+	 * @return - The remaining stack.
+	 */
+	public ItemStack increaseStackSize(ItemStack stack)
+	{
+		return InventoryHelper.addStackToInventory(this.inventory, stack);
+	}
 
-                if (itemstack != null)
-                {
-                    this.entityDropItem(itemstack, 0.0F);
-                }
-            }
-        }
-    }
+	@Override
+	protected void dropEquipment(boolean par1, int par2)
+	{
+		super.dropEquipment(par1, par2);
+		if (inventory != null && !this.worldObj.isRemote)
+		{
+			for (int i = 0; i < inventory.getSizeInventory(); ++i)
+			{
+				ItemStack itemstack = inventory.getStackInSlot(i);
 
-    public List<ItemStack> getInventoryAsList()
-    {
-        if (this.cachedInventory == null)
-        {
-            this.cachedInventory = InventoryHelper.getInventoryAsList(this.inventory);
-        }
+				if (itemstack != null)
+				{
+					this.entityDropItem(itemstack, 0.0F);
+				}
+			}
+		}
+	}
 
-        return this.cachedInventory;
-    }
+	public List<ItemStack> getInventoryAsList()
+	{
+		if (this.cachedInventory == null)
+		{
+			this.cachedInventory = InventoryHelper.getInventoryAsList(this.inventory);
+		}
 
-    public boolean hasItem(ItemStack... itemStacks)
-    {
-        return InventoryHelper.hasItem(this.inventory, itemStacks);
-    }
+		return this.cachedInventory;
+	}
 
-    public boolean decreaseStackSize(ItemStack itemStack)
-    {
-        for (int i = 0; i < this.inventory.getSizeInventory(); i++)
-        {
-            if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
-            {
-                this.inventory.decrStackSize(i, itemStack.stackSize);
-                return true;
-            }
-        }
+	public boolean hasItem(ItemStack... itemStacks)
+	{
+		return InventoryHelper.hasItem(this.inventory, itemStacks);
+	}
 
-        return false;
-    }
+	public boolean decreaseStackSize(ItemStack itemStack)
+	{
+		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
+		{
+			if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
+			{
+				this.inventory.decrStackSize(i, itemStack.stackSize);
+				return true;
+			}
+		}
 
-    public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
-    {
-        for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
-        {
-            PathEntity path = this.getNavigator().getPathToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ);
+		return false;
+	}
 
-            if (path != null)
-            {
-                return this.getNavigator().tryMoveToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ, moveSpeed);
-            }
-        }
+	public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
+	{
+		for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
+		{
+			PathEntity path = this.getNavigator().getPathToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ);
 
-        return false;
-    }
+			if (path != null)
+			{
+				return this.getNavigator().tryMoveToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ, moveSpeed);
+			}
+		}
 
-    @Override
-    public void writeEntityToNBT(NBTTagCompound nbt)
-    {
-        super.writeEntityToNBT(nbt);
+		return false;
+	}
 
-        NBTTagList nbttaglist = new NBTTagList();
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt)
+	{
+		super.writeEntityToNBT(nbt);
 
-        for (int i = 0; i < this.inventory.getSizeInventory(); ++i)
-        {
-            ItemStack itemstack = this.inventory.getStackInSlot(i);
+		NBTTagList nbttaglist = new NBTTagList();
 
-            if (itemstack != null)
-            {
-                NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-                nbttagcompound1.setByte("Slot", (byte) i);
-                itemstack.writeToNBT(nbttagcompound1);
-                nbttaglist.appendTag(nbttagcompound1);
-            }
-        }
+		for (int i = 0; i < this.inventory.getSizeInventory(); ++i)
+		{
+			ItemStack itemstack = this.inventory.getStackInSlot(i);
 
-        nbt.setTag("Items", nbttaglist);
+			if (itemstack != null)
+			{
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte) i);
+				itemstack.writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
 
-        // TODO: Save owner.
-    }
+		nbt.setTag("Items", nbttaglist);
 
-    @Override
-    public void readEntityFromNBT(NBTTagCompound nbt)
-    {
-        super.readEntityFromNBT(nbt);
+		// TODO: Save owner.
+	}
 
-        NBTTagList nbttaglist = nbt.getTagList("Items");
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt)
+	{
+		super.readEntityFromNBT(nbt);
 
-        for (int i = 0; i < nbttaglist.tagCount(); ++i)
-        {
-            NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.tagAt(i);
-            int j = nbttagcompound1.getByte("Slot") & 255;
+		NBTTagList nbttaglist = nbt.getTagList("Items");
 
-            if (j < this.inventory.getSizeInventory())
-            {
-                this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
-            }
-        }
-    }
+		for (int i = 0; i < nbttaglist.tagCount(); ++i)
+		{
+			NBTTagCompound nbttagcompound1 = (NBTTagCompound) nbttaglist.tagAt(i);
+			int j = nbttagcompound1.getByte("Slot") & 255;
+
+			if (j < this.inventory.getSizeInventory())
+			{
+				this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
+			}
+		}
+	}
 }

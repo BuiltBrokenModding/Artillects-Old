@@ -10,6 +10,7 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import artillects.Artillects;
 import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
@@ -126,10 +127,9 @@ public class EntityAIMining extends EntityAIBase
 						else
 						{
 							int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
-
 							this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
+							Artillects.proxy.renderLaser(this.world, new Vector3(this.entity), breakPosition, 1, 0, 0);
 						}
-
 					}
 				}
 			}
