@@ -3,7 +3,7 @@ package artillects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import artillects.container.ContainerWorker;
+import artillects.container.ContainerArtillect;
 import artillects.entity.EntityWorker;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -38,7 +38,7 @@ public class CommonProxy implements IGuiHandler
 
 			if (entity instanceof EntityWorker)
 			{
-				return new ContainerWorker((EntityWorker) entity, player);
+				return new ContainerArtillect((EntityWorker) entity, player);
 			}
 		}
 

@@ -1,6 +1,7 @@
 package artillects.entity;
 
 import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.entity.ai.EntityAIBuilding;
 import artillects.entity.ai.EntityAIReproduce;

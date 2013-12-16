@@ -2,14 +2,13 @@ package artillects.entity;
 
 import java.util.List;
 
-import com.google.common.io.ByteArrayDataInput;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,6 +24,9 @@ import artillects.hive.ArtillectTaskType;
 import artillects.hive.Hive;
 import artillects.hive.zone.Zone;
 import artillects.network.IPacketReceiver;
+
+import com.google.common.io.ByteArrayDataInput;
+
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public abstract class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver
@@ -67,6 +69,11 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 		}
 	}
 
+	public IInventory getInventory()
+	{
+		return this.inventory;
+	}
+
 	@Override
 	public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
 	{
@@ -91,7 +98,15 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	@Override
 	public boolean interact(EntityPlayer entityPlayer)
 	{
-		entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
+		if (entityPlayer.isSneaking())
+		{
+			this.setType(this.getType().toggle(this));
+			entityPlayer.addChatMessage("Toggled to: " + this.getType().name());
+		}
+		else
+		{
+			entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
+		}
 		return true;
 	}
 
