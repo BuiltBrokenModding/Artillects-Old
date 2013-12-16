@@ -142,7 +142,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
+									if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
 									{
 										this.entity.getNavigator().clearPathEntity();
 										chest.setInventorySlotContents(i, stackInEntity);
@@ -154,7 +154,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 							{
 								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 								{
-									if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
+									if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
 									{
 										int originalStackSize = itemStack.stackSize;
 										itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());
@@ -240,7 +240,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 						{
 							if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 							{
-								if (chestPosition.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
+								if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
 								{
 									this.entity.getNavigator().clearPathEntity();
 
@@ -273,7 +273,7 @@ public class EntityAIBlacksmith extends EntityAIBase
 		{
 			if (this.entity.tryToWalkNextTo(position, this.moveSpeed))
 			{
-				if (position.distance(new Vector3(this.entity)) <= EntityArtillectBase.interactionDistance)
+				if (new Vector3(this.entity).distance(position.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
 				{
 					this.entity.getNavigator().clearPathEntity();
 					ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.entity.getInventoryAsList());
