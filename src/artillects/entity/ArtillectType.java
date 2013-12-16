@@ -3,7 +3,6 @@ package artillects.entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Artillects;
-import artillects.entity.boss.EntityConstructor;
 import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -15,11 +14,7 @@ public enum ArtillectType
 		@Override
 		public void register()
 		{
-			// EntityRegistry.registerGlobalEntityID(EntityDroneWorker.class, "DroneWorker",
-			// EntityRegistry.findGlobalUniqueEntityId());
 			EntityRegistry.registerModEntity(EntityWorker.class, "worker", ids++, Artillects.instance, 64, 1, true);
-			// EntityRegistry.addSpawn(Entity.class, 3, 1, 10, EnumCreatureType.creature,
-			// BiomeGenBase.forest, BiomeGenBase.river);
 		}
 
 		@Override
@@ -40,32 +35,6 @@ public enum ArtillectType
 		public EntityArtillectBase getNew(World world)
 		{
 			return new EntityFabricator(world);
-		}
-	}), CONSTRUCTOR("constructor", new IArtillectSpawnHandler()
-	{
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntityConstructor.class, "constructor", ids++, Artillects.instance, 64, 1, true);
-		}
-
-		@Override
-		public EntityConstructor getNew(World world)
-		{
-			return new EntityConstructor(world);
-		}
-	}), HIVEMIND("hivemind", new IArtillectSpawnHandler()
-	{
-		@Override
-		public void register()
-		{
-
-		}
-
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return null;
 		}
 	}), DEMOLISHER("demolisher", new IArtillectSpawnHandler()
 	{
@@ -93,20 +62,6 @@ public enum ArtillectType
 		public EntityLivingBase getNew(World world)
 		{
 			return new EntitySeeker(world);
-		}
-	}), ZOMBIE("borg", new IArtillectSpawnHandler()
-	{
-
-		@Override
-		public void register()
-		{
-
-		}
-
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return null;
 		}
 	});
 
