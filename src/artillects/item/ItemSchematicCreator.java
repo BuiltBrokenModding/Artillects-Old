@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.VectorWorld;
@@ -37,13 +38,22 @@ public class ItemSchematicCreator extends ItemBase
     {
         if (!world.isRemote)
         {
-            if (!PlayerSelectionHandler.hasPointOne(player))
+            if (!player.isSneaking())
             {
-                PlayerSelectionHandler.setPointOne(player, new VectorWorld(world, x, y, z));
+                if (!PlayerSelectionHandler.hasPointOne(player))
+                {
+                    PlayerSelectionHandler.setPointOne(player, new VectorWorld(world, x, y, z));
+                }
+                else if (!PlayerSelectionHandler.hasPointTwo(player))
+                {
+                    PlayerSelectionHandler.setPointTwo(player, new VectorWorld(world, x, y, z));
+                }
             }
-            else if (!PlayerSelectionHandler.hasPointTwo(player))
+            else
             {
-                PlayerSelectionHandler.setPointTwo(player, new VectorWorld(world, x, y, z));
+                player.sendChatToPlayer(ChatMessageComponent.createFromText("Selection cleared"));
+                PlayerSelectionHandler.setPointOne(player, null);
+                PlayerSelectionHandler.setPointTwo(player, null);
             }
         }
         return true;
