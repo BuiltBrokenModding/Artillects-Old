@@ -1,6 +1,10 @@
 package artillects.hive;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import artillects.entity.EntityFabricator;
 import artillects.entity.EntityWorker;
 import artillects.entity.combat.EntityDemolisher;
@@ -20,6 +24,8 @@ public enum ArtillectTaskType
 	public final int ratio;
 	/** Entity allowed */
 	public final Class<? extends Entity> entityClass;
+
+	public final Set<ItemStack> resourcesRequired = new HashSet<ItemStack>();
 
 	ArtillectTaskType(int ratio, Class<? extends Entity> entityClass)
 	{
@@ -45,5 +51,10 @@ public enum ArtillectTaskType
 	public static ArtillectTaskType get(int id)
 	{
 		return values()[id];
+	}
+
+	public Set<ItemStack> getResourcesRequired()
+	{
+		return this.resourcesRequired;
 	}
 }

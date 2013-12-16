@@ -30,18 +30,53 @@ public class InventoryHelper
 		return false;
 	}
 
-	public static boolean hasItem(IInventory inventory, ItemStack... itemStacks)
+	/**
+	 * True when we have ALL of the comparing items in the inventory.
+	 * 
+	 * @param inventory
+	 * @param itemStacks - The comparing items
+	 * @return True if so.
+	 */
+	public static boolean hasItems(IInventory inventory, ItemStack... itemStacks)
 	{
-		return getItemIfExistsInSlot(inventory, itemStacks) != -1;
+		loop:
+		for (ItemStack itemStack : itemStacks)
+		{
+			int itemCount = 0;
+
+			for (int i = 0; i < inventory.getSizeInventory(); i++)
+			{
+				ItemStack stackInSlot = inventory.getStackInSlot(i);
+
+				if (stackInSlot != null && itemStack.isItemEqual(stackInSlot))
+				{
+					itemCount += stackInSlot.stackSize;
+				}
+			}
+
+			if (itemCount < itemStack.stackSize)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
-	public static int getItemIfExistsInSlot(IInventory inventory, ItemStack... itemStacks)
+	public static boolean hasItem(IInventory inventory, ItemStack... itemStacks)
+	{
+		return getFirstItemInInventory(inventory, itemStacks) != -1;
+	}
+
+	public static int getFirstItemInInventory(IInventory inventory, ItemStack... itemStacks)
 	{
 		for (int i = 0; i < inventory.getSizeInventory(); i++)
 		{
+			ItemStack stackInSlot = inventory.getStackInSlot(i);
+
 			for (ItemStack itemStack : itemStacks)
 			{
-				if (inventory.getStackInSlot(i) != null && itemStack.isItemEqual(inventory.getStackInSlot(i)))
+				if (stackInSlot != null && itemStack.isItemEqual(stackInSlot))
 				{
 					return i;
 				}

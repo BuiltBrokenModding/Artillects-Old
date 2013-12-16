@@ -5,12 +5,16 @@ import java.util.HashMap;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
+import artillects.InventoryHelper;
+import artillects.Vector3;
 import artillects.entity.EntityFabricator;
 import artillects.entity.IArtillect;
 import artillects.hive.ArtillectTaskType;
 import artillects.hive.Hive;
-import artillects.hive.zone.ZoneBuilding;
 import artillects.hive.zone.ZoneProcessing;
 
 public class EntityAIReproduce extends EntityAIBase
@@ -94,10 +98,11 @@ public class EntityAIReproduce extends EntityAIBase
 	 * Attempts to produce the Artillect of such type.
 	 * 
 	 * @param type
+	 * @return True if produced.
 	 */
 	private boolean tryProduce(ArtillectTaskType type)
 	{
-		if (true)
+		if (this.hasResoucre(type))
 		{
 			try
 			{
@@ -112,7 +117,47 @@ public class EntityAIReproduce extends EntityAIBase
 				e.printStackTrace();
 			}
 		}
+		else
+		{
+			this.lookForResource(type);
+		}
 
 		return false;
+	}
+
+	private void lookForResource(ArtillectTaskType type)
+	{
+		if (this.entity.zone instanceof ZoneProcessing)
+		{
+			ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
+
+			for (ItemStack stackRequired : type.getResourcesRequired())
+			{
+				for (Vector3 chestPosition : zone.chestPositions)
+				{
+					TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+
+					if (tileEntity instanceof TileEntityChest)
+					{
+						TileEntityChest chest = (TileEntityChest) tileEntity;
+
+						for (int i = 0; i < chest.getSizeInventory(); i++)
+						{
+							ItemStack stackInChest = chest.getStackInSlot(i);
+
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param type
+	 * @return If the Artillect has resource to fabricate this Artillect.
+	 */
+	private boolean hasResoucre(ArtillectTaskType type)
+	{
+		return InventoryHelper.hasItems(this.entity.getInventory(), type.getResourcesRequired().toArray(new ItemStack[0]));
 	}
 }
