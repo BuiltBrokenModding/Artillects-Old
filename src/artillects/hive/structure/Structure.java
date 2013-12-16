@@ -33,10 +33,10 @@ public class Structure extends HiveGhost
         this.location = location;
     }
 
-    public void worldGen()
+    public Structure worldGen()
     {
-
         building.getSchematic().build(location, false);
+        return this;
     }
 
     @Override

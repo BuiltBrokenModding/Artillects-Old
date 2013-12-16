@@ -1,6 +1,7 @@
 package artillects.hive;
 
 import net.minecraft.nbt.NBTTagCompound;
+import artillects.VectorWorld;
 import artillects.tile.TileEntityAdvanced;
 
 public class TileEntityHiveComplexCore extends TileEntityAdvanced
@@ -12,9 +13,21 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
     public void updateEntity()
     {
         super.updateEntity();
+        if (complex == null)
+        {
+            complex = HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 30);
+            if (complex == null)
+            {
+                complex = new HiveComplex(this);
+            }
+        }
         if (complex != null)
         {
             complex.updateEntity();
+            if (complex.core != this)
+            {
+                complex.updateTileLink(this);
+            }
         }
     }
 

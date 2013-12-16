@@ -37,6 +37,7 @@ public class HiveComplex extends HiveGhost
     private TreeSet<Report> inboxReports = new TreeSet<Report>();
 
     public HashSet<Zone> zones = new HashSet<Zone>();
+    public TileEntityHiveComplexCore core;
 
     public HiveComplex()
     {
@@ -48,6 +49,17 @@ public class HiveComplex extends HiveGhost
         this.name = name;
         this.location = location;
         HiveComplexManager.instance().addHiveComplex(this);
+    }
+
+    public HiveComplex(TileEntityHiveComplexCore tileEntityHiveComplexCore)
+    {
+        this("HiveComplexTR" + System.currentTimeMillis(), new VectorWorld(tileEntityHiveComplexCore));
+        this.updateTileLink(tileEntityHiveComplexCore);
+    }
+
+    public void updateTileLink(TileEntityHiveComplexCore core)
+    {
+        this.core = core;
     }
 
     /** Called by a drone or the hive itself to load a report into the system waiting to be processed
@@ -83,7 +95,7 @@ public class HiveComplex extends HiveGhost
 
     public void loadFabricatorDemo()
     {
-        this.load3x3Room(this.location.clone());
+        this.load3x3Room(this.location.clone(), 2);
         this.buildZone = new ZoneBuilding(this, 50);
         for (int i = 0; i < 1; i++)
         {
@@ -98,7 +110,7 @@ public class HiveComplex extends HiveGhost
     public void loadGeneralBuilding(boolean worldGen)
     {
         final int width = 3;
-        final int height = 4;
+        final int height = 1;
         final int tunnelSpacing = 12;
         for (int floor = 0; floor <= height; floor++)
         {
@@ -109,7 +121,14 @@ public class HiveComplex extends HiveGhost
             {
                 peaces.add(new Structure(this, Building.FLOOR, floorBase.clone()));
             }
-            this.load3x3Room(floorBase);
+            if (floor == 0)
+            {
+                this.load3x3Room(floorBase, 2);
+            }
+            else
+            {
+                this.load3x3Room(floorBase, 0);
+            }
 
             if (floor != height)
             {
@@ -135,16 +154,7 @@ public class HiveComplex extends HiveGhost
                 this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
             }
         }
-        this.buildZone = new ZoneBuilding(this, 50);
-
-        for (int i = 0; i < 4; i++)
-        {
-            EntityFabricator fab = new EntityFabricator(this.location.world);
-            fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
-            fab.setOwner(HiveComplexManager.instance());
-            buildZone.assignDrone(fab);
-            this.location.world.spawnEntityInWorld(fab);
-        }
+        this.buildZone = new ZoneBuilding(this, 80);
 
         if (worldGen)
         {
@@ -153,13 +163,39 @@ public class HiveComplex extends HiveGhost
                 str.worldGen();
             }
         }
+        else
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                EntityFabricator fab = new EntityFabricator(this.location.world);
+                fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
+                fab.setOwner(HiveComplexManager.instance());
+                buildZone.assignDrone(fab);
+                this.location.world.spawnEntityInWorld(fab);
+            }
+        }
 
     }
 
-    public void load3x3Room(VectorWorld start)
+    public void load3x3Room(VectorWorld start, int center)
     {
         // First Peace
-        peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 0)));
+        if (center == 0)
+        {
+            peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 0)));
+        }
+        else if (center == 1)
+        {
+            peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new Structure(this, Building.TELEFLOOR, start.clone().add(0, 0, 0)));
+        }
+        else if (center == 2)
+        {
+            peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new Structure(this, Building.COREFLOOR, start.clone().add(0, 0, 0)).worldGen());
+        }
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 6)));
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -6)));
         peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 0)));
@@ -241,84 +277,87 @@ public class HiveComplex extends HiveGhost
     public void updateEntity()
     {
         super.updateEntity();
-        Iterator<Structure> it = peaces.iterator();
-        while (it.hasNext())
+        if (this.ticks % 20 == 0)
         {
-            Structure str = it.next();
-            try
+            Iterator<Structure> it = peaces.iterator();
+            while (it.hasNext())
             {
-                if (str.isValid())
+                Structure str = it.next();
+                try
                 {
-                    str.updateEntity();
-                    if (str.isDamaged() && !this.damagedPeaces.contains(str))
+                    if (str.isValid())
                     {
-                        this.damagedPeaces.add(str);
+                        str.updateEntity();
+                        if (str.isDamaged() && !this.damagedPeaces.contains(str))
+                        {
+                            this.damagedPeaces.add(str);
+                        }
+                    }
+                    else
+                    {
+                        str.invalidate();
+                        it.remove();
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+            Iterator<Zone> itZone = zones.iterator();
+            while (itZone.hasNext())
+            {
+                Zone zone = itZone.next();
+                if (zone.isValid())
+                {
+                    zone.updateEntity();
+                    if (zone.doesZoneNeedWorkers())
+                    {
+                        Iterator<IArtillect> droneIterator = this.awaitingOrders.iterator();
+                        while (droneIterator.hasNext())
+                        {
+                            IArtillect drone = droneIterator.next();
+                            if (zone.canAssignDrone(drone))
+                            {
+                                zone.assignDrone(drone);
+                                if (drone.getZone() == zone)
+                                {
+                                    droneIterator.remove();
+                                }
+                            }
+                            if (!zone.doesZoneNeedWorkers())
+                            {
+                                break;
+                            }
+                        }
                     }
                 }
                 else
                 {
-                    str.invalidate();
-                    it.remove();
+                    zone.invalidate();
+                    itZone.remove();
                 }
             }
-            catch (Exception e)
+            Iterator<IArtillect> droneIt = artillects.iterator();
+            while (droneIt.hasNext())
             {
-                e.printStackTrace();
-            }
-        }
-
-        Iterator<Zone> itZone = zones.iterator();
-        while (itZone.hasNext())
-        {
-            Zone zone = itZone.next();
-            if (zone.isValid())
-            {
-                zone.updateEntity();
-                if (zone.doesZoneNeedWorkers())
+                IArtillect drone = droneIt.next();
+                if (drone.getOwner() != this)
                 {
-                    Iterator<IArtillect> droneIterator = this.awaitingOrders.iterator();
-                    while (droneIterator.hasNext())
+                    droneIt.remove();
+                }
+                else
+                {
+                    if (!zones.contains(drone.getZone()))
                     {
-                        IArtillect drone = droneIterator.next();
-                        if (zone.canAssignDrone(drone))
-                        {
-                            zone.assignDrone(drone);
-                            if (drone.getZone() == zone)
-                            {
-                                droneIterator.remove();
-                            }
-                        }
-                        if (!zone.doesZoneNeedWorkers())
-                        {
-                            break;
-                        }
+                        drone.setZone(null);
                     }
-                }
-            }
-            else
-            {
-                zone.invalidate();
-                itZone.remove();
-            }
-        }
-        Iterator<IArtillect> droneIt = artillects.iterator();
-        while (droneIt.hasNext())
-        {
-            IArtillect drone = droneIt.next();
-            if (drone.getOwner() != this)
-            {
-                droneIt.remove();
-            }
-            else
-            {
-                if (!zones.contains(drone.getZone()))
-                {
-                    drone.setZone(null);
-                }
-                if (drone.getZone() == null)
-                {
-                    if (!this.awaitingOrders.contains(drone))
-                        this.awaitingOrders.add(drone);
+                    if (drone.getZone() == null)
+                    {
+                        if (!this.awaitingOrders.contains(drone))
+                            this.awaitingOrders.add(drone);
+                    }
                 }
             }
         }
