@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.world.World;
 import artillects.Pair;
 import artillects.Vector3;
 import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
+import artillects.hive.HiveComplex;
 
 public class ZoneMining extends Zone
 {
@@ -47,9 +47,9 @@ public class ZoneMining extends Zone
 		}
 	}
 
-	public ZoneMining(World world, Vector3 start, Vector3 end)
+	public ZoneMining(HiveComplex complex, Vector3 start, Vector3 end)
 	{
-		super(world, start, end);
+		super(complex, start, end);
 	}
 
 	public ZoneMining clearAll()

@@ -32,19 +32,6 @@ public class EntityWorker extends EntityArtillectBase
 	public void onEntityUpdate()
 	{
 		super.onEntityUpdate();
-
-		if (this.getZone() == null)
-		{
-			if (this.getType() == ArtillectType.HARVESTER)
-			{
-				this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
-			}
-			else
-			{
-				this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
-			}
-		}
-
 		this.cachedInventory = null;
 	}
 }

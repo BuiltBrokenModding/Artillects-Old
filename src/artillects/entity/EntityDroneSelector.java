@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.hive.Hive;
+import artillects.hive.HiveComplexManager;
 
 public class EntityDroneSelector implements IEntitySelector
 {
@@ -24,7 +24,7 @@ public class EntityDroneSelector implements IEntitySelector
 			if (entity.isEntityAlive() && !entity.isInvisible())
 			{
 				// Attack players if hive drone TODO change to hostile only system later
-				if (drone.getOwner() instanceof Hive)
+				if (drone.getOwner() instanceof HiveComplexManager)
 				{
 					if (entity instanceof EntityPlayer)
 					{
@@ -47,7 +47,7 @@ public class EntityDroneSelector implements IEntitySelector
 					// Attack enemy drones
 					if (entity instanceof EntityArtillectBase)
 					{
-						if (drone.getOwner() instanceof Hive)
+						if (drone.getOwner() instanceof HiveComplexManager)
 						{
 							return true;
 						}

@@ -29,13 +29,6 @@ public class EntityFabricator extends EntityArtillectBase
 	public void onEntityUpdate()
 	{
 		super.onEntityUpdate();
-
-		if (this.getZone() == null)
-		{
-			// TODO: Remove this.
-			this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
-		}
-
 		this.cachedInventory = null;
 	}
 }
