@@ -27,10 +27,11 @@ public class EntityPlasma extends EntityThrowable
 			groundLife++;
 			if (groundLife == 30)
 			{
-				worldObj.createExplosion(this, posX, posY, posZ, 5, false);
+				worldObj.createExplosion(this, posX, posY, posZ, 2, false);
 				this.setDead();
 				impacted = false;
 			}
+			worldObj.spawnParticle("smoke", posX, posY, posZ, 0, 0, 0);
 		}
 	}
 

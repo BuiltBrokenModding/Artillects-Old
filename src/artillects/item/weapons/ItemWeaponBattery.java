@@ -49,6 +49,7 @@ public class ItemWeaponBattery extends ItemBase
 		par3List.add("Press \247lSHIFT\247r\u00a77 for detail");
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 		{
+			par3List.add("");
 			par3List.add("\u00a7bClip Size\u00a77: " + itemStack.getTagCompound().getInteger("clipsize"));
 			par3List.add("\u00a7bCharge Stored\u00a77: " + itemStack.getTagCompound().getInteger("currentStored"));
 		}

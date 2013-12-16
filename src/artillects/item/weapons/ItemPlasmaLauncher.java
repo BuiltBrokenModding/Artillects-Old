@@ -1,7 +1,12 @@
 package artillects.item.weapons;
 
+import java.util.List;
+
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.entity.weapon.EntityPlasma;
@@ -22,5 +27,17 @@ public class ItemPlasmaLauncher extends ItemBase
 
 		par2World.spawnEntityInWorld(new EntityPlasma(par2World, player));
 		return par1ItemStack;
+	}
+	
+	@Override
+	public void addInformation(ItemStack itemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
+	{
+		par3List.add("Press \247lSHIFT\247r\u00a77 for detail");
+		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
+		{
+			par3List.add("");
+			par3List.add("A launcher that shoots balls of \u00a73plasma\u00a77!");
+			par3List.add("Highly \u00a78\247leffective\247r\u00a77 against disabling artillects!");
+		}
 	}
 }
