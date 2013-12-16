@@ -31,7 +31,6 @@ public class FxLaser extends EntityFX
 	private float prevPitch = 0.0F;
 	private Vector3 target = new Vector3();
 	private float endModifier = 1.0F;
-	private boolean reverse = false;
 	private boolean pulse = true;
 	private int rotationSpeed = 20;
 	private float prevSize = 0.0F;
@@ -123,9 +122,29 @@ public class FxLaser extends EntityFX
 		GL11.glDisable(2884);
 
 		float var11 = slide + f;
-		if (this.reverse)
-			var11 *= -1.0F;
 		float var12 = -var11 * 0.2F - MathHelper.floor_float(-var11 * 0.1F);
+
+		GL11.glEnable(2884);
+		GL11.glBlendFunc(770, 1);
+		GL11.glDepthMask(false);
+		
+        float xx = (float) (this.prevPosX + (this.posX - this.prevPosX) * f - interpPosX);
+		float yy = (float) (this.prevPosY + (this.posY - this.prevPosY) * f - interpPosY);
+		float zz = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * f - interpPosZ);
+		GL11.glTranslated(xx, yy, zz);
+
+		float ry = this.prevYaw + (this.rotYaw - this.prevYaw) * f;
+		float rp = this.prevPitch + (this.rotPitch - this.prevPitch) * f;
+		GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
+		GL11.glRotatef(180.0F + ry, 0.0F, 0.0F, -1.0F);
+		GL11.glRotatef(rp, 1.0F, 0.0F, 0.0F);
+
+		double var44 = -0.15D * size;
+		double var17 = 0.15D * size;
+		double var44b = -0.15D * size * this.endModifier;
+		double var17b = 0.15D * size * this.endModifier;
+		
+		
 
 		GL11.glPopMatrix();
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(FMLClientHandler.instance().getClient().renderEngine.getResourceLocation(0));
