@@ -6,14 +6,19 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.NetLoginHandler;
+import net.minecraft.network.packet.NetHandler;
+import net.minecraft.network.packet.Packet1Login;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import artillects.block.BlockDecoration;
-import artillects.block.BlockGravitySlow;
 import artillects.block.BlockSymbol;
 import artillects.block.teleporter.BlockGlyph;
 import artillects.block.teleporter.BlockTeleporterAnchor;
@@ -46,16 +51,18 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Artillects.ID, name = Artillects.NAME, version = Artillects.VERSION, useMetadata = true)
-@NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
-public class Artillects
+@NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class, connectionHandler = Artillects.class)
+public class Artillects implements IConnectionHandler
 {
     @Instance
     public static Artillects INSTANCE;
@@ -329,6 +336,51 @@ public class Artillects
         ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
+    }
+
+    @Override
+    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager)
+    {
+        if (player != null && !((EntityPlayer) player).worldObj.isRemote)
+        {
+            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For help using the mod visit http://wiki.universalelectricity.com/"));
+        }
+
+    }
+
+    @Override
+    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void connectionClosed(INetworkManager manager)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
+    {
+        // TODO Auto-generated method stub
+
     }
 
 }
