@@ -35,13 +35,13 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        complexName = nbt.getString("complexName");
+        //complexName = nbt.getString("complexName");
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
         super.writeToNBT(nbt);
-        nbt.setString("complexName", this.complexName);
+        //nbt.setString("complexName", this.complexName);
     }
 }
