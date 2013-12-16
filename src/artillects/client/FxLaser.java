@@ -54,4 +54,31 @@ public class FxLaser extends EntityFX
 		this.particleGreen = g;
 		this.particleBlue = b;
 	}
+
+	@Override
+	public void onUpdate()
+	{
+		this.prevPosX = this.posX;
+		this.prevPosY = this.posY;
+		this.prevPosZ = this.posZ;
+
+		this.prevYaw = this.rotYaw;
+		this.prevPitch = this.rotPitch;
+
+		float xd = (float) (this.posX - this.target.x);
+		float yd = (float) (this.posY - this.target.y);
+		float zd = (float) (this.posZ - this.target.z);
+
+		this.length = MathHelper.sqrt_float(xd * xd + yd * yd + zd * zd);
+
+		double var7 = MathHelper.sqrt_double(xd * xd + zd * zd);
+
+		this.rotYaw = ((float) (Math.atan2(xd, zd) * 180.0D / 3.141592653589793D));
+		this.rotPitch = ((float) (Math.atan2(yd, var7) * 180.0D / 3.141592653589793D));
+
+		if (this.particleAge++ >= this.particleMaxAge)
+		{
+			setDead();
+		}
+	}
 }
