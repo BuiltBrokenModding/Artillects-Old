@@ -15,8 +15,7 @@ import artillects.entity.IArtillect;
 public class ZoneMining extends Zone
 {
     public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
-
-    // List of blocks sorted based on distance. Closer the block, the lower the get-ID.
+    
     public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
     public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();

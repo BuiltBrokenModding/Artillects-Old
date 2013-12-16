@@ -47,7 +47,7 @@ public class EntityAIMining extends EntityAIBase
 	/** Returns whether the EntityAIBase should begin execution. */
 	@Override
 	public boolean shouldExecute()
-	{
+	{System.out.println("tc"+(!((ZoneMining) entity.zone).scannedBlocks.isEmpty() ));
 		return this.entity.getType() == EnumWorkerType.HARVESTER && entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
 	}
 
@@ -63,7 +63,6 @@ public class EntityAIMining extends EntityAIBase
 	public void resetTask()
 	{
 		this.breakingTime = 0;
-
 	}
 
 	/** Updates the task */
