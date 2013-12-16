@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.VectorWorld;
+import artillects.entity.EntityFabricator;
 import artillects.hive.structure.Building;
 import artillects.hive.structure.Structure;
 import artillects.hive.zone.ZoneBuilding;
@@ -17,7 +18,7 @@ import artillects.hive.zone.ZoneBuilding;
  * @author Dark */
 public class HiveComplex extends HiveGhost
 {
-    protected VectorWorld location;
+    public VectorWorld location;
     protected String name;
 
     protected final List<Structure> peaces = new ArrayList<Structure>();
@@ -72,8 +73,16 @@ public class HiveComplex extends HiveGhost
                 this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
             }
         }
-
         this.buildZone = new ZoneBuilding(this.location.clone().add(0, 25, 0), this, 50);
+
+        for (int i = 0; i < 4; i++)
+        {
+            EntityFabricator fab = new EntityFabricator(this.location.world);
+            fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
+            fab.setOwner(Hive.instance());
+            buildZone.assignDrone(fab);
+            this.location.world.spawnEntityInWorld(fab);
+        }
 
         if (worldGen)
         {
@@ -221,6 +230,6 @@ public class HiveComplex extends HiveGhost
     public void load(NBTTagCompound nbt)
     {
         this.location = new VectorWorld(nbt.getCompoundTag("location"));
-
+        this.loadGeneralBuilding(false);
     }
 }

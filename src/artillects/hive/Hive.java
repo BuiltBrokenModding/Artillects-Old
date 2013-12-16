@@ -38,7 +38,7 @@ public class Hive implements IScheduledTickHandler
 	private List<IArtillect> droneAwaitingOrders = new ArrayList<IArtillect>();
 	private List<Report> inboxReports = new ArrayList<Report>();
 	public List<Zone> activeZones = new ArrayList<Zone>();
-	private HashMap<String, HiveComplex> activeComplexs = new HashMap<String, HiveComplex>();
+	public HashMap<String, HiveComplex> activeComplexs = new HashMap<String, HiveComplex>();
 
 	private long ticks = 0;
 
