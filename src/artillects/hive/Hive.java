@@ -86,6 +86,11 @@ public class Hive implements IScheduledTickHandler
 		}
 	}
 
+	public List<IArtillect> getArtillects()
+	{
+		return this.activeDrones;
+	}
+
 	public void addHiveComplex(HiveComplex hiveComplex)
 	{
 		if (hiveComplex != null && activeComplexs.get(hiveComplex.name) == null)

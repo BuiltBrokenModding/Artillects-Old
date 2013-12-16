@@ -2,6 +2,8 @@ package artillects.entity;
 
 import java.util.List;
 
+import com.google.common.io.ByteArrayDataInput;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,10 +21,13 @@ import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
+import artillects.hive.ArtillectTaskType;
 import artillects.hive.Hive;
 import artillects.hive.zone.Zone;
+import artillects.network.IPacketReceiver;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
-public abstract class EntityArtillectBase extends EntityCreature implements IArtillect
+public abstract class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver
 {
 	public InventoryBasic inventory = new InventoryBasic("gui.artillect", false, 9);
 	protected List<ItemStack> cachedInventory;
@@ -43,6 +48,31 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 		super(world);
 		this.setSize(1, 1);
 		Hive.instance().addDrone((IArtillect) this);
+	}
+
+	public ArtillectTaskType getType()
+	{
+		return ArtillectTaskType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID));
+	}
+
+	public void setType(ArtillectTaskType type)
+	{
+		if (this.worldObj.isRemote)
+		{
+			PacketDispatcher.sendPacketToServer(Artillects.PACKET_ENTITY.getPacket(this, (byte) type.ordinal()));
+		}
+		else
+		{
+			this.getDataWatcher().updateObject(EntityArtillectBase.DATA_TYPE_ID, (byte) (type.ordinal()));
+		}
+	}
+
+	@Override
+	public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
+	{
+		// TODO: REMOVE THIS;
+		this.setZone(null);
+		this.setType(ArtillectTaskType.values()[data.readByte()]);
 	}
 
 	@Override
@@ -268,6 +298,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 		}
 
 		nbt.setTag("Items", nbttaglist);
+		nbt.setByte("type", (byte) this.getType().ordinal());
 
 		// TODO: Save owner.
 	}
@@ -289,5 +320,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 				this.inventory.setInventorySlotContents(j, ItemStack.loadItemStackFromNBT(nbttagcompound1));
 			}
 		}
+
+		this.setType(ArtillectTaskType.values()[nbt.getByte("type")]);
 	}
 }

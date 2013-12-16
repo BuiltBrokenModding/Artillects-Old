@@ -1,13 +1,9 @@
 package artillects.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import artillects.Pair;
-import artillects.Vector3;
-import artillects.VectorWorld;
-import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityFabricator;
+import artillects.hive.Hive;
 import artillects.hive.zone.ZoneBuilding;
 import artillects.hive.zone.ZoneProcessing;
 
@@ -20,6 +16,7 @@ public class EntityAIReproduce extends EntityAIBase
 	private double moveSpeed;
 	private int idleTime = 0;
 	private final int maxIdleTime = 20;
+
 
 	public EntityAIReproduce(EntityFabricator entity, double par2)
 	{
@@ -63,7 +60,7 @@ public class EntityAIReproduce extends EntityAIBase
 
 		if (this.idleTime <= 0 && this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty())
 		{
-			
+			Hive.instance().getArtillects();
 		}
 	}
 }

@@ -15,7 +15,7 @@ import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
-import artillects.entity.EntityWorker.EnumWorkerType;
+import artillects.hive.ArtillectTaskType;
 import artillects.hive.zone.ZoneMining;
 
 public class EntityAIMining extends EntityAIBase
@@ -48,7 +48,7 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return this.entity.getType() == EnumWorkerType.HARVESTER;
+		return this.entity.getType() == ArtillectTaskType.HARVESTER;
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */

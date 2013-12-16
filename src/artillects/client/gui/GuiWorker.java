@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import artillects.container.ContainerWorker;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
-import artillects.entity.EntityWorker.EnumWorkerType;
+import artillects.hive.ArtillectTaskType;
 
 /**
  * @author Calclavia
@@ -36,7 +36,7 @@ public class GuiWorker extends GuiBase
 	{
 		super.drawGuiContainerForegroundLayer(x, y);
 		this.fontRenderer.drawString("Worker", this.xSize / 2 - 15, -18, 4210752);
-		this.fontRenderer.drawString("Task: " + EnumWorkerType.values()[this.worker.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID)].name(), 9, 0, 4210752);
+		this.fontRenderer.drawString("Task: " + this.worker.getType().name(), 9, 0, 4210752);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class GuiWorker extends GuiBase
 		if (guiButton.id == this.switchTaskButton.id)
 		{
 			byte type = (byte) this.worker.getType().ordinal();
-			this.worker.setType(EnumWorkerType.values()[++type % (EnumWorkerType.values().length)]);
+			this.worker.setType(ArtillectTaskType.values()[++type % (ArtillectTaskType.values().length)]);
 		}
 	}
 
