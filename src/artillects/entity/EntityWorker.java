@@ -4,6 +4,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
+import artillects.entity.ai.EntityAICrafting;
 import artillects.entity.ai.EntityAIMining;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneMining;
@@ -16,6 +17,7 @@ public class EntityWorker extends EntityArtillectBase
 		super(par1World);
 		this.tasks.addTask(0, new EntityAIMining(this, 1));
 		this.tasks.addTask(0, new EntityAIBlacksmith(this, 1));
+		this.tasks.addTask(0, new EntityAICrafting(this, 1));
 		this.tasks.addTask(1, new EntityAIWander(this, 0.5f));
 	}
 

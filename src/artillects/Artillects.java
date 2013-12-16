@@ -219,13 +219,23 @@ public class Artillects implements IConnectionHandler
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		// Load crafting
+		/* Load Artillect Recipes */
 		// Worker
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.WORKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
+		
+		// Fabriactor
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.FABRICATOR.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
+
+		// Demolisher
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.DEMOLISHER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
+
+		// Seeker
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.SEEKER.ordinal()), "G G", "GGG", "G G", 'G', itemParts));
 
 		// Metal Gear
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.diamond));
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockWall1, 1), "PGP", "G G", "PGP", 'P', new ItemStack(itemParts, 1, ItemParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemParts.Part.GEARS.ordinal())));
+
 		proxy.postInit();
 	}
 

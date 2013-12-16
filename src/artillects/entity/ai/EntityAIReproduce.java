@@ -78,6 +78,7 @@ public class EntityAIReproduce extends EntityAIBase
 				artillectTypeCount.put(artillect.getType(), (artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0) + 1);
 			}
 
+			// TODO: Fix ratio sorting NOT working.
 			for (ArtillectType type : ArtillectType.values())
 			{
 				int amount = artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0;
@@ -108,6 +109,9 @@ public class EntityAIReproduce extends EntityAIBase
 
 			for (ItemStack stackRequired : type.getResourcesRequired())
 			{
+				/**
+				 * Check if we have the required resources.
+				 */
 				int resourceCount = 0;
 
 				for (ItemStack stackInEntity : this.entity.getInventoryAsList())
@@ -121,7 +125,7 @@ public class EntityAIReproduce extends EntityAIBase
 				if (resourceCount < stackRequired.stackSize)
 				{
 					/**
-					 * Search for the resource.
+					 * Search for the resource because we have less than the required amount.
 					 */
 					for (Vector3 chestPosition : zone.chestPositions)
 					{

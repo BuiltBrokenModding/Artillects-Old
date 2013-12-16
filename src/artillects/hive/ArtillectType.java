@@ -18,7 +18,7 @@ import artillects.entity.combat.EntitySeeker;
 public enum ArtillectType
 {
 	FABRICATOR(1, EntityFabricator.class), HARVESTER(5, EntityWorker.class),
-	BLACKSMITH(4, EntityWorker.class), CRAFTER(3, EntityWorker.class),
+	BLACKSMITH(4, EntityWorker.class), CRAFTER(1, EntityWorker.class),
 	SEEKER(2, EntitySeeker.class), DEMOLISHER(2, EntityDemolisher.class);
 
 	public final int ratio;
