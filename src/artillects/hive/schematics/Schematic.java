@@ -69,9 +69,10 @@ public class Schematic implements ISaveObject
 
     public void build(VectorWorld spot, boolean doWorldCheck)
     {
+        System.out.println("Building schematic");
         if (this.blocks != null)
         {
-            HashMap<Vector3, ItemStack> blocksToPlace = new HashMap();
+            HashMap<Vector3, ItemStack> blocksToPlace = new HashMap<Vector3, ItemStack>();
             this.getBlocksToPlace(spot, blocksToPlace, doWorldCheck);
             for (Entry<Vector3, ItemStack> entry : blocksToPlace.entrySet())
             {
