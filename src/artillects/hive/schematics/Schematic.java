@@ -90,7 +90,7 @@ public class Schematic implements ISaveObject
                 int meta = entry.getValue()[1];
                 Block block = Block.blocksList[blockID];
 
-                if (block != null && block != Block.sponge)
+                if (block == null || block != Block.sponge)
                 {
                     if (blockID == Artillects.blockSymbol.blockID)
                     {

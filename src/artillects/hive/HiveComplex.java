@@ -17,7 +17,7 @@ import artillects.hive.zone.ZoneBuilding;
  * @author Dark */
 public class HiveComplex extends HiveGhost
 {
-    protected VectorWorld location;
+    public VectorWorld location;
     protected String name;
 
     protected final List<Structure> peaces = new ArrayList<Structure>();
@@ -221,6 +221,6 @@ public class HiveComplex extends HiveGhost
     public void load(NBTTagCompound nbt)
     {
         this.location = new VectorWorld(nbt.getCompoundTag("location"));
-
+        this.loadGeneralBuilding(false);
     }
 }
