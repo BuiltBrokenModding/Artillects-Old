@@ -14,7 +14,7 @@ import artillects.VectorWorld;
 public class TeleportManager
 {
     private static HashMap<Integer, TeleportManager> managerList = new HashMap<Integer, TeleportManager>();
-    private HashSet<TileEntityTeleporterAnchor> teleporters = new HashSet<TileEntityTeleporterAnchor>();
+    private HashSet<TileEntityTeleporterAnchor> teleporters = new HashSet<TileEntityTeleporterAnchor>();    
 
     public static TeleportManager getManagerForDim(int dim)
     {
