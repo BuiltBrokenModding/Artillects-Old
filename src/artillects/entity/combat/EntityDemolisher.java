@@ -19,6 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityDroneSelector;
+import artillects.hive.ArtillectTaskType;
 
 public class EntityDemolisher extends EntityArtillectBase implements IRangedAttackMob
 {
@@ -43,14 +44,14 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
 	protected void entityInit()
 	{
 		super.entityInit();
-
+		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectTaskType.DEMOLISHER.ordinal());
 	}
 
 	@Override
 	protected void applyEntityAttributes()
 	{
 		super.applyEntityAttributes();
-		//this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
+		// this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(120.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
