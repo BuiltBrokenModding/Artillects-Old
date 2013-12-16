@@ -2,6 +2,7 @@ package artillects.block.teleporter;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.Vector3;
@@ -69,19 +70,36 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 
     public void doTeleport(Entity entity)
     {
+        VectorWorld teleportSpot = null;
         if (this.forceXYZ && this.teleportSpot != null)
         {
-            worldObj.markBlockForUpdate((int) teleportSpot.x, (int) teleportSpot.y, (int) teleportSpot.z);
-            entity.setPosition((int) teleportSpot.x + 0.5, (int) teleportSpot.y + 0.5, (int) teleportSpot.z + 0.5);
+            teleportSpot = new VectorWorld(this.worldObj, this.teleportSpot);
         }
         else if (this.getFrequency() > 0)
         {
             TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
             if (teleporter != null)
             {
-                worldObj.markBlockForUpdate(teleporter.xCoord, teleporter.yCoord, teleporter.zCoord);
-                entity.setPosition(teleporter.xCoord + 0.5, teleporter.yCoord + 2, teleporter.zCoord + 0.5);
+                teleportSpot = new VectorWorld(teleporter).add(0.5, 2, 0.5);
             }
+        }
+
+        if (teleportSpot != null)
+        {
+            this.moveEntity(entity, teleportSpot);
+        }
+    }
+
+    protected void moveEntity(Entity entity, VectorWorld location)
+    {
+        worldObj.markBlockForUpdate((int) location.x, (int) location.y, (int) location.z);
+        if (entity instanceof EntityPlayerMP)
+        {
+            ((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x, location.y, location.z, 0, 0);
+        }
+        else
+        {
+            entity.setPosition(location.x, location.y, location.z);
         }
     }
 

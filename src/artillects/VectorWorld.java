@@ -34,6 +34,14 @@ public class VectorWorld extends Vector3
         this.world = tile.worldObj;
     }
 
+    public VectorWorld(World world, Vector3 v)
+    {
+        this.x = v.x;
+        this.y = v.y;
+        this.z = v.z;
+        this.world = world;
+    }
+
     @Override
     public VectorWorld add(double x, double y, double z)
     {
