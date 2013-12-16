@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import artillects.Pair;
 import artillects.Vector3;
 import artillects.VectorWorld;
+import artillects.entity.EntityFabricator;
+import artillects.entity.IArtillect;
 import artillects.hive.HiveComplex;
 import artillects.hive.structure.Structure;
 
@@ -74,5 +76,17 @@ public class ZoneBuilding extends Zone
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean canAssignDrone(IArtillect drone)
+    {
+        return drone instanceof EntityFabricator;
+    }
+
+    @Override
+    public boolean doesZoneNeedWorkers()
+    {
+        return assignedDrones.size() < 3 && !this.buildPosition.isEmpty();
     }
 }

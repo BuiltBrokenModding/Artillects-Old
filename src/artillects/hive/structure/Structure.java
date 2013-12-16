@@ -31,7 +31,7 @@ public class Structure extends HiveGhost
 
     public void worldGen()
     {
-        
+
         building.getSchematic().build(location, false);
     }
 
@@ -51,11 +51,11 @@ public class Structure extends HiveGhost
         super.updateEntity();
         if (this.ticks % ((int) 120 + location.x + location.y + location.z) == 0)
         {
-            System.out.println(this.toString() + " scanning for damage");
             HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
             building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true);
             if (!missingBlocks.isEmpty())
             {
+                System.out.println(this.toString() + " found damage");
                 this.missingBlocks.putAll(missingBlocks);
                 this.isDamaged = true;
             }
