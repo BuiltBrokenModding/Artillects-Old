@@ -47,7 +47,7 @@ public class EntityAIMining extends EntityAIBase
 	/** Returns whether the EntityAIBase should begin execution. */
 	@Override
 	public boolean shouldExecute()
-	{System.out.println("tc"+(!((ZoneMining) entity.zone).scannedBlocks.isEmpty() ));
+	{
 		return this.entity.getType() == EnumWorkerType.HARVESTER && entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
 	}
 
@@ -70,7 +70,7 @@ public class EntityAIMining extends EntityAIBase
 	public void updateTask()
 	{
 		if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
-		{System.out.println("WORKER");
+		{
 			if (!this.entity.isInventoryFull())
 			{
 				Vector3 targetPosition = null;
@@ -97,7 +97,7 @@ public class EntityAIMining extends EntityAIBase
 					this.entity.setPathToEntity(null);
 				}
 
-				MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.toVec3(), false, false);
+				MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.clone().add(0.5).toVec3(), false, false);
 
 				if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
 				{
@@ -127,7 +127,10 @@ public class EntityAIMining extends EntityAIBase
 						{
 							int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
 							this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
-							Artillects.proxy.renderLaser(this.world, new Vector3(this.entity), breakPosition, 1, 0, 0);
+							if (this.breakingTime % 10 == 0)
+							{
+								Artillects.proxy.renderLaser(this.world, new Vector3(this.entity), breakPosition.clone().add(0.5), 1, 0, 0);
+							}
 						}
 					}
 				}
