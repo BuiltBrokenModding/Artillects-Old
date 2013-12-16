@@ -7,6 +7,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
+import artillects.VectorWorld;
 import artillects.hive.Hive;
 import artillects.hive.schematics.NBTFileHandler;
 
@@ -54,6 +55,7 @@ public class CommandTool extends CommandBase
                             File file = new File(NBTFileHandler.getBaseFolder(), "schematics/" + args[2] + ".dat");
                             if (file.exists())
                             {
+                                player.sendChatToPlayer(ChatMessageComponent.createFromText("Loading " + args[2] + " from file"));
                                 PlayerSelectionHandler.getSchematic(player, file);
                             }
                             else
@@ -70,23 +72,47 @@ public class CommandTool extends CommandBase
                     {
                         if (PlayerSelectionHandler.hasSchematicLoaded(player))
                         {
-                            if (args.length >= 3 && args[2].equalsIgnoreCase("pointone"))
+                            if (args.length >= 3 && args[2].equalsIgnoreCase("pointOne"))
                             {
-
+                                if (PlayerSelectionHandler.hasPointOne(player))
+                                {
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at point one"));
+                                    PlayerSelectionHandler.getSchematic(player).build(PlayerSelectionHandler.getPointOne(player), false);
+                                }
+                                else
+                                {
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a location"));
+                                }
                             }
-                            else if (args.length >= 3 && args[2].equalsIgnoreCase("pointone"))
+                            else if (args.length >= 3 && args[2].equalsIgnoreCase("pointTwo"))
                             {
-
+                                if (PlayerSelectionHandler.hasPointTwo(player))
+                                {
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at point two"));
+                                    PlayerSelectionHandler.getSchematic(player).build(PlayerSelectionHandler.getPointTwo(player), false);
+                                }
+                                else
+                                {
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a location"));
+                                }
                             }
                             else if (args.length >= 5)
                             {
                                 try
                                 {
-
+                                    int x = Integer.parseInt(args[2]);
+                                    int y = Integer.parseInt(args[3]);
+                                    int z = Integer.parseInt(args[4]);
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at " + x + "x " + y + "y " + z + "z "));
+                                    PlayerSelectionHandler.getSchematic(player).build(new VectorWorld(player.worldObj, x, y, z), false);
+                                }
+                                catch (IllegalArgumentException e)
+                                {
+                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build due to location parsing xyz"));
                                 }
                                 catch (Exception e)
                                 {
-
+                                    e.printStackTrace();
                                 }
                             }
                         }
