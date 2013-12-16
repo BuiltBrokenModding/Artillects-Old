@@ -1,9 +1,16 @@
 package artillects.client;
 
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import org.lwjgl.opengl.GL11;
+
+import artillects.Artillects;
 import artillects.Vector3;
+import cpw.mods.fml.client.FMLClientHandler;
 
 /**
  * @author Calclavia
@@ -11,6 +18,8 @@ import artillects.Vector3;
  */
 public class FxLaser extends EntityFX
 {
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.PREFIX, "text.png");
+
 	double movX = 0.0D;
 	double movY = 0.0D;
 	double movZ = 0.0D;
@@ -81,4 +90,34 @@ public class FxLaser extends EntityFX
 			setDead();
 		}
 	}
+
+	@Override
+	public void renderParticle(Tessellator tessellator, float f, float f1, float f2, float f3, float f4, float f5)
+	{
+		tessellator.draw();
+
+		GL11.glPushMatrix();
+		float var9 = 1.0F;
+		float slide = this.worldObj.getTotalWorldTime();
+		float rot = this.worldObj.provider.getWorldTime() % (360 / this.rotationSpeed) * this.rotationSpeed + this.rotationSpeed * f;
+
+		float size = 1.0F;
+		if (this.pulse)
+		{
+			size = Math.min(this.particleAge / 4.0F, 1.0F);
+			size = this.prevSize + (size - this.prevSize) * f;
+		}
+
+		float op = 0.5F;
+		if ((this.pulse) && (this.particleMaxAge - this.particleAge <= 4))
+		{
+			op = 0.5F - (4 - (this.particleMaxAge - this.particleAge)) * 0.1F;
+		}
+
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE);
+
+		tessellator.startDrawingQuads();
+		this.prevSize = this.particleScale;
+	}
+
 }
