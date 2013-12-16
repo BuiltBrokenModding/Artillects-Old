@@ -31,6 +31,7 @@ public class Structure extends HiveGhost
 
     public void worldGen()
     {
+        
         building.getSchematic().build(location, false);
     }
 
