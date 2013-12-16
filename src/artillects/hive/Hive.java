@@ -286,23 +286,17 @@ public class Hive implements IScheduledTickHandler
     /** Temp loads all the villages from file so the manager can record what villages exist */
     public void loadObjectsForDim(int dim)
     {
-        System.out.println("loading hive peaces from world: " + dim);
         File hiveFolder = new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
         if (hiveFolder.exists())
         {
-            System.out.println("folder exists");
             for (File fileEntry : hiveFolder.listFiles())
             {
-                System.out.println("file: " + fileEntry.toString());
                 if (fileEntry.isDirectory() && fileEntry.getName().startsWith("complex"))
                 {
-                    System.out.println("file starts with complex");
                     for (File subFile : fileEntry.listFiles())
                     {
-                        System.out.println("file contains " + subFile.toString());
                         if (subFile.getName().equalsIgnoreCase("complex.dat"))
                         {
-                            System.out.println("found complex.dat");
                             NBTTagCompound tag = NBTFileHandler.loadFile(subFile);
                             String name = tag.getString("name");
                             if (!this.activeComplexs.containsKey(name))
