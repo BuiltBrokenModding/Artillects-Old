@@ -96,6 +96,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
         if (System.currentTimeMillis() - this.lastFrequencyCheck > 10)
         {
             this.lastFrequencyCheck = System.currentTimeMillis();
+            this.frequency = 0;
             for (int i = 2; i < 6; i++)
             {
                 ForgeDirection direction = ForgeDirection.getOrientation(i);
