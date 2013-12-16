@@ -131,14 +131,14 @@ public class CommandTool extends CommandBase
                 {
                     if (args.length >= 2 && args[1].equalsIgnoreCase("ls"))
                     {
-                        player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + Hive.instance().activeZones.size() + " zones part of the hive."));
+                        player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + Hive.instance().zones.size() + " zones part of the hive."));
                     }
                 }
                 else if (args.length >= 1 && args[0].equalsIgnoreCase("hive"))
                 {
                     if (args.length >= 2 && args[1].equalsIgnoreCase("ls"))
                     {
-                        player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + Hive.instance().activeComplexs.size() + " hive complexs loaded in the world."));
+                        player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + Hive.instance().complexes.size() + " hive complexs loaded in the world."));
                     }
                     else if (args.length >= 2 && args[1].equalsIgnoreCase("get"))
                     {
