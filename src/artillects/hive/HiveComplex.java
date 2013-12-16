@@ -125,11 +125,14 @@ public class HiveComplex extends HiveGhost
             {
                 this.load5x5Room(floorBase, 2);
             }
+            if (floor == 7 || floor == 8)
+            {
+                this.load5x5Room(floorBase, 1);
+            }
             else
             {
                 this.load5x5Room(floorBase, 0);
             }
-
             if (floor != height)
             {
                 // NorthTunnel
@@ -158,18 +161,45 @@ public class HiveComplex extends HiveGhost
                 this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
 
                 //Corner room
-                int cornerA = 1, cornerB = 0, cornerC = 1, cornerD = 0;
-                if (floor == 2 || floor == 4 || floor == 7 || floor == 8)
+                int cornerA = 0, cornerB = 0, cornerC = 0, cornerD = 0;
+                switch (floor)
                 {
-                    cornerA = 1;
-                    cornerB = 1;
-                    cornerC = 0;
-                    cornerD = 0;
+                    case 0:
+                        cornerA = 1;
+                        break;
+                    case 1:
+                        cornerA = 1;
+                        cornerB = 1;
+                        break;
+                    case 2:
+                        cornerB = 1;
+                        cornerC = 1;
+                        break;
+                    case 3:
+                        cornerC = 1;
+                        cornerD = 1;
+                        break;
+                    case 4:
+                        cornerD = 1;
+                        cornerA = 1;
+                        break;
+                    case 5:
+                        cornerA = 1;
+                        cornerB = 1;
+                        break;
+                    case 6:
+                        cornerB = 1;
+                        cornerC = 1;
+                        break;
                 }
+                //NorthWest
                 this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
+                //NorthEast
                 this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
-                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerC);
-                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerD);
+                //SouthEast
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerC);
+                //SouthWest
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
             }
         }
         this.buildZone = new ZoneBuilding(this, 80);
