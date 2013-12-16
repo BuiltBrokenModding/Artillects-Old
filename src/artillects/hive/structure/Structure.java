@@ -49,7 +49,7 @@ public class Structure extends HiveGhost
     public void updateEntity()
     {
         super.updateEntity();
-        if (this.ticks % ((int) 120 + location.x + location.y + location.z) == 0)
+        if (this.ticks % ((int) 60 + location.x + location.y + location.z) == 0)
         {
             HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
             building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true);

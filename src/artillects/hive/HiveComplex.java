@@ -45,7 +45,7 @@ public class HiveComplex extends HiveGhost
         for (int i = 0; i < 1; i++)
         {
             EntityFabricator fab = new EntityFabricator(this.location.world);
-            fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
+            fab.setPosition(this.location.x + 0.5, this.location.y + 1 + (i * 0.5), this.location.z + 0.5);
             fab.setOwner(Hive.instance());
             buildZone.assignDrone(fab);
             this.location.world.spawnEntityInWorld(fab);
