@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.VectorWorld;
@@ -14,7 +16,8 @@ import artillects.VectorWorld;
 public class TeleportManager
 {
     private static HashMap<Integer, TeleportManager> managerList = new HashMap<Integer, TeleportManager>();
-    private HashSet<TileEntityTeleporterAnchor> teleporters = new HashSet<TileEntityTeleporterAnchor>();    
+    private HashSet<TileEntityTeleporterAnchor> teleporters = new HashSet<TileEntityTeleporterAnchor>();
+    private static HashMap<String, Long> coolDown = new HashMap<String, Long>();
 
     public static TeleportManager getManagerForDim(int dim)
     {
@@ -79,5 +82,25 @@ public class TeleportManager
             }
         }
         return tele;
+    }
+
+    protected static void moveEntity(Entity entity, VectorWorld location)
+    {
+        if (entity != null && location != null)
+        {
+            location.world.markBlockForUpdate((int) location.x, (int) location.y, (int) location.z);
+            if (entity instanceof EntityPlayerMP)
+            {
+                if (coolDown.get(((EntityPlayerMP) entity).username) == null || (System.currentTimeMillis() - coolDown.get(((EntityPlayerMP) entity).username) > 30))
+                {
+                    ((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x, location.y, location.z, 0, 0);
+                    coolDown.put(((EntityPlayerMP) entity).username, System.currentTimeMillis());
+                }
+            }
+            else
+            {
+                entity.setPosition(location.x, location.y, location.z);
+            }
+        }
     }
 }

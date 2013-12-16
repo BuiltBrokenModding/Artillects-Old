@@ -86,22 +86,11 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 
         if (teleportSpot != null)
         {
-            this.moveEntity(entity, teleportSpot);
+            TeleportManager.moveEntity(entity, teleportSpot);
         }
     }
 
-    protected void moveEntity(Entity entity, VectorWorld location)
-    {
-        worldObj.markBlockForUpdate((int) location.x, (int) location.y, (int) location.z);
-        if (entity instanceof EntityPlayerMP)
-        {
-            ((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x, location.y, location.z, 0, 0);
-        }
-        else
-        {
-            entity.setPosition(location.x, location.y, location.z);
-        }
-    }
+   
 
     /** @return -1 if the teleporter is unable to teleport. */
     public int getFrequency()
