@@ -139,21 +139,4 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
 
 		return flag;
 	}
-
-	@Override
-	protected void attackEntity(Entity par1Entity, float par2)
-	{
-		if (this.attackTime <= 0 && par2 < 2.0F && par1Entity.boundingBox.maxY > this.boundingBox.minY && par1Entity.boundingBox.minY < this.boundingBox.maxY)
-		{
-			this.attackTime = 20;
-			this.attackEntityAsMob(par1Entity);
-		}
-	}
-
-	@Override
-	public void attackEntityWithRangedAttack(EntityLivingBase entity, float f)
-	{
-		entity.attackEntityFrom(DamageSource.generic, 5);
-	}
-
 }

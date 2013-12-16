@@ -25,7 +25,7 @@ public class EntityAIReproduce extends EntityAIBase
     /** The speed the creature moves at during mining behavior. */
     private double moveSpeed;
     private int idleTime = 0;
-    private final int maxIdleTime = 20 * 10;
+    private final int maxIdleTime = 500;
 
     public EntityAIReproduce(EntityFabricator entity, double par2)
     {
@@ -72,7 +72,7 @@ public class EntityAIReproduce extends EntityAIBase
             HashMap<ArtillectType, Integer> artillectTypeCount = new HashMap<ArtillectType, Integer>();
 
             Set<IArtillect> artillects = new HashSet<IArtillect>(this.entity.getZone().getComplex().getArtillects());
-
+            artillectTypeCount.clear();
             for (IArtillect artillect : artillects)
             {
                 ArtillectType type = artillect.getType();

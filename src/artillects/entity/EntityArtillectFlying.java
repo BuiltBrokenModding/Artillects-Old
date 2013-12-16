@@ -9,9 +9,11 @@ import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import artillects.Artillects;
 import artillects.Vector3;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
@@ -167,6 +169,12 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         entitylargefireball.posY = this.posY + this.height / 2.0F + 0.5D;
         entitylargefireball.posZ = this.posZ + vec3.zCoord * entityRadius;
         this.worldObj.spawnEntityInWorld(entitylargefireball);
+    }
+
+    public void fireLaser(EntityLivingBase entity)
+    {
+        entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
     }
 
     @Override

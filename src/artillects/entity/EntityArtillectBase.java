@@ -5,7 +5,13 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -15,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import artillects.Artillects;
@@ -30,7 +37,7 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public abstract class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver
+public class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver, IRangedAttackMob
 {
     public InventoryBasic inventory = new InventoryBasic("gui.artillect", false, 9);
     protected List<ItemStack> cachedInventory;
@@ -50,6 +57,13 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
     {
         super(world);
         this.setSize(1, 1);
+        this.tasks.addTask(5, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
+        // this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D,
+        // false));
+        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly
     }
 
     @Override
@@ -345,5 +359,13 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
         }
 
         this.setType(ArtillectType.values()[nbt.getByte("type")]);
+    }
+
+    @Override
+    public void attackEntityWithRangedAttack(EntityLivingBase entity, float f)
+    {
+        entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+
     }
 }
