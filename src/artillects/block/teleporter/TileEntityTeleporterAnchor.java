@@ -11,6 +11,20 @@ import artillects.tile.TileEntityAdvanced;
 /** @author Archadia */
 public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 {
+    private long lastFrequencyCheck = 0;
+    private int frequency = 0;
+    private boolean forceXYZ = false;
+    private Vector3 xyz = null;
+
+    public void setTeleportLocation(Vector3 location)
+    {
+        if (location != null)
+        {
+            this.forceXYZ = true;
+            this.xyz = location;
+        }
+    }
+
     @Override
     public void validate()
     {
@@ -43,8 +57,10 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
         return true;
     }
 
+    @Override
     public void updateEntity()
     {
+        super.updateEntity();
         if (worldObj.getWorldTime() % 600 == 0)
         {
             refresh();
@@ -69,31 +85,48 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
     /** @return -1 if the teleporter is unable to teleport. */
     public int getFrequency()
     {
-        int frequency = 0;
-
-        for (int i = 2; i < 6; i++)
+        if (this.lastFrequencyCheck - System.currentTimeMillis() > 10)
         {
-            ForgeDirection direction = ForgeDirection.getOrientation(i);
-            Vector3 position = new Vector3(this.xCoord + direction.offsetX, this.yCoord + direction.offsetY, this.zCoord + direction.offsetZ);
-
-            Block block = Block.blocksList[this.worldObj.getBlockId((int) position.x, (int) position.y, (int) position.z)];
-
-            if (block instanceof BlockGlyph)
+            this.lastFrequencyCheck = System.currentTimeMillis();
+            for (int i = 2; i < 6; i++)
             {
-                int metadata = this.worldObj.getBlockMetadata((int) position.x, (int) position.y, (int) position.z);
-                frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 2) * metadata;
-            }
-            else
-            {
-                return -1;
+                ForgeDirection direction = ForgeDirection.getOrientation(i);
+                Vector3 position = new Vector3(this.xCoord + direction.offsetX, this.yCoord + direction.offsetY, this.zCoord + direction.offsetZ);
+
+                Block block = Block.blocksList[this.worldObj.getBlockId((int) position.x, (int) position.y, (int) position.z)];
+
+                if (block instanceof BlockGlyph)
+                {
+                    int metadata = this.worldObj.getBlockMetadata((int) position.x, (int) position.y, (int) position.z);
+                    this.frequency += Math.pow(BlockGlyph.MAX_GLYPH, i - 2) * metadata;
+                }
+                else
+                {
+                    return -1;
+                }
             }
         }
-
-        return frequency;
+        return this.frequency;
     }
 
-    public void writeToNBT(NBTTagCompound tag)
+    @Override
+    public void readFromNBT(NBTTagCompound nbt)
     {
+        super.readFromNBT(nbt);
+        if (this.xyz != null)
+        {
+            nbt.setCompoundTag("teleportLocation", this.xyz.save(new NBTTagCompound()));
+        }
+    }
 
+    @Override
+    public void writeToNBT(NBTTagCompound nbt)
+    {
+        super.writeToNBT(nbt);
+        if (nbt.hasKey("teleportLocation"))
+        {
+            this.xyz = new Vector3(nbt.getCompoundTag("teleportLocation"));
+            this.forceXYZ = true;
+        }
     }
 }
