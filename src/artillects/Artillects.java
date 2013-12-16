@@ -345,7 +345,6 @@ public class Artillects implements IConnectionHandler
         {
             ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For help using the mod visit http://wiki.universalelectricity.com/"));
         }
-
     }
 
     @Override

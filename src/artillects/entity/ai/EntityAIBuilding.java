@@ -40,7 +40,13 @@ public class EntityAIBuilding extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty();
+        if (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty())
+        {
+            System.out.println("Executing task");
+            return true;
+        }
+        System.out.println("not executing task " + (this.entity.zone instanceof ZoneBuilding) + " " + (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty()));
+        return false;
     }
 
     /** Returns whether an in-progress EntityAIBase should continue executing */
