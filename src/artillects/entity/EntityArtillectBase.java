@@ -41,6 +41,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	public EntityArtillectBase(World world)
 	{
 		super(world);
+		this.setSize(1, 1);
 		Hive.instance().addDrone((IArtillect) this);
 	}
 

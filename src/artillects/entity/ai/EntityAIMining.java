@@ -129,7 +129,7 @@ public class EntityAIMining extends EntityAIBase
 							this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
 							if (this.breakingTime % 10 == 0)
 							{
-								Artillects.proxy.renderLaser(this.world, new Vector3(this.entity), breakPosition.clone().add(0.5), 1, 0, 0);
+								Artillects.proxy.renderLaser(this.world, new Vector3(this.entity).add(0, 0.2, 0), breakPosition.clone().add(0.5), 1, 0, 0);
 							}
 						}
 					}
