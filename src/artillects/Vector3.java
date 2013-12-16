@@ -86,6 +86,11 @@ public class Vector3 extends Vector2
         return difference.getMagnitude();
     }
 
+    public double distance(Entity entity)
+    {
+        return this.distance(new Vector3(entity));
+    }
+
     public double getMagnitude()
     {
         return Math.sqrt(this.getMagnitudeSquared());
@@ -143,4 +148,5 @@ public class Vector3 extends Vector2
         nbt.setDouble("z", this.z);
         return nbt;
     }
+
 }
