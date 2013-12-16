@@ -44,8 +44,7 @@ public class GuiWorker extends GuiBase
 	{
 		if (guiButton.id == this.switchTaskButton.id)
 		{
-			byte type = (byte) this.worker.getType().ordinal();
-			this.worker.setType(ArtillectTaskType.values()[++type % (ArtillectTaskType.values().length)]);
+			this.worker.setType(this.worker.getType().toggle(this.worker));
 		}
 	}
 
