@@ -141,7 +141,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	}
 
 	@Override
-	public void setOwner(EntityPlayer player)
+	public void setOwner(Object player)
 	{
 		this.owner = player;
 	}

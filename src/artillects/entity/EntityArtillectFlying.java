@@ -96,7 +96,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
     }
 
     @Override
-    public void setOwner(EntityPlayer player)
+    public void setOwner(Object player)
     {
         this.owner = player;
     }

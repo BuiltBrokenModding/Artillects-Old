@@ -66,6 +66,7 @@ public class Hive implements IScheduledTickHandler
         if (drone != null && !activeDrones.contains(drone))
         {
             activeDrones.add(drone);
+            drone.setOwner(this);
         }
     }
 
