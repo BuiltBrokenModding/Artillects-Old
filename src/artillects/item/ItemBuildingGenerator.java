@@ -36,11 +36,6 @@ public class ItemBuildingGenerator extends ItemBase
                 HiveComplex complex = new HiveComplex("PlayerGeneratedHive" + System.currentTimeMillis(), new VectorWorld(world, x, y, z));
                 complex.loadFabricatorDemo();
             }
-            else if (itemStack.getItemDamage() == 2)
-            {
-                HiveComplex complex = new HiveComplex("PlayerGeneratedHive" + System.currentTimeMillis(), new VectorWorld(world, x, y, z));
-                complex.load5x5Room(complex.location, 2, true);
-            }
             else
             {
                 if (Building.values()[itemStack.getItemDamage()].makeTool)

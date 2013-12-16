@@ -109,9 +109,9 @@ public class HiveComplex extends HiveGhost
 
     public void loadGeneralBuilding(boolean worldGen)
     {
-        final int width = 3;
-        final int height = 1;
-        final int tunnelSpacing = 12;
+        final int width = 4;
+        final int height = 8;
+        final int tunnelSpacing = 18;
         for (int floor = 0; floor <= height; floor++)
         {
             VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
@@ -123,11 +123,11 @@ public class HiveComplex extends HiveGhost
             }
             if (floor == 0)
             {
-                this.load3x3Room(floorBase, 2);
+                this.load5x5Room(floorBase, 2);
             }
             else
             {
-                this.load3x3Room(floorBase, 0);
+                this.load5x5Room(floorBase, 0);
             }
 
             if (floor != height)
@@ -135,23 +135,41 @@ public class HiveComplex extends HiveGhost
                 // NorthTunnel
                 this.loadTunnel(floorBase.clone().add(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
                 peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(0, 0, -tunnelSpacing - (6 * width))));
-                this.loadTunnel(floorBase.clone().add(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width - 1);
-                this.loadTunnel(floorBase.clone().add(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width - 1);
+                peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().add(0, 1, -tunnelSpacing - (6 * width) - 4)));
+                this.loadTunnel(floorBase.clone().add(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width + 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width + 1);
                 // SouthTunnel
                 this.loadTunnel(floorBase.clone().add(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
                 peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(0, 0, +tunnelSpacing + (6 * width))));
-                this.loadTunnel(floorBase.clone().add(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width - 1);
-                this.loadTunnel(floorBase.clone().add(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width - 1);
+                peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().add(0, 1, +tunnelSpacing + (6 * width) + 4)));
+                this.loadTunnel(floorBase.clone().add(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width + 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width + 1);
                 // EastTunnel
                 this.loadTunnel(floorBase.clone().add(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
                 peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 0)));
-                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width - 1);
-                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
+                peaces.add(new Structure(this, Building.WALLX, floorBase.clone().add(+tunnelSpacing + (6 * width) + 4, 1, 0)));
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
                 // WestTunnel
                 this.loadTunnel(floorBase.clone().add(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
                 peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 0)));
-                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width - 1);
-                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width - 1);
+                peaces.add(new Structure(this, Building.WALLX, floorBase.clone().add(-tunnelSpacing - (6 * width) - 4, 1, 0)));
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
+
+                //Corner room
+                int cornerA = 1, cornerB = 0, cornerC = 1, cornerD = 0;
+                if (floor == 2 || floor == 4 || floor == 7 || floor == 8)
+                {
+                    cornerA = 1;
+                    cornerB = 1;
+                    cornerC = 0;
+                    cornerD = 0;
+                }
+                this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
+                this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerC);
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerD);
             }
         }
         this.buildZone = new ZoneBuilding(this, 80);
@@ -221,7 +239,7 @@ public class HiveComplex extends HiveGhost
 
     }
 
-    public void load5x5Room(VectorWorld start, int center, boolean worldGen)
+    public void load5x5Room(VectorWorld start, int center)
     {
         // Center
         if (center == 0)
@@ -286,14 +304,6 @@ public class HiveComplex extends HiveGhost
         peaces.add(new Structure(this, Building.WALLZ, start.clone().add(12, 1, -16)));
         peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, -12)));
         peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-12, 1, -16)));
-
-        if (worldGen)
-        {
-            for (Structure str : this.peaces)
-            {
-                str.worldGen();
-            }
-        }
 
     }
 
