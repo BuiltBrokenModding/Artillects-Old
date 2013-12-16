@@ -151,7 +151,8 @@ public class EntityAIReproduce extends EntityAIBase
 										{
 											this.entity.getNavigator().clearPathEntity();
 											int resourceToGet = Math.max(stackRequired.stackSize - resourceCount, 0);
-											chest.setInventorySlotContents(i, this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet)));
+											ItemStack remainingStack = this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet));
+											chest.setInventorySlotContents(i, stackInChest.stackSize > 0 ? stackInChest : null);
 										}
 									}
 

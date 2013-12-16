@@ -1,17 +1,13 @@
 package artillects.entity.ai;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
@@ -19,14 +15,10 @@ import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 
-public class EntityAICrafting extends EntityAIBase
+public class EntityAICrafting extends EntityArtillectAIBase
 {
 	private EntityWorker entity;
-	private World world;
 
-	/** The speed the creature moves at during mining behavior. */
-	private double moveSpeed;
-	private TileEntityChest lastUseChest;
 	private int idleTime = 0;
 	private final int maxIdleTime = 20 * 5;
 
@@ -36,12 +28,12 @@ public class EntityAICrafting extends EntityAIBase
 	 * ItemStack[]: Recipe items
 	 */
 	private final HashMap<ItemStack, ItemStack[]> stacksToCraft = new HashMap<ItemStack, ItemStack[]>();
+	private boolean markForDump;
 
-	public EntityAICrafting(EntityWorker entity, double par2)
+	public EntityAICrafting(EntityWorker entity, double moveSpeed)
 	{
+		super(entity.worldObj, moveSpeed);
 		this.entity = entity;
-		this.world = entity.worldObj;
-		this.moveSpeed = par2;
 	}
 
 	@Override
@@ -87,67 +79,77 @@ public class EntityAICrafting extends EntityAIBase
 
 		if (this.idleTime <= 0)
 		{
-			// TODO: After ModJam, make this crafting modular/work with all items.
-			Iterator<Entry<ItemStack, ItemStack[]>> it = this.stacksToCraft.entrySet().iterator();
-
-			while (it.hasNext())
+			if (this.markForDump)
 			{
-				Entry<ItemStack, ItemStack[]> entry = it.next();
-				ItemStack stackToCraft = entry.getKey();
-				ItemStack[] recipeItems = entry.getValue();
+				this.dumpInventoryToChest();
+				this.markForDump = false;
+			}
+			else
+			{
+				// TODO: After ModJam, make this crafting modular/work with all items.
+				Iterator<Entry<ItemStack, ItemStack[]>> it = this.stacksToCraft.entrySet().iterator();
 
-				int validItems = 0;
-
-				for (ItemStack recipeItem : recipeItems)
+				while (it.hasNext())
 				{
-					/**
-					 * Check if we have the required resources.
-					 */
-					int resourceCount = 0;
+					Entry<ItemStack, ItemStack[]> entry = it.next();
+					ItemStack stackToCraft = entry.getKey();
+					ItemStack[] recipeItems = entry.getValue();
 
-					for (ItemStack stackInEntity : this.entity.getInventoryAsList())
-					{
-						if (stackInEntity != null && stackInEntity.isItemEqual(stackToCraft))
-						{
-							resourceCount += stackInEntity.stackSize;
-						}
-					}
+					int validItems = 0;
 
-					/**
-					 * If we have enough resources, craft. Otherwise, go find it! If we don't find
-					 * the resources, we try to craft the next item on the list.
-					 */
-					if (resourceCount < stackToCraft.stackSize)
+					for (ItemStack recipeItem : recipeItems)
 					{
 						/**
-						 * Search for the resource because we have less than the required amount.
+						 * Check if we have the required resources.
 						 */
-						if (this.entity.zone instanceof ZoneProcessing)
+						int resourceCount = 0;
+
+						for (ItemStack stackInEntity : this.entity.getInventoryAsList())
 						{
-							ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
-
-							for (Vector3 chestPosition : zone.chestPositions)
+							if (stackInEntity != null && stackInEntity.isItemEqual(recipeItem))
 							{
-								TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+								resourceCount += stackInEntity.stackSize;
+							}
+						}
 
-								if (tileEntity instanceof TileEntityChest)
+						/**
+						 * If we have enough resources, craft. Otherwise, go find it! If we don't
+						 * find the resources, we try to craft the next item on the list.
+						 */
+						if (resourceCount < recipeItem.stackSize)
+						{
+							/**
+							 * Search for the resource because we have less than the required
+							 * amount.
+							 */
+							if (this.entity.zone instanceof ZoneProcessing)
+							{
+								ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
+
+								for (Vector3 chestPosition : zone.chestPositions)
 								{
-									TileEntityChest chest = (TileEntityChest) tileEntity;
+									TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
 
-									for (int i = 0; i < chest.getSizeInventory(); i++)
+									if (tileEntity instanceof TileEntityChest)
 									{
-										ItemStack stackInChest = chest.getStackInSlot(i);
+										TileEntityChest chest = (TileEntityChest) tileEntity;
 
-										if (stackInChest != null && stackInChest.isItemEqual(stackToCraft))
+										for (int i = 0; i < chest.getSizeInventory(); i++)
 										{
-											if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
+											ItemStack stackInChest = chest.getStackInSlot(i);
+
+											if (stackInChest != null && stackInChest.isItemEqual(recipeItem))
 											{
-												if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+												if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 												{
-													this.entity.getNavigator().clearPathEntity();
-													int resourceToGet = Math.max(stackToCraft.stackSize - resourceCount, 0);
-													chest.setInventorySlotContents(i, this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet)));
-													return;
+													if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+													{
+														this.entity.getNavigator().clearPathEntity();
+														int resourceToGet = Math.max(recipeItem.stackSize - resourceCount, 0);
+														ItemStack remainingStack = this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet));
+														chest.setInventorySlotContents(i, stackInChest.stackSize > 0 ? stackInChest : null);
+														return;
+													}
 												}
 											}
 										}
@@ -155,28 +157,35 @@ public class EntityAICrafting extends EntityAIBase
 								}
 							}
 						}
-					}
-					else
-					{
-						validItems++;
-					}
-				}
-
-				if (validItems >= recipeItems.length)
-				{
-					/**
-					 * Do Crafting Here.
-					 */
-					for (ItemStack recipeItem : recipeItems)
-					{
-						this.entity.decreaseStackSize(recipeItem);
+						else
+						{
+							validItems++;
+						}
 					}
 
-					this.entity.increaseStackSize(stackToCraft);
+					if (validItems >= recipeItems.length)
+					{
+						/**
+						 * Do Crafting Here.
+						 */
+						for (ItemStack recipeItem : recipeItems)
+						{
+							this.entity.decreaseStackSize(recipeItem);
+						}
+
+						this.entity.increaseStackSize(stackToCraft);
+						this.markForDump = true;
+					}
 				}
 			}
 
 			this.idleTime = this.maxIdleTime;
 		}
+	}
+
+	@Override
+	public EntityArtillectBase getArtillect()
+	{
+		return this.entity;
 	}
 }

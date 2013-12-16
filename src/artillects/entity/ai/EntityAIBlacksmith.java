@@ -4,14 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.world.World;
 import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
@@ -19,14 +17,10 @@ import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 
-public class EntityAIBlacksmith extends EntityAIBase
+public class EntityAIBlacksmith extends EntityArtillectAIBase
 {
 	private EntityWorker entity;
-	private World world;
 
-	/** The speed the creature moves at during mining behavior. */
-	private double moveSpeed;
-	private TileEntityChest lastUseChest;
 	private int idleTime = 0;
 	private final int maxIdleTime = 20;
 
@@ -36,9 +30,8 @@ public class EntityAIBlacksmith extends EntityAIBase
 
 	public EntityAIBlacksmith(EntityWorker entity, double par2)
 	{
+		super(entity.worldObj, par2);
 		this.entity = entity;
-		this.world = entity.worldObj;
-		this.moveSpeed = par2;
 		this.setMutexBits(4);
 
 		stacksForFuel.add(new ItemStack(Item.coal));
@@ -109,74 +102,13 @@ public class EntityAIBlacksmith extends EntityAIBase
 				{
 					if (!this.dumpToBeProcessed())
 					{
-						this.dumpProcessed();
+						this.dumpInventoryToChest();
 					}
 				}
 
 				this.idleTime = this.maxIdleTime;
 			}
 		}
-	}
-
-	private boolean dumpProcessed()
-	{
-		for (Vector3 chestPosition : ((ZoneProcessing) entity.zone).chestPositions)
-		{
-			TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
-
-			if (tileEntity instanceof TileEntityChest)
-			{
-				TileEntityChest chest = ((TileEntityChest) tileEntity);
-
-				for (int i = 0; i < chest.getSizeInventory(); i++)
-				{
-					ItemStack itemStack = chest.getStackInSlot(i);
-
-					for (int j = 0; j < this.entity.inventory.getSizeInventory(); j++)
-					{
-						ItemStack stackInEntity = this.entity.inventory.getStackInSlot(j);
-
-						if (stackInEntity != null)
-						{
-							if (itemStack == null)
-							{
-								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
-								{
-									if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
-									{
-										this.entity.getNavigator().clearPathEntity();
-										chest.setInventorySlotContents(i, stackInEntity);
-										this.entity.inventory.setInventorySlotContents(j, null);
-									}
-								}
-							}
-							else if (itemStack.isItemEqual(stackInEntity) && itemStack.stackSize < itemStack.getMaxStackSize())
-							{
-								if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
-								{
-									if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
-									{
-										int originalStackSize = itemStack.stackSize;
-										itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());
-										stackInEntity.stackSize -= itemStack.stackSize - originalStackSize;
-
-										if (stackInEntity.stackSize <= 0)
-										{
-											this.entity.inventory.setInventorySlotContents(j, null);
-										}
-									}
-								}
-							}
-							chest.openChest();
-							this.lastUseChest = chest;
-							return true;
-						}
-					}
-				}
-			}
-		}
-
-		return false;
 	}
 
 	private boolean dumpToBeProcessed()
@@ -291,5 +223,11 @@ public class EntityAIBlacksmith extends EntityAIBase
 		}
 
 		return false;
+	}
+
+	@Override
+	public EntityArtillectBase getArtillect()
+	{
+		return this.entity;
 	}
 }
