@@ -38,7 +38,6 @@ public class EntityWorker extends EntityArtillectBase implements IPacketReceiver
 	public EntityWorker(World par1World)
 	{
 		super(par1World);
-		//this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(0, new EntityAIMining(this, 1));
 		this.tasks.addTask(0, new EntityAIBlacksmith(this, 1));
 		this.tasks.addTask(1, new EntityAIWander(this, 0.5f));
