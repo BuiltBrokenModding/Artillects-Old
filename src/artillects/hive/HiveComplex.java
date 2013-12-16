@@ -33,6 +33,11 @@ public class HiveComplex extends HiveGhost
         Hive.instance().addHiveComplex(this);
     }
 
+    public HiveComplex()
+    {
+        // TODO Auto-generated constructor stub
+    }
+
     public void loadGeneralBuilding(boolean worldGen)
     {
         final int width = 3;
@@ -223,7 +228,7 @@ public class HiveComplex extends HiveGhost
     public void save(NBTTagCompound nbt)
     {
         nbt.setCompoundTag("location", this.location.save(new NBTTagCompound()));
-
+        nbt.setString("name", this.name);
     }
 
     @Override
@@ -231,5 +236,6 @@ public class HiveComplex extends HiveGhost
     {
         this.location = new VectorWorld(nbt.getCompoundTag("location"));
         this.loadGeneralBuilding(false);
+        this.name = nbt.getName();
     }
 }
