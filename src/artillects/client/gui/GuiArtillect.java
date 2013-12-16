@@ -2,25 +2,24 @@ package artillects.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.container.ContainerWorker;
-import artillects.entity.EntityArtillectBase;
-import artillects.entity.EntityWorker;
-import artillects.hive.ArtillectTaskType;
+import artillects.container.ContainerArtillect;
+import artillects.entity.IArtillect;
 
 /**
  * @author Calclavia
  * 
  */
-public class GuiWorker extends GuiBase
+public class GuiArtillect extends GuiBase
 {
 	private GuiButton switchTaskButton;
-	private EntityWorker worker;
+	private IArtillect artillect;
 
-	public GuiWorker(EntityWorker worker, EntityPlayer player)
+	public GuiArtillect(IArtillect worker, EntityPlayer player)
 	{
-		super(new ContainerWorker(worker, player));
-		this.worker = worker;
+		super(new ContainerArtillect(worker, player));
+		this.artillect = worker;
 	}
 
 	@Override
@@ -35,8 +34,8 @@ public class GuiWorker extends GuiBase
 	public void drawGuiContainerForegroundLayer(int x, int y)
 	{
 		super.drawGuiContainerForegroundLayer(x, y);
-		this.fontRenderer.drawString("Worker", this.xSize / 2 - 15, -18, 4210752);
-		this.fontRenderer.drawString("Task: " + this.worker.getType().name(), 9, 0, 4210752);
+		this.fontRenderer.drawString("Artillect", this.xSize / 2 - 15, -18, 4210752);
+		this.fontRenderer.drawString("Task: " + this.artillect.getType().name(), 9, 0, 4210752);
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class GuiWorker extends GuiBase
 	{
 		if (guiButton.id == this.switchTaskButton.id)
 		{
-			this.worker.setType(this.worker.getType().toggle(this.worker));
+			this.artillect.setType(this.artillect.getType().toggle((Entity) this.artillect));
 		}
 	}
 

@@ -35,7 +35,7 @@ public enum ArtillectTaskType
 		{
 			nextID = (nextID + 1) % values().length;
 
-			if (entity.getClass().isAssignableFrom(this.entityClass))
+			if (ArtillectTaskType.get(nextID).entityClass.isAssignableFrom(entity.getClass()))
 			{
 				return ArtillectTaskType.get(nextID);
 			}
