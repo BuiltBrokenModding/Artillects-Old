@@ -75,7 +75,7 @@ public class TeleportManager
             TileEntityTeleporterAnchor teleporter = it.next();
             if (!ignore.contains(teleporter) && teleporter.getFrequency() == frequency)
             {
-                if (tele == null || new Vector3(tele).distance(vec) < new Vector3(teleporter).distance(vec))
+                if (tele == null || new Vector3(tele).distance(vec) > new Vector3(teleporter).distance(vec))
                 {
                     tele = teleporter;
                 }

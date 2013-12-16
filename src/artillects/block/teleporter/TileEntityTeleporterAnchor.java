@@ -90,8 +90,6 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
         }
     }
 
-   
-
     /** @return -1 if the teleporter is unable to teleport. */
     public int getFrequency()
     {
