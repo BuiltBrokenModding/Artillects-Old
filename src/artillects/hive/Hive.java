@@ -14,6 +14,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
+import artillects.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.hive.schematics.NBTFileHandler;
 import artillects.hive.zone.Zone;
@@ -302,5 +303,21 @@ public class Hive implements IScheduledTickHandler
             hiveFolder.mkdirs();
         }
 
+    }
+
+    public HiveComplex getClosestComplex(VectorWorld pos, int distanceCheck)
+    {
+        HiveComplex complex = null;
+        for (Entry<String, HiveComplex> entry : this.activeComplexs.entrySet())
+        {
+            if (entry.getValue() != null && entry.getValue().location.world == pos.world)
+            {
+                if (complex == null || (entry.getValue().location.distance(pos) < complex.location.distance(pos) && entry.getValue().location.distance(pos) <= distanceCheck))
+                {
+                    complex = entry.getValue();
+                }
+            }
+        }
+        return complex;
     }
 }
