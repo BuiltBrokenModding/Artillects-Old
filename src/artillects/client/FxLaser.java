@@ -116,6 +116,20 @@ public class FxLaser extends EntityFX
 
 		FMLClientHandler.instance().getClient().renderEngine.bindTexture(TEXTURE);
 
+		// Do Render Here:
+		GL11.glTexParameterf(3553, 10242, 10497.0F);
+		GL11.glTexParameterf(3553, 10243, 10497.0F);
+
+		GL11.glDisable(2884);
+
+		float var11 = slide + f;
+		if (this.reverse)
+			var11 *= -1.0F;
+		float var12 = -var11 * 0.2F - MathHelper.floor_float(-var11 * 0.1F);
+
+		GL11.glPopMatrix();
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(FMLClientHandler.instance().getClient().renderEngine.getResourceLocation(0));
+
 		tessellator.startDrawingQuads();
 		this.prevSize = this.particleScale;
 	}

@@ -1,5 +1,9 @@
 package artillects.block.teleporter;
 
+import java.util.Random;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -13,74 +17,102 @@ import artillects.block.IHiveBlock;
 
 public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider, IHiveBlock
 {
-    public Icon iconTop, iconSide, iconBot;
+	public Icon iconTop, iconSide, iconBot;
 
-    public BlockTeleporterAnchor()
-    {
-        super("teleporterAnchor", Material.iron);
-        this.setHardness(32F);
-        this.setResistance(1000F);
-    }
+	public BlockTeleporterAnchor()
+	{
+		super("teleporterAnchor", Material.iron);
+		this.setHardness(32F);
+		this.setResistance(1000F);
+		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.7F, 1.0F);
+	}
 
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3)
-    {
-        if (player != null && player.getHeldItem() == null || player.getHeldItem().itemID != (Artillects.blockGlyph.blockID))
-        {
-            TileEntity tile = world.getBlockTileEntity(x, y, z);
+	/**
+	 * A randomly called display update to be able to add particles or other items for display
+	 */
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(World par1World, int x, int y, int z, Random par5Random)
+	{
+		System.out.println("TICK");
+		int l = par1World.getBlockMetadata(x, y, z);
+		double spawnX = (float) x + 0.5f;
+		double spawnY = (float) y + 0.7f + par5Random.nextFloat() * 2.5f;
+		double spawnZ = (float) z + 0.5f;
+		double xRand = par5Random.nextFloat() * 0.6F - 0.3F;
+		double zRand = par5Random.nextFloat() * 0.6F - 0.3F;
 
-            if (tile instanceof TileEntityTeleporterAnchor)
-            {
-                int frequency = ((TileEntityTeleporterAnchor) tile).getFrequency();
+		par1World.spawnParticle("enchantmenttable", spawnX + xRand, spawnY, spawnZ + zRand, 0, 0.1, 0);
+		par1World.spawnParticle("enchantmenttable", spawnX - xRand, spawnY, spawnZ + zRand, 0, 0.1, 0);
+		par1World.spawnParticle("enchantmenttable", spawnX + xRand, spawnY, spawnZ - zRand, 0, 0.1, 0);
+		par1World.spawnParticle("enchantmenttable", spawnX - xRand, spawnY, spawnZ - zRand, 0, 0.1, 0);
+	}
 
-                if (frequency == -1)
-                {
-                    if (!world.isRemote)
-                        player.addChatMessage(Artillects.getLocal("msg.teleporter.setup"));
-                }
-                else
-                {
-                    if (player.isSneaking())
-                    {
-                        if (!world.isRemote)
-                            player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
-                    }
-                    else
-                    {
-                        ((TileEntityTeleporterAnchor) tile).doTeleport(player);
-                    }
-                }
-            }
-            return true;
-        }
+	@Override
+	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3)
+	{
+		if (player != null && player.getHeldItem() == null || player.getHeldItem().itemID != (Artillects.blockGlyph.blockID))
+		{
+			TileEntity tile = world.getBlockTileEntity(x, y, z);
 
-        return false;
-    }
+			if (tile instanceof TileEntityTeleporterAnchor)
+			{
+				int frequency = ((TileEntityTeleporterAnchor) tile).getFrequency();
 
-    @Override
-    public TileEntity createNewTileEntity(World world)
-    {
-        return new TileEntityTeleporterAnchor();
-    }
+				if (frequency == -1)
+				{
+					if (!world.isRemote)
+						player.addChatMessage(Artillects.getLocal("msg.teleporter.setup"));
+				}
+				else
+				{
+					if (player.isSneaking())
+					{
+						if (!world.isRemote)
+							player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+					}
+					else
+					{
+						((TileEntityTeleporterAnchor) tile).doTeleport(player);
+					}
+				}
+			}
+			return true;
+		}
 
-    public Icon getIcon(int side, int metadata)
-    {
-        if (side == 0)
-        {
-            return iconBot;
-        }
-        if (side == 1)
-        {
-            return iconTop;
-        }
+		return false;
+	}
 
-        return iconSide;
-    }
+	@Override
+	public TileEntity createNewTileEntity(World world)
+	{
+		return new TileEntityTeleporterAnchor();
+	}
 
-    public void registerIcons(IconRegister ir)
-    {
-        this.iconTop = ir.registerIcon(Artillects.PREFIX + "teleporterNode_top");
-        this.iconSide = ir.registerIcon(Artillects.PREFIX + "teleporterNode_side");
-        this.iconBot = ir.registerIcon(Artillects.PREFIX + "decorWall1");
-    }
+	@Override
+	public boolean isOpaqueCube()
+	{
+		return false;
+	}
+
+	public Icon getIcon(int side, int metadata)
+	{
+		if (side == 0)
+		{
+			return iconBot;
+		}
+		if (side == 1)
+		{
+			return iconTop;
+		}
+
+		return iconSide;
+	}
+
+	public void registerIcons(IconRegister ir)
+	{
+		this.iconTop = ir.registerIcon(Artillects.PREFIX + "teleporterNode_top");
+		this.iconSide = ir.registerIcon(Artillects.PREFIX + "teleporterNode_side");
+		this.iconBot = ir.registerIcon(Artillects.PREFIX + "decorWall1");
+	}
 
 }
