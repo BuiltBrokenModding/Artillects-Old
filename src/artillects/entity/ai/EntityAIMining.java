@@ -48,7 +48,7 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return this.entity.getType() == EnumWorkerType.HARVESTER && entity.zone instanceof ZoneMining && !((ZoneMining) entity.zone).scannedBlocks.isEmpty() && !this.entity.isInventoryFull();
+		return this.entity.getType() == EnumWorkerType.HARVESTER;
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */
@@ -69,92 +69,94 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public void updateTask()
 	{
-		if (((ZoneMining) entity.zone).scannedBlocks.size() > 0)
+		if (entity.zone instanceof ZoneMining && ((ZoneMining) entity.zone).scannedBlocks.size() > 0 && !this.entity.isInventoryFull())
 		{
-			if (!this.entity.isInventoryFull())
+
+			Vector3 targetPosition = null;
+
+			/** Find closest resource block to mine for. */
+			for (Vector3 checkVec : ((ZoneMining) entity.zone).scannedBlocks)
 			{
-				Vector3 targetPosition = null;
-
-				/** Find closest resource block to mine for. */
-				for (Vector3 checkVec : ((ZoneMining) entity.zone).scannedBlocks)
+				if (targetPosition == null || checkVec.distance(new Vector3(this.entity)) < targetPosition.distance(new Vector3(this.entity)))
 				{
-					if (targetPosition == null || checkVec.distance(new Vector3(this.entity)) < targetPosition.distance(new Vector3(this.entity)))
-					{
-						targetPosition = checkVec;
-					}
+					targetPosition = checkVec;
 				}
-				// checks if the entity is within range before setting the path
-				if (new Vector3(this.entity).distance(targetPosition.clone().add(0.5)) > 2)
+			}
+			// checks if the entity is within range before setting the path
+			if (new Vector3(this.entity).distance(targetPosition.clone().add(0.5)) > 2)
+			{
+				if (this.lastMoveTime-- <= 0)
 				{
-					if (this.lastMoveTime-- <= 0)
-					{
-						this.entity.tryToWalkNextTo(targetPosition, this.moveSpeed);
-						this.lastMoveTime = 40;
-					}
-				}
-				else
-				{
-					this.entity.setPathToEntity(null);
-				}
-
-				MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.clone().add(0.5).toVec3(), false, false);
-
-				if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
-				{
-					Vector3 breakPosition = new Vector3(mop.blockX, mop.blockY, mop.blockZ);
-
-					int blockID = this.world.getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
-
-					if (blockID != 0)
-					{
-						this.breakingTime++;
-
-						if (this.breakingTime >= this.maxBreakTime)
-						{
-							List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
-
-							for (ItemStack stack : droppedStacks)
-							{
-								this.entity.increaseStackSize(stack);
-							}
-
-							this.world.setBlockToAir((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
-							this.world.playAuxSFX(1012, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, 0);
-							this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, -1);
-							this.resetTask();
-						}
-						else
-						{
-							int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
-							this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
-							if (this.breakingTime % 10 == 0)
-							{
-								Artillects.proxy.renderLaser(this.world, new Vector3(this.entity).add(0, 0.2, 0), breakPosition.clone().add(0.5), 1, 0, 0);
-							}
-						}
-					}
+					this.entity.tryToWalkNextTo(targetPosition, this.moveSpeed);
+					this.lastMoveTime = 40;
 				}
 			}
 			else
 			{
-				// TODO: Need optimal chest!
-				Vector3 optimalChestPosition = null;
-				TileEntityChest optimalChest = null;
+				this.entity.setPathToEntity(null);
+			}
 
-				if (optimalChest != null && !InventoryHelper.isInventoryFull(optimalChest))
+			MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.clone().add(0.5).toVec3(), false, false);
+
+			if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
+			{
+				Vector3 breakPosition = new Vector3(mop.blockX, mop.blockY, mop.blockZ);
+				Vector3 centerVector = breakPosition.clone().add(0.5);
+
+				this.entity.getLookHelper().setLookPosition(centerVector.x, centerVector.y, centerVector.z, 10, 0);
+
+				int blockID = this.world.getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+
+				if (blockID != 0)
 				{
-					for (int i = 0; i < this.entity.inventory.getSizeInventory(); i++)
-					{
-						this.entity.tryToWalkNextTo(optimalChestPosition, this.moveSpeed);
+					this.breakingTime++;
 
-						if (optimalChestPosition.distance(new Vector3(this.entity)) < EntityArtillectBase.interactionDistance)
+					if (this.breakingTime >= this.maxBreakTime)
+					{
+						List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
+
+						for (ItemStack stack : droppedStacks)
 						{
-							this.entity.getNavigator().clearPathEntity();
-							this.entity.inventory.setInventorySlotContents(i, InventoryHelper.addStackToInventory(optimalChest, this.entity.inventory.getStackInSlot(i)));
+							this.entity.increaseStackSize(stack);
 						}
 
-						break;
+						this.world.setBlockToAir((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+						this.world.playAuxSFX(1012, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, 0);
+						this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, -1);
+						this.resetTask();
 					}
+					else
+					{
+						int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
+						this.world.destroyBlockInWorldPartially(this.entity.entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
+
+						if (this.breakingTime % 10 == 0)
+						{
+							Artillects.proxy.renderLaser(this.world, new Vector3(this.entity).add(0, 0.2, 0), centerVector, 1, 0, 0);
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			// TODO: Need optimal chest!
+			Vector3 optimalChestPosition = null;
+			TileEntityChest optimalChest = null;
+
+			if (optimalChest != null && !InventoryHelper.isInventoryFull(optimalChest))
+			{
+				for (int i = 0; i < this.entity.inventory.getSizeInventory(); i++)
+				{
+					this.entity.tryToWalkNextTo(optimalChestPosition, this.moveSpeed);
+
+					if (optimalChestPosition.distance(new Vector3(this.entity)) < EntityArtillectBase.interactionDistance)
+					{
+						this.entity.getNavigator().clearPathEntity();
+						this.entity.inventory.setInventorySlotContents(i, InventoryHelper.addStackToInventory(optimalChest, this.entity.inventory.getStackInSlot(i)));
+					}
+
+					break;
 				}
 			}
 		}
