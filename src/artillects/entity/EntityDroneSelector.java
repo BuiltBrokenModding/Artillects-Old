@@ -9,58 +9,58 @@ import artillects.hive.Hive;
 
 public class EntityDroneSelector implements IEntitySelector
 {
-    IArtillect drone;
+	IArtillect drone;
 
-    public EntityDroneSelector(IArtillect drone)
-    {
-        this.drone = drone;
-    }
+	public EntityDroneSelector(IArtillect drone)
+	{
+		this.drone = drone;
+	}
 
-    @Override
-    public boolean isEntityApplicable(Entity entity)
-    {
-        if (entity instanceof EntityLivingBase)
-        {
-            if (entity.isEntityAlive() && !entity.isInvisible())
-            {
-                // Attack players if hive drone TODO change to hostile only system later
-                if (drone.getOwner() instanceof Hive)
-                {
-                    if (entity instanceof EntityPlayer)
-                    {
-                        if (!((EntityPlayer) entity).capabilities.isCreativeMode)
-                        {
-                            return true;
-                        }
-                    }
-                    // Attack enemy drones
-                    if (entity instanceof EntityArtillectBase)
-                    {
-                        if (drone.getOwner() instanceof EntityPlayer)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                else
-                {
-                    // Attack enemy drones
-                    if (entity instanceof EntityArtillectBase)
-                    {
-                        if (drone.getOwner() instanceof Hive)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                // Always attack mobs
-                if (entity instanceof IMob)
-                {
-                    return true;
-                }
+	@Override
+	public boolean isEntityApplicable(Entity entity)
+	{
+		if (entity instanceof EntityLivingBase)
+		{
+			if (entity.isEntityAlive() && !entity.isInvisible())
+			{
+				// Attack players if hive drone TODO change to hostile only system later
+				if (drone.getOwner() instanceof Hive)
+				{
+					if (entity instanceof EntityPlayer)
+					{
+						if (!((EntityPlayer) entity).capabilities.isCreativeMode)
+						{
+							return true;
+						}
+					}
+					// Attack enemy drones
+					if (entity instanceof EntityArtillectBase)
+					{
+						if (drone.getOwner() instanceof EntityPlayer)
+						{
+							return true;
+						}
+					}
+				}
+				else
+				{
+					// Attack enemy drones
+					if (entity instanceof EntityArtillectBase)
+					{
+						if (drone.getOwner() instanceof Hive)
+						{
+							return true;
+						}
+					}
+				}
+				// Always attack mobs
+				if (entity instanceof IMob)
+				{
+					return true;
+				}
 
-            }
-        }
-        return false;
-    }
+			}
+		}
+		return false;
+	}
 }

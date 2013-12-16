@@ -14,106 +14,106 @@ import artillects.entity.IArtillect;
 
 public class ZoneMining extends Zone
 {
-    public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
-    
-    public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
+	public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
 
-    public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();
+	public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
-    public boolean clearAll = false;
+	public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();
 
-    static
-    {
-        addBlockToMiningList(Block.oreCoal);
-        addBlockToMiningList(Block.oreIron);
-        addBlockToMiningList(Block.oreGold);
-        addBlockToMiningList(Block.oreEmerald);
-        addBlockToMiningList(Block.oreRedstone);
-        addBlockToMiningList(Block.oreRedstoneGlowing);
-        addBlockToMiningList(Block.oreNetherQuartz);
-        addBlockToMiningList(Block.oreLapis);
-        addBlockToMiningList(Block.oreDiamond);
-    }
+	public boolean clearAll = false;
 
-    public static void addBlockToMiningList(Block block)
-    {
-        if (block != null)
-        {
-            Pair<Integer, Integer> ore = new Pair<Integer, Integer>(block.blockID, -1);
-            if (!oreList.contains(ore))
-            {
-                oreList.add(ore);
-            }
-        }
-    }
+	static
+	{
+		addBlockToMiningList(Block.oreCoal);
+		addBlockToMiningList(Block.oreIron);
+		addBlockToMiningList(Block.oreGold);
+		addBlockToMiningList(Block.oreEmerald);
+		addBlockToMiningList(Block.oreRedstone);
+		addBlockToMiningList(Block.oreRedstoneGlowing);
+		addBlockToMiningList(Block.oreNetherQuartz);
+		addBlockToMiningList(Block.oreLapis);
+		addBlockToMiningList(Block.oreDiamond);
+	}
 
-    public ZoneMining(World world, Vector3 start, Vector3 end)
-    {
-        super(world, start, end);
-    }
+	public static void addBlockToMiningList(Block block)
+	{
+		if (block != null)
+		{
+			Pair<Integer, Integer> ore = new Pair<Integer, Integer>(block.blockID, -1);
+			if (!oreList.contains(ore))
+			{
+				oreList.add(ore);
+			}
+		}
+	}
 
-    public ZoneMining clearAll()
-    {
-        this.clearAll = true;
-        return this;
-    }
+	public ZoneMining(World world, Vector3 start, Vector3 end)
+	{
+		super(world, start, end);
+	}
 
-    @Override
-    public void updateEntity()
-    {
-        super.updateEntity();
+	public ZoneMining clearAll()
+	{
+		this.clearAll = true;
+		return this;
+	}
 
-        if (ticks % 10 == 0)
-        {
-            this.scan();
-        }
-    }
+	@Override
+	public void updateEntity()
+	{
+		super.updateEntity();
 
-    public void scan()
-    {
-        Vector3 start = this.start;
-        Vector3 end = this.end;
-        this.scannedBlocks.clear();
-        this.scannedSortedPositions.clear();
+		if (ticks % 10 == 0)
+		{
+			this.scan();
+		}
+	}
 
-        for (int x = (int) start.x; x < (int) end.x; x++)
-        {
-            for (int y = (int) start.y; y < (int) end.y; y++)
-            {
-                for (int z = (int) start.z; z < (int) end.z; z++)
-                {
-                    int blockID = this.world.getBlockId(x, y, z);
-                    Block block = Block.blocksList[blockID];
+	public void scan()
+	{
+		Vector3 start = this.start;
+		Vector3 end = this.end;
+		this.scannedBlocks.clear();
+		this.scannedSortedPositions.clear();
 
-                    if (block != null && this.canMine(blockID, this.world.getBlockMetadata(x, y, z)))
-                    {
-                        Vector3 position = new Vector3(x, y, z);
+		for (int x = (int) start.x; x < (int) end.x; x++)
+		{
+			for (int y = (int) start.y; y < (int) end.y; y++)
+			{
+				for (int z = (int) start.z; z < (int) end.z; z++)
+				{
+					int blockID = this.world.getBlockId(x, y, z);
+					Block block = Block.blocksList[blockID];
 
-                        HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
+					if (block != null && this.canMine(blockID, this.world.getBlockMetadata(x, y, z)))
+					{
+						Vector3 position = new Vector3(x, y, z);
 
-                        if (vecs == null)
-                        {
-                            vecs = new HashSet<Vector3>();
-                        }
+						HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
 
-                        this.scannedBlocks.add(position);
-                        vecs.add(position);
+						if (vecs == null)
+						{
+							vecs = new HashSet<Vector3>();
+						}
 
-                        this.scannedSortedPositions.put(block, vecs);
-                    }
-                }
-            }
-        }
-    }
+						this.scannedBlocks.add(position);
+						vecs.add(position);
 
-    @Override
-    public boolean canAssignDrone(IArtillect drone)
-    {
-        return drone instanceof EntityWorker;
-    }
+						this.scannedSortedPositions.put(block, vecs);
+					}
+				}
+			}
+		}
+	}
 
-    public boolean canMine(int id, int meta)
-    {
-        return this.clearAll || this.oreList.contains(new Pair<Integer, Integer>(id, -1)) || this.oreList.contains(new Pair<Integer, Integer>(id, meta));
-    }
+	@Override
+	public boolean canAssignDrone(IArtillect drone)
+	{
+		return drone instanceof EntityWorker;
+	}
+
+	public boolean canMine(int id, int meta)
+	{
+		return this.clearAll || ZoneMining.oreList.contains(new Pair<Integer, Integer>(id, -1)) || ZoneMining.oreList.contains(new Pair<Integer, Integer>(id, meta));
+	}
 }

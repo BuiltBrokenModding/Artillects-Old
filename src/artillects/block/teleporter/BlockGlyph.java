@@ -25,12 +25,14 @@ public class BlockGlyph extends BlockBase implements IHiveBlock
 		this.setResistance(1000F);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta)
 	{
 		return icons[meta];
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister register)
 	{
@@ -42,6 +44,7 @@ public class BlockGlyph extends BlockBase implements IHiveBlock
 		this.blockIcon = icons[0];
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
 	{

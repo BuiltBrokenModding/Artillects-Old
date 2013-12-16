@@ -1,13 +1,11 @@
 package artillects.entity;
 
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBuilding;
 import artillects.entity.ai.EntityAIReproduce;
-import artillects.hive.ArtillectTaskType;
-import artillects.hive.zone.ZoneMining;
+import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 
 public class EntityFabricator extends EntityArtillectBase
@@ -24,7 +22,7 @@ public class EntityFabricator extends EntityArtillectBase
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectTaskType.FABRICATOR.ordinal());
+		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.FABRICATOR.ordinal());
 	}
 
 	@Override
@@ -34,7 +32,7 @@ public class EntityFabricator extends EntityArtillectBase
 
 		if (this.getZone() == null)
 		{
-			//TODO: Remove this.
+			// TODO: Remove this.
 			this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
 		}
 

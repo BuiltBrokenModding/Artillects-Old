@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAIMining;
-import artillects.hive.ArtillectTaskType;
+import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneMining;
 import artillects.hive.zone.ZoneProcessing;
 
@@ -23,7 +23,7 @@ public class EntityWorker extends EntityArtillectBase
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectTaskType.HARVESTER.ordinal());
+		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.HARVESTER.ordinal());
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class EntityWorker extends EntityArtillectBase
 
 		if (this.getZone() == null)
 		{
-			if (this.getType() == ArtillectTaskType.HARVESTER)
+			if (this.getType() == ArtillectType.HARVESTER)
 			{
 				this.setZone(new ZoneMining(this.worldObj, new Vector3(this).add(-25), new Vector3(this).add(25)));
 			}

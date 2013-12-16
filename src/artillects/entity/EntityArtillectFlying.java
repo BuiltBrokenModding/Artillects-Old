@@ -12,7 +12,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Vector3;
-import artillects.hive.ArtillectTaskType;
+import artillects.hive.ArtillectType;
 import artillects.hive.Hive;
 import artillects.hive.zone.Zone;
 
@@ -28,7 +28,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
 	public EntityArtillectFlying(World world)
 	{
 		super(world);
-		Hive.instance().addDrone((IArtillect) this);
+		Hive.instance().addDrone(this);
 	}
 
 	@Override
@@ -162,13 +162,13 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
 	}
 
 	@Override
-	public ArtillectTaskType getType()
+	public ArtillectType getType()
 	{
-		return ArtillectTaskType.SEEKER;
+		return ArtillectType.SEEKER;
 	}
 
 	@Override
-	public void setType(ArtillectTaskType type)
+	public void setType(ArtillectType type)
 	{
 
 	}

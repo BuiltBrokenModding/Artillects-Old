@@ -6,21 +6,27 @@ import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-public class EntityPlasma extends EntityThrowable {
+public class EntityPlasma extends EntityThrowable
+{
 
 	private int groundLife = 0;
 	boolean impacted = false;
 	private int lifetime = 0;
-	
-	public EntityPlasma(World par1World, EntityLivingBase par2EntityLivingBase) {
+
+	public EntityPlasma(World par1World, EntityLivingBase par2EntityLivingBase)
+	{
 		super(par1World, par2EntityLivingBase);
 	}
-	
-	public void onUpdate() {
+
+	@Override
+	public void onUpdate()
+	{
 		super.onUpdate();
-		if(impacted) {
+		if (impacted)
+		{
 			groundLife++;
-			if(groundLife==30) {
+			if (groundLife == 30)
+			{
 				worldObj.createExplosion(this, posX, posY, posZ, 5, false);
 				this.setDead();
 				impacted = false;
@@ -28,12 +34,15 @@ public class EntityPlasma extends EntityThrowable {
 		}
 	}
 
-	public void onCollideWithPlayer(EntityPlayer player) {
+	@Override
+	public void onCollideWithPlayer(EntityPlayer player)
+	{
 
 	}
-	
+
 	@Override
-	protected void onImpact(MovingObjectPosition movingobjectposition) {
+	protected void onImpact(MovingObjectPosition movingobjectposition)
+	{
 		impacted = true;
 		motionX = 0;
 		motionZ = 0;

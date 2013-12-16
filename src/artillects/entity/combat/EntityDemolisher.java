@@ -19,7 +19,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityDroneSelector;
-import artillects.hive.ArtillectTaskType;
+import artillects.hive.ArtillectType;
 
 public class EntityDemolisher extends EntityArtillectBase implements IRangedAttackMob
 {
@@ -44,7 +44,7 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectTaskType.DEMOLISHER.ordinal());
+		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.DEMOLISHER.ordinal());
 	}
 
 	@Override

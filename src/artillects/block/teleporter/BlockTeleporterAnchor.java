@@ -2,8 +2,6 @@ package artillects.block.teleporter;
 
 import java.util.Random;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -14,6 +12,8 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.block.BlockBase;
 import artillects.block.IHiveBlock;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider, IHiveBlock
 {
@@ -30,14 +30,15 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 	/**
 	 * A randomly called display update to be able to add particles or other items for display
 	 */
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(World par1World, int x, int y, int z, Random par5Random)
 	{
 		System.out.println("TICK");
 		int l = par1World.getBlockMetadata(x, y, z);
-		double spawnX = (float) x + 0.5f;
-		double spawnY = (float) y + 0.7f + par5Random.nextFloat() * 2.5f;
-		double spawnZ = (float) z + 0.5f;
+		double spawnX = x + 0.5f;
+		double spawnY = y + 0.7f + par5Random.nextFloat() * 2.5f;
+		double spawnZ = z + 0.5f;
 		double xRand = par5Random.nextFloat() * 0.6F - 0.3F;
 		double zRand = par5Random.nextFloat() * 0.6F - 0.3F;
 
@@ -94,6 +95,7 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 		return false;
 	}
 
+	@Override
 	public Icon getIcon(int side, int metadata)
 	{
 		if (side == 0)
@@ -108,6 +110,7 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 		return iconSide;
 	}
 
+	@Override
 	public void registerIcons(IconRegister ir)
 	{
 		this.iconTop = ir.registerIcon(Artillects.PREFIX + "teleporterNode_top");

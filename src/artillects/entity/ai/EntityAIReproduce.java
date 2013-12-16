@@ -9,12 +9,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
-import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityFabricator;
 import artillects.entity.IArtillect;
-import artillects.hive.ArtillectTaskType;
+import artillects.hive.ArtillectType;
 import artillects.hive.Hive;
 import artillects.hive.zone.ZoneProcessing;
 
@@ -71,15 +70,15 @@ public class EntityAIReproduce extends EntityAIBase
 
 		if (this.idleTime <= 0 && this.shouldExecute())
 		{
-			HashMap<ArtillectTaskType, Integer> artillectTypeCount = new HashMap<ArtillectTaskType, Integer>();
+			HashMap<ArtillectType, Integer> artillectTypeCount = new HashMap<ArtillectType, Integer>();
 
 			for (IArtillect artillect : Hive.instance().getArtillects())
 			{
-				ArtillectTaskType type = artillect.getType();
+				ArtillectType type = artillect.getType();
 				artillectTypeCount.put(artillect.getType(), (artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0) + 1);
 			}
 
-			for (ArtillectTaskType type : ArtillectTaskType.values())
+			for (ArtillectType type : ArtillectType.values())
 			{
 				int amount = artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0;
 
@@ -90,7 +89,7 @@ public class EntityAIReproduce extends EntityAIBase
 				}
 			}
 
-			this.tryProduce(ArtillectTaskType.FABRICATOR);
+			this.tryProduce(ArtillectType.FABRICATOR);
 			this.idleTime = this.maxIdleTime;
 		}
 	}
@@ -101,7 +100,7 @@ public class EntityAIReproduce extends EntityAIBase
 	 * @param type
 	 * @return True if produced.
 	 */
-	private boolean tryProduce(ArtillectTaskType type)
+	private boolean tryProduce(ArtillectType type)
 	{
 		if (this.entity.zone instanceof ZoneProcessing)
 		{

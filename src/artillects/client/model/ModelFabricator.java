@@ -1,7 +1,6 @@
 package artillects.client.model;
 
 import net.minecraft.client.model.ModelSpider;
-import net.minecraft.entity.Entity;
 
 /**
  * @author Calclavia

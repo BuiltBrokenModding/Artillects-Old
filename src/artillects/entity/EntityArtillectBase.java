@@ -20,7 +20,7 @@ import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
-import artillects.hive.ArtillectTaskType;
+import artillects.hive.ArtillectType;
 import artillects.hive.Hive;
 import artillects.hive.zone.Zone;
 import artillects.network.IPacketReceiver;
@@ -49,15 +49,17 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	{
 		super(world);
 		this.setSize(1, 1);
-		Hive.instance().addDrone((IArtillect) this);
+		Hive.instance().addDrone(this);
 	}
 
-	public ArtillectTaskType getType()
+	@Override
+	public ArtillectType getType()
 	{
-		return ArtillectTaskType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID));
+		return ArtillectType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID));
 	}
 
-	public void setType(ArtillectTaskType type)
+	@Override
+	public void setType(ArtillectType type)
 	{
 		if (this.worldObj.isRemote)
 		{
@@ -69,6 +71,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 		}
 	}
 
+	@Override
 	public IInventory getInventory()
 	{
 		return this.inventory;
@@ -79,7 +82,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 	{
 		// TODO: REMOVE THIS;
 		this.setZone(null);
-		this.setType(ArtillectTaskType.values()[data.readByte()]);
+		this.setType(ArtillectType.values()[data.readByte()]);
 	}
 
 	@Override
@@ -336,6 +339,6 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 			}
 		}
 
-		this.setType(ArtillectTaskType.values()[nbt.getByte("type")]);
+		this.setType(ArtillectType.values()[nbt.getByte("type")]);
 	}
 }

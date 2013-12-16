@@ -1,5 +1,6 @@
 package artillects.block;
 
-public interface IHiveBlock {
+public interface IHiveBlock
+{
 
 }

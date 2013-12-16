@@ -15,7 +15,7 @@ import artillects.entity.combat.EntitySeeker;
  * 
  * @author Calclavia
  */
-public enum ArtillectTaskType
+public enum ArtillectType
 {
 	FABRICATOR(1, EntityFabricator.class), HARVESTER(5, EntityWorker.class),
 	BLACKSMITH(4, EntityWorker.class), CRAFTER(3, EntityWorker.class),
@@ -27,13 +27,13 @@ public enum ArtillectTaskType
 
 	public final Set<ItemStack> resourcesRequired = new HashSet<ItemStack>();
 
-	ArtillectTaskType(int ratio, Class<? extends Entity> entityClass)
+	ArtillectType(int ratio, Class<? extends Entity> entityClass)
 	{
 		this.ratio = ratio;
 		this.entityClass = entityClass;
 	}
 
-	public ArtillectTaskType toggle(Entity entity)
+	public ArtillectType toggle(Entity entity)
 	{
 		int nextID = this.ordinal();
 
@@ -41,14 +41,14 @@ public enum ArtillectTaskType
 		{
 			nextID = (nextID + 1) % values().length;
 
-			if (ArtillectTaskType.get(nextID).entityClass.isAssignableFrom(entity.getClass()))
+			if (ArtillectType.get(nextID).entityClass.isAssignableFrom(entity.getClass()))
 			{
-				return ArtillectTaskType.get(nextID);
+				return ArtillectType.get(nextID);
 			}
 		}
 	}
 
-	public static ArtillectTaskType get(int id)
+	public static ArtillectType get(int id)
 	{
 		return values()[id];
 	}
