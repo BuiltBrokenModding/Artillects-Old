@@ -3,6 +3,7 @@ package artillects;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
@@ -157,6 +158,12 @@ public class Vector3 extends Vector2
     public int getBlockMeta(World world)
     {
         return world.getBlockMetadata((int) x, (int) y, (int) z);
+    }
+    
+    public void rotatebyYaw(float yaw)
+    {
+        this.x = (float) (MathHelper.cos((float) (yaw * 0.0174532925)) * this.x - MathHelper.sin((float) (yaw * 0.0174532925)) * this.z);
+        this.z = (float) (MathHelper.sin((float) (yaw * 0.0174532925)) * this.x + MathHelper.cos((float) (yaw * 0.0174532925)) * this.z);        
     }
 
 }
