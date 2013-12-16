@@ -228,16 +228,7 @@ public abstract class EntityArtillectBase extends EntityCreature implements IArt
 
 	public boolean decreaseStackSize(ItemStack itemStack)
 	{
-		for (int i = 0; i < this.inventory.getSizeInventory(); i++)
-		{
-			if (itemStack.isItemEqual(this.inventory.getStackInSlot(i)))
-			{
-				this.inventory.decrStackSize(i, itemStack.stackSize);
-				return true;
-			}
-		}
-
-		return false;
+		return InventoryHelper.decreaseStackSize(this.inventory, itemStack);
 	}
 
 	public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
