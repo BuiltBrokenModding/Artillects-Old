@@ -28,8 +28,13 @@ public class ItemBuildingGenerator extends ItemBase
         {
             if (itemStack.getItemDamage() == 0)
             {
-                HiveComplex complex = new HiveComplex("TestHive", new VectorWorld(world, x, y, z));
+                HiveComplex complex = new HiveComplex("PlayerGeneratedHive" + System.currentTimeMillis(), new VectorWorld(world, x, y, z));
                 complex.loadGeneralBuilding(true);
+            }
+            else if (itemStack.getItemDamage() == 1)
+            {
+                HiveComplex complex = new HiveComplex("PlayerGeneratedHive" + System.currentTimeMillis(), new VectorWorld(world, x, y, z));
+                complex.loadFabricatorDemo();
             }
             else
             {
@@ -51,7 +56,7 @@ public class ItemBuildingGenerator extends ItemBase
             if (Building.values()[itemStack.getItemDamage()].makeTool)
             {
                 par3List.add("Generates a building");
-                par3List.add("Building: " + Building.values()[itemStack.getItemDamage()]);
+                par3List.add("Building: " + Building.values()[itemStack.getItemDamage()].toolName);
             }
             else
             {

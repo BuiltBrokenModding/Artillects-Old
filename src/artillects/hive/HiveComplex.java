@@ -38,6 +38,20 @@ public class HiveComplex extends HiveGhost
         // TODO Auto-generated constructor stub
     }
 
+    public void loadFabricatorDemo()
+    {
+        this.load3x3Room(this.location.clone());
+        this.buildZone = new ZoneBuilding(this.location.clone().add(0, 25, 0), this, 50);
+        for (int i = 0; i < 1; i++)
+        {
+            EntityFabricator fab = new EntityFabricator(this.location.world);
+            fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
+            fab.setOwner(Hive.instance());
+            buildZone.assignDrone(fab);
+            this.location.world.spawnEntityInWorld(fab);
+        }
+    }
+
     public void loadGeneralBuilding(boolean worldGen)
     {
         final int width = 3;

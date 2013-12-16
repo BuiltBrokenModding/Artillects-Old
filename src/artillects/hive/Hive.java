@@ -259,7 +259,6 @@ public class Hive implements IScheduledTickHandler
                     if (event.world.equals(entry.getValue().location.world))
                     {
                         entry.getValue().invalidate();
-                        activeComplexs.remove(entry.getKey());
                     }
                 }
             }
