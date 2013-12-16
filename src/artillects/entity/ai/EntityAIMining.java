@@ -83,11 +83,18 @@ public class EntityAIMining extends EntityAIBase
                         targetPosition = checkVec;
                     }
                 }
-
-                if (this.lastMoveTime-- <= 0 && targetPosition.distance(this.entity) > 2)
+                //checks if the entity is within range before setting the path
+                if (targetPosition.distance(this.entity) > 2)
                 {
-                    this.entity.tryToWalkNextTo(targetPosition, this.moveSpeed);
-                    this.lastMoveTime = 40;
+                    if (this.lastMoveTime-- <= 0)
+                    {
+                        this.entity.tryToWalkNextTo(targetPosition, this.moveSpeed);
+                        this.lastMoveTime = 40;
+                    }
+                }
+                else
+                {
+                    this.entity.setPathToEntity(null);
                 }
 
                 MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.entity.posX, this.entity.posY, this.entity.posZ), targetPosition.toVec3(), false, false);
