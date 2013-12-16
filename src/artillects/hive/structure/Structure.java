@@ -19,31 +19,35 @@ public class Structure extends HiveGhost
     public Building building;
     protected VectorWorld location;
 
-    protected boolean generated = false, isDamaged = false, worldGenerated;
+    protected boolean isDamaged = false;
 
-    HashMap<Vector3, ItemStack> missingBlocks = new HashMap();
+    HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
 
-    public Structure(Building building, VectorWorld location, boolean worldGen)
+    public Structure(Building building, VectorWorld location)
     {
         this.building = building;
         this.location = location;
-        this.worldGenerated = worldGen;
+    }
+
+    public void worldGen()
+    {
+        building.getSchematic().build(location, false);
+    }
+
+    @Override
+    public void init()
+    {
+        super.init();
+        if (building == Building.PROCESSORROOM)
+        {
+            new ZoneProcessing(location.world, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
+        }
     }
 
     @Override
     public void updateEntity()
     {
         super.updateEntity();
-        if (this.worldGenerated && !this.generated && building.getSchematic() != null)
-        {
-            this.generated = true;
-            building.getSchematic().build(location, false);
-            //System.out.println("Generating Schematic @ " + location.toString());
-            if (building == Building.PROCESSORROOM)
-            {
-                new ZoneProcessing(location.world, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
-            }
-        }
         if (this.ticks % ((int) 120 + location.x + location.y + location.z) == 0)
         {
             System.out.println(this.toString() + " scanning for damage");
