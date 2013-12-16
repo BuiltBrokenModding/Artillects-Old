@@ -1,7 +1,7 @@
 package artillects.entity.ai;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -72,10 +72,14 @@ public class EntityAIReproduce extends EntityAIBase
 		{
 			HashMap<ArtillectType, Integer> artillectTypeCount = new HashMap<ArtillectType, Integer>();
 
-			for (IArtillect artillect : Hive.instance().getArtillects())
+			Set<IArtillect> artillects = Hive.instance().getArtillects();
+			synchronized (artillects)
 			{
-				ArtillectType type = artillect.getType();
-				artillectTypeCount.put(artillect.getType(), (artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0) + 1);
+				for (IArtillect artillect : artillects)
+				{
+					ArtillectType type = artillect.getType();
+					artillectTypeCount.put(artillect.getType(), (artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0) + 1);
+				}
 			}
 
 			// TODO: Fix ratio sorting NOT working.
@@ -171,7 +175,7 @@ public class EntityAIReproduce extends EntityAIBase
 			((IArtillect) entity).setType(type);
 			return true;
 		}
-		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}

@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
@@ -86,6 +87,7 @@ public class EntityAICrafting extends EntityAIBase
 
 		if (this.idleTime <= 0)
 		{
+			// TODO: After ModJam, make this crafting modular/work with all items.
 			Iterator<Entry<ItemStack, ItemStack[]>> it = this.stacksToCraft.entrySet().iterator();
 
 			while (it.hasNext())

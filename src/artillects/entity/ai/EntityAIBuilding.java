@@ -42,10 +42,10 @@ public class EntityAIBuilding extends EntityAIBase
 	{
 		if (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty())
 		{
-			System.out.println("Executing task");
+//			System.out.println("Executing task");
 			return true;
 		}
-		System.out.println("not executing task " + (this.entity.zone instanceof ZoneBuilding) + " " + (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty()));
+//		System.out.println("not executing task " + (this.entity.zone instanceof ZoneBuilding) + " " + (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty()));
 		return false;
 	}
 
