@@ -5,6 +5,7 @@ import artillects.hive.schematics.Schematic;
 public enum Building
 {
     TEST("", "[Laggy]Hive complex [A]"),
+    TESTB("", "[Laggy]Hive complex [B]"),
     TUNNELZ("5x5ZTunnel"),
     TUNNELX("5x5XTunnel"),
     WALLZ("5x5ZWall"),
