@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.VectorWorld;
+import artillects.block.BlockSymbol;
 import artillects.hive.ISaveObject;
 
 /** File that represents all the data loaded from a schematic data file
@@ -69,12 +71,52 @@ public class Schematic implements ISaveObject
     {
         if (this.blocks != null)
         {
+            HashMap<Vector3, ItemStack> blocksToPlace = new HashMap();
+            this.getBlocksToPlace(spot, blocksToPlace, true);
+            for (Entry<Vector3, ItemStack> entry : blocksToPlace.entrySet())
+            {
+                Vector3 setPos = spot.clone().subtract(this.schematicCenter).add(entry.getKey());
+                setPos.setBlock(spot.world, entry.getValue().itemID, entry.getValue().getItemDamage());
+            }
+        }
+    }
+
+    public void getBlocksToPlace(VectorWorld spot, HashMap<Vector3, ItemStack> blockMap, boolean checkWorld)
+    {
+        if (this.blocks != null)
+        {
             for (Entry<Vector3, int[]> entry : this.blocks.entrySet())
             {
-                if (entry.getValue()[0] != Block.sponge.blockID)
+                int blockID = entry.getValue()[0];
+                int meta = entry.getValue()[1];
+                Block block = Block.blocksList[blockID];
+
+                if (block != null && block != Block.sponge)
                 {
+                    if (blockID == Artillects.blockSymbol.blockID)
+                    {
+                        meta = spot.world.rand.nextInt(BlockSymbol.DroneSymbol.values().length - 1);
+                    }
+                    if (meta > 15)
+                    {
+                        meta = 15;
+                    }
+                    else if (meta < 0)
+                    {
+                        meta = 0;
+                    }
                     Vector3 setPos = spot.clone().subtract(this.schematicCenter).add(entry.getKey());
-                    setPos.setBlock(spot.world, entry.getValue()[0], entry.getValue()[1]);
+                    if (checkWorld)
+                    {
+                        int checkID = setPos.getBlockID(spot.world);
+                        int checkMeta = setPos.getBlockID(spot.world);
+                        if (checkID == blockID && checkMeta == meta)
+                        {
+                            continue;
+                        }
+                    }
+
+                    blockMap.put(setPos, new ItemStack(blockID, 1, meta));
                 }
             }
         }

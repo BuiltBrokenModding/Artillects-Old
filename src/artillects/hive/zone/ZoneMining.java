@@ -9,6 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import artillects.Pair;
 import artillects.Vector3;
+import artillects.entity.EntityWorker;
+import artillects.entity.IArtillect;
 
 public class ZoneMining extends Zone
 {
@@ -103,6 +105,12 @@ public class ZoneMining extends Zone
                 }
             }
         }
+    }
+
+    @Override
+    public boolean canAssignDrone(IArtillect drone)
+    {
+        return drone instanceof EntityWorker;
     }
 
     public boolean canMine(int id, int meta)

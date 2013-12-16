@@ -149,4 +149,14 @@ public class Vector3 extends Vector2
         return nbt;
     }
 
+    public int getBlockID(World world)
+    {
+        return world.getBlockId((int) x, (int) y, (int) z);
+    }
+    
+    public int getBlockMeta(World world)
+    {
+        return world.getBlockMetadata((int) x, (int) y, (int) z);
+    }
+
 }

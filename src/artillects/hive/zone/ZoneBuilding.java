@@ -1,65 +1,78 @@
 package artillects.hive.zone;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import artillects.Pair;
 import artillects.Vector3;
+import artillects.VectorWorld;
+import artillects.hive.HiveComplex;
+import artillects.hive.structure.Structure;
 
 public class ZoneBuilding extends Zone
 {
-	public final HashMap<Vector3, ItemStack> buildPosition = new HashMap<Vector3, ItemStack>();
+    public HashMap<Vector3, Pair<ItemStack, Structure>> buildPosition = new HashMap<Vector3, Pair<ItemStack, Structure>>();
+    protected HiveComplex complex;
 
-	/**
-	 * The location in which a chest with resource is provided.
-	 */
-	public Vector3 resourceLocation;
+    public ZoneBuilding(VectorWorld vectorWorld, HiveComplex complex, int radius)
+    {
+        super(vectorWorld, radius);
+        this.complex = complex;
+    }
 
-	public ZoneBuilding(World world, Vector3 start, Vector3 end)
-	{
-		super(world, start, end);
-	}
+    @Override
+    public void updateEntity()
+    {
+        super.updateEntity();
+        if (ticks % 20 == 0 && complex != null)
+        {
+            this.buildPosition.clear();
+            for (Structure str : complex.damagedPeaces)
+            {
+                str.loadBuildingRequest(this.buildPosition);
+            }
+        }
+    }
 
-	@Override
-	public void updateEntity()
-	{
-		super.updateEntity();
+    public Pair<Vector3, ItemStack> getClosestBlock(VectorWorld vec)
+    {
+        if (!buildPosition.isEmpty() && vec.world == this.world)
+        {
+            Vector3 location = null;
+            ItemStack stack = null;
 
-		if (ticks % 10 == 0)
-		{
-			this.scan();
-		}
-	}
+            for (Entry<Vector3, Pair<ItemStack, Structure>> entry : buildPosition.entrySet())
+            {
+                if (location == null || entry.getKey().distance(vec) < vec.distance(location))
+                {
+                    location = entry.getKey();
+                    stack = entry.getValue().getLeft();
+                }
+            }
+            return new Pair<Vector3, ItemStack>(location, stack);
+        }
+        return null;
+    }
 
-	public void scan()
-	{
-		Vector3 start = this.start;
-		Vector3 end = this.end;
-
-		this.buildPosition.clear();
-
-		for (int x = (int) start.x; x < (int) end.x; x++)
-		{
-			for (int y = (int) start.y; y < (int) end.y; y++)
-			{
-				for (int z = (int) start.z; z < (int) end.z; z++)
-				{
-					int blockID = this.world.getBlockId(x, y, z);
-					Block block = Block.blocksList[blockID];
-
-					if (block != null && this.canMine(block))
-					{
-						Vector3 position = new Vector3(x, y, z);
-						// TODO: Load schematic here.
-					}
-				}
-			}
-		}
-	}
-
-	public boolean canMine(Block block)
-	{
-		return block.blockID == Block.oreIron.blockID;
-	}
+    /** Called by a builder to place a block.
+     * 
+     * @param location - location in the zone's world
+     * @param stack - item stack, stack size is ignored
+     * @return true if the block was placed */
+    public boolean placeBlock(Vector3 location, ItemStack stack)
+    {
+        if (this.buildPosition.get(location) != null)
+        {
+            if (this.buildPosition.get(location).getRight() != null)
+            {
+                if (this.buildPosition.get(location).getRight().addBlock(location, stack))
+                {
+                    this.buildPosition.remove(location);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
