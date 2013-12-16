@@ -19,7 +19,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 public class FxLaser extends EntityFX
 {
 	// TODO: Fix this.
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.PREFIX, "text.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.PREFIX, Artillects.TEXTURE_DIRECTORY + "laser.png");
 
 	double movX = 0.0D;
 	double movY = 0.0D;

@@ -22,6 +22,7 @@ public class HiveComplexGenerator implements IWorldGenerator
 		{
 			HiveComplex complex = new HiveComplex("HiveTX" + System.currentTimeMillis(), pos);
 			complex.loadGeneralBuilding(true);
+			System.out.println("Generating AI Hive.");
 		}
 	}
 }

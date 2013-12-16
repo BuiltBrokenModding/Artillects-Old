@@ -57,7 +57,7 @@ public class Structure extends HiveGhost
 			building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true);
 			if (!missingBlocks.isEmpty())
 			{
-				System.out.println(this.toString() + " found damage");
+//				System.out.println(this.toString() + " found damage");
 				this.missingBlocks.putAll(missingBlocks);
 				this.isDamaged = true;
 			}

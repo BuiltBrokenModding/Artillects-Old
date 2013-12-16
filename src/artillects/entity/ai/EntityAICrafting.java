@@ -138,7 +138,7 @@ public class EntityAICrafting extends EntityAIBase
 									{
 										ItemStack stackInChest = chest.getStackInSlot(i);
 
-										if (stackInChest.isItemEqual(stackToCraft))
+										if (stackInChest != null && stackInChest.isItemEqual(stackToCraft))
 										{
 											if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 											{

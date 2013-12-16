@@ -143,7 +143,7 @@ public class EntityAIReproduce extends EntityAIBase
 							{
 								ItemStack stackInChest = chest.getStackInSlot(i);
 
-								if (stackInChest.isItemEqual(stackRequired))
+								if (stackInChest != null && stackInChest.isItemEqual(stackRequired))
 								{
 									if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 									{

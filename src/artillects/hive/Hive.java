@@ -111,8 +111,7 @@ public class Hive implements IScheduledTickHandler
 			this.ticks = 0;
 		}
 
-		// System.out.println("[Hive] Tick. HiveComplex: " + activeComplexs.size() + " Drones:" +
-		// activeDrones.size() + " Zones:" + activeZones.size());
+		System.out.println("[Hive] Tick.");
 		synchronized (complexes)
 		{
 			for (Entry<String, HiveComplex> entry : complexes.entrySet())
@@ -252,7 +251,7 @@ public class Hive implements IScheduledTickHandler
 		{
 			synchronized (complexes)
 			{
-				System.out.println("unloading hive peaces from world: " + event.world.provider.dimensionId);
+				System.out.println("Unloading hive complexes from World: " + event.world.provider.dimensionId);
 				for (Entry<String, HiveComplex> entry : complexes.entrySet())
 				{
 					if (event.world.equals(entry.getValue().location.world))
