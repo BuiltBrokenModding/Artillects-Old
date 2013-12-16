@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import artillects.InventoryHelper;
 import artillects.Vector3;
+import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityFabricator;
 import artillects.entity.IArtillect;
 import artillects.hive.ArtillectTaskType;
@@ -102,62 +103,76 @@ public class EntityAIReproduce extends EntityAIBase
 	 */
 	private boolean tryProduce(ArtillectTaskType type)
 	{
-		if (this.hasResoucre(type))
-		{
-			try
-			{
-				Entity entity = type.entityClass.getConstructor(World.class).newInstance(this.world);
-				entity.setPosition(this.entity.posX, this.entity.posY, this.entity.posZ);
-				this.world.spawnEntityInWorld(entity);
-				((IArtillect) entity).setType(type);
-				return true;
-			}
-			catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
-			{
-				e.printStackTrace();
-			}
-		}
-		else
-		{
-			this.lookForResource(type);
-		}
-
-		return false;
-	}
-
-	private void lookForResource(ArtillectTaskType type)
-	{
 		if (this.entity.zone instanceof ZoneProcessing)
 		{
 			ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
 
 			for (ItemStack stackRequired : type.getResourcesRequired())
 			{
-				for (Vector3 chestPosition : zone.chestPositions)
+				int resourceCount = 0;
+
+				for (ItemStack stackInEntity : this.entity.getInventoryAsList())
 				{
-					TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
-
-					if (tileEntity instanceof TileEntityChest)
+					if (stackInEntity != null && stackInEntity.isItemEqual(stackRequired))
 					{
-						TileEntityChest chest = (TileEntityChest) tileEntity;
+						resourceCount += stackInEntity.stackSize;
+					}
+				}
 
-						for (int i = 0; i < chest.getSizeInventory(); i++)
+				if (resourceCount < stackRequired.stackSize)
+				{
+					/**
+					 * Search for the resource.
+					 */
+					for (Vector3 chestPosition : zone.chestPositions)
+					{
+						TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+
+						if (tileEntity instanceof TileEntityChest)
 						{
-							ItemStack stackInChest = chest.getStackInSlot(i);
+							TileEntityChest chest = (TileEntityChest) tileEntity;
+
+							for (int i = 0; i < chest.getSizeInventory(); i++)
+							{
+								ItemStack stackInChest = chest.getStackInSlot(i);
+
+								if (stackInChest.isItemEqual(stackRequired))
+								{
+									if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
+									{
+										if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+										{
+											this.entity.getNavigator().clearPathEntity();
+											int resourceToGet = Math.max(stackRequired.stackSize - resourceCount, 0);
+											chest.setInventorySlotContents(i, this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet)));
+										}
+									}
+
+									return false;
+								}
+							}
 
 						}
+
+						return false;
 					}
 				}
 			}
 		}
-	}
 
-	/**
-	 * @param type
-	 * @return If the Artillect has resource to fabricate this Artillect.
-	 */
-	private boolean hasResoucre(ArtillectTaskType type)
-	{
-		return InventoryHelper.hasItems(this.entity.getInventory(), type.getResourcesRequired().toArray(new ItemStack[0]));
+		try
+		{
+			Entity entity = type.entityClass.getConstructor(World.class).newInstance(this.world);
+			entity.setPosition(this.entity.posX, this.entity.posY, this.entity.posZ);
+			this.world.spawnEntityInWorld(entity);
+			((IArtillect) entity).setType(type);
+			return true;
+		}
+		catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e)
+		{
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 }
