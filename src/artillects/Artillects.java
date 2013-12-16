@@ -17,6 +17,7 @@ import artillects.block.BlockSymbol;
 import artillects.block.teleporter.BlockGlyph;
 import artillects.block.teleporter.BlockTeleporterAnchor;
 import artillects.block.teleporter.ItemBlockGlyph;
+import artillects.block.teleporter.TileEntityTeleporterAnchor;
 import artillects.commands.CommandTool;
 import artillects.entity.ArtillectType;
 import artillects.hive.Hive;
@@ -30,7 +31,6 @@ import artillects.item.weapons.ItemWeaponBattery;
 import artillects.network.PacketEntity;
 import artillects.network.PacketHandler;
 import artillects.network.PacketTile;
-import artillects.tile.TileEntityTeleporterAnchor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -125,6 +125,8 @@ public class Artillects
     public static Item weaponPlasmaLauncher;
     public static Item plasmaBattery;
 
+    public static boolean enableHiveComplexGenerator = true;
+
     public static Artillects instance()
     {
         if (instance == null)
@@ -164,6 +166,9 @@ public class Artillects
     {
         // Register blocks and tiles
         CONFIGURATION.load();
+        //Settings
+        enableHiveComplexGenerator = CONFIGURATION.get("HiveComplex", "EnableWorldGen", true).getBoolean(true);
+        //Item & block ids
         itemArtillectSpawner = new ItemArtillectSpawner();
         itemParts = new ItemParts();
         itemBuilding = new ItemBuildingGenerator();
