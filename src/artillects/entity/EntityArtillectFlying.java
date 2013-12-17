@@ -65,7 +65,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         double d2 = this.waypointZ - this.posZ;
         double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
-        double groundDistance = 100;
+        double groundDistance = 40;
 
         MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
 
@@ -77,7 +77,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         if (d3 < 1.0D || d3 > 3600.0D)
         {
             this.waypointX = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            if (groundDistance < 100)
+            if (groundDistance < 50)
             {
                 this.waypointY = this.posY + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
             }
