@@ -16,7 +16,7 @@ public class HiveComplexGenerator implements IWorldGenerator
 	{
 		chunkX = chunkX << 4;
 		chunkZ = chunkZ << 4;
-		VectorWorld pos = new VectorWorld(world, chunkX, 63 - 32, chunkZ);
+		VectorWorld pos = new VectorWorld(world, chunkX, 6, chunkZ);
 		
 		if (HiveComplexManager.instance().getClosestComplex(pos, 400) == null)
 		{

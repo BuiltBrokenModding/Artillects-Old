@@ -12,7 +12,6 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -104,7 +103,12 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         }
         else
         {
-            this.getDataWatcher().updateObject(EntityArtillectBase.DATA_TYPE_ID, (byte) (type.ordinal()));
+            ArtillectType t = this.getType();
+            if (t != type)
+            {
+                this.getDataWatcher().updateObject(EntityArtillectBase.DATA_TYPE_ID, (byte) (type.ordinal()));
+                this.setZone(null);               
+            }
         }
     }
 

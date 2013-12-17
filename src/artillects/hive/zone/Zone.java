@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveGhost;
@@ -17,27 +18,16 @@ import artillects.hive.HiveGhost;
 public class Zone extends HiveGhost
 {
     /** Start is always the min point; end is always the largest point. */
-    public Vector3 start, end;
-
-    public World world;
+    public VectorWorld start, end;
 
     public HiveComplex complex;
 
     public List<IArtillect> assignedDrones = new ArrayList<IArtillect>();
 
-    public Zone(HiveComplex complex, Vector3 start, Vector3 end)
+    public Zone(HiveComplex complex, VectorWorld start, VectorWorld end)
     {
-        this.world = complex.location.world;
-        this.start = new Vector3(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
-        this.end = new Vector3(Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
-    }
-
-    public Zone(HiveComplex complex, int radius)
-    {
-        this.world = complex.location.world;
-        this.start = complex.location.clone().subtract(radius);
-        this.end = complex.location.clone().add(radius);
-
+        this.start = new VectorWorld(start.world, Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
+        this.end = new VectorWorld(start.world, Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
     }
 
     @Override

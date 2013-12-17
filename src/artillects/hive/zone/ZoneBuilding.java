@@ -14,12 +14,13 @@ import artillects.hive.structure.Structure;
 
 public class ZoneBuilding extends Zone
 {
-    public HashMap<Vector3, Pair<ItemStack, Structure>> buildPosition = new HashMap<Vector3, Pair<ItemStack, Structure>>();
-
-    public ZoneBuilding(HiveComplex complex, int radius)
+    public ZoneBuilding(HiveComplex complex, VectorWorld start, VectorWorld end)
     {
-        super(complex, radius);
+        super(complex, start, end);
+        // TODO Auto-generated constructor stub
     }
+
+    public HashMap<Vector3, Pair<ItemStack, Structure>> buildPosition = new HashMap<Vector3, Pair<ItemStack, Structure>>();
 
     @Override
     public void updateEntity()
@@ -37,7 +38,7 @@ public class ZoneBuilding extends Zone
 
     public Pair<Vector3, ItemStack> getClosestBlock(VectorWorld vec)
     {
-        if (!buildPosition.isEmpty() && vec.world == this.world)
+        if (!buildPosition.isEmpty() && vec.world == this.start.world)
         {
             Vector3 location = null;
             ItemStack stack = null;

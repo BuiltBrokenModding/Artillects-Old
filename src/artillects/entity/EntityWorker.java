@@ -2,12 +2,13 @@ package artillects.entity;
 
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
-import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.entity.ai.EntityAIBlacksmith;
 import artillects.entity.ai.EntityAICrafting;
 import artillects.entity.ai.EntityAIMining;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
+import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneMining;
 import artillects.hive.zone.ZoneProcessing;
 
@@ -64,30 +65,32 @@ public class EntityWorker extends EntityArtillectBase
         this.cachedInventory = null;
     }
 
+    @Override
+    public void setZone(Zone zone)
+    {
+        if (!this.worldObj.isRemote && this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone)
+        {
+            if (zone != null)
+                HiveComplex.getPlayerHive().addZone(zone);
+        }
+    }
+
     public void genZone()
     {
-        if (this.zone != null)
+        if (!this.worldObj.isRemote)
         {
-            if (this.getZone() instanceof ZoneMining && this.getType() == ArtillectType.HARVESTER)
+            if (this.zone == null)
             {
-                return;
-            }
-            if (this.getZone() instanceof ZoneProcessing && (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER))
-            {
-                return;
-            }
-        }
-        else
-        {
-            if (this.getType() == ArtillectType.HARVESTER)
-            {
-                System.out.println("new Harvesting zone");
-                this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
-            }
-            if (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER)
-            {
-                System.out.println("new Processing zone");
-                this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+                if (this.getType() == ArtillectType.HARVESTER)
+                {
+                    System.out.println("new Harvesting zone");
+                    this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+                }
+                if (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER)
+                {
+                    System.out.println("new Processing zone");
+                    this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+                }
             }
         }
     }

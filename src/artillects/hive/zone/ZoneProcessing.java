@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockFurnace;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
 import artillects.hive.HiveComplex;
@@ -16,7 +17,7 @@ public class ZoneProcessing extends Zone
     public final List<Vector3> chestPositions = new ArrayList<Vector3>();
     public final List<Vector3> furnacePositions = new ArrayList<Vector3>();
 
-    public ZoneProcessing(HiveComplex complex, Vector3 start, Vector3 end)
+    public ZoneProcessing(HiveComplex complex, VectorWorld start, VectorWorld end)
     {
         super(complex, start, end);
     }
@@ -45,7 +46,7 @@ public class ZoneProcessing extends Zone
             {
                 for (int z = (int) start.z; z < (int) end.z; z++)
                 {
-                    int blockID = this.world.getBlockId(x, y, z);
+                    int blockID = this.start.world.getBlockId(x, y, z);
                     Block block = Block.blocksList[blockID];
 
                     if (block != null)

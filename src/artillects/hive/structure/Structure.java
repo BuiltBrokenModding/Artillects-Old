@@ -45,7 +45,7 @@ public class Structure extends HiveGhost
         super.init();
         if (building == Building.PROCESSORROOM)
         {
-            new ZoneProcessing(complex, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
+            //new ZoneProcessing(complex, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
         }
     }
 

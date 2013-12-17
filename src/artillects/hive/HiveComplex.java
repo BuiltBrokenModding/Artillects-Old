@@ -116,7 +116,7 @@ public class HiveComplex extends HiveGhost
     public void loadFabricatorDemo()
     {
         this.load3x3Room(this.location.clone(), 2);
-        this.buildZone = new ZoneBuilding(this, 50);
+        //this.buildZone = new ZoneBuilding(this, 50);
         for (int i = 0; i < 1; i++)
         {
             EntityFabricator fab = new EntityFabricator(this.location.world);
@@ -222,7 +222,7 @@ public class HiveComplex extends HiveGhost
                 this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
             }
         }
-        this.buildZone = new ZoneBuilding(this, 80);
+        //this.buildZone = new ZoneBuilding(this, 80);
 
         if (worldGen)
         {
@@ -413,38 +413,23 @@ public class HiveComplex extends HiveGhost
                 }
             }
 
-            Iterator<Zone> itZone = zones.iterator();
-            while (itZone.hasNext())
+            if (this.zones != null && !this.zones.isEmpty())
             {
-                Zone zone = itZone.next();
-                if (zone.isValid())
+                Iterator<Zone> itZone = zones.iterator();
+                while (itZone.hasNext())
                 {
-                    zone.updateEntity();                   
-                }
-                else
-                {
-                    zone.invalidate();
-                    itZone.remove();
-                }
-            }
-            Iterator<IArtillect> droneIt = artillects.iterator();
-            while (droneIt.hasNext())
-            {
-                IArtillect drone = droneIt.next();
-                if (drone.getOwner() != this)
-                {
-                    droneIt.remove();
-                }
-                else
-                {
-                    if (!zones.contains(drone.getZone()))
+                    Zone zone = itZone.next();
+                    if (zone != null)
                     {
-                        drone.setZone(null);
-                    }
-                    if (drone.getZone() == null)
-                    {
-                        if (!this.awaitingOrders.contains(drone))
-                            this.awaitingOrders.add(drone);
+                        if (zone.isValid())
+                        {
+                            zone.updateEntity();
+                        }
+                        else
+                        {
+                            zone.invalidate();
+                            itZone.remove();
+                        }
                     }
                 }
             }
