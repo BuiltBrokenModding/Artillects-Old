@@ -31,6 +31,7 @@ import artillects.Vector3;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.zone.Zone;
+import artillects.item.ItemParts;
 import artillects.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -162,6 +163,17 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         // TODO: Drop some kind of circuit
         return Artillects.itemParts.itemID;
+    }
+
+    @Override
+    protected void dropFewItems(boolean par1, int par2)
+    {
+        if (par1)
+        {
+            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemParts.Part.values().length - 1)), 0.0F);
+            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(5 + par2), this.worldObj.rand.nextInt(ItemParts.Part.values().length - 1)), 0.0F);
+
+        }
     }
 
     @Override
