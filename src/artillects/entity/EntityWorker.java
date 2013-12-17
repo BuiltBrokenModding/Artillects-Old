@@ -32,17 +32,9 @@ public class EntityWorker extends EntityArtillectBase
 
     @Override
     public void setType(ArtillectType type)
-    {
-        if (!this.worldObj.isRemote)
-        {
-            if (this.getType() != type)
-            {
-                genZone();
-            }
-
-        }
-        super.setType(type);
-
+    {             
+        super.setType(type);   
+        genZone();
     }
 
     @Override
@@ -79,7 +71,7 @@ public class EntityWorker extends EntityArtillectBase
     {
         if (!this.worldObj.isRemote)
         {
-            if (this.zone == null)
+            if (this.getZone() == null)
             {
                 if (this.getType() == ArtillectType.HARVESTER)
                 {

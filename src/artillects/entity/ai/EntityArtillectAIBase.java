@@ -35,9 +35,9 @@ public abstract class EntityArtillectAIBase extends EntityAIBase
 	 */
 	protected boolean dumpInventoryToChest()
 	{
-		if (this.getArtillect().zone instanceof ZoneProcessing)
+		if (this.getArtillect().getZone() instanceof ZoneProcessing)
 		{
-			for (Vector3 chestPosition : ((ZoneProcessing) getArtillect().zone).chestPositions)
+			for (Vector3 chestPosition : ((ZoneProcessing) getArtillect().getZone()).chestPositions)
 			{
 				TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
 

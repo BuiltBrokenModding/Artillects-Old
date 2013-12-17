@@ -40,7 +40,7 @@ public class EntityAIBuilding extends EntityAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		if (this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty())
+		if (this.entity.getZone() instanceof ZoneBuilding && !((ZoneBuilding) entity.getZone()).buildPosition.isEmpty())
 		{
 //			System.out.println("Executing task");
 			return true;
@@ -69,12 +69,12 @@ public class EntityAIBuilding extends EntityAIBase
 	{
 		this.idleTime--;
 		System.out.println("Build task update");
-		if (this.idleTime <= 0 && this.entity.zone instanceof ZoneBuilding && !((ZoneBuilding) entity.zone).buildPosition.isEmpty())
+		if (this.idleTime <= 0 && this.entity.getZone() instanceof ZoneBuilding && !((ZoneBuilding) entity.getZone()).buildPosition.isEmpty())
 		{
 			if (this.placementSpot == null)
 			{
 				System.out.println("placement location == null");
-				Pair<Vector3, ItemStack> data = ((ZoneBuilding) this.entity.zone).getClosestBlock(new VectorWorld(this.entity));
+				Pair<Vector3, ItemStack> data = ((ZoneBuilding) this.entity.getZone()).getClosestBlock(new VectorWorld(this.entity));
 				if (data != null && data.getLeft() != null && data.getRight() != null)
 				{
 					System.out.println("placement location set");
@@ -97,7 +97,7 @@ public class EntityAIBuilding extends EntityAIBase
 				{
 					System.out.println(" placing block");
 					this.entity.getNavigator().clearPathEntity();
-					((ZoneBuilding) this.entity.zone).placeBlock(placementSpot, placementItem);
+					((ZoneBuilding) this.entity.getZone()).placeBlock(placementSpot, placementItem);
 				}
 			}
 			this.idleTime = 20;

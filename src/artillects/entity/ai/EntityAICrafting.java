@@ -53,7 +53,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return this.entity.getType() == ArtillectType.CRAFTER && entity.zone instanceof ZoneProcessing;
+		return this.entity.getType() == ArtillectType.CRAFTER && entity.getZone() instanceof ZoneProcessing;
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */
@@ -124,9 +124,9 @@ public class EntityAICrafting extends EntityArtillectAIBase
 							 * Search for the resource because we have less than the required
 							 * amount.
 							 */
-							if (this.entity.zone instanceof ZoneProcessing)
+							if (this.entity.getZone() instanceof ZoneProcessing)
 							{
-								ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
+								ZoneProcessing zone = (ZoneProcessing) this.entity.getZone();
 
 								for (Vector3 chestPosition : zone.chestPositions)
 								{

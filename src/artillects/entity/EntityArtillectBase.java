@@ -48,7 +48,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
     protected int armorSetting = 5;
 
-    public Zone zone;
+    private Zone zone;
 
     /** Owner of the drone either hive or player */
     public Object owner;
@@ -107,7 +107,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
             if (t != type)
             {
                 this.getDataWatcher().updateObject(EntityArtillectBase.DATA_TYPE_ID, (byte) (type.ordinal()));
-                this.setZone(null);               
+                this.setZone(null);
             }
         }
     }
