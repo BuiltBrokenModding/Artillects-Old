@@ -46,7 +46,7 @@ public class EntityAIArtillectFollow extends EntityArtillectAIBase
     {
         Object owner = this.entity.getOwner();
 
-        if (owner == HiveComplex.getPlayerHive())
+        if (owner instanceof HiveComplex && ((HiveComplex) owner).playerZone)
         {
             EntityLivingBase entitylivingbase = this.entity.worldObj.getClosestPlayer(this.entity.posX, this.entity.posX, this.entity.posX, maxDist);
 

@@ -395,10 +395,10 @@ public class HiveComplex extends HiveGhost
                 {
                     if (str.isValid())
                     {
-                        str.updateEntity();
+                        //str.updateEntity();
                         if (str.isDamaged() && !this.damagedPeaces.contains(str))
                         {
-                            this.damagedPeaces.add(str);
+                            // this.damagedPeaces.add(str);
                         }
                     }
                     else

@@ -25,7 +25,7 @@ public class EntityDroneSelector implements IEntitySelector
             if (entity.isEntityAlive() && !entity.isInvisible())
             {
                 // Attack players if hive drone TODO change to hostile only system later
-                if (drone.getOwner() != HiveComplex.getPlayerHive())
+                if (drone.getOwner() instanceof HiveComplex && !((HiveComplex) drone.getOwner()).playerZone)
                 {
                     if (entity instanceof EntityPlayer)
                     {
@@ -37,7 +37,7 @@ public class EntityDroneSelector implements IEntitySelector
                     // Attack enemy drones
                     if (entity instanceof EntityArtillectBase)
                     {
-                        if (drone.getOwner() instanceof EntityPlayer)
+                        if (drone.getOwner() instanceof HiveComplex && ((HiveComplex) drone.getOwner()).playerZone)
                         {
                             return true;
                         }
@@ -48,7 +48,7 @@ public class EntityDroneSelector implements IEntitySelector
                     // Attack enemy drones
                     if (entity instanceof EntityArtillectBase)
                     {
-                        if (drone.getOwner() != HiveComplex.getPlayerHive())
+                        if (drone.getOwner() instanceof HiveComplex && !((HiveComplex) drone.getOwner()).playerZone)
                         {
                             return true;
                         }
