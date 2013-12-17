@@ -125,16 +125,20 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public boolean interact(EntityPlayer entityPlayer)
     {
-        if (entityPlayer.isSneaking())
+        if (owner instanceof HiveComplex && ((HiveComplex) owner).playerZone)
         {
-            this.setType(this.getType().toggle(this));
-            entityPlayer.addChatMessage("Toggled to: " + this.getType().name());
+            if (entityPlayer.isSneaking())
+            {
+                this.setType(this.getType().toggle(this));
+                entityPlayer.addChatMessage("Toggled to: " + this.getType().name());
+            }
+            else
+            {
+                entityPlayer.openGui(Artillects.instance, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
+            }
+            return true;
         }
-        else
-        {
-            entityPlayer.openGui(Artillects.instance, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
-        }
-        return true;
+        return false;
     }
 
     @Override

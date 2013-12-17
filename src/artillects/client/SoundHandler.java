@@ -38,13 +38,13 @@ public class SoundHandler
             System.out.println("Loading sound file " + SOUND_FILES[i].name);
             if (SOUND_FILES[i].versions == 1)
             {
-                event.manager.addSound(Artillects.PREFIX + SOUND_FILES[i] + ".ogg");
+                event.manager.addSound(Artillects.PREFIX + SOUND_FILES[i].name + ".ogg");
             }
             else
             {
                 for (int variation = 1; variation < SOUND_FILES[i].versions; variation++)
                 {
-                    event.manager.addSound(Artillects.PREFIX + SOUND_FILES[i] + variation + ".ogg");
+                    event.manager.addSound(Artillects.PREFIX + SOUND_FILES[i].name + variation + ".ogg");
                 }
 
             }
