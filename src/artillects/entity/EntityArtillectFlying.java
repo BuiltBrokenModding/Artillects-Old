@@ -5,19 +5,22 @@ import java.util.List;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityLargeFireball;
+import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
-import artillects.hive.HiveComplexManager;
 import artillects.hive.zone.Zone;
 
 public class EntityArtillectFlying extends EntityFlying implements IArtillect
@@ -62,10 +65,26 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         double d2 = this.waypointZ - this.posZ;
         double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
+        double groundDistance = 100;
+
+        MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
+
+        if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
+        {
+            groundDistance = this.posY - mop.blockY;
+        }
+
         if (d3 < 1.0D || d3 > 3600.0D)
         {
             this.waypointX = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            this.waypointY = this.posY + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
+            if (groundDistance < 100)
+            {
+                this.waypointY = this.posY + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
+            }
+            else
+            {
+                this.waypointY = this.posY - (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
+            }
             this.waypointZ = this.posZ + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
         }
 
@@ -154,7 +173,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         return entity;
     }
 
-    public void launchFireBall(EntityLivingBase targetedEntity, double entityRadius, int explosionStrength)
+    public void launchFireBall(EntityLivingBase targetedEntity, double entityRadius, boolean small)
     {
         double deltaX = targetedEntity.posX - this.posX;
         double deltaY = targetedEntity.boundingBox.minY + targetedEntity.height / 2.0F - (this.posY + this.height / 2.0F);
@@ -162,8 +181,7 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         this.renderYawOffset = this.rotationYaw = -((float) Math.atan2(deltaX, deltaZ)) * 180.0F / (float) Math.PI;
 
         this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1008, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
-        EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.worldObj, this, deltaX, deltaY, deltaZ);
-        entitylargefireball.field_92057_e = explosionStrength;
+        EntityFireball entitylargefireball = small ? new EntitySmallFireball(this.worldObj, this, deltaX, deltaY, deltaZ) : new EntityLargeFireball(this.worldObj, this, deltaX, deltaY, deltaZ);
         Vec3 vec3 = this.getLook(1.0F);
         entitylargefireball.posX = this.posX + vec3.xCoord * entityRadius;
         entitylargefireball.posY = this.posY + this.height / 2.0F + 0.5D;

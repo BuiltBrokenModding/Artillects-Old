@@ -9,7 +9,7 @@ public class EntitySeeker extends EntityArtillectFlying
     private EntityLivingBase targetedEntity;
 
     public int missileCounter, laserCounter;
-    protected int targetingRange = 100;
+    protected int targetingRange = 43;
 
     public EntitySeeker(World world)
     {
@@ -33,16 +33,15 @@ public class EntitySeeker extends EntityArtillectFlying
 
         if (this.targetedEntity != null && this.targetedEntity.getDistanceSqToEntity(this) < targetingRange * targetingRange)
         {
-
             if (this.canEntityBeSeen(this.targetedEntity))
             {
                 ++this.missileCounter;
                 ++this.laserCounter;
-                if (this.missileCounter >= 20)
+                if (this.missileCounter >= 100)
                 {
-                    this.launchFireBall(this.targetedEntity, 2, 1);
+                    this.launchFireBall(this.targetedEntity, 2, true);
                     this.missileCounter = -40;
-                } 
+                }
                 if (this.laserCounter >= 5)
                 {
                     this.fireLaser(this.targetedEntity);
@@ -63,7 +62,7 @@ public class EntitySeeker extends EntityArtillectFlying
             {
                 --this.missileCounter;
             }
-            if(this.laserCounter > 0)
+            if (this.laserCounter > 0)
             {
                 --this.laserCounter;
             }
