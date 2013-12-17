@@ -419,27 +419,7 @@ public class HiveComplex extends HiveGhost
                 Zone zone = itZone.next();
                 if (zone.isValid())
                 {
-                    zone.updateEntity();
-                    if (zone.doesZoneNeedWorkers())
-                    {
-                        Iterator<IArtillect> droneIterator = this.awaitingOrders.iterator();
-                        while (droneIterator.hasNext())
-                        {
-                            IArtillect drone = droneIterator.next();
-                            if (zone.canAssignDrone(drone))
-                            {
-                                zone.assignDrone(drone);
-                                if (drone.getZone() == zone)
-                                {
-                                    droneIterator.remove();
-                                }
-                            }
-                            if (!zone.doesZoneNeedWorkers())
-                            {
-                                break;
-                            }
-                        }
-                    }
+                    zone.updateEntity();                   
                 }
                 else
                 {

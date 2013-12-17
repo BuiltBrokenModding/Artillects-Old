@@ -48,7 +48,10 @@ public class EntityWorker extends EntityArtillectBase
     public void onEntityUpdate()
     {
         super.onEntityUpdate();
-
+        if (this.getHomePosition().posX == 0 && this.getHomePosition().posY == 0 && this.getHomePosition().posZ == 0)
+        {
+            this.setHomeArea((int) posX, (int) posY, (int) posZ, 100);
+        }
         if (!this.worldObj.isRemote && this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone)
         {
             HiveComplex.getPlayerHive().updateEntity();
@@ -57,35 +60,35 @@ public class EntityWorker extends EntityArtillectBase
             {
                 genZone();
             }
-            if (this.getZone() != null)
-            {
-                this.getZone().updateEntity();
-            }
         }
         this.cachedInventory = null;
     }
 
     public void genZone()
     {
-        System.out.println("Creating zone at " + this.getHomePosition().posX + "x " + this.getHomePosition().posY + "y " + this.getHomePosition().posZ + "z ");
         if (this.zone != null)
         {
             if (this.getZone() instanceof ZoneMining && this.getType() == ArtillectType.HARVESTER)
             {
                 return;
             }
-            if (this.getZone() instanceof ZoneProcessing && this.getType() == ArtillectType.BLACKSMITH)
+            if (this.getZone() instanceof ZoneProcessing && (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER))
             {
                 return;
             }
         }
-        if (this.getType() == ArtillectType.HARVESTER)
+        else
         {
-            this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
-        }
-        if (this.getType() == ArtillectType.BLACKSMITH)
-        {
-            this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+            if (this.getType() == ArtillectType.HARVESTER)
+            {
+                System.out.println("new Harvesting zone");
+                this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+            }
+            if (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER)
+            {
+                System.out.println("new Processing zone");
+                this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+            }
         }
     }
 }
