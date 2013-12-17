@@ -70,6 +70,17 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 	}
 
 	@Override
+	protected String getDeathSound()
+	{
+		return Artillects.PREFIX + "voice-lost";
+	}
+	@Override
+	protected String getHurtSound()
+	{
+		return Artillects.PREFIX + "voice-firstSight";
+	}
+
+	@Override
 	public ArtillectType getType()
 	{
 		return ArtillectType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectBase.DATA_TYPE_ID));
@@ -194,18 +205,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 	protected void dropRareDrop(int par1)
 	{
 
-	}
-
-	@Override
-	public void setLastAttacker(Entity par1Entity)
-	{
-		// TODO: This doesn't get called properly.
-		super.setLastAttacker(par1Entity);
-
-		if (this.ticksExisted - this.getLastAttackerTime() >= 60)
-		{
-			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-firstSight", 1, 1);
-		}
 	}
 
 	@Override
