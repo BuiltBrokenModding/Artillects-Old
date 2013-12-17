@@ -167,10 +167,7 @@ public class ItemArtillectSpawner extends ItemBase
                     if (entityliving instanceof IArtillect)
                     {
                         ((IArtillect) entityliving).setOwner(player);
-                        if (entityliving instanceof EntityWorker)
-                        {
-                            ((EntityWorker) entityliving).setType(ArtillectType.BLACKSMITH);
-                        }
+                        ((EntityWorker) entityliving).setType(ArtillectType.NONE);
                     }
 
                     world.spawnEntityInWorld(entity);
