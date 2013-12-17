@@ -74,10 +74,17 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 	{
 		return Artillects.PREFIX + "voice-lost";
 	}
+
 	@Override
 	protected String getHurtSound()
 	{
 		return Artillects.PREFIX + "voice-firstSight";
+	}
+
+	@Override
+	protected String getLivingSound()
+	{
+		return Artillects.PREFIX + "voice-random";
 	}
 
 	@Override
