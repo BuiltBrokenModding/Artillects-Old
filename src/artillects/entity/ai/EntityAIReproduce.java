@@ -102,9 +102,9 @@ public class EntityAIReproduce extends EntityAIBase
      * @return True if produced. */
     private boolean tryProduce(ArtillectType type)
     {
-        if (this.entity.zone instanceof ZoneProcessing)
+        if (this.entity.getZone() instanceof ZoneProcessing)
         {
-            ZoneProcessing zone = (ZoneProcessing) this.entity.zone;
+            ZoneProcessing zone = (ZoneProcessing) this.entity.getZone();
 
             for (ItemStack stackRequired : type.getResourcesRequired())
             {

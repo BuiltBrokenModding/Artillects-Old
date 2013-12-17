@@ -69,13 +69,13 @@ public class EntityAIMining extends EntityAIBase
 	@Override
 	public void updateTask()
 	{
-		if (entity.zone instanceof ZoneMining && ((ZoneMining) entity.zone).scannedBlocks.size() > 0 && !this.entity.isInventoryFull())
+		if (entity.getZone() instanceof ZoneMining && ((ZoneMining) entity.getZone()).scannedBlocks.size() > 0 && !this.entity.isInventoryFull())
 		{
 
 			Vector3 targetPosition = null;
 
 			/** Find closest resource block to mine for. */
-			for (Vector3 checkVec : ((ZoneMining) entity.zone).scannedBlocks)
+			for (Vector3 checkVec : ((ZoneMining) entity.getZone()).scannedBlocks)
 			{
 				if (targetPosition == null || checkVec.distance(new Vector3(this.entity)) < targetPosition.distance(new Vector3(this.entity)))
 				{

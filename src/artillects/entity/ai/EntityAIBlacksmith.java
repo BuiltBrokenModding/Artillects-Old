@@ -53,7 +53,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return this.entity.getType() == ArtillectType.BLACKSMITH && entity.zone instanceof ZoneProcessing;
+		return this.entity.getType() == ArtillectType.BLACKSMITH && entity.getZone() instanceof ZoneProcessing;
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */
@@ -79,7 +79,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 			this.lastUseChest = null;
 		}
 
-		if (((ZoneProcessing) entity.zone).chestPositions.size() > 0 && ((ZoneProcessing) entity.zone).furnacePositions.size() > 0)
+		if (((ZoneProcessing) entity.getZone()).chestPositions.size() > 0 && ((ZoneProcessing) entity.getZone()).furnacePositions.size() > 0)
 		{
 			this.idleTime--;
 			if (this.idleTime <= 0)
@@ -116,7 +116,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 		boolean containsInput = InventoryHelper.listContainsStack(this.stacksToSmelt, this.entity.getInventoryAsList());
 		boolean containsFuel = InventoryHelper.listContainsStack(this.stacksForFuel, this.entity.getInventoryAsList());
 
-		for (Vector3 furnacePosition : ((ZoneProcessing) entity.zone).furnacePositions)
+		for (Vector3 furnacePosition : ((ZoneProcessing) entity.getZone()).furnacePositions)
 		{
 			boolean didDump = false;
 			TileEntity tileEntity = this.world.getBlockTileEntity((int) furnacePosition.x, (int) furnacePosition.y, (int) furnacePosition.z);
@@ -154,7 +154,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 
 	private boolean takeResources()
 	{
-		for (Vector3 chestPosition : ((ZoneProcessing) entity.zone).chestPositions)
+		for (Vector3 chestPosition : ((ZoneProcessing) entity.getZone()).chestPositions)
 		{
 			TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
 
