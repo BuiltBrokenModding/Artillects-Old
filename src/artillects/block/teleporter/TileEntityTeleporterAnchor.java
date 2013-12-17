@@ -12,6 +12,7 @@ import artillects.tile.TileEntityAdvanced;
 public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 {
 	private long lastFrequencyCheck = 0;
+	public long lastVoiceActivation = 0;
 	private int frequency = 0;
 	private boolean forceXYZ = false;
 	private Vector3 teleportSpot = null;
