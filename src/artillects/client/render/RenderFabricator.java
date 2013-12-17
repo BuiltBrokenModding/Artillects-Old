@@ -12,7 +12,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderFabricator extends RenderLiving
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, Artillects.MODEL_DIRECTORY + "128x128Blank.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, Artillects.MODEL_DIRECTORY + "Fabricator.png");
 	public static final ModelFabricator MODEL = new ModelFabricator();
 
 	public RenderFabricator()
