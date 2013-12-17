@@ -66,9 +66,6 @@ import cpw.mods.fml.relauncher.Side;
 @NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class, connectionHandler = Artillects.class)
 public class Artillects implements IConnectionHandler
 {
-	@Instance
-	public static Artillects INSTANCE;
-
 	// @Mod Prerequisites
 	public static final String MAJOR_VERSION = "@MAJOR@";
 	public static final String MINOR_VERSION = "@MINOR@";
@@ -223,16 +220,16 @@ public class Artillects implements IConnectionHandler
 	{
 		/* Load Artillect Recipes */
 		// Worker
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.WORKER.ordinal()), "G G", "GCG", "G G", 'G', itemParts,'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.WORKER.ordinal()), "G G", "GCG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
 		// Fabriactor
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.FABRICATOR.ordinal()), "GCG", "GGG", "GCG", 'G', itemParts,'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.FABRICATOR.ordinal()), "GCG", "GGG", "GCG", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
 		// Demolisher
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.DEMOLISHER.ordinal()), "C C", "GGG", "G G", 'G', itemParts,'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.DEMOLISHER.ordinal()), "C C", "GGG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
 		// Seeker
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.SEEKER.ordinal()), "G G", "GGG", " C ", 'G', itemParts,'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.SEEKER.ordinal()), "G G", "GGG", " C ", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
 		/* Load Recipe Item Recipes */
 		// Metal Plate
@@ -248,7 +245,7 @@ public class Artillects implements IConnectionHandler
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T2.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_T1.ordinal()), 'I', Item.ingotGold));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T2.ordinal()), new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_MELTED_T2.ordinal()), new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_MELTED_T2.ordinal())));
 		// Circuit 3
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T3.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_T2.ordinal()), 'I',  new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_T1.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T3.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_T2.ordinal()), 'I', new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_T1.ordinal())));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T3.ordinal()), new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_MELTED_T3.ordinal()), new ItemStack(itemParts, 1, ItemParts.Part.CIRCUITS_MELTED_T3.ordinal())));
 
 		// Wall 1
