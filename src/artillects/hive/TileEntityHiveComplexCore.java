@@ -1,15 +1,15 @@
 package artillects.hive;
 
-import cpw.mods.fml.common.registry.EntityRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
-import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.WeightedRandomMinecart;
 import net.minecraft.world.World;
 import artillects.VectorWorld;
 import artillects.entity.EntityFabricator;
 import artillects.tile.TileEntityAdvanced;
+import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class TileEntityHiveComplexCore extends TileEntityAdvanced
 {
@@ -95,6 +95,16 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
         public int getSpawnerZ()
         {
             return this.mobSpawnerEntity.zCoord;
+        }
+
+        public Entity func_98265_a(Entity par1Entity)
+        {
+            Entity entity = super.func_98265_a(par1Entity);
+            if(entity instanceof EntityFabricator)
+            {
+                ((EntityFabricator) entity).setOwner(HiveComplexManager.instance().getClosestComplex(new VectorWorld(par1Entity),1000);
+            }
+            return entity;
         }
 
         public void setRandomMinecart(WeightedRandomMinecart par1WeightedRandomMinecart)
