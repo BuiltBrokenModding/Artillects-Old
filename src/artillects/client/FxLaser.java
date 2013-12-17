@@ -18,8 +18,8 @@ import cpw.mods.fml.client.FMLClientHandler;
  */
 public class FxLaser extends EntityFX
 {
-	// TODO: Fix this.
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.PREFIX, Artillects.TEXTURE_DIRECTORY + "laser.png");
+	public static final ResourceLocation PARTICLE_RESOURCE = new ResourceLocation("textures/particle/particles.png");
 
 	double movX = 0.0D;
 	double movY = 0.0D;
@@ -172,7 +172,7 @@ public class FxLaser extends EntityFX
 		GL11.glEnable(2884);
 
 		GL11.glPopMatrix();
-		FMLClientHandler.instance().getClient().renderEngine.bindTexture(FMLClientHandler.instance().getClient().renderEngine.getResourceLocation(0));
+		FMLClientHandler.instance().getClient().renderEngine.bindTexture(PARTICLE_RESOURCE);
 
 		tessellator.startDrawingQuads();
 		this.prevSize = this.particleScale;
