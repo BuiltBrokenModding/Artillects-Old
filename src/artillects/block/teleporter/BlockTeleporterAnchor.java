@@ -1,7 +1,5 @@
 package artillects.block.teleporter;
 
-import icbm.core.ICBMCore;
-
 import java.util.Random;
 
 import net.minecraft.block.ITileEntityProvider;
