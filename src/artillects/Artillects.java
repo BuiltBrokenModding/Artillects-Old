@@ -251,7 +251,7 @@ public class Artillects implements IConnectionHandler
 		// Wall 1
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockWall1, 1), "PGP", "G G", "PGP", 'P', new ItemStack(itemParts, 1, ItemParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemParts.Part.GEARS.ordinal())));
 		// Wall 2
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockWall1, 1), "GPG", "P P ", "GPG", 'P', new ItemStack(itemParts, 1, ItemParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemParts.Part.GEARS.ordinal())));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockWall1, 1), "GPG", "P P", "GPG", 'P', new ItemStack(itemParts, 1, ItemParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemParts.Part.GEARS.ordinal())));
 
 		proxy.postInit();
 	}

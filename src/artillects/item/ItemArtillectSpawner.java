@@ -174,7 +174,7 @@ public class ItemArtillectSpawner extends ItemBase
                     if (entityliving instanceof IArtillect)
                     {
                         ((IArtillect) entityliving).setOwner(HiveComplex.getPlayerHive());
-                        ((EntityWorker) entityliving).setType(ArtillectType.NONE);
+                        ((IArtillect) entityliving).setType(ArtillectType.NONE);
                     }
 
                     world.spawnEntityInWorld(entity);

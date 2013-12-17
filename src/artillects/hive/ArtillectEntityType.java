@@ -46,7 +46,7 @@ public enum ArtillectEntityType
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance, 64, 1, true);
+			EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance, 100, 1, true);
 		}
 
 		@Override
@@ -60,7 +60,7 @@ public enum ArtillectEntityType
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 64, 1, true);
+			EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 100, 1, true);
 		}
 
 		@Override
@@ -73,7 +73,7 @@ public enum ArtillectEntityType
 		@Override
 		public void register()
 		{
-			EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 64, 1, true);
+			EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 100, 1, true);
 		}
 
 		@Override

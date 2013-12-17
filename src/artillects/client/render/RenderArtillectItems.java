@@ -66,6 +66,12 @@ public class RenderArtillectItems implements IItemRenderer
 				RenderDemolisher.MODEL.render(0.0625f);
 				break;
 			}
+			case COMBATDRONE:
+            {
+                FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderCombatDrone.TEXTURE);
+                RenderCombatDrone.MODEL.render(0.0625f);
+                break;
+            }
 			default:
 				break;
 		}
