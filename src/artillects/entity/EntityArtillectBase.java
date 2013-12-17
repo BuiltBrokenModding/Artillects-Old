@@ -123,6 +123,13 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 	}
 
 	@Override
+	public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
+	{
+		super.setAttackTarget(par1EntityLivingBase);
+		this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-target", 1, 1);
+	}
+
+	@Override
 	public boolean interact(EntityPlayer entityPlayer)
 	{
 		if (owner instanceof HiveComplex && ((HiveComplex) owner).playerZone)
@@ -197,14 +204,8 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
 		if (this.ticksExisted - this.getLastAttackerTime() >= 60)
 		{
-			this.playSoundEffect(0);
+			this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-firstSight", 1, 1);
 		}
-	}
-
-	public void playSoundEffect(int id)
-	{
-		String[] soundNames = new String[] { "voice-agressionDetected", "voice-intruderAlert", "voice-pleaseDisarmYourself", "voice-theHiveIsUnderAttack" };
-		this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + soundNames[id], 1f, 1f);
 	}
 
 	@Override
