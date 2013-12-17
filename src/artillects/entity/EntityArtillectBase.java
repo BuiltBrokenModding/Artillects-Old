@@ -168,6 +168,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     protected void dropFewItems(boolean par1, int par2)
     {
+        super.dropFewItems(par1, par2);
         if (par1)
         {
             this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemParts.Part.values().length - 1)), 0.0F);

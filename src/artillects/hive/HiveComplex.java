@@ -39,9 +39,29 @@ public class HiveComplex extends HiveGhost
     public HashSet<Zone> zones = new HashSet<Zone>();
     public TileEntityHiveComplexCore core;
 
+    public boolean playerZone = false;
+
+    private static HiveComplex playerHiveComplex;
+
+    public static HiveComplex getPlayerHive()
+    {
+        if (playerHiveComplex == null)
+        {
+            playerHiveComplex = new HiveComplex(true);
+        }
+        return playerHiveComplex;
+    }
+
     public HiveComplex()
     {
         // TODO Auto-generated constructor stub
+    }
+
+    public HiveComplex(boolean player)
+    {
+        this.playerZone = true;
+        this.name = "PlayerZone";
+        this.location = new VectorWorld(null, 0, 0, 0);
     }
 
     public HiveComplex(String name, VectorWorld location)
