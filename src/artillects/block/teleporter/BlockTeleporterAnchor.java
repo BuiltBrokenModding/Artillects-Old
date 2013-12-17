@@ -1,10 +1,13 @@
 package artillects.block.teleporter;
 
+import icbm.core.ICBMCore;
+
 import java.util.Random;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
@@ -68,7 +71,15 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 					if (player.isSneaking())
 					{
 						if (!world.isRemote)
+						{
 							player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
+						}
+
+						if (System.currentTimeMillis() - ((TileEntityTeleporterAnchor) tile).lastVoiceActivation > 20 * 600)
+						{
+							((TileEntityTeleporterAnchor) tile).lastVoiceActivation = System.currentTimeMillis();
+							world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Artillects.PREFIX + "voice-introduce-teleporter", 1, 1);
+						}
 					}
 					else
 					{
@@ -80,6 +91,12 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 		}
 
 		return false;
+	}
+
+	@Override
+	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity par5Entity)
+	{
+
 	}
 
 	@Override
