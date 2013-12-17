@@ -21,6 +21,7 @@ import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
 import artillects.hive.ArtillectEntityType;
 import artillects.hive.ArtillectType;
+import artillects.hive.HiveComplex;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -172,7 +173,7 @@ public class ItemArtillectSpawner extends ItemBase
 
                     if (entityliving instanceof IArtillect)
                     {
-                        ((IArtillect) entityliving).setOwner(player);
+                        ((IArtillect) entityliving).setOwner(HiveComplex.getPlayerHive());
                         ((EntityWorker) entityliving).setType(ArtillectType.NONE);
                     }
 

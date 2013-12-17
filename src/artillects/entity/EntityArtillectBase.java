@@ -30,6 +30,7 @@ import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
+import artillects.hive.HiveComplexManager;
 import artillects.hive.zone.Zone;
 import artillects.item.ItemParts;
 import artillects.network.IPacketReceiver;
@@ -349,6 +350,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
         nbt.setTag("Items", nbttaglist);
         nbt.setByte("type", (byte) this.getType().ordinal());
+        nbt.setBoolean("hive", !(this.getOwner() != HiveComplex.getPlayerHive()));
 
         // TODO: Save owner.
     }
@@ -372,6 +374,10 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         }
 
         this.setType(ArtillectType.values()[nbt.getByte("type")]);
+        if (!nbt.getBoolean("hive"))
+        {
+            HiveComplex.getPlayerHive().addDrone(this);
+        }
     }
 
     @Override
