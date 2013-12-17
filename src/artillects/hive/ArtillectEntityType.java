@@ -51,6 +51,7 @@ public enum ArtillectEntityType
         public void register()
         {
             EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance, 100, 1, true);
+            EntityRegistry.addSpawn(EntityDemolisher.class, 3, 1, 10, EnumCreatureType.creature, ar);
         }
 
         @Override
@@ -66,7 +67,7 @@ public enum ArtillectEntityType
         public void register()
         {
             EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 100, 1, true);
-            EntityRegistry.addSpawn(EntitySeeker.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.biomeList);
+            EntityRegistry.addSpawn(EntitySeeker.class, 3, 1, 10, EnumCreatureType.creature, ar);
         }
 
         @Override
@@ -81,7 +82,7 @@ public enum ArtillectEntityType
         public void register()
         {
             EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 100, 1, true);
-            EntityRegistry.addSpawn(EntityCombatDrone.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.biomeList);
+            EntityRegistry.addSpawn(EntityCombatDrone.class, 3, 1, 10, EnumCreatureType.creature, ar);
         }
 
         @Override
@@ -90,6 +91,7 @@ public enum ArtillectEntityType
             return new EntityCombatDrone(world);
         }
     });
+    public static BiomeGenBase[] ar = new BiomeGenBase[] { BiomeGenBase.ocean, BiomeGenBase.plains, BiomeGenBase.desert, BiomeGenBase.extremeHills, BiomeGenBase.forest, BiomeGenBase.taiga, BiomeGenBase.swampland, BiomeGenBase.river, BiomeGenBase.hell, BiomeGenBase.sky, BiomeGenBase.frozenOcean, BiomeGenBase.frozenRiver, BiomeGenBase.icePlains, BiomeGenBase.iceMountains, BiomeGenBase.mushroomIsland, BiomeGenBase.mushroomIslandShore, BiomeGenBase.beach, BiomeGenBase.desertHills, BiomeGenBase.forestHills, BiomeGenBase.taigaHills, BiomeGenBase.extremeHillsEdge, BiomeGenBase.jungle, BiomeGenBase.jungleHills };
 
     public static int ids = 54;
     IArtillectSpawnHandler builder;
