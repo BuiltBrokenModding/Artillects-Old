@@ -100,9 +100,9 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
         public Entity func_98265_a(Entity par1Entity)
         {
             Entity entity = super.func_98265_a(par1Entity);
-            if(entity instanceof EntityFabricator)
+            if (entity instanceof EntityFabricator)
             {
-                ((EntityFabricator) entity).setOwner(HiveComplexManager.instance().getClosestComplex(new VectorWorld(par1Entity),1000);
+                ((EntityFabricator) entity).setOwner(HiveComplexManager.instance().getClosestComplex(new VectorWorld(par1Entity), 1000));
             }
             return entity;
         }

@@ -102,7 +102,7 @@ public class EntityAIReproduce extends EntityAIBase
      * @return True if produced. */
     private boolean tryProduce(ArtillectType type)
     {
-    	/*
+        /*
         if (this.entity.getZone() instanceof ZoneProcessing)
         {
             ZoneProcessing zone = (ZoneProcessing) this.entity.getZone();
@@ -166,6 +166,7 @@ public class EntityAIReproduce extends EntityAIBase
             entity.setPosition(this.entity.posX, this.entity.posY, this.entity.posZ);
             this.world.spawnEntityInWorld(entity);
             ((IArtillect) entity).setType(type);
+            ((IArtillect) entity).setOwner(this.entity.getOwner());
             return true;
         }
         catch (Exception e)
