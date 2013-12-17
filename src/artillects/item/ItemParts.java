@@ -67,8 +67,8 @@ public class ItemParts extends ItemBase
 
 	public static enum Part
 	{
-		GEARS("gears"), CICUITS_MELTED_T1("meltedCircuits1"),
-		CIRCUITS_MELTED_T2("meltedCircuits2"), CICUITS_MELTED_T3("meltedCircuits3"),
+		GEARS("gears"), CIRCUITS_MELTED_T1("meltedCircuits1"),
+		CIRCUITS_MELTED_T2("meltedCircuits2"), CIRCUITS_MELTED_T3("meltedCircuits3"),
 		CIRCUITS_T1("circuits1"), CIRCUITS_T2("circuits2"), CIRCUITS_T3("circuits3"),
 		METAL_PLATE("metalPlate");
 

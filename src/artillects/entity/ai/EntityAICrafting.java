@@ -14,6 +14,7 @@ import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
+import artillects.item.ItemParts.Part;
 
 public class EntityAICrafting extends EntityArtillectAIBase
 {
@@ -44,6 +45,8 @@ public class EntityAICrafting extends EntityArtillectAIBase
 		 */
 		// Gear
 		stacksToCraft.put(new ItemStack(Artillects.itemParts), new ItemStack[] { new ItemStack(Item.ingotIron, 4) });
+		stacksToCraft.put(new ItemStack(Artillects.itemParts, 1, Part.CIRCUITS_T1.ordinal()), new ItemStack[] { new ItemStack(Item.ingotIron, 4), new ItemStack(Item.ingotGold, 4) });
+
 	}
 
 	/** Returns whether the EntityAIBase should begin execution. */
