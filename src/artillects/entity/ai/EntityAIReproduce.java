@@ -102,13 +102,14 @@ public class EntityAIReproduce extends EntityAIBase
      * @return True if produced. */
     private boolean tryProduce(ArtillectType type)
     {
+    	/*
         if (this.entity.getZone() instanceof ZoneProcessing)
         {
             ZoneProcessing zone = (ZoneProcessing) this.entity.getZone();
 
             for (ItemStack stackRequired : type.getResourcesRequired())
             {
-                /** Check if we have the required resources. */
+                //Check if we have the required resources. 
                 int resourceCount = 0;
 
                 for (ItemStack stackInEntity : this.entity.getInventoryAsList())
@@ -121,7 +122,7 @@ public class EntityAIReproduce extends EntityAIBase
 
                 if (resourceCount < stackRequired.stackSize)
                 {
-                    /** Search for the resource because we have less than the required amount. */
+                    // Search for the resource because we have less than the required amount. 
                     for (Vector3 chestPosition : zone.chestPositions)
                     {
                         TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
@@ -157,7 +158,7 @@ public class EntityAIReproduce extends EntityAIBase
                     }
                 }
             }
-        }
+        }*/
 
         try
         {
