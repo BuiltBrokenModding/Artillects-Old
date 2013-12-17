@@ -351,8 +351,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         nbt.setTag("Items", nbttaglist);
         nbt.setByte("type", (byte) this.getType().ordinal());
         nbt.setBoolean("hive", !(this.getOwner() != HiveComplex.getPlayerHive()));
-
-        // TODO: Save owner.
     }
 
     @Override

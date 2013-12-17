@@ -9,6 +9,9 @@ import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
@@ -212,4 +215,25 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
     {
         return null;
     }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbt)
+    {
+        super.writeEntityToNBT(nbt);
+        nbt.setByte("type", (byte) this.getType().ordinal());
+        nbt.setBoolean("hive", !(this.getOwner() != HiveComplex.getPlayerHive()));
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt)
+    {
+        super.readEntityFromNBT(nbt);
+
+        this.setType(ArtillectType.values()[nbt.getByte("type")]);
+        if (!nbt.getBoolean("hive"))
+        {
+            HiveComplex.getPlayerHive().addDrone(this);
+        }
+    }
+
 }
