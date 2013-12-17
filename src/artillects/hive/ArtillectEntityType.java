@@ -67,7 +67,7 @@ public enum ArtillectEntityType
         public void register()
         {
             EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 100, 1, true);
-            EntityRegistry.addSpawn(EntitySeeker.class, 3, 1, 10, EnumCreatureType.creature, ar);
+            EntityRegistry.addSpawn(EntitySeeker.class, 10, 5, 30, EnumCreatureType.creature, ar);
         }
 
         @Override
@@ -82,7 +82,7 @@ public enum ArtillectEntityType
         public void register()
         {
             EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 100, 1, true);
-            EntityRegistry.addSpawn(EntityCombatDrone.class, 3, 1, 10, EnumCreatureType.creature, ar);
+            EntityRegistry.addSpawn(EntityCombatDrone.class, 5, 1, 10, EnumCreatureType.creature, ar);
         }
 
         @Override

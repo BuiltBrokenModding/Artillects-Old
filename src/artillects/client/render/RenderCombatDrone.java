@@ -18,7 +18,7 @@ public class RenderCombatDrone extends RenderLiving
 
 	public RenderCombatDrone()
 	{
-		super(MODEL, 1.0F);
+		super(new ModelCombatDrone(), 1.0F);
 	}
 
 	@Override

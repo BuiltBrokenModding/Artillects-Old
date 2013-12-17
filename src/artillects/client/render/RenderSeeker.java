@@ -13,27 +13,25 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderSeeker extends RenderLiving
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, Artillects.MODEL_DIRECTORY + "Seeker.png");
-	public static final ModelArtillect MODEL = new ModelSeeker();
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Artillects.DOMAIN, Artillects.MODEL_DIRECTORY + "Seeker.png");
+    public static final ModelArtillect MODEL = new ModelSeeker();
 
-	public RenderSeeker()
-	{
-		super(MODEL, 1.0F);
-	}
+    public RenderSeeker()
+    {
+        super(new ModelSeeker(), 1.0F);
+    }
 
-	@Override
-	protected float getDeathMaxRotation(EntityLivingBase entity)
-	{
-		return 180.0F;
-	}
+    @Override
+    protected float getDeathMaxRotation(EntityLivingBase entity)
+    {
+        return 180.0F;
+    }
 
-	/**
-	 * Returns the location of an entity's texture. Doesn't seem to be called unless you call
-	 * Render.bindEntityTexture.
-	 */
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity)
-	{
-		return TEXTURE;
-	}
+    /** Returns the location of an entity's texture. Doesn't seem to be called unless you call
+     * Render.bindEntityTexture. */
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity)
+    {
+        return TEXTURE;
+    }
 }
