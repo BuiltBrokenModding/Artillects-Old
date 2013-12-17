@@ -81,8 +81,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 		{
 			if (this.markForDump)
 			{
-				this.dumpInventoryToChest();
-				this.markForDump = false;
+				this.markForDump = this.dumpInventoryToChest();
 			}
 			else
 			{

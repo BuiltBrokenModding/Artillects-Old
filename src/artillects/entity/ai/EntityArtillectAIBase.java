@@ -27,6 +27,12 @@ public abstract class EntityArtillectAIBase extends EntityAIBase
 		this.moveSpeed = moveSpeed;
 	}
 
+	/**
+	 * Returns true if a chest is found and an item (ONLY ONE) is dumped. Dumps only one item at a
+	 * time!
+	 * 
+	 * @return True
+	 */
 	protected boolean dumpInventoryToChest()
 	{
 		if (this.getArtillect().zone instanceof ZoneProcessing)
