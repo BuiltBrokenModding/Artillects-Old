@@ -131,7 +131,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
     {
         super.setAttackTarget(par1EntityLivingBase);
-        if (System.currentTimeMillis() - this.lastAudioPlay > 20)
+        if (System.currentTimeMillis() - this.lastAudioPlay > 100)
         {
             this.lastAudioPlay = System.currentTimeMillis();
             this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-target", 1, 1);
@@ -213,7 +213,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
         if (this.ticksExisted - this.getLastAttackerTime() >= 60)
         {
-            if (System.currentTimeMillis() - this.lastAudioPlay > 20)
+            if (System.currentTimeMillis() - this.lastAudioPlay > 100)
             {
                 this.lastAudioPlay = System.currentTimeMillis();
                 this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-firstSight", 1, 1);
@@ -240,7 +240,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
             this.worldObj.spawnEntityInWorld(entityzombie);
         }
-        if (System.currentTimeMillis() - this.lastAudioPlay > 20)
+        if (System.currentTimeMillis() - this.lastAudioPlay > 100)
         {
             this.lastAudioPlay = System.currentTimeMillis();
             this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-kill", 1, 1);
