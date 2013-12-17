@@ -1,7 +1,9 @@
 package artillects.hive;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import artillects.Artillects;
 import artillects.entity.EntityArtillectBase;
 import artillects.entity.EntityFabricator;
@@ -14,100 +16,106 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 
 public enum ArtillectEntityType
 {
-	WORKER("worker", new IArtillectSpawnHandler()
-	{
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntityWorker.class, "worker", ids++, Artillects.instance, 64, 1, true);
-		}
+    WORKER("worker", new IArtillectSpawnHandler()
+    {
+        @Override
+        public void register()
+        {
+            EntityRegistry.registerModEntity(EntityWorker.class, "worker", ids++, Artillects.instance, 64, 1, true);
+        }
 
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return new EntityWorker(world);
-		}
-	}), FABRICATOR("fabricator", new IArtillectSpawnHandler()
-	{
+        @Override
+        public EntityArtillectBase getNew(World world)
+        {
+            return new EntityWorker(world);
+        }
+    }),
+    FABRICATOR("fabricator", new IArtillectSpawnHandler()
+    {
 
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntityFabricator.class, "fabricator", ids++, Artillects.instance, 64, 1, true);
-		}
+        @Override
+        public void register()
+        {
+            EntityRegistry.registerModEntity(EntityFabricator.class, "fabricator", ids++, Artillects.instance, 64, 1, true);
+        }
 
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return new EntityFabricator(world);
-		}
-	}), DEMOLISHER("demolisher", new IArtillectSpawnHandler()
-	{
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance, 100, 1, true);
-		}
+        @Override
+        public EntityArtillectBase getNew(World world)
+        {
+            return new EntityFabricator(world);
+        }
+    }),
+    DEMOLISHER("demolisher", new IArtillectSpawnHandler()
+    {
+        @Override
+        public void register()
+        {
+            EntityRegistry.registerModEntity(EntityDemolisher.class, "demolisher", ids++, Artillects.instance, 100, 1, true);
+        }
 
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return new EntityDemolisher(world);
-		}
-	}), SEEKER("seeker", new IArtillectSpawnHandler()
-	{
+        @Override
+        public EntityArtillectBase getNew(World world)
+        {
+            return new EntityDemolisher(world);
+        }
+    }),
+    SEEKER("seeker", new IArtillectSpawnHandler()
+    {
 
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 100, 1, true);
-		}
+        @Override
+        public void register()
+        {
+            EntityRegistry.registerModEntity(EntitySeeker.class, "seeker", ids++, Artillects.instance, 100, 1, true);
+            EntityRegistry.addSpawn(EntitySeeker.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.biomeList);
+        }
 
-		@Override
-		public EntityLivingBase getNew(World world)
-		{
-			return new EntitySeeker(world);
-		}
-	}), COMBATDRONE("combat", new IArtillectSpawnHandler()
-	{
-		@Override
-		public void register()
-		{
-			EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 100, 1, true);
-		}
+        @Override
+        public EntityLivingBase getNew(World world)
+        {
+            return new EntitySeeker(world);
+        }
+    }),
+    COMBATDRONE("combat", new IArtillectSpawnHandler()
+    {
+        @Override
+        public void register()
+        {
+            EntityRegistry.registerModEntity(EntityCombatDrone.class, "combatdrone", ids++, Artillects.instance, 100, 1, true);
+            EntityRegistry.addSpawn(EntityCombatDrone.class, 3, 1, 10, EnumCreatureType.creature, BiomeGenBase.biomeList);
+        }
 
-		@Override
-		public EntityArtillectBase getNew(World world)
-		{
-			return new EntityCombatDrone(world);
-		}
-	});
+        @Override
+        public EntityArtillectBase getNew(World world)
+        {
+            return new EntityCombatDrone(world);
+        }
+    });
 
-	public static int ids = 54;
-	IArtillectSpawnHandler builder;
+    public static int ids = 54;
+    IArtillectSpawnHandler builder;
 
-	public final String name;
+    public final String name;
 
-	private ArtillectEntityType(String name, IArtillectSpawnHandler builder)
-	{
-		this.name = name;
-		this.builder = builder;
-	}
+    private ArtillectEntityType(String name, IArtillectSpawnHandler builder)
+    {
+        this.name = name;
+        this.builder = builder;
+    }
 
-	public void register()
-	{
-		if (builder != null)
-		{
-			builder.register();
-		}
-	}
+    public void register()
+    {
+        if (builder != null)
+        {
+            builder.register();
+        }
+    }
 
-	public EntityLivingBase getNew(World world)
-	{
-		if (builder != null)
-		{
-			return builder.getNew(world);
-		}
-		return null;
-	}
+    public EntityLivingBase getNew(World world)
+    {
+        if (builder != null)
+        {
+            return builder.getNew(world);
+        }
+        return null;
+    }
 }
