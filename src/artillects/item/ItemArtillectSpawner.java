@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -163,6 +164,11 @@ public class ItemArtillectSpawner extends ItemBase
                     entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
+
+                    if (entityliving instanceof EntityCreature)
+                    {
+                        ((EntityCreature) entityliving).setHomeArea((int) x, (int) y, (int) z, 50);
+                    }
 
                     if (entityliving instanceof IArtillect)
                     {
