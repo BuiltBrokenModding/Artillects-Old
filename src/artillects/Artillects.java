@@ -370,44 +370,35 @@ public class Artillects implements IConnectionHandler
     {
         if (player != null && !((EntityPlayer) player).worldObj.isRemote)
         {
-            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For help using the mod visit http://wiki.universalelectricity.com/"));
-            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For more updated versions visit http://www.calclavia.com:8080/job/Artillects/"));
+            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] Visit http://wiki.universalelectricity.com/artillects for documentation on Artillects."));
+            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For more updated versions of the mod, visit http://www.calclavia.com:8080/job/Artillects/"));
         }
     }
 
     @Override
     public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
     {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void connectionClosed(INetworkManager manager)
     {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
     {
-        // TODO Auto-generated method stub
-
     }
 
 }
