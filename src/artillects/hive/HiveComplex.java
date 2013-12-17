@@ -240,6 +240,7 @@ public class HiveComplex extends HiveGhost
                 fab.setOwner(HiveComplexManager.instance());
                 buildZone.assignDrone(fab);
                 this.location.world.spawnEntityInWorld(fab);
+                System.out.println("Spawnned Fabricator");
             }
         }
 
