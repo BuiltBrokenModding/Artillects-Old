@@ -1,7 +1,6 @@
 package artillects.entity;
 
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.Vector3;
 import artillects.entity.ai.EntityAIBlacksmith;
@@ -39,6 +38,7 @@ public class EntityWorker extends EntityArtillectBase
             {
                 genZone();
             }
+
         }
         super.setType(type);
 
@@ -49,7 +49,7 @@ public class EntityWorker extends EntityArtillectBase
     {
         super.onEntityUpdate();
 
-        if (!this.worldObj.isRemote && this.getOwner() instanceof EntityPlayer)
+        if (!this.worldObj.isRemote && this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone)
         {
             HiveComplex.getPlayerHive().updateEntity();
             HiveComplex.getPlayerHive().addDrone(this);
@@ -57,12 +57,17 @@ public class EntityWorker extends EntityArtillectBase
             {
                 genZone();
             }
+            if (this.getZone() != null)
+            {
+                this.getZone().updateEntity();
+            }
         }
         this.cachedInventory = null;
     }
 
     public void genZone()
     {
+        System.out.println("Creating zone at " + this.getHomePosition().posX + "x " + this.getHomePosition().posY + "y " + this.getHomePosition().posZ + "z ");
         if (this.zone != null)
         {
             if (this.getZone() instanceof ZoneMining && this.getType() == ArtillectType.HARVESTER)

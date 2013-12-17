@@ -17,7 +17,7 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import artillects.entity.EntityWorker;
+import artillects.Artillects;
 import artillects.entity.IArtillect;
 import artillects.hive.ArtillectEntityType;
 import artillects.hive.ArtillectType;
@@ -30,6 +30,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author Dark */
 public class ItemArtillectSpawner extends ItemBase
 {
+    private long lastVoiceActivation;
+
     public ItemArtillectSpawner()
     {
         super("artillectSpawner");
@@ -50,33 +52,53 @@ public class ItemArtillectSpawner extends ItemBase
     {
         if (world.isRemote)
         {
+
+            if (player.isSneaking())
+            {
+                if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
+                {
+                    this.lastVoiceActivation = System.currentTimeMillis();
+                    switch (ArtillectEntityType.values()[stack.getItemDamage()])
+                    {
+                        case WORKER:
+                            world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
+                            break;
+                        case FABRICATOR:
+                            world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-fabricator", 5F, 1F);
+                            break;
+                    }
+                }
+            }
             return true;
         }
         else
         {
-            int i1 = world.getBlockId(par4, par5, par6);
-            par4 += Facing.offsetsXForSide[par7];
-            par5 += Facing.offsetsYForSide[par7];
-            par6 += Facing.offsetsZForSide[par7];
-            double d0 = 0.0D;
-
-            if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
+            if (!player.isSneaking())
             {
-                d0 = 0.5D;
-            }
+                int i1 = world.getBlockId(par4, par5, par6);
+                par4 += Facing.offsetsXForSide[par7];
+                par5 += Facing.offsetsYForSide[par7];
+                par6 += Facing.offsetsZForSide[par7];
+                double d0 = 0.0D;
 
-            Entity entity = spawnCreature(player, world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
-
-            if (entity != null)
-            {
-                if (entity instanceof EntityLivingBase && stack.hasDisplayName())
+                if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
                 {
-                    ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                    d0 = 0.5D;
                 }
 
-                if (!player.capabilities.isCreativeMode)
+                Entity entity = spawnCreature(player, world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
+
+                if (entity != null)
                 {
-                    --stack.stackSize;
+                    if (entity instanceof EntityLivingBase && stack.hasDisplayName())
+                    {
+                        ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                    }
+
+                    if (!player.capabilities.isCreativeMode)
+                    {
+                        --stack.stackSize;
+                    }
                 }
             }
 
@@ -87,19 +109,19 @@ public class ItemArtillectSpawner extends ItemBase
     /** Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack,
      * world, entityPlayer */
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer player)
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (par2World.isRemote)
+        if (world.isRemote)
         {
-            return par1ItemStack;
+            return stack;
         }
-        else
+        else if (!player.isSneaking())
         {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(par2World, player, true);
+            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
             if (movingobjectposition == null)
             {
-                return par1ItemStack;
+                return stack;
             }
             else
             {
@@ -109,37 +131,54 @@ public class ItemArtillectSpawner extends ItemBase
                     int j = movingobjectposition.blockY;
                     int k = movingobjectposition.blockZ;
 
-                    if (!par2World.canMineBlock(player, i, j, k))
+                    if (!world.canMineBlock(player, i, j, k))
                     {
-                        return par1ItemStack;
+                        return stack;
                     }
 
-                    if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, par1ItemStack))
+                    if (!player.canPlayerEdit(i, j, k, movingobjectposition.sideHit, stack))
                     {
-                        return par1ItemStack;
+                        return stack;
                     }
 
-                    if (par2World.getBlockMaterial(i, j, k) == Material.water)
+                    if (world.getBlockMaterial(i, j, k) == Material.water)
                     {
-                        Entity entity = spawnCreature(player, par2World, par1ItemStack.getItemDamage(), i, j, k);
+                        Entity entity = spawnCreature(player, world, stack.getItemDamage(), i, j, k);
 
                         if (entity != null)
                         {
-                            if (entity instanceof EntityLivingBase && par1ItemStack.hasDisplayName())
+                            if (entity instanceof EntityLivingBase && stack.hasDisplayName())
                             {
-                                ((EntityLiving) entity).setCustomNameTag(par1ItemStack.getDisplayName());
+                                ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
                             }
 
                             if (!player.capabilities.isCreativeMode)
                             {
-                                --par1ItemStack.stackSize;
+                                --stack.stackSize;
                             }
                         }
                     }
                 }
 
-                return par1ItemStack;
+                return stack;
             }
+        }
+        else
+        {
+            if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
+            {
+                this.lastVoiceActivation = System.currentTimeMillis();
+                switch (ArtillectEntityType.values()[stack.getItemDamage()])
+                {
+                    case WORKER:
+                        world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
+                        break;
+                    case FABRICATOR:
+                        world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-fabricator", 5F, 1F);
+                        break;
+                }
+            }
+            return stack;
         }
     }
 
@@ -178,7 +217,6 @@ public class ItemArtillectSpawner extends ItemBase
                     }
 
                     world.spawnEntityInWorld(entity);
-                    // entityliving.playLivingSound();
                 }
             }
 

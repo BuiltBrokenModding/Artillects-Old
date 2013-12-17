@@ -98,18 +98,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    protected String getHurtSound()
-    {
-        return Artillects.PREFIX + "voice-firstSight";
-    }
-
-    @Override
-    protected String getLivingSound()
-    {
-        return Artillects.PREFIX + "voice-random";
-    }
-
-    @Override
     public IInventory getInventory()
     {
         return this.inventory;
@@ -135,10 +123,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         if (this.getOwner() instanceof HiveComplex)
         {
             ((HiveComplex) this.getOwner()).removeDrone(this);
-        }
-        else if (this.getOwner() instanceof EntityPlayer)
-        {
-            ((EntityPlayer) this.getOwner()).sendChatToPlayer(ChatMessageComponent.createFromText("One of your drones has died"));
         }
         super.setDead();
     }
@@ -389,7 +373,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
 
         nbt.setTag("Items", nbttaglist);
         nbt.setByte("type", (byte) this.getType().ordinal());
-        nbt.setBoolean("hive", !(this.getOwner() != HiveComplex.getPlayerHive()));
+        nbt.setBoolean("hive", !(this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone));
     }
 
     @Override
@@ -414,6 +398,14 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         if (!nbt.getBoolean("hive"))
         {
             HiveComplex.getPlayerHive().addDrone(this);
+        }
+        else
+        {
+            HiveComplex hive = HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 1000);
+            if (hive != null)
+            {
+                hive.addDrone(this);
+            }
         }
     }
 
