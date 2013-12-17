@@ -37,6 +37,8 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
                 complex.updateTileLink(this);
             }
         }
+        
+        /*
         try
         {
             spawnLogic.setMobID(EntityRegistry.instance().lookupModSpawn(EntityFabricator.class, false).getEntityName());
@@ -45,7 +47,7 @@ public class TileEntityHiveComplexCore extends TileEntityAdvanced
         catch (Exception e)
         {
 
-        }
+        }*/
     }
 
     @Override

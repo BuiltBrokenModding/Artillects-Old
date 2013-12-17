@@ -22,7 +22,7 @@ public class Zone extends HiveGhost
 
     public HiveComplex complex;
 
-    public List<IArtillect> assignedDrones = new ArrayList<IArtillect>();
+    public List<IArtillect> assignedArtillects = new ArrayList<IArtillect>();
 
     public Zone(HiveComplex complex, VectorWorld start, VectorWorld end)
     {
@@ -34,7 +34,7 @@ public class Zone extends HiveGhost
     public void updateEntity()
     {
         super.updateEntity();
-        Iterator<IArtillect> droneIt = assignedDrones.iterator();
+        Iterator<IArtillect> droneIt = assignedArtillects.iterator();
         while (droneIt.hasNext())
         {
             IArtillect drone = droneIt.next();
@@ -48,18 +48,18 @@ public class Zone extends HiveGhost
         return true;
     }
 
-    public void assignDrone(IArtillect drone)
+    public void assignArtillect(IArtillect drone)
     {
-        if (drone != null && !this.assignedDrones.contains(drone))
+        if (drone != null && !this.assignedArtillects.contains(drone))
         {
-            this.assignedDrones.add(drone);
+            this.assignedArtillects.add(drone);
             drone.setZone(this);
         }
     }
 
     public boolean doesZoneNeedWorkers()
     {
-        return assignedDrones.isEmpty();
+        return assignedArtillects.isEmpty();
     }
 
     @Override

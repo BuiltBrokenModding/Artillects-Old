@@ -281,7 +281,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         this.zone = zone;
         if (zone != null)
         {
-            zone.assignDrone(this);
+            zone.assignArtillect(this);
         }
     }
 

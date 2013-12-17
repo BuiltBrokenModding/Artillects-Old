@@ -86,6 +86,6 @@ public class ZoneBuilding extends Zone
     @Override
     public boolean doesZoneNeedWorkers()
     {
-        return assignedDrones.size() < 3 && !this.buildPosition.isEmpty();
+        return assignedArtillects.size() < 3 && !this.buildPosition.isEmpty();
     }
 }
