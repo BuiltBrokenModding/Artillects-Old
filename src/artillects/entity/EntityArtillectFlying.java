@@ -22,8 +22,10 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
+import artillects.hive.HiveComplexManager;
 import artillects.hive.zone.Zone;
 
 public class EntityArtillectFlying extends EntityFlying implements IArtillect
@@ -234,6 +236,12 @@ public class EntityArtillectFlying extends EntityFlying implements IArtillect
         {
             HiveComplex.getPlayerHive().addDrone(this);
         }
+    }
+
+    @Override
+    public boolean getCanSpawnHere()
+    {
+        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 100) != null;
     }
 
 }

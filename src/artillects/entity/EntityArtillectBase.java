@@ -28,6 +28,7 @@ import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
+import artillects.VectorWorld;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
@@ -384,5 +385,11 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
+    }
+
+    @Override
+    public boolean getCanSpawnHere()
+    {
+        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 100) != null;
     }
 }
