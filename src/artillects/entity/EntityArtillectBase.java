@@ -130,7 +130,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         }
         else
         {
-            entityPlayer.openGui(Artillects.INSTANCE, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
+            entityPlayer.openGui(Artillects.instance, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
         }
         return true;
     }
