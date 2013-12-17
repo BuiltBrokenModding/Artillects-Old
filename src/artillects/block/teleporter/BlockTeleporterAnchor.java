@@ -71,10 +71,11 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
                             player.addChatMessage(Artillects.getLocal("msg.teleporter.frequency") + " " + frequency);
                         }
 
-                        //if (System.currentTimeMillis() - ((TileEntityTeleporterAnchor) tile).lastVoiceActivation > 20 * 600)
-
-                        ((TileEntityTeleporterAnchor) tile).lastVoiceActivation = System.currentTimeMillis();
-                        world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Artillects.PREFIX + "voice-introduce-teleporter", 5F, 1F);
+                        if (System.currentTimeMillis() - ((TileEntityTeleporterAnchor) tile).lastVoiceActivation > 20 * 600)
+                        {
+                            ((TileEntityTeleporterAnchor) tile).lastVoiceActivation = System.currentTimeMillis();
+                            world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Artillects.PREFIX + "voice-introduce-teleporter", 5F, 1F);
+                        }
                     }
                     else
                     {
