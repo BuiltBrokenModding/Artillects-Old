@@ -2,6 +2,7 @@ package artillects.entity;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -68,6 +69,61 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly
+        this.experienceValue = 5;
+    }
+
+    @Override
+    public void onLivingUpdate()
+    {
+        this.updateArmSwingProgress();
+        super.onLivingUpdate();
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float damage)
+    {
+        if (this.isEntityInvulnerable())
+        {
+            return false;
+        }
+        else if (super.attackEntityFrom(source, damage))
+        {
+            Entity attacker = source.getEntity();
+
+            if (this.riddenByEntity != attacker && this.ridingEntity != attacker)
+            {
+                if (attacker != this)
+                {
+                    this.entityToAttack = attacker;
+                }
+
+                return true;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public float getBlockPathWeight(int x, int y, int z)
+    {
+        Block block = Block.blocksList[this.worldObj.getBlockId(x, y, z)];
+        Block blockAbove = Block.blocksList[this.worldObj.getBlockId(x, y + 1, z)];
+        if (block == Block.fire || blockAbove == Block.fire || block == Block.lavaMoving || blockAbove == Block.lavaStill)
+        {
+            return -1000;
+        }
+        if (block == Artillects.blockLight || block == Artillects.blockWall1 || block == Artillects.blockWall2)
+        {
+            return 1000;
+        }
+        return 0.5F + this.worldObj.getLightBrightness(x, y, z);
     }
 
     @Override
@@ -298,7 +354,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     /** Adds a stack into the inventory.
-     * 
+     *
      * @param stack - The stack to add
      * @return - The remaining stack. */
     public ItemStack increaseStackSize(ItemStack stack)
@@ -429,6 +485,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 200) != null;
+        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 200) != null && super.getCanSpawnHere();
     }
 }
