@@ -26,16 +26,10 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
     public EntityDemolisher(World par1World)
     {
         super(par1World);
-        this.tasks.addTask(2, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
         this.tasks.addTask(3, new EntityAIArtillectFollow(this, this.moveForward, 3, 100));
-        this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(5, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly
-                                                                          // fire
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
-
         this.setSize(1f, 1.5f);
+        this.experienceValue = 5;
     }
 
     @Override
@@ -49,7 +43,6 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        // this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(15.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);

@@ -20,19 +20,19 @@ public class EntityAIRangedAttack extends EntityAIBase
     private int rangedAttackTime;
     private double entityMoveSpeed;
     private int targetTimeLost;
-    private int field_96561_g;
+    private int minRangedAttackTime;
 
     /** The maximum time the AI has to wait before peforming another ranged attack. */
     private int maxRangedAttackTime;
-    private float field_96562_i;
-    private float field_82642_h;
+    private float attackRange;
+    private float followDistance;
 
-    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int par4, float par5)
+    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int attackTime, float attackRange)
     {
-        this(rangeAttacker, moveSpeed, par4, par4, par5);
+        this(rangeAttacker, moveSpeed, attackTime, attackTime, attackRange);
     }
 
-    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int par4, int par5, float par6)
+    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int minAttackTime, int maxAttackTime, float attackRange)
     {
         this.rangedAttackTime = -1;
 
@@ -45,10 +45,10 @@ public class EntityAIRangedAttack extends EntityAIBase
             this.rangedAttackEntityHost = rangeAttacker;
             this.entityHost = (EntityLiving) rangeAttacker;
             this.entityMoveSpeed = moveSpeed;
-            this.field_96561_g = par4;
-            this.maxRangedAttackTime = par5;
-            this.field_96562_i = par6;
-            this.field_82642_h = par6 * par6;
+            this.minRangedAttackTime = minAttackTime;
+            this.maxRangedAttackTime = maxAttackTime;
+            this.attackRange = attackRange;
+            this.followDistance = attackRange * attackRange;
             this.setMutexBits(3);
         }
     }
@@ -98,7 +98,7 @@ public class EntityAIRangedAttack extends EntityAIBase
             this.targetTimeLost = 0;
         }
 
-        if (distanceFromTarget <= (double) this.field_82642_h && this.targetTimeLost >= 20)
+        if (distanceFromTarget <= (double) this.followDistance && this.targetTimeLost >= 20)
         {
             this.entityHost.getNavigator().clearPathEntity();
         }
@@ -112,31 +112,20 @@ public class EntityAIRangedAttack extends EntityAIBase
 
         if (--this.rangedAttackTime == 0)
         {
-            if (distanceFromTarget > (double) this.field_82642_h || !canSeeTarget)
+            if (distanceFromTarget > (double) this.followDistance || !canSeeTarget)
             {
                 return;
             }
 
-            f = MathHelper.sqrt_double(distanceFromTarget) / this.field_96562_i;
-            float f1 = f;
+            f = MathHelper.sqrt_double(distanceFromTarget) / this.attackRange;
 
-            if (f < 0.1F)
-            {
-                f1 = 0.1F;
-            }
-
-            if (f1 > 1.0F)
-            {
-                f1 = 1.0F;
-            }
-
-            this.rangedAttackEntityHost.attackEntityWithRangedAttack(this.attackTarget, f1);
-            this.rangedAttackTime = MathHelper.floor_float(f * (float) (this.maxRangedAttackTime - this.field_96561_g) + (float) this.field_96561_g);
+            this.rangedAttackEntityHost.attackEntityWithRangedAttack(this.attackTarget, f);
+            this.rangedAttackTime = MathHelper.floor_float(f * (float) (this.maxRangedAttackTime - this.minRangedAttackTime) + (float) this.minRangedAttackTime);
         }
         else if (this.rangedAttackTime < 0)
         {
-            f = MathHelper.sqrt_double(distanceFromTarget) / this.field_96562_i;
-            this.rangedAttackTime = MathHelper.floor_float(f * (float) (this.maxRangedAttackTime - this.field_96561_g) + (float) this.field_96561_g);
+            f = MathHelper.sqrt_double(distanceFromTarget) / this.attackRange;
+            this.rangedAttackTime = MathHelper.floor_float(f * (float) (this.maxRangedAttackTime - this.minRangedAttackTime) + (float) this.minRangedAttackTime);
         }
     }
 }

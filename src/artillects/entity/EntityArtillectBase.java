@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -28,6 +27,7 @@ import artillects.CommonProxy.GuiIDs;
 import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.VectorWorld;
+import artillects.entity.ai.EntityAIRangedAttack;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
@@ -62,7 +62,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         super(world);
         this.setSize(1, 1);
-        this.tasks.addTask(5, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
+        this.tasks.addTask(2, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
@@ -484,5 +484,25 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public boolean getCanSpawnHere()
     {
         return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 200) != null && super.getCanSpawnHere();
+    }
+
+    @Override
+    public boolean isOnSameTeam(EntityLivingBase entity)
+    {
+        if (entity instanceof IArtillect && ((IArtillect) entity).getOwner() instanceof HiveComplex)
+        {
+            if (((HiveComplex) ((IArtillect) entity).getOwner()) == this.getOwner())
+            {
+                return true;
+            }
+        }
+        if (entity instanceof EntityPlayer)
+        {
+            if (this.getOwner() instanceof HiveComplex)
+            {
+                //TODO when access list is added to hive check for username
+            }
+        }
+        return this.isOnTeam(entity.getTeam());
     }
 }
