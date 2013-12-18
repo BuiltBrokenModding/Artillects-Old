@@ -21,6 +21,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import artillects.block.BlockDecoration;
 import artillects.block.BlockSymbol;
+import artillects.block.door.BlockDoorCore;
+import artillects.block.door.BlockDoorFrame;
 import artillects.block.teleporter.BlockGlyph;
 import artillects.block.teleporter.BlockTeleporterAnchor;
 import artillects.block.teleporter.ItemBlockMetadata;
@@ -121,7 +123,9 @@ public class Artillects implements IConnectionHandler
 	public static Block blockWall2;
 	public static Block blockLight;
 	public static Block blockHiveTeleporterNode;
-
+	public static Block blockDoorCore;
+	public static Block blockDoorFrame;
+	
 	public static Block blockSymbol;
 	public static Block blockHiveCore;
 
@@ -178,7 +182,8 @@ public class Artillects implements IConnectionHandler
 		blockWall1 = new BlockDecoration("decorWall1");
 		blockWall2 = new BlockDecoration("decorWall2");
 		blockLight = new BlockDecoration("decorLight").setLightValue(1F);
-
+		blockDoorCore = new BlockDoorCore();
+		blockDoorFrame = new BlockDoorFrame();
 		blockGlyph = new BlockGlyph();
 
 		// Teleporter Blocks
@@ -206,6 +211,8 @@ public class Artillects implements IConnectionHandler
 		GameRegistry.registerBlock(blockSymbol, ItemBlockMetadata.class, "blockSymbol");
 		GameRegistry.registerBlock(blockGlyph, ItemBlockMetadata.class, "blockGlyph");
 		GameRegistry.registerBlock(blockHiveCore, "blockHiveCore");
+		GameRegistry.registerBlock(blockDoorCore, "blockDoorCore");
+		GameRegistry.registerBlock(blockDoorFrame, "blockDoorFrame");
 		GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 		GameRegistry.registerTileEntity(TileEntityHiveComplexCore.class, "tileHiveComplexCore");
 		if (Artillects.enableHiveComplexGenerator)
