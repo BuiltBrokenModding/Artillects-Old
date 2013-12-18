@@ -16,12 +16,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityDroneSelector;
 import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.hive.ArtillectType;
 
-public class EntityDemolisher extends EntityArtillectBase implements IRangedAttackMob
+public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
 {
     public EntityDemolisher(World par1World)
     {
@@ -36,7 +36,7 @@ public class EntityDemolisher extends EntityArtillectBase implements IRangedAtta
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.DEMOLISHER.ordinal());
+        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.DEMOLISHER.ordinal());
     }
 
     @Override

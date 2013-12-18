@@ -18,12 +18,12 @@ import net.minecraft.world.biome.BiomeGenRiver;
 import net.minecraft.world.biome.BiomeGenSnow;
 import net.minecraft.world.biome.BiomeGenSwamp;
 import net.minecraft.world.biome.BiomeGenTaiga;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.hive.HiveComplex;
 
 public class EntityAIArtillectFollow extends EntityArtillectAIBase
 {
-    private EntityArtillectBase entity;
+    private EntityArtillectGround entity;
     private EntityLivingBase theOwner;
     private PathNavigate petPathfinder;
     private int idleTime;
@@ -31,7 +31,7 @@ public class EntityAIArtillectFollow extends EntityArtillectAIBase
     float minDist;
     private boolean avoidsWater;
 
-    public EntityAIArtillectFollow(EntityArtillectBase entity, double moveSpeed, float minDistance, float maxDistance)
+    public EntityAIArtillectFollow(EntityArtillectGround entity, double moveSpeed, float minDistance, float maxDistance)
     {
         super(entity.worldObj, moveSpeed);
         this.entity = entity;
@@ -127,7 +127,7 @@ public class EntityAIArtillectFollow extends EntityArtillectAIBase
     }
 
     @Override
-    public EntityArtillectBase getArtillect()
+    public EntityArtillectGround getArtillect()
     {
         return this.entity;
     }

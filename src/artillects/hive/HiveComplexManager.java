@@ -20,7 +20,7 @@ import artillects.hive.schematics.NBTFileHandler;
 import artillects.hive.zone.Zone;
 
 /** Hive collection that the drones use for logic and collection feed back
- * 
+ *
  * @author Dark */
 public class HiveComplexManager
 {
@@ -48,9 +48,9 @@ public class HiveComplexManager
 
     public void addHiveComplex(HiveComplex hiveComplex)
     {
-        if (hiveComplex != null && complexes.get(hiveComplex.name) == null)
+        if (hiveComplex != null && complexes.get(hiveComplex.getName()) == null)
         {
-            complexes.put(hiveComplex.name, hiveComplex);
+            complexes.put(hiveComplex.getName(), hiveComplex);
         }
     }
 
@@ -92,7 +92,7 @@ public class HiveComplexManager
                     {
                         NBTTagCompound nbt = new NBTTagCompound();
                         entry.getValue().save(nbt);
-                        NBTFileHandler.saveFile("complex.dat", new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().name), nbt);
+                        NBTFileHandler.saveFile("complex.dat", new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), nbt);
                     }
 
                 }
@@ -192,5 +192,10 @@ public class HiveComplexManager
             }
         }
         return complex;
+    }
+
+    public HiveComplex getHive(String string)
+    {
+        return this.complexes.get(string);
     }
 }

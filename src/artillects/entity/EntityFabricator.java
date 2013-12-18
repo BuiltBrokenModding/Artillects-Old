@@ -6,7 +6,7 @@ import artillects.entity.ai.EntityAIBuilding;
 import artillects.entity.ai.EntityAIReproduce;
 import artillects.hive.ArtillectType;
 
-public class EntityFabricator extends EntityArtillectBase
+public class EntityFabricator extends EntityArtillectGround
 {
     public EntityFabricator(World par1World)
     {
@@ -21,7 +21,7 @@ public class EntityFabricator extends EntityArtillectBase
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.FABRICATOR.ordinal());
+        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.FABRICATOR.ordinal());
     }
 
     @Override

@@ -12,7 +12,7 @@ import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneMining;
 import artillects.hive.zone.ZoneProcessing;
 
-public class EntityWorker extends EntityArtillectBase
+public class EntityWorker extends EntityArtillectGround
 {
 	public EntityWorker(World par1World)
 	{
@@ -27,7 +27,7 @@ public class EntityWorker extends EntityArtillectBase
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(EntityArtillectBase.DATA_TYPE_ID, (byte) ArtillectType.HARVESTER.ordinal());
+		this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.HARVESTER.ordinal());
 	}
 
 	@Override

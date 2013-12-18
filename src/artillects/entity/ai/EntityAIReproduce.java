@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import artillects.Vector3;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityFabricator;
 import artillects.entity.IArtillect;
 import artillects.hive.ArtillectType;
@@ -138,7 +138,7 @@ public class EntityAIReproduce extends EntityAIBase
                                 {
                                     if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
                                     {
-                                        if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+                                        if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                                         {
                                             this.entity.getNavigator().clearPathEntity();
                                             int resourceToGet = Math.max(stackRequired.stackSize - resourceCount, 0);

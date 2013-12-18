@@ -6,7 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import artillects.Vector3;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.hive.zone.ZoneProcessing;
 
 /**
@@ -59,7 +59,7 @@ public abstract class EntityArtillectAIBase extends EntityAIBase
 								{
 									if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
 									{
-										if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+										if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 										{
 											this.getArtillect().getNavigator().clearPathEntity();
 											chest.setInventorySlotContents(i, stackInEntity);
@@ -71,7 +71,7 @@ public abstract class EntityArtillectAIBase extends EntityAIBase
 								{
 									if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
 									{
-										if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+										if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 										{
 											int originalStackSize = itemStack.stackSize;
 											itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());
@@ -97,5 +97,5 @@ public abstract class EntityArtillectAIBase extends EntityAIBase
 		return false;
 	}
 
-	public abstract EntityArtillectBase getArtillect();
+	public abstract EntityArtillectGround getArtillect();
 }

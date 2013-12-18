@@ -35,7 +35,7 @@ public class EntityDroneSelector implements IEntitySelector
                         }
                     }
                     // Attack enemy drones
-                    if (entity instanceof EntityArtillectBase)
+                    if (entity instanceof EntityArtillectGround)
                     {
                         if (drone.getOwner() instanceof HiveComplex && ((HiveComplex) drone.getOwner()).playerZone)
                         {
@@ -46,7 +46,7 @@ public class EntityDroneSelector implements IEntitySelector
                 else
                 {
                     // Attack enemy drones
-                    if (entity instanceof EntityArtillectBase)
+                    if (entity instanceof EntityArtillectGround)
                     {
                         if (drone.getOwner() instanceof HiveComplex && !((HiveComplex) drone.getOwner()).playerZone)
                         {

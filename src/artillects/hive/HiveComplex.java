@@ -25,7 +25,7 @@ import artillects.hive.zone.ZoneBuilding;
 public class HiveComplex extends HiveGhost
 {
 	public VectorWorld location;
-	protected String name;
+	private String name;
 
 	protected final List<Structure> peaces = new ArrayList<Structure>();
 	public final List<Structure> damagedPeaces = new ArrayList<Structure>();
@@ -62,13 +62,13 @@ public class HiveComplex extends HiveGhost
 	public HiveComplex(boolean player)
 	{
 		this.playerZone = true;
-		this.name = "PlayerZone";
+		this.setName("PlayerZone");
 		this.location = new VectorWorld(null, 0, 0, 0);
 	}
 
 	public HiveComplex(String name, VectorWorld location)
 	{
-		this.name = name;
+		this.setName(name);
 		this.location = location;
 		HiveComplexManager.instance().addHiveComplex(this);
 	}
@@ -458,7 +458,7 @@ public class HiveComplex extends HiveGhost
 	public void save(NBTTagCompound nbt)
 	{
 		nbt.setCompoundTag("location", this.location.save(new NBTTagCompound()));
-		nbt.setString("name", this.name);
+		nbt.setString("name", this.getName());
 	}
 
 	@Override
@@ -466,6 +466,16 @@ public class HiveComplex extends HiveGhost
 	{
 		this.location = new VectorWorld(nbt.getCompoundTag("location"));
 		this.loadGeneralBuilding(false);
-		this.name = nbt.getName();
+		this.setName(nbt.getName());
 	}
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 }

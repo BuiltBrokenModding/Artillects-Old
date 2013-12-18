@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import artillects.Pair;
 import artillects.Vector3;
 import artillects.VectorWorld;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityFabricator;
 import artillects.hive.zone.ZoneBuilding;
 
@@ -82,7 +82,7 @@ public class EntityAIBuilding extends EntityAIBase
 
 			if (this.placementSpot != null)
 			{
-				if (placementSpot.distance(new Vector3(this.entity)) > EntityArtillectBase.interactionDistance)
+				if (placementSpot.distance(new Vector3(this.entity)) > EntityArtillectGround.interactionDistance)
 				{
 					if (!this.entity.tryToWalkNextTo(placementSpot, this.moveSpeed))
 					{

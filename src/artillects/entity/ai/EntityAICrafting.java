@@ -10,7 +10,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import artillects.Artillects;
 import artillects.Vector3;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
@@ -144,7 +144,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 											{
 												if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 												{
-													if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+													if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 													{
 														this.entity.getNavigator().clearPathEntity();
 														int resourceToGet = Math.max(recipeItem.stackSize - resourceCount, 0);
@@ -186,7 +186,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 	}
 
 	@Override
-	public EntityArtillectBase getArtillect()
+	public EntityArtillectGround getArtillect()
 	{
 		return this.entity;
 	}

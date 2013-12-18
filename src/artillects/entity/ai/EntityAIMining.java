@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.InventoryHelper;
 import artillects.Vector3;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneMining;
@@ -150,7 +150,7 @@ public class EntityAIMining extends EntityAIBase
 				{
 					this.entity.tryToWalkNextTo(optimalChestPosition, this.moveSpeed);
 
-					if (optimalChestPosition.distance(new Vector3(this.entity)) < EntityArtillectBase.interactionDistance)
+					if (optimalChestPosition.distance(new Vector3(this.entity)) < EntityArtillectGround.interactionDistance)
 					{
 						this.entity.getNavigator().clearPathEntity();
 						this.entity.inventory.setInventorySlotContents(i, InventoryHelper.addStackToInventory(optimalChest, this.entity.inventory.getStackInSlot(i)));

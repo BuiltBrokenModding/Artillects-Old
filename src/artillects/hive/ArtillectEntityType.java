@@ -5,7 +5,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import artillects.Artillects;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityFabricator;
 import artillects.entity.EntityWorker;
 import artillects.entity.IArtillectSpawnHandler;
@@ -25,7 +25,7 @@ public enum ArtillectEntityType
         }
 
         @Override
-        public EntityArtillectBase getNew(World world)
+        public EntityArtillectGround getNew(World world)
         {
             return new EntityWorker(world);
         }
@@ -40,7 +40,7 @@ public enum ArtillectEntityType
         }
 
         @Override
-        public EntityArtillectBase getNew(World world)
+        public EntityArtillectGround getNew(World world)
         {
             return new EntityFabricator(world);
         }
@@ -55,7 +55,7 @@ public enum ArtillectEntityType
         }
 
         @Override
-        public EntityArtillectBase getNew(World world)
+        public EntityArtillectGround getNew(World world)
         {
             return new EntityDemolisher(world);
         }
@@ -86,7 +86,7 @@ public enum ArtillectEntityType
         }
 
         @Override
-        public EntityArtillectBase getNew(World world)
+        public EntityArtillectGround getNew(World world)
         {
             return new EntityCombatDrone(world);
         }

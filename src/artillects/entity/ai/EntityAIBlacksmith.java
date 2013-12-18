@@ -12,7 +12,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
 import artillects.InventoryHelper;
 import artillects.Vector3;
-import artillects.entity.EntityArtillectBase;
+import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
@@ -172,7 +172,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 						{
 							if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
 							{
-								if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+								if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 								{
 									this.entity.getNavigator().clearPathEntity();
 
@@ -205,7 +205,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 		{
 			if (this.entity.tryToWalkNextTo(position, this.moveSpeed))
 			{
-				if (new Vector3(this.entity).distance(position.clone().add(0.5)) <= EntityArtillectBase.interactionDistance)
+				if (new Vector3(this.entity).distance(position.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 				{
 					this.entity.getNavigator().clearPathEntity();
 					ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.entity.getInventoryAsList());
@@ -226,7 +226,7 @@ public class EntityAIBlacksmith extends EntityArtillectAIBase
 	}
 
 	@Override
-	public EntityArtillectBase getArtillect()
+	public EntityArtillectGround getArtillect()
 	{
 		return this.entity;
 	}
