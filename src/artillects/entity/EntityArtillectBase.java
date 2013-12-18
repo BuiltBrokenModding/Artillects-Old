@@ -63,8 +63,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         super(world);
         this.setSize(1, 1);
         this.tasks.addTask(5, new EntityAIArrowAttack(this, 1.0D, 20, 100, 15.0F));
-        // this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityLivingBase.class, 1.0D,
-        // false));
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
