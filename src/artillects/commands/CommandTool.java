@@ -37,7 +37,7 @@ public class CommandTool extends CommandBase
                 EntityPlayer player = (EntityPlayer) sender;
                 if (args == null || args.length == 0 || args[0].equalsIgnoreCase("help"))
                 {
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection load - creates a schematic using the world selection"));
+                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection copy - copies the selected area"));
                     player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection load <name> - loads a schematic from file"));
                     player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection save [name] - saves the loaded schematic"));
                     player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection build pointOne - build a schematic at first selection point"));
@@ -69,8 +69,12 @@ public class CommandTool extends CommandBase
                         }
                         else
                         {
-                            PlayerSelectionHandler.loadWorldSelection(player);
+                            player.sendChatToPlayer(ChatMessageComponent.createFromText("Name is required to load schematics"));
                         }
+                    }
+                    else if (args.length >= 2 && args[1].equalsIgnoreCase("copy"))
+                    {
+                        PlayerSelectionHandler.loadWorldSelection(player);
                     }
                     else if (args.length >= 2 && args[1].equalsIgnoreCase("build"))
                     {
