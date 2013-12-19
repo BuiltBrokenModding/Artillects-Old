@@ -8,9 +8,10 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import artillects.VectorWorld;
-import artillects.hive.HiveComplexManager;
 import artillects.hive.HiveComplex;
-import artillects.hive.schematics.NBTFileHandler;
+import artillects.hive.HiveComplexManager;
+
+import com.dark.save.NBTFileHelper;
 
 public class CommandTool extends CommandBase
 {
@@ -55,7 +56,7 @@ public class CommandTool extends CommandBase
                     {
                         if (args.length >= 3)
                         {
-                            File file = new File(NBTFileHandler.getBaseFolder(), "schematics/" + args[2] + ".dat");
+                            File file = new File(NBTFileHelper.getBaseDirectory(), "schematics/" + args[2] + ".dat");
                             if (file.exists())
                             {
                                 player.sendChatToPlayer(ChatMessageComponent.createFromText("Loading " + args[2] + " from file"));

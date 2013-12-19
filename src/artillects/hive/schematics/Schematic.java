@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.dark.save.NBTFileHelper;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -252,7 +254,7 @@ public class Schematic implements ISaveObject
 		{
 			NBTTagCompound nbt = new NBTTagCompound();
 			this.save(nbt);
-			NBTFileHandler.saveFile(fileName + ".dat", new File(NBTFileHandler.getBaseFolder(), "schematics"), nbt);
+			NBTFileHelper.saveNBTFile(new File(NBTFileHelper.getBaseDirectory(), "schematics"), fileName + ".dat", nbt);
 		}
 		catch (Exception e)
 		{

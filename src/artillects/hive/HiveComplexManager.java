@@ -2,10 +2,7 @@ package artillects.hive;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.TreeSet;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -15,12 +12,11 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import artillects.VectorWorld;
-import artillects.entity.IArtillect;
-import artillects.hive.schematics.NBTFileHandler;
-import artillects.hive.zone.Zone;
+
+import com.dark.save.NBTFileHelper;
 
 /** Hive collection that the drones use for logic and collection feed back
- *
+ * 
  * @author Dark */
 public class HiveComplexManager
 {
@@ -92,7 +88,7 @@ public class HiveComplexManager
                     {
                         NBTTagCompound nbt = new NBTTagCompound();
                         entry.getValue().save(nbt);
-                        NBTFileHandler.saveFile("complex.dat", new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), nbt);
+                        NBTFileHelper.saveNBTFile(new File(NBTFileHelper.getWorldSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), "complex.dat", nbt);
                     }
 
                 }
@@ -144,7 +140,7 @@ public class HiveComplexManager
     {
         synchronized (complexes)
         {
-            File hiveFolder = new File(NBTFileHandler.getWorldSaveFolder(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
+            File hiveFolder = new File(NBTFileHelper.getWorldSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
             if (hiveFolder.exists())
             {
                 for (File fileEntry : hiveFolder.listFiles())
@@ -155,7 +151,7 @@ public class HiveComplexManager
                         {
                             if (subFile.getName().equalsIgnoreCase("complex.dat"))
                             {
-                                NBTTagCompound tag = NBTFileHandler.loadFile(subFile);
+                                NBTTagCompound tag = NBTFileHelper.loadNBTFile(subFile, false);
                                 String name = tag.getString("name");
                                 if (!this.complexes.containsKey(name))
                                 {
