@@ -7,15 +7,15 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import artillects.Artillects;
+import artillects.block.BlockSymbol.SymbolType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockSymbol extends BlockHiveBlock
+public class BlockHiveWalling extends BlockHiveBlock
 {
-
-    public BlockSymbol()
+    public BlockHiveWalling()
     {
-        super("symbol");
+        super("hiveWalling");
     }
 
     @Override
@@ -27,7 +27,7 @@ public class BlockSymbol extends BlockHiveBlock
     @Override
     public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (SymbolType data : SymbolType.values())
+        for (HiveWallTypes data : HiveWallTypes.values())
         {
             par3List.add(new ItemStack(this, 1, data.ordinal()));
         }
@@ -37,32 +37,30 @@ public class BlockSymbol extends BlockHiveBlock
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
     {
-        for (SymbolType data : SymbolType.values())
+        for (HiveWallTypes data : HiveWallTypes.values())
         {
-            data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "symbol." + data.name().toLowerCase());
+            data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "wall." + data.name().toLowerCase());
         }
 
-        this.blockIcon = SymbolType.ZHUANG.icon;
+        this.blockIcon = HiveWallTypes.BASE.icon;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Icon getIcon(int side, int metadata)
     {
-        if (metadata < SymbolType.values().length)
+        if (metadata < HiveWallTypes.values().length)
         {
-            return SymbolType.values()[metadata].icon;
+            return HiveWallTypes.values()[metadata].icon;
         }
 
-        return SymbolType.ZHUANG.icon;
+        return HiveWallTypes.BASE.icon;
     }
 
-    public static enum SymbolType
+    public static enum HiveWallTypes
     {
-        ZHUANG,
-        GU,
-        ZHI;
+        BASE,
+        SQUARE;
         public Icon icon;
     }
-
 }

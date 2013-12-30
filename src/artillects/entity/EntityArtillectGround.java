@@ -46,7 +46,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
         {
             return -1000;
         }
-        if (block == Artillects.blockLight || block == Artillects.blockWall1 || block == Artillects.blockWall2)
+        if (block == Artillects.blockLight || block == Artillects.blockHiveWalling)
         {
             return 1000;
         }

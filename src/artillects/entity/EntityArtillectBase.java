@@ -18,7 +18,7 @@ import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.zone.Zone;
-import artillects.item.ItemParts;
+import artillects.item.ItemDroneParts;
 import artillects.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -226,8 +226,8 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         super.dropFewItems(par1, par2);
         if (par1)
         {
-            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemParts.Part.values().length - 1)), 0.0F);
-            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(5 + par2), this.worldObj.rand.nextInt(ItemParts.Part.values().length - 1)), 0.0F);
+            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
+            this.entityDropItem(new ItemStack(Artillects.itemParts, 1 + this.worldObj.rand.nextInt(5 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
 
         }
     }

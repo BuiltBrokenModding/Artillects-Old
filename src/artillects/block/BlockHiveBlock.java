@@ -2,9 +2,9 @@ package artillects.block;
 
 import net.minecraft.block.material.Material;
 
-public class BlockDecoration extends BlockBase implements IHiveBlock
+public class BlockHiveBlock extends BlockBase implements IHiveBlock
 {
-	public BlockDecoration(String name)
+	public BlockHiveBlock(String name)
 	{
 		super(name, Material.rock);
 		this.setHardness(32F);

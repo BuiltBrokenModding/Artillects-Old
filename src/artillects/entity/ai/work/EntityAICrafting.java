@@ -14,7 +14,7 @@ import artillects.entity.EntityArtillectGround;
 import artillects.entity.workers.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
-import artillects.item.ItemParts.Part;
+import artillects.item.ItemDroneParts.Part;
 
 public class EntityAICrafting extends EntityAILaborTask
 {

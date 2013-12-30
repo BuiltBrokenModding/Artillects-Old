@@ -15,9 +15,9 @@ import cpw.mods.fml.relauncher.SideOnly;
  * 
  * @author DarkGuardsman
  */
-public class ItemParts extends ItemBase
+public class ItemDroneParts extends ItemBase
 {
-	public ItemParts()
+	public ItemDroneParts()
 	{
 		super("droneParts");
 		this.setHasSubtypes(true);
