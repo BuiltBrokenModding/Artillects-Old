@@ -1,7 +1,7 @@
 package artillects.hive;
 
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
 import artillects.entity.EntityArtillectGround;
 
 public class ReportPlayer extends Report

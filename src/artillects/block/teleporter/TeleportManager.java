@@ -10,8 +10,8 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 
 public class TeleportManager
 {

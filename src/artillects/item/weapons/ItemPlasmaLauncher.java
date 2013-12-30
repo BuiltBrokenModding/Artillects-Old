@@ -2,12 +2,12 @@ package artillects.item.weapons;
 
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import org.lwjgl.input.Keyboard;
+
 import artillects.Artillects;
 import artillects.entity.projectile.EntityPlasma;
 import artillects.item.ItemBase;

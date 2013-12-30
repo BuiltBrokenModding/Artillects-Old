@@ -6,10 +6,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.WeightedRandomMinecart;
 import net.minecraft.world.World;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.workers.EntityFabricator;
 import artillects.tile.TileEntityAdvanced;
-import cpw.mods.fml.common.registry.EntityRegistry;
 
 public class TileEntityHiveComplexCore extends TileEntityAdvanced
 {

@@ -3,16 +3,13 @@ package artillects.entity;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
@@ -21,9 +18,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.Vector3;
-import artillects.VectorWorld;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
@@ -292,7 +289,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
     }
 
     @Override

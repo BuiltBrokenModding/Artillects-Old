@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;

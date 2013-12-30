@@ -1,6 +1,7 @@
 package artillects.block.door;
 
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
+
 
 public class FrameHelper {
 	public static Vector3[] getVector3Frame(AxisType axis, IFrameCore core) {

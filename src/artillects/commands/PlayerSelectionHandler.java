@@ -9,7 +9,7 @@ import java.util.HashMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatMessageComponent;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.schematics.Schematic;
 
 public class PlayerSelectionHandler

@@ -5,17 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.world.World;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.hive.HiveComplex;
-import artillects.hive.HiveGhost;
+import artillects.hive.HiveEntityObject;
 
 /** Class used by the hive mind to ID an area by which a task is to be operated in
  * 
  * @author DarkGuardsman */
-public class Zone extends HiveGhost
+public class Zone extends HiveEntityObject
 {
     /** Start is always the min point; end is always the largest point. */
     public VectorWorld start, end;
@@ -39,7 +37,9 @@ public class Zone extends HiveGhost
         {
             IArtillect drone = droneIt.next();
             if (drone.getZone() != this || ((EntityLivingBase) drone).isDead)
+            {
                 droneIt.remove();
+            }
         }
     }
 
@@ -77,7 +77,6 @@ public class Zone extends HiveGhost
 
     public HiveComplex getComplex()
     {
-
-        return null;
+        return this.complex;
     }
 }

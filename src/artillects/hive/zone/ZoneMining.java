@@ -6,12 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import artillects.Pair;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityWorker;
 import artillects.hive.HiveComplex;
+
+import com.builtbroken.common.Pair;
 
 public class ZoneMining extends Zone
 {

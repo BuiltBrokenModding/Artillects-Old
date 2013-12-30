@@ -4,18 +4,18 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import com.builtbroken.minecraft.save.NBTFileHelper;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.Vector3;
-import artillects.VectorWorld;
 import artillects.block.BlockSymbol;
 import artillects.hive.ISaveObject;
+
+import com.builtbroken.minecraft.save.NBTFileHelper;
 
 /**
  * File that represents all the data loaded from a schematic data file

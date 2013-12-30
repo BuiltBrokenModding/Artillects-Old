@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.structure.Building;
@@ -22,7 +22,7 @@ import artillects.hive.zone.ZoneBuilding;
  * 
  * @author Dark
  */
-public class HiveComplex extends HiveGhost
+public class HiveComplex extends HiveEntityObject
 {
 	public VectorWorld location;
 	private String name;
@@ -140,7 +140,7 @@ public class HiveComplex extends HiveGhost
 		final int tunnelSpacing = 18;
 		for (int floor = 0; floor <= height; floor++)
 		{
-			VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
+			VectorWorld floorBase = this.location.clone().translate(0, 8 * floor, 0);
 			// Center room
 			peaces.add(new Structure(this, Building.NODE, floorBase.clone()));
 			if (floor == 0)
@@ -162,29 +162,29 @@ public class HiveComplex extends HiveGhost
 			if (floor != height)
 			{
 				// NorthTunnel
-				this.loadTunnel(floorBase.clone().add(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
-				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(0, 0, -tunnelSpacing - (6 * width))));
-				peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().add(0, 1, -tunnelSpacing - (6 * width) - 4)));
-				this.loadTunnel(floorBase.clone().add(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width + 1);
-				this.loadTunnel(floorBase.clone().add(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width + 1);
+				this.loadTunnel(floorBase.clone().translate(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
+				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().translate(0, 0, -tunnelSpacing - (6 * width))));
+				peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().translate(0, 1, -tunnelSpacing - (6 * width) - 4)));
+				this.loadTunnel(floorBase.clone().translate(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width + 1);
+				this.loadTunnel(floorBase.clone().translate(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width + 1);
 				// SouthTunnel
-				this.loadTunnel(floorBase.clone().add(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
-				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(0, 0, +tunnelSpacing + (6 * width))));
-				peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().add(0, 1, +tunnelSpacing + (6 * width) + 4)));
-				this.loadTunnel(floorBase.clone().add(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width + 1);
-				this.loadTunnel(floorBase.clone().add(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width + 1);
+				this.loadTunnel(floorBase.clone().translate(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
+				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().translate(0, 0, +tunnelSpacing + (6 * width))));
+				peaces.add(new Structure(this, Building.WALLZ, floorBase.clone().translate(0, 1, +tunnelSpacing + (6 * width) + 4)));
+				this.loadTunnel(floorBase.clone().translate(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width + 1);
+				this.loadTunnel(floorBase.clone().translate(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width + 1);
 				// EastTunnel
-				this.loadTunnel(floorBase.clone().add(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
-				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 0)));
-				peaces.add(new Structure(this, Building.WALLX, floorBase.clone().add(+tunnelSpacing + (6 * width) + 4, 1, 0)));
-				this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
-				this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
+				this.loadTunnel(floorBase.clone().translate(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
+				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, 0)));
+				peaces.add(new Structure(this, Building.WALLX, floorBase.clone().translate(+tunnelSpacing + (6 * width) + 4, 1, 0)));
+				this.loadTunnel(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+				this.loadTunnel(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
 				// WestTunnel
-				this.loadTunnel(floorBase.clone().add(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
-				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 0)));
-				peaces.add(new Structure(this, Building.WALLX, floorBase.clone().add(-tunnelSpacing - (6 * width) - 4, 1, 0)));
-				this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
-				this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
+				this.loadTunnel(floorBase.clone().translate(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
+				peaces.add(new Structure(this, Building.TUNNELC, floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, 0)));
+				peaces.add(new Structure(this, Building.WALLX, floorBase.clone().translate(-tunnelSpacing - (6 * width) - 4, 1, 0)));
+				this.loadTunnel(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+				this.loadTunnel(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
 
 				// Corner room
 				int cornerA = 0, cornerB = 0, cornerC = 0, cornerD = 0;
@@ -219,13 +219,13 @@ public class HiveComplex extends HiveGhost
 						break;
 				}
 				// NorthWest
-				this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
+				this.load3x3Room(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
 				// NorthEast
-				this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
+				this.load3x3Room(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
 				// SouthEast
-				this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerC);
+				this.load3x3Room(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerC);
 				// SouthWest
-				this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
+				this.load3x3Room(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
 			}
 		}
 		
@@ -254,42 +254,42 @@ public class HiveComplex extends HiveGhost
 		// Center
 		if (center == 0)
 		{
-			peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 0)));
+			peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, 0)));
 		}
 		else if (center == 1)
 		{
-			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
-			peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
-			peaces.add(new Structure(this, Building.TELEFLOOR, start.clone().add(0, 0, 0)));
+			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().translate(0, +7, 0)));
+			peaces.add(new Structure(this, Building.NODE, start.clone().translate(0, 0, 0)));
+			peaces.add(new Structure(this, Building.TELEFLOOR, start.clone().translate(0, 0, 0)));
 		}
 		else if (center == 2)
 		{
-			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
-			peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
-			peaces.add(new Structure(this, Building.COREFLOOR, start.clone().add(0, 0, 0)).worldGen());
+			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().translate(0, +7, 0)));
+			peaces.add(new Structure(this, Building.NODE, start.clone().translate(0, 0, 0)));
+			peaces.add(new Structure(this, Building.COREFLOOR, start.clone().translate(0, 0, 0)).worldGen());
 		}
 		// South
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, 6)));
 		// North
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, -6)));
 		// East
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, 0)));
 		// West
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, 0)));
 		// Corners
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, -6)));
 		// Walls
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(10, 1, 6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, 10)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-10, 1, 6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, 10)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(10, 1, -6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, -10)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-10, 1, -6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, -10)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(10, 1, 6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(6, 1, 10)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-10, 1, 6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-6, 1, 10)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(10, 1, -6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(6, 1, -10)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-10, 1, -6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-6, 1, -10)));
 
 	}
 
@@ -298,66 +298,66 @@ public class HiveComplex extends HiveGhost
 		// Center
 		if (center == 0)
 		{
-			peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 0)));
+			peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, 0)));
 		}
 		else if (center == 1)
 		{
-			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
-			peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
-			peaces.add(new Structure(this, Building.TELEFLOOR, start.clone().add(0, 0, 0)));
+			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().translate(0, +7, 0)));
+			peaces.add(new Structure(this, Building.NODE, start.clone().translate(0, 0, 0)));
+			peaces.add(new Structure(this, Building.TELEFLOOR, start.clone().translate(0, 0, 0)));
 		}
 		else if (center == 2)
 		{
-			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().add(0, +7, 0)));
-			peaces.add(new Structure(this, Building.NODE, start.clone().add(0, 0, 0)));
-			peaces.add(new Structure(this, Building.COREFLOOR, start.clone().add(0, 0, 0)).worldGen());
+			peaces.add(new Structure(this, Building.SKYLIGHT, start.clone().translate(0, +7, 0)));
+			peaces.add(new Structure(this, Building.NODE, start.clone().translate(0, 0, 0)));
+			peaces.add(new Structure(this, Building.COREFLOOR, start.clone().translate(0, 0, 0)).worldGen());
 		}
 		// South
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, 12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(+6, 0, 12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, 12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, 12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(+6, 0, 12)));
 		// North
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(0, 0, -12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, -12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(+6, 0, -12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(0, 0, -12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, -12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(+6, 0, -12)));
 		// East
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 0)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 0)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(12, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(12, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(12, 0, 6)));
 		// West
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 0)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 0)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-12, 0, 0)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-12, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-12, 0, 6)));
 		// Corners
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, 6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-6, 0, 6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(6, 0, -6)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, 12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, -12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(-12, 0, 12)));
-		peaces.add(new Structure(this, Building.TUNNELC, start.clone().add(12, 0, -12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-6, 0, 6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(6, 0, -6)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(12, 0, 12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-12, 0, -12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(-12, 0, 12)));
+		peaces.add(new Structure(this, Building.TUNNELC, start.clone().translate(12, 0, -12)));
 		// Walls
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, 6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, 16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, 6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, 16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, -6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(6, 1, -16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, -6)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-6, 1, -16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, 12)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(12, 1, 16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, 12)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-12, 1, 16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(16, 1, -12)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(12, 1, -16)));
-		peaces.add(new Structure(this, Building.WALLX, start.clone().add(-16, 1, -12)));
-		peaces.add(new Structure(this, Building.WALLZ, start.clone().add(-12, 1, -16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(16, 1, 6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(6, 1, 16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-16, 1, 6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-6, 1, 16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(16, 1, -6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(6, 1, -16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-16, 1, -6)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-6, 1, -16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(16, 1, 12)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(12, 1, 16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-16, 1, 12)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-12, 1, 16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(16, 1, -12)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(12, 1, -16)));
+		peaces.add(new Structure(this, Building.WALLX, start.clone().translate(-16, 1, -12)));
+		peaces.add(new Structure(this, Building.WALLZ, start.clone().translate(-12, 1, -16)));
 
 	}
 
@@ -365,7 +365,7 @@ public class HiveComplex extends HiveGhost
 	{
 		for (int i = 0; i < tunnelPeaces; i++)
 		{
-			VectorWorld spot = start.clone().add(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
+			VectorWorld spot = start.clone().translate(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
 			if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH)
 			{
 				peaces.add(new Structure(this, Building.TUNNELZ, spot));
@@ -377,10 +377,10 @@ public class HiveComplex extends HiveGhost
 			else if (direction == ForgeDirection.UP || direction == ForgeDirection.DOWN)
 			{
 				peaces.add(new Structure(this, Building.NODE, spot));
-				peaces.add(new Structure(this, Building.WALLX, spot.clone().add(3, 1, 0)));
-				peaces.add(new Structure(this, Building.WALLZ, spot.clone().add(-3, 1, 0)));
-				peaces.add(new Structure(this, Building.WALLX, spot.clone().add(0, 1, -3)));
-				peaces.add(new Structure(this, Building.WALLZ, spot.clone().add(0, 1, 3)));
+				peaces.add(new Structure(this, Building.WALLX, spot.clone().translate(3, 1, 0)));
+				peaces.add(new Structure(this, Building.WALLZ, spot.clone().translate(-3, 1, 0)));
+				peaces.add(new Structure(this, Building.WALLX, spot.clone().translate(0, 1, -3)));
+				peaces.add(new Structure(this, Building.WALLZ, spot.clone().translate(0, 1, 3)));
 			}
 		}
 	}
@@ -457,7 +457,7 @@ public class HiveComplex extends HiveGhost
 	@Override
 	public void save(NBTTagCompound nbt)
 	{
-		nbt.setCompoundTag("location", this.location.save(new NBTTagCompound()));
+		nbt.setCompoundTag("location", this.location.writeToNBT(new NBTTagCompound()));
 		nbt.setString("name", this.getName());
 	}
 

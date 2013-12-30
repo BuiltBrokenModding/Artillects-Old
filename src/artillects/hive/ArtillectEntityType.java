@@ -1,7 +1,6 @@
 package artillects.hive;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import artillects.Artillects;

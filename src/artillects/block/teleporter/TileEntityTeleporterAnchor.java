@@ -4,8 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.tile.TileEntityAdvanced;
 
 /** @author Archadia */
@@ -66,7 +66,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 			TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
 			if (teleporter != null)
 			{
-				teleportSpot = new VectorWorld(teleporter).add(0.5, 2, 0.5);
+				teleportSpot = new VectorWorld(teleporter).translate(0.5, 2, 0.5);
 			}
 		}
 
@@ -110,7 +110,7 @@ public class TileEntityTeleporterAnchor extends TileEntityAdvanced
 		super.readFromNBT(nbt);
 		if (this.teleportSpot != null)
 		{
-			nbt.setCompoundTag("teleportLocation", this.teleportSpot.save(new NBTTagCompound()));
+			nbt.setCompoundTag("teleportLocation", this.teleportSpot.writeToNBT(new NBTTagCompound()));
 		}
 	}
 

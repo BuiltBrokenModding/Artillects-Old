@@ -3,12 +3,13 @@ package artillects.entity.ai.work;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import artillects.Pair;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.zone.ZoneBuilding;
+
+import com.builtbroken.common.Pair;
 
 public class EntityAIBuilding extends EntityAIBase
 {
@@ -73,10 +74,10 @@ public class EntityAIBuilding extends EntityAIBase
 			if (this.placementSpot == null)
 			{
 				Pair<Vector3, ItemStack> data = ((ZoneBuilding) this.entity.getZone()).getClosestBlock(new VectorWorld(this.entity));
-				if (data != null && data.getLeft() != null && data.getRight() != null)
+				if (data != null && data.left() != null && data.right() != null)
 				{
-					this.placementItem = data.getRight();
-					this.placementSpot = data.getLeft();
+					this.placementItem = data.right();
+					this.placementSpot = data.left();
 				}
 			}
 

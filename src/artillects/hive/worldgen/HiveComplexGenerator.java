@@ -4,9 +4,9 @@ import java.util.Random;
 
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import artillects.VectorWorld;
-import artillects.hive.HiveComplexManager;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveComplex;
+import artillects.hive.HiveComplexManager;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class HiveComplexGenerator implements IWorldGenerator

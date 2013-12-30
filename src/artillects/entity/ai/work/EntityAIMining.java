@@ -3,16 +3,14 @@ package artillects.entity.ai.work;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector3;
 import artillects.Artillects;
 import artillects.InventoryHelper;
-import artillects.Vector3;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.workers.EntityWorker;
 import artillects.hive.ArtillectType;
@@ -125,7 +123,7 @@ public class EntityAIMining extends EntityAILaborTask
 
                         if (this.breakingTime % 10 == 0)
                         {
-                            Artillects.proxy.renderLaser(this.world, new Vector3(this.getArtillect()).add(0, 0.2, 0), centerVector, 1, 0, 0);
+                            Artillects.proxy.renderLaser(this.world, new Vector3(this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
                         }
                     }
                 }

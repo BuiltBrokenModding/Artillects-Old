@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
-import artillects.Pair;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.HiveComplex;
 import artillects.hive.structure.Structure;
+
+import com.builtbroken.common.Pair;
 
 public class ZoneBuilding extends Zone
 {
@@ -48,7 +49,7 @@ public class ZoneBuilding extends Zone
                 if (location == null || entry.getKey().distance(vec) < vec.distance(location))
                 {
                     location = entry.getKey();
-                    stack = entry.getValue().getLeft();
+                    stack = entry.getValue().left();
                 }
             }
             return new Pair<Vector3, ItemStack>(location, stack);
@@ -65,9 +66,9 @@ public class ZoneBuilding extends Zone
     {
         if (this.buildPosition.get(location) != null)
         {
-            if (this.buildPosition.get(location).getRight() != null)
+            if (this.buildPosition.get(location).right() != null)
             {
-                if (this.buildPosition.get(location).getRight().addBlock(location, stack))
+                if (this.buildPosition.get(location).right().addBlock(location, stack))
                 {
                     this.buildPosition.remove(location);
                     return true;

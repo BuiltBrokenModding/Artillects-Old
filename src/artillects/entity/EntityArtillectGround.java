@@ -1,40 +1,21 @@
 package artillects.entity;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
-import artillects.InventoryHelper;
-import artillects.Vector3;
-import artillects.VectorWorld;
-import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
-import artillects.hive.zone.Zone;
-import artillects.item.ItemParts;
-
-import com.google.common.io.ByteArrayDataInput;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
 
 /** Prefab for ground based drones
  * 
@@ -216,7 +197,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 

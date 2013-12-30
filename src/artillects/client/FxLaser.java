@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
+import universalelectricity.api.vector.Vector3;
 import artillects.Artillects;
-import artillects.Vector3;
 import cpw.mods.fml.client.FMLClientHandler;
 
 /**

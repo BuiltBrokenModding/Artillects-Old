@@ -11,7 +11,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.VectorWorld;
 
 import com.builtbroken.minecraft.save.NBTFileHelper;
 

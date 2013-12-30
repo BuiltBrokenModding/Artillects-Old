@@ -9,11 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import artillects.InventoryHelper;
-import artillects.VectorWorld;
 import artillects.entity.EntityArtillectGround;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
-import artillects.hive.HiveComplexManager;
 
 /** Prefab for non-combat drones that do hard labor for the hive
  * 

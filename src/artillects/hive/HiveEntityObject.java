@@ -4,17 +4,15 @@ import net.minecraft.nbt.NBTTagCompound;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 
- * @author Dark */
-public class HiveGhost implements ISaveObject
+ * @author DarkGuardsman */
+public class HiveEntityObject implements ISaveObject
 {
     protected long ticks = 0;
     public boolean isInvalid = false;
 
     /** Called on the first tick. Use this to setup the building */
     public void init()
-    {
-
-    }
+    {}
 
     /** Called when the entity updates */
     public void updateEntity()
@@ -44,16 +42,10 @@ public class HiveGhost implements ISaveObject
 
     @Override
     public void save(NBTTagCompound nbt)
-    {
-        // TODO Auto-generated method stub
-
-    }
+    {}
 
     @Override
     public void load(NBTTagCompound nbt)
-    {
-        // TODO Auto-generated method stub
-
-    }
+    {}
 
 }

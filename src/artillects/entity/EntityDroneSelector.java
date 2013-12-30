@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import artillects.hive.HiveComplex;
-import artillects.hive.HiveComplexManager;
 
 public class EntityDroneSelector implements IEntitySelector
 {

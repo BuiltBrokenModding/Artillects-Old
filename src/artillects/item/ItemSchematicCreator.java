@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.VectorWorld;
 import artillects.commands.PlayerSelectionHandler;
 
 public class ItemSchematicCreator extends ItemBase

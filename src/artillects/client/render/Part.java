@@ -1,6 +1,7 @@
 package artillects.client.render;
 
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
+
 
 public class Part
 {

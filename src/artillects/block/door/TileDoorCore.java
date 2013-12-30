@@ -1,7 +1,7 @@
 package artillects.block.door;
 
 import net.minecraft.tileentity.TileEntity;
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
 
 public class TileDoorCore extends TileEntity implements IFrameCore {
 

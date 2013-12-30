@@ -3,7 +3,7 @@ package artillects.entity.ai.work;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
-import artillects.Vector3;
+import universalelectricity.api.vector.Vector3;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityArtillectAIBase;
 import artillects.entity.workers.EntityArtillectDrone;

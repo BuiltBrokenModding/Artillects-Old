@@ -1,13 +1,9 @@
 package artillects.entity.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
-import artillects.Vector3;
 import artillects.entity.EntityArtillectGround;
-import artillects.hive.zone.ZoneProcessing;
 
 /**
  * @author Calclavia

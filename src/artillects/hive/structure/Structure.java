@@ -5,17 +5,17 @@ import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import artillects.Pair;
-import artillects.Vector3;
-import artillects.VectorWorld;
+import universalelectricity.api.vector.Vector3;
+import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveComplex;
-import artillects.hive.HiveGhost;
-import artillects.hive.zone.ZoneProcessing;
+import artillects.hive.HiveEntityObject;
+
+import com.builtbroken.common.Pair;
 
 /** Entity that represents a structure peace in a hive complex
  * 
  * @author DarkGuardsman */
-public class Structure extends HiveGhost
+public class Structure extends HiveEntityObject
 {
     public Building building;
     protected VectorWorld location;

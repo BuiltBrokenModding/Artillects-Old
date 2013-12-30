@@ -3,6 +3,7 @@ package artillects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector3;
 import artillects.container.ContainerArtillect;
 import artillects.entity.workers.EntityWorker;
 import cpw.mods.fml.common.network.IGuiHandler;
