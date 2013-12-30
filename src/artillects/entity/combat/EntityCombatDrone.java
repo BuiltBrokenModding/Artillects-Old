@@ -1,6 +1,6 @@
 package artillects.entity.combat;
 
-import artillects.entity.ai.EntityAIRangedAttack;
+import artillects.entity.ai.combat.EntityAIRangedAttack;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWander;

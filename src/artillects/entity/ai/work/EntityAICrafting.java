@@ -1,4 +1,4 @@
-package artillects.entity.ai;
+package artillects.entity.ai.work;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,15 +11,14 @@ import net.minecraft.tileentity.TileEntityChest;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectGround;
+import artillects.entity.ai.EntityArtillectAIBase;
 import artillects.entity.workers.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 import artillects.item.ItemParts.Part;
 
-public class EntityAICrafting extends EntityArtillectAIBase
+public class EntityAICrafting extends EntityAILaborTask
 {
-	private EntityWorker entity;
-
 	private int idleTime = 0;
 	private final int maxIdleTime = 20 * 5;
 
@@ -33,8 +32,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 
 	public EntityAICrafting(EntityWorker entity, double moveSpeed)
 	{
-		super(entity.worldObj, moveSpeed);
-		this.entity = entity;
+		super(entity, moveSpeed);
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 	@Override
 	public boolean shouldExecute()
 	{
-		return this.entity.getType() == ArtillectType.CRAFTER && entity.getZone() instanceof ZoneProcessing;
+		return this.getArtillect().getType() == ArtillectType.CRAFTER && getArtillect().getZone() instanceof ZoneProcessing;
 	}
 
 	/** Returns whether an in-progress EntityAIBase should continue executing */
@@ -106,7 +104,7 @@ public class EntityAICrafting extends EntityArtillectAIBase
 						 */
 						int resourceCount = 0;
 
-						for (ItemStack stackInEntity : this.entity.getInventoryAsList())
+						for (ItemStack stackInEntity : this.getArtillect().getInventoryAsList())
 						{
 							if (stackInEntity != null && stackInEntity.isItemEqual(recipeItem))
 							{
@@ -124,9 +122,9 @@ public class EntityAICrafting extends EntityArtillectAIBase
 							 * Search for the resource because we have less than the required
 							 * amount.
 							 */
-							if (this.entity.getZone() instanceof ZoneProcessing)
+							if (this.getArtillect().getZone() instanceof ZoneProcessing)
 							{
-								ZoneProcessing zone = (ZoneProcessing) this.entity.getZone();
+								ZoneProcessing zone = (ZoneProcessing) this.getArtillect().getZone();
 
 								for (Vector3 chestPosition : zone.chestPositions)
 								{
@@ -142,13 +140,13 @@ public class EntityAICrafting extends EntityArtillectAIBase
 
 											if (stackInChest != null && stackInChest.isItemEqual(recipeItem))
 											{
-												if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
+												if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
 												{
-													if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+													if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 													{
-														this.entity.getNavigator().clearPathEntity();
+														this.getArtillect().getNavigator().clearPathEntity();
 														int resourceToGet = Math.max(recipeItem.stackSize - resourceCount, 0);
-														ItemStack remainingStack = this.entity.increaseStackSize(stackInChest.splitStack(resourceToGet));
+														ItemStack remainingStack = this.getArtillect().increaseStackSize(stackInChest.splitStack(resourceToGet));
 														chest.setInventorySlotContents(i, stackInChest.stackSize > 0 ? stackInChest : null);
 														return;
 													}
@@ -172,10 +170,10 @@ public class EntityAICrafting extends EntityArtillectAIBase
 						 */
 						for (ItemStack recipeItem : recipeItems)
 						{
-							this.entity.decreaseStackSize(recipeItem);
+							this.getArtillect().decreaseStackSize(recipeItem);
 						}
 
-						this.entity.increaseStackSize(stackToCraft);
+						this.getArtillect().increaseStackSize(stackToCraft);
 						this.markForDump = true;
 					}
 				}
@@ -183,11 +181,5 @@ public class EntityAICrafting extends EntityArtillectAIBase
 
 			this.idleTime = this.maxIdleTime;
 		}
-	}
-
-	@Override
-	public EntityArtillectGround getArtillect()
-	{
-		return this.entity;
 	}
 }

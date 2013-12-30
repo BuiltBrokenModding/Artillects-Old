@@ -1,4 +1,4 @@
-package artillects.entity.ai;
+package artillects.entity.ai.work;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;

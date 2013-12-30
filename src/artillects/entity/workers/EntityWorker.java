@@ -9,17 +9,21 @@ import net.minecraft.world.World;
 import artillects.VectorWorld;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityAIArtillectFollow;
-import artillects.entity.ai.EntityAIBlacksmith;
-import artillects.entity.ai.EntityAICrafting;
-import artillects.entity.ai.EntityAIMining;
-import artillects.entity.ai.EntityAIRangedAttack;
+import artillects.entity.ai.combat.EntityAIRangedAttack;
+import artillects.entity.ai.work.EntityAIBlacksmith;
+import artillects.entity.ai.work.EntityAICrafting;
+import artillects.entity.ai.work.EntityAIMining;
 import artillects.hive.ArtillectType;
 import artillects.hive.HiveComplex;
 import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneMining;
 import artillects.hive.zone.ZoneProcessing;
 
-public class EntityWorker extends EntityArtillectGround
+/** Drone designed to do generic work for the hive including mining, harvesting, collection, sorting,
+ * crafting, processing, and even combat.
+ * 
+ * @author DarkGuardsman */
+public class EntityWorker extends EntityArtillectDrone
 {
     public EntityWorker(World par1World)
     {

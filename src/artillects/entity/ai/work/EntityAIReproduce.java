@@ -1,4 +1,4 @@
-package artillects.entity.ai;
+package artillects.entity.ai.work;
 
 import java.util.HashMap;
 import java.util.HashSet;

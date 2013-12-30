@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityDroneSelector;
 import artillects.entity.ai.EntityAIArtillectFollow;
-import artillects.entity.ai.EntityAIRangedAttack;
+import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.hive.ArtillectType;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob

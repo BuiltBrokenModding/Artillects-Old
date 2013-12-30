@@ -1,4 +1,4 @@
-package artillects.entity.ai;
+package artillects.entity.ai.combat;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
