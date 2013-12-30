@@ -51,47 +51,11 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
             return 1000;
         }
         return 0.5F + this.worldObj.getLightBrightness(x, y, z);
-    }
-
-    @Override
-    protected String getLivingSound()
-    {
-        if (System.currentTimeMillis() - this.lastAudioPlay[0] > 100)
-        {
-            this.lastAudioPlay[0] = System.currentTimeMillis();
-            return Artillects.PREFIX + "voice-random";
-        }
-
-        return null;
-    }
-
-    @Override
-    protected String getDeathSound()
-    {
-        return Artillects.PREFIX + "voice-lost";
-    }
-
-  
-
-    @Override
-    public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
-    {
-        super.setAttackTarget(par1EntityLivingBase);
-        if (System.currentTimeMillis() - this.lastAudioPlay[1] > 100)
-        {
-            this.lastAudioPlay[1] = System.currentTimeMillis();
-            this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-target", 1, 1);
-        }
-    }
+    } 
 
     @Override
     public boolean interact(EntityPlayer entityPlayer)
     {
-        if (System.currentTimeMillis() - this.lastAudioPlay[2] > 100)
-        {
-            this.lastAudioPlay[2] = System.currentTimeMillis();
-            this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-welcome", 1, 1);
-        }
 
         if (this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone)
         {
@@ -119,36 +83,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     protected boolean isAIEnabled()
     {
         return true;
-    }
-
-    @Override
-    public void setLastAttacker(Entity par1Entity)
-    {
-        // TODO: This doesn't get called properly.
-        super.setLastAttacker(par1Entity);
-
-        if (this.ticksExisted - this.getLastAttackerTime() >= 60)
-        {
-            if (System.currentTimeMillis() - this.lastAudioPlay[3] > 100)
-            {
-                this.lastAudioPlay[3] = System.currentTimeMillis();
-                this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-firstSight", 1, 1);
-            }
-        }
-    }
-
-    @Override
-    public void onKillEntity(EntityLivingBase entityKilled)
-    {
-        super.onKillEntity(entityKilled);
-        if (System.currentTimeMillis() - this.lastAudioPlay[4] > 100)
-        {
-            this.lastAudioPlay[4] = System.currentTimeMillis();
-            this.worldObj.playSoundEffect(this.posX, this.posY, this.posZ, Artillects.PREFIX + "voice-kill", 1, 1);
-        }
-    }
-
-  
+    }  
 
     public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
     {
@@ -163,33 +98,6 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
         }
 
         return false;
-    }
-
-    @Override
-    public void writeEntityToNBT(NBTTagCompound nbt)
-    {
-        super.writeEntityToNBT(nbt);
-        nbt.setByte("type", (byte) this.getType().ordinal());
-        nbt.setBoolean("hive", !(this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone));
-    }
-
-    @Override
-    public void readEntityFromNBT(NBTTagCompound nbt)
-    {
-        super.readEntityFromNBT(nbt);
-        this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
-        if (!nbt.getBoolean("hive"))
-        {
-            HiveComplex.getPlayerHive().addDrone(this);
-        }
-        else
-        {
-            HiveComplex hive = HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 1000);
-            if (hive != null)
-            {
-                hive.addDrone(this);
-            }
-        }
     }
 
     @Override

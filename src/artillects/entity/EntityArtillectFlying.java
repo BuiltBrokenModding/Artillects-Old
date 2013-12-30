@@ -44,7 +44,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     @Override
     protected boolean isAIEnabled()
     {
-        return true;
+        return false;
     }
 
     @Override
@@ -53,10 +53,6 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         if (this.getOwner() instanceof HiveComplex)
         {
             ((HiveComplex) this.getOwner()).removeDrone(this);
-        }
-        else if (this.getOwner() instanceof EntityPlayer)
-        {
-            ((EntityPlayer) this.getOwner()).sendChatToPlayer(ChatMessageComponent.createFromText("One of your drones has died"));
         }
         super.setDead();
     }
@@ -120,15 +116,13 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
 
     /** Called when the mob is falling. Calculates and applies fall damage. */
     protected void fall(float par1)
-    {
-    }
+    {}
 
     /** Takes in the distance the entity has fallen this tick and whether its on the ground to update
      * the fall distance and deal fall damage if landing on the ground. Args:
      * distanceFallenThisTick, onGround */
     protected void updateFallState(double par1, boolean par3)
-    {
-    }
+    {}
 
     /** Moves the entity based on the specified heading. Args: strafe, forward */
     public void moveEntityWithHeading(float par1, float par2)
