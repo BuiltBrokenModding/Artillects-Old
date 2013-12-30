@@ -7,7 +7,7 @@ import artillects.Pair;
 import artillects.Vector3;
 import artillects.VectorWorld;
 import artillects.entity.EntityArtillectGround;
-import artillects.entity.EntityFabricator;
+import artillects.entity.workers.EntityFabricator;
 import artillects.hive.zone.ZoneBuilding;
 
 public class EntityAIBuilding extends EntityAIBase

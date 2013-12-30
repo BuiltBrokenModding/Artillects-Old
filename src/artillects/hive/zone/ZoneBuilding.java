@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import artillects.Pair;
 import artillects.Vector3;
 import artillects.VectorWorld;
-import artillects.entity.EntityFabricator;
 import artillects.entity.IArtillect;
+import artillects.entity.workers.EntityFabricator;
 import artillects.hive.HiveComplex;
 import artillects.hive.structure.Structure;
 

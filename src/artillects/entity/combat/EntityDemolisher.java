@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.EntityDroneSelector;
 import artillects.entity.ai.EntityAIArtillectFollow;
+import artillects.entity.ai.EntityAIRangedAttack;
 import artillects.hive.ArtillectType;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
@@ -26,10 +27,15 @@ public class EntityDemolisher extends EntityArtillectGround implements IRangedAt
     public EntityDemolisher(World par1World)
     {
         super(par1World);
-        this.tasks.addTask(3, new EntityAIArtillectFollow(this, this.moveForward, 3, 100));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
         this.setSize(1f, 1.5f);
         this.experienceValue = 5;
+        this.tasks.addTask(2, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
+        this.tasks.addTask(3, new EntityAIArtillectFollow(this, this.moveForward, 3, 100));
+        this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(5, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
     }
 
     @Override

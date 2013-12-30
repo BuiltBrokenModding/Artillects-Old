@@ -7,7 +7,7 @@ import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.WeightedRandomMinecart;
 import net.minecraft.world.World;
 import artillects.VectorWorld;
-import artillects.entity.EntityFabricator;
+import artillects.entity.workers.EntityFabricator;
 import artillects.tile.TileEntityAdvanced;
 import cpw.mods.fml.common.registry.EntityRegistry;
 

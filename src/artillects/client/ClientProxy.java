@@ -15,12 +15,12 @@ import artillects.client.render.RenderDemolisher;
 import artillects.client.render.RenderFabricator;
 import artillects.client.render.RenderSeeker;
 import artillects.client.render.RenderWorker;
-import artillects.entity.EntityFabricator;
-import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
 import artillects.entity.combat.EntityCombatDrone;
 import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
+import artillects.entity.workers.EntityFabricator;
+import artillects.entity.workers.EntityWorker;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 

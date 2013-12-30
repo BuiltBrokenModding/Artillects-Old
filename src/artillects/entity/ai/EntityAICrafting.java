@@ -11,7 +11,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import artillects.Artillects;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectGround;
-import artillects.entity.EntityWorker;
+import artillects.entity.workers.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 import artillects.item.ItemParts.Part;

@@ -6,10 +6,10 @@ import java.util.Set;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import artillects.entity.EntityFabricator;
-import artillects.entity.EntityWorker;
 import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
+import artillects.entity.workers.EntityFabricator;
+import artillects.entity.workers.EntityWorker;
 
 /** Ratio of AIs: 1 Fabricator : 5 Harvesters : 4 Blacksmith : 2 Crafters : 3 Seekers: 2 Demolisher
  * 

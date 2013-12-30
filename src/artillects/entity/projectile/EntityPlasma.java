@@ -1,4 +1,4 @@
-package artillects.entity.weapon;
+package artillects.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

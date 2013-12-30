@@ -8,8 +8,8 @@ import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockFurnace;
 import artillects.Vector3;
 import artillects.VectorWorld;
-import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
+import artillects.entity.workers.EntityWorker;
 import artillects.hive.HiveComplex;
 
 public class ZoneProcessing extends Zone

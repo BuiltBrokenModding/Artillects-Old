@@ -14,7 +14,7 @@ import artillects.Artillects;
 import artillects.InventoryHelper;
 import artillects.Vector3;
 import artillects.entity.EntityArtillectGround;
-import artillects.entity.EntityWorker;
+import artillects.entity.workers.EntityWorker;
 import artillects.hive.ArtillectType;
 import artillects.hive.zone.ZoneMining;
 

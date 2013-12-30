@@ -9,8 +9,8 @@ import net.minecraft.block.Block;
 import artillects.Pair;
 import artillects.Vector3;
 import artillects.VectorWorld;
-import artillects.entity.EntityWorker;
 import artillects.entity.IArtillect;
+import artillects.entity.workers.EntityWorker;
 import artillects.hive.HiveComplex;
 
 public class ZoneMining extends Zone

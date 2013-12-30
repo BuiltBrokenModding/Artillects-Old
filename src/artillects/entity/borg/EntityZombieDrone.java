@@ -2,16 +2,15 @@ package artillects.entity.borg;
 
 import net.minecraft.world.World;
 
-/**
- * Borg enough said
+/** Zombie that has been converted to serve the hive. Acts in the same way a zombie does when it has
+ * no task. However, when needed it will gain some level of intelligence when working on a task.
  * 
- * @author Dark
- */
+ * @author Dark */
 public class EntityZombieDrone extends EntityBorg
 {
-	public EntityZombieDrone(World par1World)
-	{
-		super(par1World);
-	}
+    public EntityZombieDrone(World world)
+    {
+        super(world);
+    }
 
 }

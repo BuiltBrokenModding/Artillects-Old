@@ -54,15 +54,7 @@ public class EntityArtillectGround extends EntityArtillectBase
     {
         super(world);
         this.setSize(1, 1);
-        this.tasks.addTask(2, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
-        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));// TODO remove friendly
-        this.experienceValue = 5;
     }
-
-
 
     @Override
     public float getBlockPathWeight(int x, int y, int z)
@@ -98,15 +90,11 @@ public class EntityArtillectGround extends EntityArtillectBase
         return Artillects.PREFIX + "voice-lost";
     }
 
-
-
     @Override
     public IInventory getInventory()
     {
         return this.inventory;
     }
-
-
 
     @Override
     public void setAttackTarget(EntityLivingBase par1EntityLivingBase)
@@ -143,8 +131,6 @@ public class EntityArtillectGround extends EntityArtillectBase
         }
         return false;
     }
-
-
 
     @Override
     public int getTotalArmorValue()
@@ -185,8 +171,6 @@ public class EntityArtillectGround extends EntityArtillectBase
         }
     }
 
-
-
     /** INVENTORY FUNCTIONS */
     /** @return True if the Worker's inventory is full. (See EntityAIMining) */
     public boolean isInventoryFull()
@@ -200,7 +184,7 @@ public class EntityArtillectGround extends EntityArtillectBase
     }
 
     /** Adds a stack into the inventory.
-     *
+     * 
      * @param stack - The stack to add
      * @return - The remaining stack. */
     public ItemStack increaseStackSize(ItemStack stack)
@@ -327,6 +311,5 @@ public class EntityArtillectGround extends EntityArtillectBase
         Artillects.proxy.renderLaser(this.worldObj, new Vector3(this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
-
 
 }

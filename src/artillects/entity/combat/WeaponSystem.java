@@ -1,4 +1,4 @@
-package artillects.entity;
+package artillects.entity.combat;
 
 /**
  * Index for all weapon system that the drones can be geared with

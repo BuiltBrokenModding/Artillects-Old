@@ -6,12 +6,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import artillects.Artillects;
 import artillects.entity.EntityArtillectGround;
-import artillects.entity.EntityFabricator;
-import artillects.entity.EntityWorker;
 import artillects.entity.IArtillectSpawnHandler;
 import artillects.entity.combat.EntityCombatDrone;
 import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
+import artillects.entity.workers.EntityFabricator;
+import artillects.entity.workers.EntityWorker;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 public enum ArtillectEntityType
