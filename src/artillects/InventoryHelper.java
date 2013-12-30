@@ -38,8 +38,7 @@ public class InventoryHelper
 	 * @return True if so.
 	 */
 	public static boolean hasItems(IInventory inventory, ItemStack... itemStacks)
-	{
-		loop:
+	{		
 		for (ItemStack itemStack : itemStacks)
 		{
 			int itemCount = 0;

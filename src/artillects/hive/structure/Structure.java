@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveEntityObject;
-import artillects.hive.complex.HiveComplex;
 
 import com.builtbroken.common.Pair;
 
@@ -17,20 +16,22 @@ import com.builtbroken.common.Pair;
  * @author DarkGuardsman */
 public class Structure extends HiveEntityObject
 {
-    public Building building;
+    public EnumStructurePeaces building;
     protected VectorWorld location;
 
     protected boolean isDamaged = false;
 
     HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
 
-    public HiveComplex complex;
-
-    public Structure(HiveComplex complex, Building building, VectorWorld location)
+    public Structure(EnumStructurePeaces building, VectorWorld location)
     {
-        this.complex = complex;
         this.building = building;
         this.location = location;
+    }
+
+    public Structure(NBTTagCompound tag)
+    {
+        this.load(tag);
     }
 
     public Structure worldGen()
@@ -43,7 +44,7 @@ public class Structure extends HiveEntityObject
     public void init()
     {
         super.init();
-        if (building == Building.PROCESSORROOM)
+        if (building == EnumStructurePeaces.PROCESSORROOM)
         {
             //new ZoneProcessing(complex, location.subtract(new Vector3(-8, 0, -8)), location.add(new Vector3(8, 5, 8)));
         }
@@ -108,12 +109,14 @@ public class Structure extends HiveEntityObject
     public void save(NBTTagCompound nbt)
     {
         nbt.setInteger("buildingID", building.ordinal());
+        nbt.setCompoundTag("location", this.location.writeToNBT(new NBTTagCompound()));
     }
 
     @Override
     public void load(NBTTagCompound nbt)
     {
-        building = Building.values()[nbt.getInteger("buildingID")];
+        this.location = new VectorWorld(nbt.getCompoundTag("location"));
+        building = EnumStructurePeaces.values()[nbt.getInteger("buildingID")];
     }
 
     public boolean isDamaged()
