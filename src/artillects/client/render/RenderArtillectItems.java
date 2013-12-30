@@ -6,7 +6,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import artillects.Artillects;
-import artillects.hive.ArtillectEntityType;
+import artillects.hive.EnumArtillectEntity;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,7 +39,7 @@ public class RenderArtillectItems implements IItemRenderer
 			GL11.glTranslatef(0, -0.9f, 0);
 		}
 
-		switch (ArtillectEntityType.values()[item.getItemDamage()])
+		switch (EnumArtillectEntity.values()[item.getItemDamage()])
 		{
 			case WORKER:
 			{

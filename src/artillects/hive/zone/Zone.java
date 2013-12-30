@@ -7,8 +7,8 @@ import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
-import artillects.hive.HiveComplex;
 import artillects.hive.HiveEntityObject;
+import artillects.hive.complex.HiveComplex;
 
 /** Class used by the hive mind to ID an area by which a task is to be operated in
  * 

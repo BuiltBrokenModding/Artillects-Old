@@ -1,4 +1,4 @@
-package artillects.hive;
+package artillects.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -8,6 +8,8 @@ import net.minecraft.tileentity.WeightedRandomMinecart;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.workers.EntityFabricator;
+import artillects.hive.HiveComplexManager;
+import artillects.hive.complex.HiveComplex;
 import artillects.tile.TileEntityAdvanced;
 
 public class TileEntityHiveComplexCore extends TileEntityAdvanced

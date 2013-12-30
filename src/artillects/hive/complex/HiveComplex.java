@@ -1,4 +1,4 @@
-package artillects.hive;
+package artillects.hive.complex;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,8 +9,12 @@ import java.util.TreeSet;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.VectorWorld;
+import artillects.block.TileEntityHiveComplexCore;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
+import artillects.hive.HiveComplexManager;
+import artillects.hive.HiveEntityObject;
+import artillects.hive.logs.DataLog;
 import artillects.hive.structure.Building;
 import artillects.hive.structure.Structure;
 import artillects.hive.zone.Zone;
@@ -36,7 +40,7 @@ public class HiveComplex extends HiveEntityObject
 
 	private HashSet<IArtillect> awaitingOrders = new HashSet<IArtillect>();
 
-	private TreeSet<Report> inboxReports = new TreeSet<Report>();
+	private TreeSet<DataLog> inboxReports = new TreeSet<DataLog>();
 
 	public HashSet<Zone> zones = new HashSet<Zone>();
 	public TileEntityHiveComplexCore core;
@@ -88,7 +92,7 @@ public class HiveComplex extends HiveEntityObject
 	 * Called by a drone or the hive itself to load a report into the system waiting to be processed
 	 * into a task
 	 */
-	public void issueReport(Report report)
+	public void issueReport(DataLog report)
 	{
 		// TODO add validation system to reject reports
 		this.inboxReports.add(report);

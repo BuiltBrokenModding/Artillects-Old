@@ -13,9 +13,9 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
+import artillects.hive.complex.HiveComplex;
 
 /** Prefab for ground based drones
  * 
@@ -177,7 +177,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     public void readEntityFromNBT(NBTTagCompound nbt)
     {
         super.readEntityFromNBT(nbt);
-        this.setType(ArtillectType.values()[nbt.getByte("type")]);
+        this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
         if (!nbt.getBoolean("hive"))
         {
             HiveComplex.getPlayerHive().addDrone(this);

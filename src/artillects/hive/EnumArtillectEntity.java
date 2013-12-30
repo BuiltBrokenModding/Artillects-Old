@@ -13,7 +13,11 @@ import artillects.entity.workers.EntityFabricator;
 import artillects.entity.workers.EntityWorker;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
-public enum ArtillectEntityType
+/** Used to quickly generate new drone types without adding data to the main mod class. As well keeps
+ * things cleaner knowing exactly that goes to which entity class.
+ * 
+ * @author DarkGuardsman */
+public enum EnumArtillectEntity
 {
     WORKER("worker", new IArtillectSpawnHandler()
     {
@@ -97,7 +101,7 @@ public enum ArtillectEntityType
 
     public final String name;
 
-    private ArtillectEntityType(String name, IArtillectSpawnHandler builder)
+    private EnumArtillectEntity(String name, IArtillectSpawnHandler builder)
     {
         this.name = name;
         this.builder = builder;

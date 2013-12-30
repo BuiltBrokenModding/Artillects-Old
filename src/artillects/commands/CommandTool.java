@@ -8,8 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.hive.HiveComplex;
 import artillects.hive.HiveComplexManager;
+import artillects.hive.complex.HiveComplex;
 
 import com.builtbroken.minecraft.save.NBTFileHelper;
 

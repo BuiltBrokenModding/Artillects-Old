@@ -1,11 +1,13 @@
 package artillects.hive;
 
+import com.builtbroken.minecraft.save.ISaveObj;
+
 import net.minecraft.nbt.NBTTagCompound;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 
  * @author DarkGuardsman */
-public class HiveEntityObject implements ISaveObject
+public class HiveEntityObject implements ISaveObj
 {
     protected long ticks = 0;
     public boolean isInvalid = false;

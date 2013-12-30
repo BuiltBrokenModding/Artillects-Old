@@ -14,7 +14,7 @@ import artillects.entity.workers.EntityWorker;
 /** Ratio of AIs: 1 Fabricator : 5 Harvesters : 4 Blacksmith : 2 Crafters : 3 Seekers: 2 Demolisher
  * 
  * @author Calclavia */
-public enum ArtillectType
+public enum EnumArtillectType
 {
     NONE(0, EntityLivingBase.class),
     FABRICATOR(1, EntityFabricator.class),
@@ -30,13 +30,13 @@ public enum ArtillectType
 
     public final Set<ItemStack> resourcesRequired = new HashSet<ItemStack>();
 
-    ArtillectType(int ratio, Class<? extends Entity> entityClass)
+    EnumArtillectType(int ratio, Class<? extends Entity> entityClass)
     {
         this.ratio = ratio;
         this.entityClass = entityClass;
     }
 
-    public ArtillectType toggle(Entity entity)
+    public EnumArtillectType toggle(Entity entity)
     {
         int nextID = this.ordinal();
 
@@ -44,14 +44,14 @@ public enum ArtillectType
         {
             nextID = (nextID + 1) % values().length;
 
-            if (ArtillectType.get(nextID).entityClass.isAssignableFrom(entity.getClass()))
+            if (EnumArtillectType.get(nextID).entityClass.isAssignableFrom(entity.getClass()))
             {
-                return ArtillectType.get(nextID);
+                return EnumArtillectType.get(nextID);
             }
         }
     }
 
-    public static ArtillectType get(int id)
+    public static EnumArtillectType get(int id)
     {
         return values()[id];
     }

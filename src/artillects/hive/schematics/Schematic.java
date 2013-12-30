@@ -13,8 +13,8 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.block.BlockSymbol;
-import artillects.hive.ISaveObject;
 
+import com.builtbroken.minecraft.save.ISaveObj;
 import com.builtbroken.minecraft.save.NBTFileHelper;
 
 /**
@@ -22,7 +22,7 @@ import com.builtbroken.minecraft.save.NBTFileHelper;
  * 
  * @author Dark
  */
-public class Schematic implements ISaveObject
+public class Schematic implements ISaveObj
 {
 	public static final String BlockList = "BlockList";
 

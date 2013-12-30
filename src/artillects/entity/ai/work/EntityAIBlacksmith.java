@@ -14,7 +14,7 @@ import universalelectricity.api.vector.Vector3;
 import artillects.InventoryHelper;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.workers.EntityWorker;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 
 public class EntityAIBlacksmith extends EntityAILaborTask
@@ -50,7 +50,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
     @Override
     public boolean shouldExecute()
     {
-        return this.getArtillect().getType() == ArtillectType.BLACKSMITH && getArtillect().getZone() instanceof ZoneProcessing;
+        return this.getArtillect().getType() == EnumArtillectType.BLACKSMITH && getArtillect().getZone() instanceof ZoneProcessing;
     }
 
     /** Returns whether an in-progress EntityAIBase should continue executing */

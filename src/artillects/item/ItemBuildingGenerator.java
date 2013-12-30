@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.hive.HiveComplex;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.schematics.Schematic;
 import artillects.hive.structure.Building;
 

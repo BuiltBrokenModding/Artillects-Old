@@ -7,7 +7,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.IArtillect;
-import artillects.hive.HiveComplex;
+import artillects.hive.complex.HiveComplex;
 
 public class EntityDroneSelector implements IEntitySelector
 {

@@ -8,7 +8,7 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
-import artillects.hive.HiveComplex;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.structure.Structure;
 
 import com.builtbroken.common.Pair;

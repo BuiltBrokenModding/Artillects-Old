@@ -13,6 +13,8 @@ import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import universalelectricity.api.vector.VectorWorld;
 
+import artillects.hive.complex.HiveComplex;
+
 import com.builtbroken.minecraft.save.NBTFileHelper;
 
 /** Hive collection that the drones use for logic and collection feed back

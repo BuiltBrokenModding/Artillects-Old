@@ -1,7 +1,7 @@
 package artillects.entity;
 
 import net.minecraft.inventory.IInventory;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.Zone;
 
 public interface IArtillect
@@ -14,9 +14,9 @@ public interface IArtillect
 
 	public void setZone(Zone zone);
 
-	public ArtillectType getType();
+	public EnumArtillectType getType();
 
-	public void setType(ArtillectType type);
+	public void setType(EnumArtillectType type);
 
 	public IInventory getInventory();
 }

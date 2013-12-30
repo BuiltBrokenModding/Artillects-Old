@@ -13,7 +13,7 @@ import artillects.Artillects;
 import artillects.InventoryHelper;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.workers.EntityWorker;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.ZoneMining;
 
 public class EntityAIMining extends EntityAILaborTask
@@ -39,7 +39,7 @@ public class EntityAIMining extends EntityAILaborTask
     @Override
     public boolean shouldExecute()
     {
-        return this.getArtillect().getType() == ArtillectType.HARVESTER;
+        return this.getArtillect().getType() == EnumArtillectType.HARVESTER;
     }
 
     /** Returns whether an in-progress EntityAIBase should continue executing */

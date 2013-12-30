@@ -19,9 +19,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import artillects.Artillects;
 import artillects.entity.IArtillect;
-import artillects.hive.ArtillectEntityType;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
+import artillects.hive.EnumArtillectEntity;
+import artillects.hive.EnumArtillectType;
+import artillects.hive.complex.HiveComplex;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,7 +41,7 @@ public class ItemArtillectSpawner extends ItemBase
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        return super.getUnlocalizedName(itemStack) + "." + ArtillectEntityType.values()[itemStack.getItemDamage()].name;
+        return super.getUnlocalizedName(itemStack) + "." + EnumArtillectEntity.values()[itemStack.getItemDamage()].name;
     }
 
     /** Callback for item usage. If the item does something special on right clicking, he will have
@@ -58,7 +58,7 @@ public class ItemArtillectSpawner extends ItemBase
                 if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
                 {
                     this.lastVoiceActivation = System.currentTimeMillis();
-                    switch (ArtillectEntityType.values()[stack.getItemDamage()])
+                    switch (EnumArtillectEntity.values()[stack.getItemDamage()])
                     {
                         case WORKER:
                             world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
@@ -168,7 +168,7 @@ public class ItemArtillectSpawner extends ItemBase
             if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
             {
                 this.lastVoiceActivation = System.currentTimeMillis();
-                switch (ArtillectEntityType.values()[stack.getItemDamage()])
+                switch (EnumArtillectEntity.values()[stack.getItemDamage()])
                 {
                     case WORKER:
                         world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
@@ -186,7 +186,7 @@ public class ItemArtillectSpawner extends ItemBase
      * parameters. Parameters: world, entityID, x, y, z. */
     public static Entity spawnCreature(EntityPlayer player, World world, int id, double x, double y, double z)
     {
-        if (id >= ArtillectEntityType.values().length || ArtillectEntityType.values()[id].getNew(world) == null)
+        if (id >= EnumArtillectEntity.values().length || EnumArtillectEntity.values()[id].getNew(world) == null)
         {
             return null;
         }
@@ -196,7 +196,7 @@ public class ItemArtillectSpawner extends ItemBase
 
             for (int j = 0; j < 1; ++j)
             {
-                entity = ArtillectEntityType.values()[id].getNew(world);
+                entity = EnumArtillectEntity.values()[id].getNew(world);
 
                 if (entity != null && entity instanceof EntityLivingBase)
                 {
@@ -213,7 +213,7 @@ public class ItemArtillectSpawner extends ItemBase
                     if (entityliving instanceof IArtillect)
                     {
                         ((IArtillect) entityliving).setOwner(HiveComplex.getPlayerHive());
-                        ((IArtillect) entityliving).setType(ArtillectType.NONE);
+                        ((IArtillect) entityliving).setType(EnumArtillectType.NONE);
                     }
 
                     world.spawnEntityInWorld(entity);
@@ -228,7 +228,7 @@ public class ItemArtillectSpawner extends ItemBase
     @SideOnly(Side.CLIENT)
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        for (ArtillectEntityType drone : ArtillectEntityType.values())
+        for (EnumArtillectEntity drone : EnumArtillectEntity.values())
         {
             par3List.add(new ItemStack(this, 1, drone.ordinal()));
         }

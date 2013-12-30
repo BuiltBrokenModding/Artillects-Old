@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
 import artillects.item.ItemDroneParts;
 import artillects.network.IPacketReceiver;
@@ -138,13 +138,13 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    public ArtillectType getType()
+    public EnumArtillectType getType()
     {
-        return ArtillectType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectGround.DATA_TYPE_ID));
+        return EnumArtillectType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectGround.DATA_TYPE_ID));
     }
 
     @Override
-    public void setType(ArtillectType type)
+    public void setType(EnumArtillectType type)
     {
         if (this.worldObj.isRemote)
         {
@@ -152,7 +152,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         }
         else
         {
-            ArtillectType t = this.getType();
+            EnumArtillectType t = this.getType();
             if (t != type)
             {
                 this.getDataWatcher().updateObject(EntityArtillectGround.DATA_TYPE_ID, (byte) (type.ordinal()));
@@ -184,7 +184,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public void readEntityFromNBT(NBTTagCompound nbt)
     {
         super.readEntityFromNBT(nbt);
-        this.setType(ArtillectType.values()[nbt.getByte("type")]);
+        this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
         this.isPlayerOwned = nbt.getBoolean("playerOwned");
         if (nbt.hasKey("hiveID") && HiveComplexManager.instance().getHive(nbt.getString("hiveID")) != null)
         {
@@ -204,7 +204,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
     {
-        this.setType(ArtillectType.values()[data.readByte()]);
+        this.setType(EnumArtillectType.values()[data.readByte()]);
     }
 
     @Override

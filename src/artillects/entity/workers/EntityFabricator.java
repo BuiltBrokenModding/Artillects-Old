@@ -11,7 +11,7 @@ import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.entity.ai.work.EntityAIBuilding;
 import artillects.entity.ai.work.EntityAIReproduce;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 
 /** Drone designed to repair and build structure peaces for the hive
  * 
@@ -36,7 +36,7 @@ public class EntityFabricator extends EntityArtillectDrone
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.FABRICATOR.ordinal());
+        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) EnumArtillectType.FABRICATOR.ordinal());
     }
 
     @Override

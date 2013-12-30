@@ -22,9 +22,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import artillects.block.BlockHiveBlock;
+import artillects.block.BlockHiveComplexCore;
 import artillects.block.BlockHiveLighting;
 import artillects.block.BlockHiveWalling;
 import artillects.block.BlockSymbol;
+import artillects.block.TileEntityHiveComplexCore;
 import artillects.block.door.BlockDoorCore;
 import artillects.block.door.BlockDoorFrame;
 import artillects.block.teleporter.BlockGlyph;
@@ -32,10 +34,8 @@ import artillects.block.teleporter.BlockTeleporterAnchor;
 import artillects.block.teleporter.ItemBlockMetadata;
 import artillects.block.teleporter.TileEntityTeleporterAnchor;
 import artillects.commands.CommandTool;
-import artillects.hive.ArtillectEntityType;
-import artillects.hive.BlockHiveComplexCore;
+import artillects.hive.EnumArtillectEntity;
 import artillects.hive.HiveComplexManager;
-import artillects.hive.TileEntityHiveComplexCore;
 import artillects.hive.worldgen.HiveComplexGenerator;
 import artillects.item.ItemArtillectSpawner;
 import artillects.item.ItemBuildingGenerator;
@@ -188,7 +188,6 @@ public class Artillects implements IConnectionHandler
         blockGlyph = CoreRegistry.createNewBlock("blockGlyph", Artillects.ID, BlockGlyph.class, ItemBlockMetadata.class, false);
         blockHiveTeleporterNode = CoreRegistry.createNewBlock("blockHiveTeleporterNode", Artillects.ID, BlockTeleporterAnchor.class, false);
         blockHiveCore = CoreRegistry.createNewBlock("blockHiveCore", Artillects.ID, BlockHiveComplexCore.class, false);
-
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
@@ -196,7 +195,7 @@ public class Artillects implements IConnectionHandler
         System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
         // Register entities
-        for (ArtillectEntityType artillect : ArtillectEntityType.values())
+        for (EnumArtillectEntity artillect : EnumArtillectEntity.values())
         {
             artillect.register();
         }
@@ -215,16 +214,16 @@ public class Artillects implements IConnectionHandler
     {
         /* Load Artillect Recipes */
         // Worker
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.WORKER.ordinal()), "G G", "GCG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.WORKER.ordinal()), "G G", "GCG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
         // Fabriactor
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.FABRICATOR.ordinal()), "GCG", "GGG", "GCG", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.FABRICATOR.ordinal()), "GCG", "GGG", "GCG", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
         // Demolisher
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.DEMOLISHER.ordinal()), "C C", "GGG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.DEMOLISHER.ordinal()), "C C", "GGG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
         // Seeker
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, ArtillectEntityType.SEEKER.ordinal()), "G G", "GGG", " C ", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.SEEKER.ordinal()), "G G", "GGG", " C ", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
 
         /* Load Recipe Item Recipes */
         // Metal Plate

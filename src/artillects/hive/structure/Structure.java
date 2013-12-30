@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.hive.HiveComplex;
 import artillects.hive.HiveEntityObject;
+import artillects.hive.complex.HiveComplex;
 
 import com.builtbroken.common.Pair;
 

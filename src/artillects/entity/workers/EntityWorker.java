@@ -12,8 +12,8 @@ import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.entity.ai.work.EntityAIBlacksmith;
 import artillects.entity.ai.work.EntityAICrafting;
 import artillects.entity.ai.work.EntityAIMining;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
+import artillects.hive.EnumArtillectType;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneMining;
 import artillects.hive.zone.ZoneProcessing;
@@ -41,11 +41,11 @@ public class EntityWorker extends EntityArtillectDrone
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.HARVESTER.ordinal());
+        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) EnumArtillectType.HARVESTER.ordinal());
     }
 
     @Override
-    public void setType(ArtillectType type)
+    public void setType(EnumArtillectType type)
     {
         super.setType(type);
         genZone();
@@ -87,11 +87,11 @@ public class EntityWorker extends EntityArtillectDrone
         {
             if (this.getZone() == null)
             {
-                if (this.getType() == ArtillectType.HARVESTER)
+                if (this.getType() == EnumArtillectType.HARVESTER)
                 {
                     this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
                 }
-                if (this.getType() == ArtillectType.BLACKSMITH || this.getType() == ArtillectType.CRAFTER)
+                if (this.getType() == EnumArtillectType.BLACKSMITH || this.getType() == EnumArtillectType.CRAFTER)
                 {
                     this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
                 }

@@ -14,7 +14,7 @@ import universalelectricity.api.vector.Vector3;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.ZoneProcessing;
 
 public class EntityAIReproduce extends EntityAIBase
@@ -69,18 +69,18 @@ public class EntityAIReproduce extends EntityAIBase
 
         if (this.idleTime <= 0 && this.shouldExecute())
         {
-            HashMap<ArtillectType, Integer> artillectTypeCount = new HashMap<ArtillectType, Integer>();
+            HashMap<EnumArtillectType, Integer> artillectTypeCount = new HashMap<EnumArtillectType, Integer>();
 
             Set<IArtillect> artillects = new HashSet<IArtillect>(this.entity.getZone().getComplex().getArtillects());
             artillectTypeCount.clear();
             for (IArtillect artillect : artillects)
             {
-                ArtillectType type = artillect.getType();
+                EnumArtillectType type = artillect.getType();
                 artillectTypeCount.put(artillect.getType(), (artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0) + 1);
             }
 
             // TODO: Fix ratio sorting NOT working.
-            for (ArtillectType type : ArtillectType.values())
+            for (EnumArtillectType type : EnumArtillectType.values())
             {
                 int amount = artillectTypeCount.containsKey(type) ? artillectTypeCount.get(type) : 0;
 
@@ -91,7 +91,7 @@ public class EntityAIReproduce extends EntityAIBase
                 }
             }
 
-            this.tryProduce(ArtillectType.FABRICATOR);
+            this.tryProduce(EnumArtillectType.FABRICATOR);
             this.idleTime = this.maxIdleTime;
         }
     }
@@ -100,7 +100,7 @@ public class EntityAIReproduce extends EntityAIBase
      * 
      * @param type
      * @return True if produced. */
-    private boolean tryProduce(ArtillectType type)
+    private boolean tryProduce(EnumArtillectType type)
     {
         if (this.entity.getZone() instanceof ZoneProcessing)
         {

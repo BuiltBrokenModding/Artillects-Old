@@ -19,7 +19,7 @@ import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.entity.ai.combat.EntityDroneSelector;
-import artillects.hive.ArtillectType;
+import artillects.hive.EnumArtillectType;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
 {
@@ -41,7 +41,7 @@ public class EntityDemolisher extends EntityArtillectGround implements IRangedAt
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) ArtillectType.DEMOLISHER.ordinal());
+        this.dataWatcher.addObject(EntityArtillectGround.DATA_TYPE_ID, (byte) EnumArtillectType.DEMOLISHER.ordinal());
     }
 
     @Override

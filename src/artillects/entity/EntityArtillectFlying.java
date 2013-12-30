@@ -22,9 +22,9 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.entity.ai.combat.EntityDroneSelector;
-import artillects.hive.ArtillectType;
-import artillects.hive.HiveComplex;
+import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
 
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
@@ -294,13 +294,13 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     }
 
     @Override
-    public ArtillectType getType()
+    public EnumArtillectType getType()
     {
-        return ArtillectType.SEEKER;
+        return EnumArtillectType.SEEKER;
     }
 
     @Override
-    public void setType(ArtillectType type)
+    public void setType(EnumArtillectType type)
     {
 
     }
@@ -324,7 +324,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     {
         super.readEntityFromNBT(nbt);
 
-        this.setType(ArtillectType.values()[nbt.getByte("type")]);
+        this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
         if (!nbt.getBoolean("hive"))
         {
             HiveComplex.getPlayerHive().addDrone(this);
