@@ -6,7 +6,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.api.vector.Vector3;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.entity.ai.work.EntityAIBlacksmith;
@@ -89,11 +89,11 @@ public class EntityWorker extends EntityArtillectDrone
             {
                 if (this.getType() == EnumArtillectType.HARVESTER)
                 {
-                    this.setZone(new ZoneMining(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+                    this.setZone(new ZoneMining(this.worldObj, new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
                 }
                 if (this.getType() == EnumArtillectType.BLACKSMITH || this.getType() == EnumArtillectType.CRAFTER)
                 {
-                    this.setZone(new ZoneProcessing(HiveComplex.getPlayerHive(), new VectorWorld(this.worldObj, this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new VectorWorld(this.worldObj, this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
+                    this.setZone(new ZoneProcessing(this.worldObj, new Vector3(this.getHomePosition().posX - 25, this.getHomePosition().posY - 10, this.getHomePosition().posZ - 25), new Vector3(this.getHomePosition().posX + 25, this.getHomePosition().posY + 10, this.getHomePosition().posZ + 25)));
                 }
             }
         }

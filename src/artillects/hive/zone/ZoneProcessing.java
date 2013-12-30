@@ -6,20 +6,19 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockFurnace;
+import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityWorker;
-import artillects.hive.complex.HiveComplex;
 
 public class ZoneProcessing extends Zone
 {
     public final List<Vector3> chestPositions = new ArrayList<Vector3>();
     public final List<Vector3> furnacePositions = new ArrayList<Vector3>();
 
-    public ZoneProcessing(HiveComplex complex, VectorWorld start, VectorWorld end)
+    public ZoneProcessing(World world, Vector3 start, Vector3 end)
     {
-        super(complex, start, end);
+        super(world, start, end);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class ZoneProcessing extends Zone
             {
                 for (int z = (int) start.z; z < (int) end.z; z++)
                 {
-                    int blockID = this.start.world.getBlockId(x, y, z);
+                    int blockID = this.world.getBlockId(x, y, z);
                     Block block = Block.blocksList[blockID];
 
                     if (block != null)

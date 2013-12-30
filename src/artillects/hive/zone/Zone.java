@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.hive.HiveEntityObject;
@@ -16,16 +18,15 @@ import artillects.hive.complex.HiveComplex;
 public class Zone extends HiveEntityObject
 {
     /** Start is always the min point; end is always the largest point. */
-    public VectorWorld start, end;
-
-    public HiveComplex complex;
+    public World world;
+    public Vector3 start, end;
 
     public List<IArtillect> assignedArtillects = new ArrayList<IArtillect>();
 
-    public Zone(HiveComplex complex, VectorWorld start, VectorWorld end)
+    public Zone(World world, Vector3 start, Vector3 end)
     {
-        this.start = new VectorWorld(start.world, Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
-        this.end = new VectorWorld(start.world, Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
+        this.start = new Vector3(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
+        this.end = new Vector3(Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
     }
 
     @Override
@@ -73,10 +74,5 @@ public class Zone extends HiveEntityObject
     public void scanForChests()
     {
         // TODO load IInventory tiles from chunks into a list for easy access
-    }
-
-    public HiveComplex getComplex()
-    {
-        return this.complex;
     }
 }

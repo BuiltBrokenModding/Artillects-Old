@@ -1,16 +1,14 @@
 package artillects.hive.zone;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityWorker;
-import artillects.hive.complex.HiveComplex;
 import artillects.world.AreaScanner;
 import artillects.world.IBlockSelector;
 
@@ -49,9 +47,9 @@ public class ZoneMining extends Zone implements IBlockSelector
         }
     }
 
-    public ZoneMining(HiveComplex complex, VectorWorld start, VectorWorld end)
+    public ZoneMining(World world, Vector3 start, Vector3 end)
     {
-        super(complex, start, end);
+        super(world, start, end);
     }
 
     public ZoneMining clearAll()
@@ -67,14 +65,14 @@ public class ZoneMining extends Zone implements IBlockSelector
         if (ticks % 20 == 0)
         {
             this.scannedBlocks.clear();
-            AreaScanner.scanArea(this.start.world, this, this.start, this.end);
+            AreaScanner.scanArea(this.world, this, this.start, this.end);
         }
     }
 
     @Override
     public void onScan(VectorWorld loc)
     {
-        if (loc != null && loc.world == this.start.world)
+        if (loc != null && loc.world == this.world)
         {
             int blockID = loc.getBlockID();
             Block block = Block.blocksList[blockID];

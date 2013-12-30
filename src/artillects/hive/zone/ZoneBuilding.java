@@ -15,10 +15,11 @@ import com.builtbroken.common.Pair;
 
 public class ZoneBuilding extends Zone
 {
-    public ZoneBuilding(HiveComplex complex, VectorWorld start, VectorWorld end)
+    HiveComplex complex;
+    public ZoneBuilding(HiveComplex complex, Vector3 start, Vector3 end)
     {
-        super(complex, start, end);
-        // TODO Auto-generated constructor stub
+        super(complex.location.world, start, end);
+        this.complex = complex;
     }
 
     public HashMap<Vector3, Pair<ItemStack, Structure>> buildPosition = new HashMap<Vector3, Pair<ItemStack, Structure>>();
@@ -39,7 +40,7 @@ public class ZoneBuilding extends Zone
 
     public Pair<Vector3, ItemStack> getClosestBlock(VectorWorld vec)
     {
-        if (!buildPosition.isEmpty() && vec.world == this.start.world)
+        if (!buildPosition.isEmpty() && vec.world == this.world)
         {
             Vector3 location = null;
             ItemStack stack = null;

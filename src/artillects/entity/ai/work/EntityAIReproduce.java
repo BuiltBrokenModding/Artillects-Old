@@ -15,6 +15,7 @@ import artillects.entity.EntityArtillectGround;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.EnumArtillectType;
+import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.ZoneProcessing;
 
 public class EntityAIReproduce extends EntityAIBase
@@ -44,7 +45,7 @@ public class EntityAIReproduce extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return this.entity.getZone() instanceof ZoneProcessing && this.entity.getZone().getComplex() != null;
+        return this.entity.getZone() instanceof ZoneProcessing && this.entity.getOwner() instanceof HiveComplex;
     }
 
     /** Returns whether an in-progress EntityAIBase should continue executing */
@@ -71,7 +72,7 @@ public class EntityAIReproduce extends EntityAIBase
         {
             HashMap<EnumArtillectType, Integer> artillectTypeCount = new HashMap<EnumArtillectType, Integer>();
 
-            Set<IArtillect> artillects = new HashSet<IArtillect>(this.entity.getZone().getComplex().getArtillects());
+            Set<IArtillect> artillects = new HashSet<IArtillect>(((HiveComplex)this.entity.getOwner()).getArtillects());
             artillectTypeCount.clear();
             for (IArtillect artillect : artillects)
             {
