@@ -1,10 +1,12 @@
-package artillects.entity;
+package artillects.entity.ai.combat;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import artillects.entity.EntityArtillectGround;
+import artillects.entity.IArtillect;
 import artillects.hive.HiveComplex;
 
 public class EntityDroneSelector implements IEntitySelector
@@ -26,7 +28,7 @@ public class EntityDroneSelector implements IEntitySelector
                 // Attack players if hive drone TODO change to hostile only system later
                 if (drone.getOwner() instanceof HiveComplex && !((HiveComplex) drone.getOwner()).playerZone)
                 {
-                    if (entity instanceof EntityPlayer)
+                    if (entity instanceof EntityPlayer && entity.worldObj.difficultySetting > 0)
                     {
                         if (!((EntityPlayer) entity).capabilities.isCreativeMode)
                         {
