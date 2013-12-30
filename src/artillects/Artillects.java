@@ -3,25 +3,15 @@ package artillects;
 import java.io.File;
 import java.util.Arrays;
 
-import com.builtbroken.minecraft.CoreRegistry;
-
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.NetLoginHandler;
-import net.minecraft.network.packet.NetHandler;
-import net.minecraft.network.packet.Packet1Login;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import artillects.block.BlockHiveBlock;
 import artillects.block.BlockHiveComplexCore;
 import artillects.block.BlockHiveLighting;
 import artillects.block.BlockHiveWalling;
@@ -47,6 +37,9 @@ import artillects.item.weapons.ItemWeaponBattery;
 import artillects.network.PacketEntity;
 import artillects.network.PacketHandler;
 import artillects.network.PacketTile;
+
+import com.builtbroken.minecraft.CoreRegistry;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -60,17 +53,15 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.Player;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Artillects.ID, name = Artillects.NAME, version = Artillects.VERSION, useMetadata = true)
-@NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class, connectionHandler = Artillects.class)
-public class Artillects implements IConnectionHandler
+@NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+public class Artillects
 {
     // @Mod Prerequisites
     public static final String MAJOR_VERSION = "@MAJOR@";
@@ -325,40 +316,6 @@ public class Artillects implements IConnectionHandler
         return text;
     }
 
-    public static int nextBlockID()
-    {
-        int id = BLOCK_ID_PRE;
-
-        while (id > 255 && id < (Block.blocksList.length - 1))
-        {
-            Block block = Block.blocksList[id];
-            if (block == null)
-            {
-                break;
-            }
-            id++;
-        }
-        BLOCK_ID_PRE = id + 1;
-        return id;
-    }
-
-    public static int nextItemID()
-    {
-        int id = ITEM_ID_PREFIX;
-
-        while (id > 255 && id < (Item.itemsList.length - 1))
-        {
-            Item item = Item.itemsList[id];
-            if (item == null)
-            {
-                break;
-            }
-            id++;
-        }
-        ITEM_ID_PREFIX = id + 1;
-        return id;
-    }
-
     @EventHandler
     public void serverStarting(FMLServerStartingEvent event)
     {
@@ -366,37 +323,5 @@ public class Artillects implements IConnectionHandler
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
     }
-
-    @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager)
-    {
-        if (player != null && !((EntityPlayer) player).worldObj.isRemote)
-        {
-            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] Visit http://wiki.universalelectricity.com/artillects for documentation on Artillects."));
-            ((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText("[Artillect] For more updated versions of the mod, visit http://www.calclavia.com:8080/job/Artillects/"));
-        }
-    }
-
-    @Override
-    public String connectionReceived(NetLoginHandler netHandler, INetworkManager manager)
-    {
-        return null;
-    }
-
-    @Override
-    public void connectionOpened(NetHandler netClientHandler, String server, int port, INetworkManager manager)
-    {}
-
-    @Override
-    public void connectionOpened(NetHandler netClientHandler, MinecraftServer server, INetworkManager manager)
-    {}
-
-    @Override
-    public void connectionClosed(INetworkManager manager)
-    {}
-
-    @Override
-    public void clientLoggedIn(NetHandler clientHandler, INetworkManager manager, Packet1Login login)
-    {}
 
 }
