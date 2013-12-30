@@ -53,10 +53,11 @@ public class Structure extends HiveEntityObject
     public void updateEntity()
     {
         super.updateEntity();
+        /** Tick is setup to make sure that only a few structures update per tick */
         if (this.ticks % (60 + location.x + location.y + location.z) == 0)
         {
             HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
-            building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true);
+            building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true, true);
             if (!missingBlocks.isEmpty())
             {
                 System.out.println(this.toString() + " found damage");
