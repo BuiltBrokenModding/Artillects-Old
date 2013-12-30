@@ -11,13 +11,13 @@ import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityWorker;
 import artillects.hive.complex.HiveComplex;
+import artillects.world.AreaScanner;
+import artillects.world.IBlockSelector;
 
 import com.builtbroken.common.Pair;
 
-public class ZoneMining extends Zone
+public class ZoneMining extends Zone implements IBlockSelector
 {
-    public final HashMap<Block, HashSet<Vector3>> scannedSortedPositions = new HashMap<Block, HashSet<Vector3>>();
-
     public final List<Vector3> scannedBlocks = new ArrayList<Vector3>();
 
     public static final List<Pair<Integer, Integer>> oreList = new ArrayList<Pair<Integer, Integer>>();
@@ -64,45 +64,24 @@ public class ZoneMining extends Zone
     public void updateEntity()
     {
         super.updateEntity();
-        if (ticks % 10 == 0)
+        if (ticks % 20 == 0)
         {
-            this.scan();
+            this.scannedBlocks.clear();
+            AreaScanner.scanArea(this.start.world, this, this.start, this.end);
         }
     }
 
-    public void scan()
+    @Override
+    public void onScan(VectorWorld loc)
     {
-        Vector3 start = this.start;
-        Vector3 end = this.end;
-        this.scannedBlocks.clear();
-        this.scannedSortedPositions.clear();
-
-        for (int x = (int) start.x; x < (int) end.x; x++)
+        if (loc != null && loc.world == this.start.world)
         {
-            for (int y = (int) start.y; y < (int) end.y; y++)
+            int blockID = loc.getBlockID();
+            Block block = Block.blocksList[blockID];
+
+            if (block != null && this.canMine(blockID, loc.getBlockMetadata()))
             {
-                for (int z = (int) start.z; z < (int) end.z; z++)
-                {
-                    int blockID = this.start.world.getBlockId(x, y, z);
-                    Block block = Block.blocksList[blockID];
-
-                    if (block != null && this.canMine(blockID, this.start.world.getBlockMetadata(x, y, z)))
-                    {
-                        Vector3 position = new Vector3(x, y, z);
-
-                        HashSet<Vector3> vecs = this.scannedSortedPositions.get(block);
-
-                        if (vecs == null)
-                        {
-                            vecs = new HashSet<Vector3>();
-                        }
-
-                        this.scannedBlocks.add(position);
-                        vecs.add(position);
-
-                        this.scannedSortedPositions.put(block, vecs);
-                    }
-                }
+                this.scannedBlocks.add(new Vector3(loc.x, loc.y, loc.z));
             }
         }
     }
@@ -117,4 +96,5 @@ public class ZoneMining extends Zone
     {
         return this.clearAll || ZoneMining.oreList.contains(new Pair<Integer, Integer>(id, -1)) || ZoneMining.oreList.contains(new Pair<Integer, Integer>(id, meta));
     }
+
 }

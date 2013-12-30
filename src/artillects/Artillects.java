@@ -59,7 +59,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = Artillects.ID, name = Artillects.NAME, version = Artillects.VERSION, useMetadata = true)
+@Mod(modid = Artillects.MOD_ID, name = Artillects.NAME, version = Artillects.VERSION, useMetadata = true)
 @NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Artillects
 {
@@ -71,7 +71,7 @@ public class Artillects
     public static final String VERSION = MAJOR_VERSION + "." + MINOR_VERSION + "." + REVIS_VERSION + "." + BUILD_VERSION;
 
     // @Mod
-    public static final String ID = "Artillects";
+    public static final String MOD_ID = "Artillects";
     public static final String NAME = "Artillects";
 
     @SidedProxy(clientSide = "artillects.client.ClientProxy", serverSide = "artillects.CommonProxy")
@@ -81,7 +81,7 @@ public class Artillects
 
     public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Dark/Artillects.cfg"));
 
-    private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US" };
+    private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US", "de_DE" };
 
     // Domain and prefix
     public static final String DOMAIN = "artillects";
@@ -107,10 +107,10 @@ public class Artillects
     public static final PacketTile PACKET_TILE = new PacketTile();
     public static final PacketEntity PACKET_ENTITY = new PacketEntity();
 
-    @Instance(Artillects.ID)
+    @Instance(Artillects.MOD_ID)
     public static Artillects instance;
 
-    @Metadata(Artillects.ID)
+    @Metadata(Artillects.MOD_ID)
     public static ModMetadata meta;
 
     public static Block blockGlyph;
@@ -141,7 +141,7 @@ public class Artillects
         MinecraftForge.EVENT_BUS.register(this);
 
         // Load meta
-        meta.modId = ID;
+        meta.modId = MOD_ID;
         meta.name = NAME;
         meta.description = "Alien in nature, it is unknown how these Artillects came to exist. What is do know is that they seem to be focused on stripping the planet of its resources...";
         meta.url = "www.universalelectricity.com/artillects";
@@ -171,21 +171,21 @@ public class Artillects
         hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
-        itemArtillectSpawner = CoreRegistry.createNewItem("itemDrones", Artillects.ID, ItemArtillectSpawner.class, true);
-        itemParts = CoreRegistry.createNewItem("itemDroneParts", Artillects.ID, ItemDroneParts.class, true);
-        itemBuilding = CoreRegistry.createNewItem("itemBuildingSpawner", Artillects.ID, ItemBuildingGenerator.class, true);
-        itemSchematicCreator = CoreRegistry.createNewItem("itemSchematicTool", Artillects.ID, ItemSchematicCreator.class, true);
-        weaponPlasmaLauncher = CoreRegistry.createNewItem("itemPlasmaLauncher", Artillects.ID, ItemPlasmaLauncher.class, true);
+        itemArtillectSpawner = CoreRegistry.createNewItem("itemDrones", Artillects.MOD_ID, ItemArtillectSpawner.class, true);
+        itemParts = CoreRegistry.createNewItem("itemDroneParts", Artillects.MOD_ID, ItemDroneParts.class, true);
+        itemBuilding = CoreRegistry.createNewItem("itemBuildingSpawner", Artillects.MOD_ID, ItemBuildingGenerator.class, true);
+        itemSchematicCreator = CoreRegistry.createNewItem("itemSchematicTool", Artillects.MOD_ID, ItemSchematicCreator.class, true);
+        weaponPlasmaLauncher = CoreRegistry.createNewItem("itemPlasmaLauncher", Artillects.MOD_ID, ItemPlasmaLauncher.class, true);
         plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
 
-        blockSymbol = CoreRegistry.createNewBlock("blockSymbol", Artillects.ID, BlockSymbol.class, ItemBlockMetadata.class, false);
-        blockHiveWalling = CoreRegistry.createNewBlock("blockHiveWalling", Artillects.ID, BlockHiveWalling.class, ItemBlockMetadata.class, false);
-        blockLight = CoreRegistry.createNewBlock("blockHiveLighting", Artillects.ID, BlockHiveLighting.class, ItemBlockMetadata.class, false);
-        blockDoorCore = CoreRegistry.createNewBlock("blockDoorCore", Artillects.ID, BlockDoorCore.class, false);
-        blockDoorFrame = CoreRegistry.createNewBlock("blockDoorFrame", Artillects.ID, BlockDoorFrame.class, false);
-        blockGlyph = CoreRegistry.createNewBlock("blockGlyph", Artillects.ID, BlockGlyph.class, ItemBlockMetadata.class, false);
-        blockHiveTeleporterNode = CoreRegistry.createNewBlock("blockHiveTeleporterNode", Artillects.ID, BlockTeleporterAnchor.class, false);
-        blockHiveCore = CoreRegistry.createNewBlock("blockHiveCore", Artillects.ID, BlockHiveComplexCore.class, false);
+        blockSymbol = CoreRegistry.createNewBlock("blockSymbol", Artillects.MOD_ID, BlockSymbol.class, ItemBlockMetadata.class, false);
+        blockHiveWalling = CoreRegistry.createNewBlock("blockHiveWalling", Artillects.MOD_ID, BlockHiveWalling.class, ItemBlockMetadata.class, false);
+        blockLight = CoreRegistry.createNewBlock("blockHiveLighting", Artillects.MOD_ID, BlockHiveLighting.class, ItemBlockMetadata.class, false);
+        blockDoorCore = CoreRegistry.createNewBlock("blockDoorCore", Artillects.MOD_ID, BlockDoorCore.class, false);
+        blockDoorFrame = CoreRegistry.createNewBlock("blockDoorFrame", Artillects.MOD_ID, BlockDoorFrame.class, false);
+        blockGlyph = CoreRegistry.createNewBlock("blockGlyph", Artillects.MOD_ID, BlockGlyph.class, ItemBlockMetadata.class, false);
+        blockHiveTeleporterNode = CoreRegistry.createNewBlock("blockHiveTeleporterNode", Artillects.MOD_ID, BlockTeleporterAnchor.class, false);
+        blockHiveCore = CoreRegistry.createNewBlock("blockHiveCore", Artillects.MOD_ID, BlockHiveComplexCore.class, false);
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
