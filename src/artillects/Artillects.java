@@ -140,6 +140,9 @@ public class Artillects implements IConnectionHandler
     public static Item plasmaBattery;
 
     public static boolean enableHiveComplexGenerator = true;
+    public static boolean enableHiveChunkLoading = true;
+    public static boolean enableHiveCoreChunkLoading = true;
+    public static int hiveChunkLoadingRange = 5;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -172,6 +175,10 @@ public class Artillects implements IConnectionHandler
         CONFIGURATION.load();
         // Settings
         enableHiveComplexGenerator = CONFIGURATION.get("HiveComplex", "EnableWorldGen", true).getBoolean(true);
+        enableHiveChunkLoading = CONFIGURATION.get("HiveComplex", "EnableGeneralChunkLoading", true, "Allows drone complexs to chunkload areas outside the core chunk").getBoolean(true);
+        enableHiveCoreChunkLoading = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", true, "Disabling this will cause a hive complex to unload from the map").getBoolean(true);
+        hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
+        
         // Item & block ids
         itemArtillectSpawner = CoreRegistry.createNewItem("itemDrones", Artillects.ID, ItemArtillectSpawner.class, true);
         itemParts = CoreRegistry.createNewItem("itemDroneParts", Artillects.ID, ItemDroneParts.class, true);
