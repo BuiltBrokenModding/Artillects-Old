@@ -258,4 +258,16 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         return this.isOnTeam(entity.getTeam());
     }
 
+    @Override
+    public World getWorld()
+    {
+        return this.worldObj;
+    }
+
+    @Override
+    public Vector3 pos()
+    {
+        return new Vector3(this);
+    }
+
 }

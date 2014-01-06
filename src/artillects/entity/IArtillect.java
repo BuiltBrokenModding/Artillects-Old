@@ -1,10 +1,12 @@
 package artillects.entity;
 
+import com.builtbroken.ai.IEntity;
+
 import net.minecraft.inventory.IInventory;
 import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.Zone;
 
-public interface IArtillect
+public interface IArtillect extends IEntity
 {
 	public void setOwner(Object hive);
 

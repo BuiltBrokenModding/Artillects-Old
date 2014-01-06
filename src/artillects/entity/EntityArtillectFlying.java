@@ -2,6 +2,8 @@ package artillects.entity;
 
 import java.util.List;
 
+import com.builtbroken.ai.combat.EntityCombatSelector;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +23,6 @@ import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
-import artillects.entity.ai.combat.EntityDroneSelector;
 import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
@@ -248,7 +249,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     public EntityLivingBase getTarget(double range)
     {
         EntityLivingBase entity = null;
-        EntityDroneSelector selector = new EntityDroneSelector(this);
+        EntityCombatSelector selector = new EntityCombatSelector(this);
         List<EntityLivingBase> entityList = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.boundingBox.expand(range, range, range));
 
         double distance = range * range;

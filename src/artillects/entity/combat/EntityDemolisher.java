@@ -1,5 +1,7 @@
 package artillects.entity.combat;
 
+import com.builtbroken.ai.combat.EntityCombatSelector;
+
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
@@ -18,7 +20,6 @@ import net.minecraft.world.World;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
-import artillects.entity.ai.combat.EntityDroneSelector;
 import artillects.hive.EnumArtillectType;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
@@ -34,7 +35,7 @@ public class EntityDemolisher extends EntityArtillectGround implements IRangedAt
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityDroneSelector(this)));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityCombatSelector(this)));
     }
 
     @Override
