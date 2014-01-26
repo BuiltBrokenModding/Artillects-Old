@@ -27,6 +27,7 @@ public class Zone extends HiveEntityObject
     {
         this.start = new Vector3(Math.min(start.x, end.x), Math.min(start.y, end.y), Math.min(start.z, end.z));
         this.end = new Vector3(Math.max(start.x, end.x), Math.max(start.y, end.y), Math.max(start.z, end.z));
+        this.world = world;
     }
 
     @Override

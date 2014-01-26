@@ -25,7 +25,7 @@ public class BlockDoorFrame extends BlockBase implements IHiveBlock {
 	}
 	
 	public void registerIcons(IconRegister ir) {
-		icons[0] = ir.registerIcon(Artillects.PREFIX + "decorWall2");
+		icons[0] = ir.registerIcon(Artillects.PREFIX + "decorWall.1");
 		icons[1] = ir.registerIcon(Artillects.PREFIX + "doorFrame_open");
 	}
 }

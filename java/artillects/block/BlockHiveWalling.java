@@ -15,7 +15,7 @@ public class BlockHiveWalling extends BlockHiveBlock
 {
     public BlockHiveWalling()
     {
-        super("hiveWalling");
+        super("decorWall");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BlockHiveWalling extends BlockHiveBlock
     {
         for (HiveWallTypes data : HiveWallTypes.values())
         {
-            data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "wall." + data.name().toLowerCase());
+            data.icon = par1IconRegister.registerIcon(Artillects.PREFIX + "decorWall." + data.ordinal());
         }
 
         this.blockIcon = HiveWallTypes.BASE.icon;
