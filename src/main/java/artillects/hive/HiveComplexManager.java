@@ -15,7 +15,7 @@ import universalelectricity.api.vector.VectorWorld;
 
 import artillects.hive.complex.HiveComplex;
 
-import com.builtbroken.minecraft.save.NBTFileHelper;
+import calclavia.lib.utility.nbt.NBTUtility;
 
 /** Hive collection that the drones use for logic and collection feed back
  * 
@@ -90,7 +90,7 @@ public class HiveComplexManager
                     {
                         NBTTagCompound nbt = new NBTTagCompound();
                         entry.getValue().save(nbt);
-                        NBTFileHelper.saveNBTFile(new File(NBTFileHelper.getWorldSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), "complex.dat", nbt);
+                        NBTUtility.saveData(new File(NBTUtility.getSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), "complex.dat", nbt);
                     }
 
                 }
@@ -142,7 +142,7 @@ public class HiveComplexManager
     {
         synchronized (complexes)
         {
-            File hiveFolder = new File(NBTFileHelper.getWorldSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
+            File hiveFolder = new File(NBTUtility.getSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
             if (hiveFolder.exists())
             {
                 for (File fileEntry : hiveFolder.listFiles())
@@ -153,7 +153,7 @@ public class HiveComplexManager
                         {
                             if (subFile.getName().equalsIgnoreCase("complex.dat"))
                             {
-                                NBTTagCompound tag = NBTFileHelper.loadNBTFile(subFile, false);
+                                NBTTagCompound tag = NBTUtility.loadData(subFile);
                                 String name = tag.getString("name");
                                 if (!this.complexes.containsKey(name))
                                 {

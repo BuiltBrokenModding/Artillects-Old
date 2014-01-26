@@ -10,8 +10,7 @@ import net.minecraft.util.ChatMessageComponent;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
-
-import com.builtbroken.minecraft.save.NBTFileHelper;
+import calclavia.lib.utility.nbt.NBTUtility;
 
 public class CommandTool extends CommandBase
 {
@@ -56,7 +55,7 @@ public class CommandTool extends CommandBase
                     {
                         if (args.length >= 3)
                         {
-                            File file = new File(NBTFileHelper.getBaseDirectory(), "schematics/" + args[2] + ".dat");
+                            File file = new File(NBTUtility.getBaseDirectory(), "schematics/" + args[2] + ".dat");
                             if (file.exists())
                             {
                                 player.sendChatToPlayer(ChatMessageComponent.createFromText("Loading " + args[2] + " from file"));
@@ -177,5 +176,10 @@ public class CommandTool extends CommandBase
     {
         return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] { "help", "selection load <name>", "selection save [name]", "selection scan", "zone new <name>" }) : null;
     }
+
+	@Override
+	public int compareTo(Object o) {
+		return 0;
+	}
 
 }

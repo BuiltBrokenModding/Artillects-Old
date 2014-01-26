@@ -15,9 +15,8 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.block.BlockSymbol;
-
-import com.builtbroken.minecraft.save.ISaveObj;
-import com.builtbroken.minecraft.save.NBTFileHelper;
+import calclavia.lib.utility.nbt.ISaveObj;
+import calclavia.lib.utility.nbt.NBTUtility;
 
 /** File that represents all the data loaded from a schematic data file
  * 
@@ -271,7 +270,7 @@ public class Schematic implements ISaveObj
         {
             NBTTagCompound nbt = new NBTTagCompound();
             this.save(nbt);
-            NBTFileHelper.saveNBTFile(new File(NBTFileHelper.getBaseDirectory(), "schematics"), fileName + ".dat", nbt);
+            NBTUtility.saveData(new File(NBTUtility.getBaseDirectory(), "schematics"), fileName + ".dat", nbt);
         }
         catch (Exception e)
         {

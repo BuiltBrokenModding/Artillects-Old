@@ -33,13 +33,11 @@ import artillects.item.ItemDroneParts;
 import artillects.item.ItemDroneParts.Part;
 import artillects.item.ItemSchematicCreator;
 import artillects.item.weapons.ItemPlasmaLauncher;
-import artillects.item.weapons.ItemWeaponBattery;
 import artillects.network.PacketEntity;
 import artillects.network.PacketHandler;
 import artillects.network.PacketTile;
-
-import com.builtbroken.minecraft.CoreRegistry;
-
+import calclavia.lib.content.ContentRegistry;
+import calclavia.lib.content.IDManager;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -113,6 +111,10 @@ public class Artillects
     @Metadata(Artillects.MOD_ID)
     public static ModMetadata meta;
 
+    /** Calclavia Gubins */
+    public static IDManager idManager = new IDManager(BLOCK_ID_PRE, ITEM_ID_PREFIX);
+    public static ContentRegistry contentRegistry = new ContentRegistry(CONFIGURATION, Artillects.MOD_ID);
+    
     public static Block blockGlyph;
     public static Block blockHiveWalling;
     public static Block blockLight;
@@ -171,21 +173,21 @@ public class Artillects
         hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
-        itemArtillectSpawner = CoreRegistry.createNewItem("itemDrones", Artillects.MOD_ID, ItemArtillectSpawner.class, true);
-        itemParts = CoreRegistry.createNewItem("itemDroneParts", Artillects.MOD_ID, ItemDroneParts.class, true);
-        itemBuilding = CoreRegistry.createNewItem("itemBuildingSpawner", Artillects.MOD_ID, ItemBuildingGenerator.class, true);
-        itemSchematicCreator = CoreRegistry.createNewItem("itemSchematicTool", Artillects.MOD_ID, ItemSchematicCreator.class, true);
-        weaponPlasmaLauncher = CoreRegistry.createNewItem("itemPlasmaLauncher", Artillects.MOD_ID, ItemPlasmaLauncher.class, true);
-        plasmaBattery = new ItemWeaponBattery("plasmaBattery", 20);
+        itemArtillectSpawner = contentRegistry.createItem("it1"
+        		+ "emDrones", ItemArtillectSpawner.class, true);
+        itemParts = contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
+        itemBuilding = contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
+        itemSchematicCreator = contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
+        weaponPlasmaLauncher = contentRegistry.createItem("itemPlasmaLauncher", ItemPlasmaLauncher.class, true);
 
-        blockSymbol = CoreRegistry.createNewBlock("blockSymbol", Artillects.MOD_ID, BlockSymbol.class, ItemBlockMetadata.class, false);
-        blockHiveWalling = CoreRegistry.createNewBlock("blockHiveWalling", Artillects.MOD_ID, BlockHiveWalling.class, ItemBlockMetadata.class, false);
-        blockLight = CoreRegistry.createNewBlock("blockHiveLighting", Artillects.MOD_ID, BlockHiveLighting.class, ItemBlockMetadata.class, false);
-        blockDoorCore = CoreRegistry.createNewBlock("blockDoorCore", Artillects.MOD_ID, BlockDoorCore.class, false);
-        blockDoorFrame = CoreRegistry.createNewBlock("blockDoorFrame", Artillects.MOD_ID, BlockDoorFrame.class, false);
-        blockGlyph = CoreRegistry.createNewBlock("blockGlyph", Artillects.MOD_ID, BlockGlyph.class, ItemBlockMetadata.class, false);
-        blockHiveTeleporterNode = CoreRegistry.createNewBlock("blockHiveTeleporterNode", Artillects.MOD_ID, BlockTeleporterAnchor.class, false);
-        blockHiveCore = CoreRegistry.createNewBlock("blockHiveCore", Artillects.MOD_ID, BlockHiveComplexCore.class, false);
+        blockSymbol = contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
+        blockHiveWalling = contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
+        blockLight = contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
+        blockDoorCore = contentRegistry.createBlock(BlockDoorCore.class);
+        blockDoorFrame = contentRegistry.createBlock(BlockDoorFrame.class);
+        blockGlyph = contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
+        blockHiveTeleporterNode = contentRegistry.createBlock(BlockTeleporterAnchor.class);
+        blockHiveCore = contentRegistry.createBlock(BlockHiveComplexCore.class);
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);

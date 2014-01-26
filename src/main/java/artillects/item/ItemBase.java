@@ -1,24 +1,14 @@
 package artillects.item;
 
-import com.builtbroken.minecraft.DarkCore;
-
-import net.minecraft.item.Item;
 import artillects.Artillects;
 import artillects.ArtillectsTab;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraftforge.common.Configuration;
 
-/**
- * Base item for all items in this mod
- * 
- * @author Dark
- */
-public class ItemBase extends Item
-{
+public class ItemBase extends calclavia.lib.prefab.item.ItemBase {
 
-	public ItemBase(String name)
-	{
-		super(Artillects.CONFIGURATION.getItem(name, DarkCore.getNextItemId()).getInt());
-		this.setUnlocalizedName(Artillects.PREFIX + name);
-		this.setCreativeTab(ArtillectsTab.instance());
+	public ItemBase(String name) {
+		super(Artillects.idManager.getNextItemID(), name, Artillects.CONFIGURATION, Artillects.PREFIX, ArtillectsTab.instance());
 	}
 
 }

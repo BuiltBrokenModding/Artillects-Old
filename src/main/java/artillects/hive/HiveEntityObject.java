@@ -1,6 +1,6 @@
 package artillects.hive;
 
-import com.builtbroken.minecraft.save.ISaveObj;
+import calclavia.lib.utility.nbt.ISaveObj;
 
 import net.minecraft.nbt.NBTTagCompound;
 
