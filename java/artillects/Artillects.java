@@ -19,6 +19,8 @@ import artillects.block.BlockSymbol;
 import artillects.block.TileEntityHiveComplexCore;
 import artillects.block.door.BlockDoorCore;
 import artillects.block.door.BlockDoorFrame;
+import artillects.block.lightbridge.BlockLightbridgeCore;
+import artillects.block.lightbridge.BlockLightbridgeFrame;
 import artillects.block.teleporter.BlockGlyph;
 import artillects.block.teleporter.BlockTeleporterAnchor;
 import artillects.block.teleporter.ItemBlockMetadata;
@@ -121,7 +123,9 @@ public class Artillects
     public static Block blockHiveTeleporterNode;
     public static Block blockDoorCore;
     public static Block blockDoorFrame;
-
+    public static Block blockLightbridgeCore;
+    public static Block blockLightbridgeFrame;
+    
     public static Block blockSymbol;
     public static Block blockHiveCore;
 
@@ -188,6 +192,9 @@ public class Artillects
         blockGlyph = contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         blockHiveTeleporterNode = contentRegistry.createBlock(BlockTeleporterAnchor.class);
         blockHiveCore = contentRegistry.createBlock(BlockHiveComplexCore.class);
+        blockLightbridgeCore = contentRegistry.createBlock(BlockLightbridgeCore.class);
+        blockLightbridgeFrame = contentRegistry.createBlock(BlockLightbridgeFrame.class);
+
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
