@@ -15,7 +15,6 @@ import artillects.block.IHiveBlock;
 public class BlockLightbridgeCore extends BlockBase implements ITileEntityProvider, IHiveBlock {
 
 	Icon[] icons = new Icon[3];
-	Icon icon;
 	
 	public BlockLightbridgeCore() {
 		super("lightbridgeCore", Material.rock);
