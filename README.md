@@ -1,15 +1,12 @@
 Artillects
 ==========
 
-Artillects is a mod that adds: Drones! Hive Bases! Gadgets and Futuristic Gismos!
-This mod was created for Modjam 3.
+Artillects is a mod that adds: Drones! Hive Bases! Gadgets and Futuristic Gismos! 
 
-### Developers
-Archadia
+### Team
+* Archadia - Asset Creator, & Dev
+* DarkCow - Project Manager, & Dev
 
-### Project Manager
-DarkCow
-
-#### Ex-developers
-DarkCow
-Calclavia
+### Credits
+* Calclavia - Helped dev the mod during the 3rd MCP Modjam
+* Hangcow - 3D Assets
