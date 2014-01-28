@@ -10,9 +10,9 @@ import universalelectricity.api.vector.VectorWorld;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
-import artillects.tile.TileEntityAdvanced;
+import calclavia.lib.prefab.tile.TileAdvanced;
 
-public class TileEntityHiveComplexCore extends TileEntityAdvanced
+public class TileEntityHiveComplexCore extends TileAdvanced
 {
     protected HiveComplex complex;
     protected String complexName;

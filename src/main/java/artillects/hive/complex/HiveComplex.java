@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeSet;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
@@ -14,17 +13,15 @@ import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.HiveEntityObject;
-import artillects.hive.logs.DataLog;
 import artillects.hive.structure.EnumStructurePeaces;
 import artillects.hive.structure.Structure;
 import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneBuilding;
 
 /** Hive village in other words. This represents a single location in the hive. Each hive complex has
- * a task and set of structure peaces. 
+ * a task and set of structure peaces.
  * 
- * @TODO setup building priority so that the entire hive doesn't
- * world gen or construct at one time
+ * @TODO setup building priority so that the entire hive doesn't world gen or construct at one time
  * 
  * @author Dark */
 public class HiveComplex extends HiveEntityObject
@@ -40,8 +37,6 @@ public class HiveComplex extends HiveEntityObject
     private HashSet<IArtillect> artillects = new HashSet<IArtillect>();
 
     private HashSet<IArtillect> awaitingOrders = new HashSet<IArtillect>();
-
-    private TreeSet<DataLog> inboxReports = new TreeSet<DataLog>();
 
     public HashSet<Zone> zones = new HashSet<Zone>();
     public TileEntityHiveComplexCore core;
@@ -87,14 +82,6 @@ public class HiveComplex extends HiveEntityObject
     public void updateTileLink(TileEntityHiveComplexCore core)
     {
         this.core = core;
-    }
-
-    /** Called by a drone or the hive itself to load a report into the system waiting to be processed
-     * into a task */
-    public void issueReport(DataLog report)
-    {
-        // TODO add validation system to reject reports
-        this.inboxReports.add(report);
     }
 
     /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */

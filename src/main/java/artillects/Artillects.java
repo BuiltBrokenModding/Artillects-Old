@@ -37,11 +37,11 @@ import artillects.item.ItemDroneParts;
 import artillects.item.ItemDroneParts.Part;
 import artillects.item.ItemSchematicCreator;
 import artillects.item.weapons.ItemPlasmaLauncher;
-import artillects.network.PacketEntity;
-import artillects.network.PacketHandler;
-import artillects.network.PacketTile;
 import calclavia.lib.content.ContentRegistry;
 import calclavia.lib.content.IDManager;
+import calclavia.lib.network.PacketEntity;
+import calclavia.lib.network.PacketHandler;
+import calclavia.lib.network.PacketTile;
 import calclavia.lib.prefab.item.ItemBlockMetadata;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
@@ -61,8 +61,6 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
-
-
 
 @Mod(modid = Artillects.MOD_ID, name = Artillects.NAME, version = Artillects.VERSION, useMetadata = true)
 @NetworkMod(channels = { Artillects.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
@@ -109,8 +107,8 @@ public class Artillects
     public static int ITEM_ID_PREFIX = 15966;
 
     /** Packet Types */
-    public static final PacketTile PACKET_TILE = new PacketTile();
-    public static final PacketEntity PACKET_ENTITY = new PacketEntity();
+    public static final PacketTile PACKET_TILE = new PacketTile(CHANNEL);
+    public static final PacketEntity PACKET_ENTITY = new PacketEntity(CHANNEL);
 
     @Instance(Artillects.MOD_ID)
     public static Artillects instance;
@@ -121,7 +119,7 @@ public class Artillects
     /** Calclavia Gubins */
     public static IDManager idManager = new IDManager(BLOCK_ID_PRE, ITEM_ID_PREFIX);
     public static ContentRegistry contentRegistry = new ContentRegistry(CONFIGURATION, Artillects.MOD_ID);
-    
+
     public static Block blockGlyph;
     public static Block blockHiveWalling;
     public static Block blockLight;
@@ -131,7 +129,7 @@ public class Artillects
     public static Block blockLightbridgeCore;
     public static Block blockLightbridgeFrame;
     public static Block blockLightbridge;
-    
+
     public static Block blockSymbol;
     public static Block blockHiveCore;
 
@@ -183,8 +181,7 @@ public class Artillects
         hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
-        itemArtillectSpawner = contentRegistry.createItem("it1"
-        		+ "emDrones", ItemArtillectSpawner.class, true);
+        itemArtillectSpawner = contentRegistry.createItem("it1" + "emDrones", ItemArtillectSpawner.class, true);
         itemParts = contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
         itemBuilding = contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
         itemSchematicCreator = contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);

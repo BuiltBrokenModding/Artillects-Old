@@ -19,7 +19,7 @@ import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
 import artillects.item.ItemDroneParts;
-import artillects.network.IPacketReceiver;
+import calclavia.lib.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
 
@@ -202,7 +202,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player)
+    public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player, Object... extra)
     {
         this.setType(EnumArtillectType.values()[data.readByte()]);
     }

@@ -3,12 +3,11 @@ package artillects.block.lightbridge;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
 import artillects.Artillects;
-import artillects.tile.TileEntityAdvanced;
+import calclavia.lib.prefab.tile.TileAdvanced;
 
 import com.builtbroken.common.Pair;
-import com.google.common.collect.HashBiMap;
 
-public class TileLightbridgeCore extends TileEntityAdvanced {
+public class TileLightbridgeCore extends TileAdvanced {
 
 	public boolean isToggled = false;
 	

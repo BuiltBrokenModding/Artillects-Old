@@ -270,7 +270,7 @@ public class Schematic implements ISaveObj
         {
             NBTTagCompound nbt = new NBTTagCompound();
             this.save(nbt);
-            NBTUtility.saveData(new File(NBTUtility.getBaseDirectory(), "schematics"), fileName + ".dat", nbt);
+            NBTUtility.saveData(new File(NBTUtility.getBaseDirectory(), "schematics"), fileName, nbt);
         }
         catch (Exception e)
         {
