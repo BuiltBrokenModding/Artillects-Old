@@ -6,19 +6,29 @@ import net.minecraft.inventory.IInventory;
 import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.Zone;
 
+/** Applied to any Entity that is considered to be a drone for the hive
+ * 
+ * @author Darkguardsman */
 public interface IArtillect extends IEntity
 {
-	public void setOwner(Object hive);
+    /** Sets the drone's owner */
+    public void setOwner(Object hive);
 
-	public Object getOwner();
+    /** Gets the drone's owner */
+    public Object getOwner();
 
-	public Zone getZone();
+    /** Sets the working area of the drone */
+    public void setZone(Zone zone);
 
-	public void setZone(Zone zone);
+    /** Gets the drone's working area */
+    public Zone getZone();
 
-	public EnumArtillectType getType();
+    /** Sets the drone's objective type */
+    public void setType(EnumArtillectType type);
 
-	public void setType(EnumArtillectType type);
+    /** Gets the drone's objective type */
+    public EnumArtillectType getType();
 
-	public IInventory getInventory();
+    /** Gets the drone's working inventory */
+    public IInventory getInventory();
 }

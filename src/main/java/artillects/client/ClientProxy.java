@@ -1,5 +1,6 @@
 package artillects.client;
 
+import calclavia.lib.render.FxLaser;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
