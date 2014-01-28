@@ -1,141 +1,129 @@
 package artillects.block.lightbridge;
 
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
 import artillects.Artillects;
 import calclavia.lib.prefab.tile.TileAdvanced;
 
-import com.builtbroken.common.Pair;
+import com.builtbroken.common.Triple;
 
 public class TileLightbridgeCore extends TileAdvanced {
 
-	public boolean isToggled = false;
-	
 	public TileLightbridgeCore pair;
-	
-	public void setPair(TileLightbridgeCore toPair) {
-		pair = toPair;
-		toPair.pair = this;
-	}
+	public boolean flag;
 	
 	public void validate() {
 		super.validate();
 	}
 	
 	public void invalidate() {
+		if(this.pair != null && this.pair.pair == this) {
+			System.out.println("Core: " + pair.pair.toString() + ", has lost connection with: " + this.toString());
+			this.pair.pair = null;
+			this.pair = null;
+		}
 		super.invalidate();
-		if(pair != null && pair.pair == this) {
-			pair.pair = null;
-			pair = null;
+	}
+	
+	public void setPair(TileLightbridgeCore toPair) {
+		if(!worldObj.isRemote) {
+			if(toPair.pair == null && this.pair == null) {
+				pair = toPair;
+				toPair.pair = this;
+				System.out.println("Core: " + this.toString() + ", was paired with: " + this.pair.toString());
+			}
 		}
 	}
 	
 	public void updateEntity() {
+		super.updateEntity();
 		if(!worldObj.isRemote) {
-			if(isFrameComplete()) {
-				if(checkForLightbridge() != null) {
-					TileLightbridgeCore block = (TileLightbridgeCore) worldObj.getBlockTileEntity(checkForLightbridge().right().intX(), checkForLightbridge().right().intY(), checkForLightbridge().right().intZ());
-					if(block.pair == null && block.pair != this) {
-						setPair(block);	
-						if(isToggled = true) {
-							for(int i = 1; i < Vector3.distance(new Vector3(this), checkForLightbridge().right()); i++) {
-								if(checkForLightbridge().left() == ForgeDirection.NORTH) {
-									if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == Artillects.blockLightbridge.blockID) {
-										worldObj.setBlockToAir(xCoord, yCoord, zCoord  + i);
-									}
-								}
-								if(checkForLightbridge().left() == ForgeDirection.SOUTH) {
-									if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == Artillects.blockLightbridge.blockID) {
-										worldObj.setBlockToAir(xCoord, yCoord, zCoord  - i);
-									}
-								}
-								if(checkForLightbridge().left() == ForgeDirection.EAST) {
-									if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == Artillects.blockLightbridge.blockID) {
-										worldObj.setBlockToAir(xCoord + i, yCoord, zCoord);
-									}
-								}
-								if(checkForLightbridge().left() == ForgeDirection.WEST) {
-									if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == Artillects.blockLightbridge.blockID) {
-										worldObj.setBlockToAir(xCoord - i, yCoord, zCoord);
-									}
-								}
+			if(checkForLightbridge() != null) {
+				ForgeDirection dir = checkForLightbridge().getA();
+				Vector3 vec = checkForLightbridge().getB();
+				TileLightbridgeCore core = checkForLightbridge().getC();
+				
+				if(pair != core)
+				if(worldObj.getWorldTime()%5==0) setPair(core);
+				if(pair != null) {
+					for(int i = 1; i < Vector3.distance(new Vector3(this), vec); i++) {
+						if(dir == ForgeDirection.NORTH) {
+							if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == 0) {
+								worldObj.setBlock(xCoord, yCoord, zCoord  + i, Artillects.blockLightbridge.blockID); }
 							}
-						} else {
-							for(int i = 1; i < Vector3.distance(new Vector3(this), checkForLightbridge().right()); i++) {
-								if(checkForLightbridge().left() == ForgeDirection.NORTH) {
-									if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == 0) {
-										worldObj.setBlock(xCoord, yCoord, zCoord  + i, Artillects.blockLightbridge.blockID); }
-									}
-								if(checkForLightbridge().left() == ForgeDirection.SOUTH) {
-									if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == 0) {
-										worldObj.setBlock(xCoord, yCoord, zCoord  - i, Artillects.blockLightbridge.blockID);
-									}
-								}
-								if(checkForLightbridge().left() == ForgeDirection.EAST) {
-									if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == 0) {
-										worldObj.setBlock(xCoord + i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
-									}
-								}
-								if(checkForLightbridge().left() == ForgeDirection.WEST) {
-									if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == 0) {
-										worldObj.setBlock(xCoord - i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
-									}
-								}
+						if(dir == ForgeDirection.SOUTH) {
+							if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == 0) {
+								worldObj.setBlock(xCoord, yCoord, zCoord  - i, Artillects.blockLightbridge.blockID);
+							}
+						}
+						if(dir == ForgeDirection.EAST) {
+							if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == 0) {
+								worldObj.setBlock(xCoord + i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
+							}
+						}
+						if(dir == ForgeDirection.WEST) {
+							if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == 0) {
+								worldObj.setBlock(xCoord - i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
 							}
 						}
 					}
 				}
-			}
+			}	
 		}
 	}
 	
-	public void toggleLightbridge() {
-		if(!worldObj.isRemote) {
-			if(isToggled == false) {
-				isToggled = true;
-				if(pair != null) pair.isToggled = true;
-			} else {
-				isToggled = false;
-				if(pair != null) pair.isToggled = false;
-			}
-		}
-	}
-	
-	public boolean isFrameComplete() {
-		return true;
-	}
-	
-	public int getFrameSize() {
-		return 0;
-	}
-
-	public Pair<ForgeDirection, Vector3> checkForLightbridge() {
+	public Triple<ForgeDirection, Vector3, TileLightbridgeCore> checkForLightbridge() {
 		
-		for(int n = 1; n < 50; n++) {
-			if(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + n) instanceof TileLightbridgeCore) {
-				Pair<ForgeDirection, Vector3> map = new Pair<ForgeDirection, Vector3>(ForgeDirection.NORTH, new Vector3(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + n)));				
-				return map;
+		for(int n = 2; n < 50; n++) {
+			TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + n);
+			if(tile instanceof TileLightbridgeCore) {
+				if(((TileLightbridgeCore) tile).pair == null && this.pair == null) {
+					Triple<ForgeDirection, Vector3, TileLightbridgeCore> map = new Triple<ForgeDirection, Vector3, TileLightbridgeCore>(ForgeDirection.NORTH,
+							new Vector3(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + n)),
+							(TileLightbridgeCore) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + n));				
+					return map;
+				}
 			}
 		}
-		for(int s = 1; s < 50; s++) {
-			if(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - s) instanceof TileLightbridgeCore) {
-				Pair<ForgeDirection, Vector3> map = new Pair<ForgeDirection, Vector3>(ForgeDirection.SOUTH, new Vector3(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - s)));				
-				return map;
+		for(int s = 2; s < 50; s++) {
+			TileEntity tile = worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - s);
+			if(tile instanceof TileLightbridgeCore) {
+				if(((TileLightbridgeCore) tile).pair == null && this.pair == null) {
+					Triple<ForgeDirection, Vector3, TileLightbridgeCore> map = new Triple<ForgeDirection, Vector3, TileLightbridgeCore>(ForgeDirection.SOUTH,
+							new Vector3(worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - s)),
+							(TileLightbridgeCore) worldObj.getBlockTileEntity(xCoord, yCoord, zCoord - s));				
+					return map;
+				}
 			}
 		}
-		for(int e = 1; e < 50; e++) {
-			if(worldObj.getBlockTileEntity(xCoord + e, yCoord, zCoord) instanceof TileLightbridgeCore) {
-				Pair<ForgeDirection, Vector3> map = new Pair<ForgeDirection, Vector3>(ForgeDirection.EAST, new Vector3(worldObj.getBlockTileEntity(xCoord + e, yCoord, zCoord)));
-				return map;
+		for(int e = 2; e < 50; e++) {
+			TileEntity tile = worldObj.getBlockTileEntity(xCoord + e, yCoord, zCoord);
+			if(tile instanceof TileLightbridgeCore) {
+				if(((TileLightbridgeCore) tile).pair == null && this.pair == null) {
+					Triple<ForgeDirection, Vector3, TileLightbridgeCore> map = new Triple<ForgeDirection, Vector3, TileLightbridgeCore>(ForgeDirection.EAST,
+							new Vector3(worldObj.getBlockTileEntity(xCoord + e, yCoord, zCoord)),
+							(TileLightbridgeCore) worldObj.getBlockTileEntity(xCoord + e, yCoord, zCoord));
+					return map;
+				}
 			}
 		}
-		for(int w = 1; w < 50; w++) {
-			if(worldObj.getBlockTileEntity(xCoord - w, yCoord, zCoord) instanceof TileLightbridgeCore) {
-				Pair<ForgeDirection, Vector3> map = new Pair<ForgeDirection, Vector3>(ForgeDirection.WEST, new Vector3(worldObj.getBlockTileEntity(xCoord - w, yCoord, zCoord)));
-				return map;
+		for(int w = 2; w < 50; w++) {
+			TileEntity tile = worldObj.getBlockTileEntity(xCoord - w, yCoord, zCoord);
+			if(tile instanceof TileLightbridgeCore) {
+				if(((TileLightbridgeCore) tile).pair == null && this.pair == null) {
+					Triple<ForgeDirection, Vector3, TileLightbridgeCore> map = new Triple<ForgeDirection, Vector3, TileLightbridgeCore>(ForgeDirection.WEST,
+							new Vector3(worldObj.getBlockTileEntity(xCoord - w, yCoord, zCoord)),
+							(TileLightbridgeCore) worldObj.getBlockTileEntity(xCoord - w, yCoord, zCoord));
+					return map;
+				}
 			}
 		}
 		return null;
 	}
 	
+	public String toString() {
+		return pair == null ? "LBCore@(NULL)" : "LBCore@(" + this.xCoord + "," + this.yCoord + "," + this.zCoord + ")";
+
+	}
 }

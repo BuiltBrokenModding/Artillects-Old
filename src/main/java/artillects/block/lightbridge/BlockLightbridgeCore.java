@@ -27,9 +27,7 @@ public class BlockLightbridgeCore extends BlockBase implements ITileEntityProvid
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int i, float f1, float f2, float f3) {
 		TileLightbridgeCore tile = (TileLightbridgeCore) world.getBlockTileEntity(x, y, z);
-				
-		if(player.isSneaking()) tile.toggleLightbridge();
-			
+							
 		return true;
 	}
 	
