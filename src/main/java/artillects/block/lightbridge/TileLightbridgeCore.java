@@ -11,13 +11,13 @@ import com.builtbroken.common.Triple;
 public class TileLightbridgeCore extends TileAdvanced {
 
 	public TileLightbridgeCore pair;
-	public boolean flag;
+	public boolean toggle = true;
 	
 	public void validate() {
 		super.validate();
 	}
 	
-	public void invalidate() {
+	public void invalidate() {		
 		if(this.pair != null && this.pair.pair == this) {
 			System.out.println("Core: " + pair.pair.toString() + ", has lost connection with: " + this.toString());
 			this.pair.pair = null;
@@ -36,6 +36,21 @@ public class TileLightbridgeCore extends TileAdvanced {
 		}
 	}
 	
+	public void toggle() {
+		System.out.println("Toggled? = " + toggle);
+		if(!toggle) {
+			toggle = true;
+			if(pair != null && pair.pair == this) {
+				pair.toggle = true;
+			}
+		} else {
+			toggle = false;
+			if(pair != null && pair.pair == this) {
+				pair.toggle = false;
+			}
+		}
+	}
+	
 	public void updateEntity() {
 		super.updateEntity();
 		if(!worldObj.isRemote) {
@@ -46,30 +61,62 @@ public class TileLightbridgeCore extends TileAdvanced {
 				
 				if(pair != core)
 				if(worldObj.getWorldTime()%5==0) setPair(core);
-				if(pair != null) {
-					for(int i = 1; i < Vector3.distance(new Vector3(this), vec); i++) {
-						if(dir == ForgeDirection.NORTH) {
-							if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == 0) {
-								worldObj.setBlock(xCoord, yCoord, zCoord  + i, Artillects.blockLightbridge.blockID); }
+				if(toggle) {
+					if(pair != null) {
+						for(int i = 1; i < Vector3.distance(new Vector3(this), vec); i++) {
+							if(dir == ForgeDirection.NORTH) {
+								if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == 0) {
+									worldObj.setBlock(xCoord, yCoord, zCoord  + i, Artillects.blockLightbridge.blockID); }
+								}
+							if(dir == ForgeDirection.SOUTH) {
+								if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == 0) {
+									worldObj.setBlock(xCoord, yCoord, zCoord  - i, Artillects.blockLightbridge.blockID);
+								}
 							}
-						if(dir == ForgeDirection.SOUTH) {
-							if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == 0) {
-								worldObj.setBlock(xCoord, yCoord, zCoord  - i, Artillects.blockLightbridge.blockID);
+							if(dir == ForgeDirection.EAST) {
+								if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == 0) {
+									worldObj.setBlock(xCoord + i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
+								}
+							}
+							if(dir == ForgeDirection.WEST) {
+								if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == 0) {
+									worldObj.setBlock(xCoord - i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
+								}
 							}
 						}
-						if(dir == ForgeDirection.EAST) {
-							if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == 0) {
-								worldObj.setBlock(xCoord + i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
-							}
-						}
-						if(dir == ForgeDirection.WEST) {
-							if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == 0) {
-								worldObj.setBlock(xCoord - i, yCoord, zCoord, Artillects.blockLightbridge.blockID);
-							}
-						}
+					} else {
+						forceDisable(dir, vec);
 					}
+				} else {
+					forceDisable(dir, vec);
+					pair.forceDisable(dir.getOpposite(), new Vector3(this));
 				}
 			}	
+		}
+	}
+	
+	public void forceDisable(ForgeDirection dir, Vector3 vec) {
+		System.out.println("FORCE DISABLE");
+		for(int i = 1; i < Vector3.distance(new Vector3(this), vec); i++) {
+			if(dir == ForgeDirection.NORTH) {
+				if(worldObj.getBlockId(xCoord, yCoord, zCoord + i) == Artillects.blockLightbridge.blockID) {
+					worldObj.setBlockToAir(xCoord, yCoord, zCoord  + i); }
+				}
+			if(dir == ForgeDirection.SOUTH) {
+				if(worldObj.getBlockId(xCoord, yCoord, zCoord - i) == Artillects.blockLightbridge.blockID) {
+					worldObj.setBlockToAir(xCoord, yCoord, zCoord  - i);
+				}
+			}
+			if(dir == ForgeDirection.EAST) {
+				if(worldObj.getBlockId(xCoord + i, yCoord, zCoord) == Artillects.blockLightbridge.blockID) {
+					worldObj.setBlockToAir(xCoord + i, yCoord, zCoord);
+				}
+			}
+			if(dir == ForgeDirection.WEST) {
+				if(worldObj.getBlockId(xCoord - i, yCoord, zCoord) == Artillects.blockLightbridge.blockID) {
+					worldObj.setBlockToAir(xCoord - i, yCoord, zCoord);
+				}
+			}
 		}
 	}
 	
