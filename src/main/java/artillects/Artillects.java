@@ -17,8 +17,6 @@ import artillects.block.BlockHiveLighting;
 import artillects.block.BlockHiveWalling;
 import artillects.block.BlockSymbol;
 import artillects.block.TileEntityHiveComplexCore;
-import artillects.block.door.BlockDoorCore;
-import artillects.block.door.BlockDoorFrame;
 import artillects.block.lightbridge.BlockLightbridge;
 import artillects.block.lightbridge.BlockLightbridgeCore;
 import artillects.block.lightbridge.BlockLightbridgeFrame;
@@ -124,8 +122,6 @@ public class Artillects
     public static Block blockHiveWalling;
     public static Block blockLight;
     public static Block blockHiveTeleporterNode;
-    public static Block blockDoorCore;
-    public static Block blockDoorFrame;
     public static Block blockLightbridgeCore;
     public static Block blockLightbridgeFrame;
     public static Block blockLightbridge;
@@ -190,8 +186,6 @@ public class Artillects
         blockSymbol = contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
         blockHiveWalling = contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
         blockLight = contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
-        blockDoorCore = contentRegistry.createBlock(BlockDoorCore.class);
-        blockDoorFrame = contentRegistry.createBlock(BlockDoorFrame.class);
         blockGlyph = contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         blockHiveTeleporterNode = contentRegistry.createBlock(BlockTeleporterAnchor.class);
         blockHiveCore = contentRegistry.createBlock(BlockHiveComplexCore.class);
