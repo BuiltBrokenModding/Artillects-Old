@@ -1,12 +1,17 @@
 package artillects.hive.complex;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.world.WorldEvent.Unload;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.block.TileEntityHiveComplexCore;
 import artillects.entity.IArtillect;
@@ -17,6 +22,9 @@ import artillects.hive.structure.EnumStructurePeaces;
 import artillects.hive.structure.Structure;
 import artillects.hive.zone.Zone;
 import artillects.hive.zone.ZoneBuilding;
+import calclavia.lib.utility.nbt.IVirtualObject;
+import calclavia.lib.utility.nbt.NBTUtility;
+import calclavia.lib.utility.nbt.SaveManager;
 
 /** Hive village in other words. This represents a single location in the hive. Each hive complex has
  * a task and set of structure peaces.
@@ -24,7 +32,7 @@ import artillects.hive.zone.ZoneBuilding;
  * @TODO setup building priority so that the entire hive doesn't world gen or construct at one time
  * 
  * @author Dark */
-public class HiveComplex extends HiveEntityObject
+public class HiveComplex extends HiveEntityObject implements IVirtualObject
 {
     public VectorWorld location;
     private String name;
@@ -35,8 +43,6 @@ public class HiveComplex extends HiveEntityObject
     protected ZoneBuilding buildZone;
 
     private HashSet<IArtillect> artillects = new HashSet<IArtillect>();
-
-    private HashSet<IArtillect> awaitingOrders = new HashSet<IArtillect>();
 
     public HashSet<Zone> zones = new HashSet<Zone>();
     public TileEntityHiveComplexCore core;
@@ -56,21 +62,22 @@ public class HiveComplex extends HiveEntityObject
 
     public HiveComplex()
     {
-        // TODO Auto-generated constructor stub
-    }
-
-    public HiveComplex(boolean player)
-    {
-        this.playerZone = true;
-        this.setName("PlayerZone");
-        this.location = new VectorWorld(null, 0, 0, 0);
+        SaveManager.register(this);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     public HiveComplex(String name, VectorWorld location)
     {
+        this();
         this.setName(name);
         this.location = location;
-        HiveComplexManager.instance().addHiveComplex(this);
+        HiveComplexManager.instance().register(this);
+    }
+
+    public HiveComplex(boolean player)
+    {
+        this("PlayerZone", new VectorWorld(WorldProvider.getProviderForDimension(0).worldObj, 0, 255, 0));
+        this.playerZone = true;
     }
 
     public HiveComplex(TileEntityHiveComplexCore tileEntityHiveComplexCore)
@@ -465,5 +472,28 @@ public class HiveComplex extends HiveEntityObject
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public File getSaveFile()
+    {
+        return new File(NBTUtility.getSaveDirectory(), "hive/" + this.location.world.provider.dimensionId + "/complex_" + this.name);
+    }
+
+    @Override
+    public void setSaveFile(File file)
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+    @ForgeSubscribe
+    public void onWorldunLoad(Unload event)
+    {
+        if (event.world == this.location.world)
+        {
+            this.invalidate();
+            HiveComplexManager.instance().unloadHive(this);
+        }
     }
 }

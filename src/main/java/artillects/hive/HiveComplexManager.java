@@ -17,159 +17,105 @@ import artillects.hive.complex.HiveComplex;
 
 import calclavia.lib.utility.nbt.NBTUtility;
 
-/** Hive collection that the drones use for logic and collection feed back
+/** Hive complex manager mainly used for saving control and grouping of hive complexes.
  * 
- * @author Dark */
+ * @author DarkGuardsman */
 public class HiveComplexManager
 {
-    public static final int BUILDING_SCAN_UPDATE_RATE = 10;
-
     /** Main hive instance */
-    private static HiveComplexManager PRIMARY_HIVE;
+    private static HiveComplexManager instance;
 
-    /** All active drones loaded by this hive instance */
-
+    /** All complex object currently loaded */
     public HashMap<String, HiveComplex> complexes = new HashMap<String, HiveComplex>();
 
-    private long lastUpdate = 0;
-
-    /** Main hive instance */
+    /** Main instance of the hive complex manager */
     public static HiveComplexManager instance()
     {
-        if (PRIMARY_HIVE == null)
+        if (instance == null)
         {
-            PRIMARY_HIVE = new HiveComplexManager();
-            MinecraftForge.EVENT_BUS.register(PRIMARY_HIVE);
+            instance = new HiveComplexManager();
+            MinecraftForge.EVENT_BUS.register(instance);
         }
-        return PRIMARY_HIVE;
+        return instance;
     }
 
-    public void addHiveComplex(HiveComplex hiveComplex)
+    /** Registers a hive complex for tracking */
+    public void register(HiveComplex hiveComplex)
     {
-        if (hiveComplex != null && complexes.get(hiveComplex.getName()) == null)
+        if (hiveComplex != null && getHive(hiveComplex.getName()) == null)
         {
             complexes.put(hiveComplex.getName(), hiveComplex);
         }
     }
 
-    public void callUpdate()
+    /** Called by a hive complex when it unloads from the map. Mainly used to null the reference in
+     * the complex map */
+    public void unloadHive(HiveComplex hiveComplex)
     {
-        if (System.currentTimeMillis() - this.lastUpdate < 100)
+        if (hiveComplex != null && getHive(hiveComplex.getName()) != null)
         {
-            //System.out.println("[Hive] Tick.");
-
-            for (Entry<String, HiveComplex> entry : complexes.entrySet())
-            {
-                if (entry.getValue() != null)
-                {
-                    if (entry.getValue().isValid())
-                    {
-                        entry.getValue().updateEntity();
-                    }
-                    else
-                    {
-                        entry.getValue().invalidate();
-                        complexes.remove(entry.getKey());
-                    }
-                }
-            }
+            complexes.put(hiveComplex.getName(), null);
         }
     }
 
-    @ForgeSubscribe
-    public void onWorldSave(Save event)
+    /** Grabs a hive my name */
+    public HiveComplex getHive(String string)
     {
-        try
-        {
-            synchronized (complexes)
-            {
-                System.out.println("Saving hive to map int world: " + event.world.provider.dimensionId);
-                for (Entry<String, HiveComplex> entry : complexes.entrySet())
-                {
-                    if (entry.getValue().isValid() && event.world.equals(entry.getValue().location.world))
-                    {
-                        NBTTagCompound nbt = new NBTTagCompound();
-                        entry.getValue().save(nbt);
-                        NBTUtility.saveData(new File(NBTUtility.getSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + event.world.provider.dimensionId + "/complex_" + entry.getValue().getName()), "complex", nbt);
-                    }
-
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        return this.complexes.get(string);
     }
 
-    @ForgeSubscribe
-    public void onWorldunLoad(Unload event)
+    /** Checks if a hive complex string id is in use */
+    public boolean isNameInUse(String string)
     {
-        try
-        {
-            System.out.println("Unloading hive complexes from World: " + event.world.provider.dimensionId);
-            HashMap<String, HiveComplex> complexCopy = new HashMap();
-            complexCopy.putAll(this.complexes);
-            for (Entry<String, HiveComplex> entry : complexCopy.entrySet())
-            {
-                if (event.world.equals(entry.getValue().location.world))
-                {
-                    entry.getValue().invalidate();
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        return this.complexes.containsKey(string);
     }
 
     @ForgeSubscribe
     public void onWorldLoad(WorldEvent.Load event)
     {
-        try
-        {
-            this.loadObjectsForDim(event.world.provider.dimensionId);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        this.loadObjectsForDim(event.world.provider.dimensionId);
     }
 
     /** Temp loads all the villages from file so the manager can record what villages exist */
     public void loadObjectsForDim(int dim)
     {
-        synchronized (complexes)
+        try
         {
-            File hiveFolder = new File(NBTUtility.getSaveDirectory(MinecraftServer.getServer().getFolderName()), "hive/" + dim);
-            if (hiveFolder.exists())
+            synchronized (complexes)
             {
-                for (File fileEntry : hiveFolder.listFiles())
+                File hiveFolder = new File(NBTUtility.getSaveDirectory(), "hive/" + dim);
+                if (hiveFolder.exists())
                 {
-                    if (fileEntry.isDirectory() && fileEntry.getName().startsWith("complex"))
+                    for (File fileEntry : hiveFolder.listFiles())
                     {
-                        for (File subFile : fileEntry.listFiles())
+                        if (fileEntry.isDirectory() && fileEntry.getName().startsWith("complex"))
                         {
-                            if (subFile.getName().equalsIgnoreCase("complex.dat"))
+                            for (File subFile : fileEntry.listFiles())
                             {
-                                NBTTagCompound tag = NBTUtility.loadData(subFile);
-                                String name = tag.getString("name");
-                                if (!this.complexes.containsKey(name))
+                                if (subFile.getName().equalsIgnoreCase("complex.dat"))
                                 {
-                                    HiveComplex complex = new HiveComplex();
-                                    complex.load(tag);
-                                    this.complexes.put(name, complex);
+                                    NBTTagCompound tag = NBTUtility.loadData(subFile);
+                                    String name = tag.getString("name");
+                                    if (!this.complexes.containsKey(name))
+                                    {
+                                        HiveComplex complex = new HiveComplex();
+                                        complex.load(tag);
+                                        this.complexes.put(name, complex);
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                else
+                {
+                    hiveFolder.mkdirs();
+                }
             }
-            else
-            {
-                hiveFolder.mkdirs();
-            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
     }
@@ -192,8 +138,4 @@ public class HiveComplexManager
         return complex;
     }
 
-    public HiveComplex getHive(String string)
-    {
-        return this.complexes.get(string);
-    }
 }
