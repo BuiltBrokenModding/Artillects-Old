@@ -7,9 +7,9 @@ import net.minecraft.world.World;
 
 public class BlockHiveComplexCore extends BlockBase implements ITileEntityProvider, IHiveBlock
 {
-	public BlockHiveComplexCore()
+	public BlockHiveComplexCore(int id)
 	{
-		super("hiveCore", Material.iron);
+		super(id, "hiveCore", Material.iron);
 		this.setBlockUnbreakable();
 	}
 

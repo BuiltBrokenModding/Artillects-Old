@@ -3,9 +3,9 @@ package artillects.block;
 public class BlockHiveLighting extends BlockHiveBlock
 {
 
-    public BlockHiveLighting()
+    public BlockHiveLighting(int id)
     {
-        super("decorLight");
+        super(id, "decorLight");
         this.setLightValue(1.0f);
     }
 

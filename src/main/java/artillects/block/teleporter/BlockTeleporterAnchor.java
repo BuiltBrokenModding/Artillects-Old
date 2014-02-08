@@ -20,9 +20,9 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
 {
     public Icon iconTop, iconSide, iconBot;
 
-    public BlockTeleporterAnchor()
+    public BlockTeleporterAnchor(int id)
     {
-        super("teleporterAnchor", Material.iron);
+        super(id, "teleporterAnchor", Material.iron);
         this.setHardness(32F);
         this.setResistance(1000F);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.7F, 1.0F);

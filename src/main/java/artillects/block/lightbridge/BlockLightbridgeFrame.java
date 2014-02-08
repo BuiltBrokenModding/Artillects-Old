@@ -5,8 +5,8 @@ import artillects.block.BlockBase;
 
 public class BlockLightbridgeFrame extends BlockBase {
 
-	public BlockLightbridgeFrame() {
-		super("lightbridgeFrame", Material.rock);
+	public BlockLightbridgeFrame(int id) {
+		super(id, "lightbridgeFrame", Material.rock);
 	}
 
 }

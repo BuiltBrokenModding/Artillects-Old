@@ -14,9 +14,9 @@ import artillects.commands.PlayerSelectionHandler;
 public class ItemSchematicCreator extends ItemBase
 {
 
-	public ItemSchematicCreator()
+	public ItemSchematicCreator(int id)
 	{
-		super("schematicCreator");
+		super(id, "schematicCreator");
 		this.setHasSubtypes(true);
 		this.setTextureName(Artillects.PREFIX + "schematicCreator");
 	}

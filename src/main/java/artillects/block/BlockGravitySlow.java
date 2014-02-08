@@ -8,9 +8,9 @@ import artillects.Artillects;
 public class BlockGravitySlow extends BlockBase implements IHiveBlock
 {
 
-	public BlockGravitySlow()
+	public BlockGravitySlow(int id)
 	{
-		super("gravitySlow", Material.rock);
+		super(id, "gravitySlow", Material.rock);
 		setTextureName(Artillects.PREFIX + "gravitySlow");
 	}
 

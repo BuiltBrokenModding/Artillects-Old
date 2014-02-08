@@ -7,9 +7,9 @@ import artillects.ArtillectsTab;
 public class BlockBase extends calclavia.lib.prefab.block.BlockAdvanced implements IHiveBlock
 {
 
-	public BlockBase(String name, Material material)
+	public BlockBase(int id, String name, Material material)
 	{
-		super(Artillects.CONFIGURATION.getBlock(name, Artillects.idManager.getNextBlockID()).getInt(), material);
+		super(id, material);
 		this.setUnlocalizedName(Artillects.PREFIX + name);
 		this.setTextureName(Artillects.PREFIX + name);
 		this.setCreativeTab(ArtillectsTab.instance());

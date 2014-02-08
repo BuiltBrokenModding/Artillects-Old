@@ -32,9 +32,9 @@ public class ItemArtillectSpawner extends ItemBase
 {
     private long lastVoiceActivation;
 
-    public ItemArtillectSpawner()
+    public ItemArtillectSpawner(int id)
     {
-        super("artillectSpawner");
+        super(id, "artillectSpawner");
         this.setHasSubtypes(true);
     }
 

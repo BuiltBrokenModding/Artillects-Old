@@ -13,9 +13,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockHiveWalling extends BlockHiveBlock
 {
-    public BlockHiveWalling()
+    public BlockHiveWalling(int id)
     {
-        super("decorWall");
+        super(id, "decorWall");
     }
 
     @Override

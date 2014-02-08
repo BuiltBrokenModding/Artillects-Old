@@ -15,9 +15,9 @@ import artillects.item.ItemBase;
 public class ItemPlasmaLauncher extends ItemBase
 {
 
-	public ItemPlasmaLauncher()
+	public ItemPlasmaLauncher(int id)
 	{
-		super("plasmaLauncher");
+		super(id, "plasmaLauncher");
 		setTextureName(Artillects.PREFIX + "plasmaLauncher");
 	}
 

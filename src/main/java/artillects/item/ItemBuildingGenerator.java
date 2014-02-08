@@ -14,9 +14,9 @@ import artillects.hive.structure.EnumStructurePeaces;
 
 public class ItemBuildingGenerator extends ItemBase
 {
-    public ItemBuildingGenerator()
+    public ItemBuildingGenerator(int id)
     {
-        super("buildingGenerator");
+        super(id, "buildingGenerator");
         this.setHasSubtypes(true);
         this.setTextureName(Artillects.PREFIX + "buildingGenerator");
     }

@@ -13,8 +13,8 @@ import artillects.block.IHiveBlock;
 
 public class BlockLightbridge extends BlockBase implements ITileEntityProvider, IHiveBlock {
 
-	public BlockLightbridge() {
-		super("lightbridge", Material.ice);
+	public BlockLightbridge(int id) {
+		super(id, "lightbridge", Material.ice);
 		setBlockBounds(0F, 0.8F, 0F, 1F, 1F, 1F);
 		setLightValue(1.0F);
 		setBlockUnbreakable();

@@ -16,8 +16,8 @@ public class BlockLightbridgeCore extends BlockBase implements ITileEntityProvid
 
 	Icon[] icons = new Icon[3];
 	
-	public BlockLightbridgeCore() {
-		super("lightbridgeCore", Material.rock);
+	public BlockLightbridgeCore(int id) {
+		super(id,"lightbridgeCore", Material.rock);
 	}
 
 	@Override

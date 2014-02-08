@@ -13,9 +13,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockSymbol extends BlockHiveBlock
 {
 
-    public BlockSymbol()
+    public BlockSymbol(int id)
     {
-        super("symbol");
+        super(id, "symbol");
     }
 
     @Override

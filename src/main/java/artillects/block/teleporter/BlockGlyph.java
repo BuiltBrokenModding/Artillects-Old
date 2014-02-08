@@ -18,9 +18,9 @@ public class BlockGlyph extends BlockBase implements IHiveBlock
 	public static final int MAX_GLYPH = 4;
 	public static final Icon[] icons = new Icon[MAX_GLYPH];
 
-	public BlockGlyph()
+	public BlockGlyph(int id)
 	{
-		super("glyph", Material.iron);
+		super(id, "glyph", Material.iron);
 		this.setHardness(32F);
 		this.setResistance(1000F);
 	}
