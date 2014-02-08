@@ -20,8 +20,8 @@ public class HiveComplexGenerator implements IWorldGenerator
 		
 		if (HiveComplexManager.instance().getClosestComplex(pos, 400) == null)
 		{
-			HiveComplex complex = new HiveComplex("HiveTX" + System.currentTimeMillis(), pos);
-			complex.loadGeneralBuilding(true);
+			//HiveComplex complex = new HiveComplex("HiveTX" + System.currentTimeMillis(), pos);
+			//complex.loadGeneralBuilding(true);
 		}
 	}
 }
