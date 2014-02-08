@@ -116,7 +116,7 @@ public class Artillects
 
     /** Calclavia Gubins */
     public static IDManager idManager = new IDManager(BLOCK_ID_PRE, ITEM_ID_PREFIX);
-    public static ContentRegistry contentRegistry = new ContentRegistry(CONFIGURATION, Artillects.MOD_ID);
+    public static ContentRegistry contentRegistry = new ContentRegistry(CONFIGURATION, new IDManager(3567, 13567), Artillects.MOD_ID);
 
     public static Block blockGlyph;
     public static Block blockHiveWalling;
