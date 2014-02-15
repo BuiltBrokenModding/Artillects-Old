@@ -50,60 +50,36 @@ public class ItemArtillectSpawner extends ItemBase
     @Override
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int par4, int par5, int par6, int par7, float par8, float par9, float par10)
     {
-        if (world.isRemote)
+        if (!player.isSneaking())
         {
+            int i1 = world.getBlockId(par4, par5, par6);
+            par4 += Facing.offsetsXForSide[par7];
+            par5 += Facing.offsetsYForSide[par7];
+            par6 += Facing.offsetsZForSide[par7];
+            double d0 = 0.0D;
 
-            if (player.isSneaking())
+            if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
             {
-                if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
-                {
-                    this.lastVoiceActivation = System.currentTimeMillis();
-                    switch (EnumArtillectEntity.values()[stack.getItemDamage()])
-                    {
-                        case WORKER:
-                            world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
-                            break;
-                        case FABRICATOR:
-                            world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-fabricator", 5F, 1F);
-                            break;
-                    }
-                }
-            }
-            return true;
-        }
-        else
-        {
-            if (!player.isSneaking())
-            {
-                int i1 = world.getBlockId(par4, par5, par6);
-                par4 += Facing.offsetsXForSide[par7];
-                par5 += Facing.offsetsYForSide[par7];
-                par6 += Facing.offsetsZForSide[par7];
-                double d0 = 0.0D;
-
-                if (par7 == 1 && Block.blocksList[i1] != null && Block.blocksList[i1].getRenderType() == 11)
-                {
-                    d0 = 0.5D;
-                }
-
-                Entity entity = spawnCreature(player, world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
-
-                if (entity != null)
-                {
-                    if (entity instanceof EntityLivingBase && stack.hasDisplayName())
-                    {
-                        ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
-                    }
-
-                    if (!player.capabilities.isCreativeMode)
-                    {
-                        --stack.stackSize;
-                    }
-                }
+                d0 = 0.5D;
             }
 
-            return true;
+            Entity entity = spawnCreature(player, world, stack.getItemDamage(), par4 + 0.5D, par5 + d0, par6 + 0.5D);
+
+            if (entity != null)
+            {
+                if (entity instanceof EntityLivingBase && stack.hasDisplayName())
+                {
+                    ((EntityLiving) entity).setCustomNameTag(stack.getDisplayName());
+                }
+
+                if (!player.capabilities.isCreativeMode)
+                {
+                    --stack.stackSize;
+                }
+            }
         }
+
+        return true;
     }
 
     /** Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack,
@@ -111,11 +87,7 @@ public class ItemArtillectSpawner extends ItemBase
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if (world.isRemote)
-        {
-            return stack;
-        }
-        else if (!player.isSneaking())
+        if (!world.isRemote && !player.isSneaking())
         {
             MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(world, player, true);
 
@@ -163,23 +135,7 @@ public class ItemArtillectSpawner extends ItemBase
                 return stack;
             }
         }
-        else
-        {
-            if (System.currentTimeMillis() - this.lastVoiceActivation > 20 * 100)
-            {
-                this.lastVoiceActivation = System.currentTimeMillis();
-                switch (EnumArtillectEntity.values()[stack.getItemDamage()])
-                {
-                    case WORKER:
-                        world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-worker", 5F, 1F);
-                        break;
-                    case FABRICATOR:
-                        world.playSoundEffect(player.posX + 0.5, player.posY + 0.5, player.posZ + 0.5, Artillects.PREFIX + "voice-introduce-fabricator", 5F, 1F);
-                        break;
-                }
-            }
-            return stack;
-        }
+        return stack;
     }
 
     /** Spawns the creature specified by the egg's type in the location specified by the last three

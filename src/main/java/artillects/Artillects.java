@@ -80,7 +80,7 @@ public class Artillects
 
     public static final String CHANNEL = "Artillects";
 
-    public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Dark/Artillects.cfg"));
+    public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Artillects.cfg"));
 
     private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US", "de_DE" };
 
