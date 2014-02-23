@@ -34,7 +34,14 @@ import artillects.item.ItemBuildingGenerator;
 import artillects.item.ItemDroneParts;
 import artillects.item.ItemDroneParts.Part;
 import artillects.item.ItemSchematicCreator;
-import artillects.item.weapons.ItemPlasmaLauncher;
+import artillects.item.weapons.laser.ItemLaserHeavy;
+import artillects.item.weapons.laser.ItemLaserPistol;
+import artillects.item.weapons.laser.ItemLaserRifle;
+import artillects.item.weapons.laser.ItemLaserSniper;
+import artillects.item.weapons.plasma.ItemPlasmaLight;
+import artillects.item.weapons.plasma.ItemPlasmaPistol;
+import artillects.item.weapons.plasma.ItemPlasmaRifle;
+import artillects.item.weapons.plasma.ItemPlasmaSniper;
 import calclavia.lib.content.ContentRegistry;
 import calclavia.lib.content.IDManager;
 import calclavia.lib.network.PacketEntity;
@@ -135,7 +142,9 @@ public class Artillects
     public static Item itemSchematicCreator;
     public static Item weaponPlasmaLauncher;
     public static Item plasmaBattery;
-
+    public static Item laserRifle, laserSniper, laserPistol, laserHeavy;
+	public static Item plasmaRifle, plasmaSniper, plasmaPistol, plasmaHeavy, plasmaLight;
+    
     public static boolean enableHiveComplexGenerator = true;
     public static boolean enableHiveChunkLoading = true;
     public static boolean enableHiveCoreChunkLoading = true;
@@ -181,8 +190,17 @@ public class Artillects
         itemParts = contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
         itemBuilding = contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
         itemSchematicCreator = contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
-        weaponPlasmaLauncher = contentRegistry.createItem("itemPlasmaLauncher", ItemPlasmaLauncher.class, true);
 
+        laserRifle = contentRegistry.createItem("laserRifle", ItemLaserRifle.class, false);
+		laserSniper = contentRegistry.createItem("laserSniper", ItemLaserSniper.class, false);
+		laserPistol = contentRegistry.createItem("laserPistol", ItemLaserPistol.class, false);
+		laserHeavy = contentRegistry.createItem("laserHeavy", ItemLaserHeavy.class, false);
+		
+		plasmaRifle = contentRegistry.createItem("plasmaRifle", ItemPlasmaRifle.class, false);
+		plasmaPistol = contentRegistry.createItem("plasmaPistol", ItemPlasmaPistol.class, false);
+		plasmaLight = contentRegistry.createItem("plasmaLight", ItemPlasmaLight.class, false);
+		plasmaSniper = contentRegistry.createItem("plasmaSniper", ItemPlasmaSniper.class, false);
+        
         blockSymbol = contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
         blockHiveWalling = contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
         blockLight = contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
