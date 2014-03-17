@@ -2,8 +2,6 @@ package artillects.entity;
 
 import java.util.List;
 
-import com.builtbroken.ai.combat.EntityCombatSelector;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +11,6 @@ import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
@@ -27,6 +24,8 @@ import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
+
+import com.builtbroken.ai.combat.EntityCombatSelector;
 
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
 {

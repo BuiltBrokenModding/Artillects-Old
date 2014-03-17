@@ -1,8 +1,7 @@
 package artillects.hive;
 
-import calclavia.lib.utility.nbt.ISaveObj;
-
 import net.minecraft.nbt.NBTTagCompound;
+import calclavia.lib.utility.nbt.ISaveObj;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 

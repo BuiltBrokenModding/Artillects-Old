@@ -11,8 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveEntityObject;
-
-import com.builtbroken.common.Pair;
+import calclavia.lib.java.Pair;
 
 /** Collection of structure peaces that forms a building. Essential in code this acts as a contain
  * for several structure peaces so its easier to manage larger HiveComplexs.

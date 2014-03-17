@@ -5,16 +5,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.event.world.WorldEvent.Save;
-import net.minecraftforge.event.world.WorldEvent.Unload;
 import universalelectricity.api.vector.VectorWorld;
-
 import artillects.hive.complex.HiveComplex;
-
 import calclavia.lib.utility.nbt.NBTUtility;
 
 /** Hive complex manager mainly used for saving control and grouping of hive complexes.

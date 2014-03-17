@@ -1,20 +1,15 @@
 package artillects.entity;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
 import artillects.CommonProxy.GuiIDs;
-import artillects.hive.EnumArtillectType;
-import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
 
 /** Prefab for ground based drones

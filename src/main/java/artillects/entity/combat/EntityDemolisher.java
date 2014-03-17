@@ -1,7 +1,5 @@
 package artillects.entity.combat;
 
-import com.builtbroken.ai.combat.EntityCombatSelector;
-
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.entity.Entity;
@@ -21,6 +19,8 @@ import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.hive.EnumArtillectType;
+
+import com.builtbroken.ai.combat.EntityCombatSelector;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
 {

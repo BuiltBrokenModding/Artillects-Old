@@ -1,8 +1,8 @@
 package com.builtbroken.ai.combat;
 
-import com.builtbroken.ai.IEntity;
-
 import net.minecraft.entity.Entity;
+
+import com.builtbroken.ai.IEntity;
 
 public interface ICombatEntity extends IEntity
 {

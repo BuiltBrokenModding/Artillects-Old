@@ -17,7 +17,6 @@ import net.minecraft.util.Facing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import artillects.Artillects;
 import artillects.entity.IArtillect;
 import artillects.hive.EnumArtillectEntity;
 import artillects.hive.EnumArtillectType;

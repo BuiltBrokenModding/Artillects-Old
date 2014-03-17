@@ -10,12 +10,12 @@ import artillects.entity.IArtillect;
 import artillects.entity.workers.EntityFabricator;
 import artillects.hive.complex.HiveComplex;
 import artillects.hive.structure.Structure;
-
-import com.builtbroken.common.Pair;
+import calclavia.lib.java.Pair;
 
 public class ZoneBuilding extends Zone
 {
     HiveComplex complex;
+
     public ZoneBuilding(HiveComplex complex, Vector3 start, Vector3 end)
     {
         super(complex.location.world, start, end);

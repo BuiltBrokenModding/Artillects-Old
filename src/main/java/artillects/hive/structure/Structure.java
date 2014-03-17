@@ -8,8 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveEntityObject;
-
-import com.builtbroken.common.Pair;
+import calclavia.lib.java.Pair;
 
 /** Entity that represents a structure peace in a hive complex
  * 

@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.hive.HiveComplexManager;
-import artillects.hive.complex.HiveComplex;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class HiveComplexGenerator implements IWorldGenerator
