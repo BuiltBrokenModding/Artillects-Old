@@ -8,8 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import universalelectricity.api.vector.VectorWorld;
+import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
-import artillects.drone.hive.complex.HiveComplex;
 import calclavia.lib.utility.nbt.NBTUtility;
 
 public class CommandTool extends CommandBase

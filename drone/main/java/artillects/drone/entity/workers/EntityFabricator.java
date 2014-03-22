@@ -7,11 +7,11 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.drone.entity.EntityArtillectGround;
+import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.ai.EntityAIArtillectFollow;
 import artillects.drone.entity.ai.combat.EntityAIRangedAttack;
 import artillects.drone.entity.ai.work.EntityAIBuilding;
 import artillects.drone.entity.ai.work.EntityAIReproduce;
-import artillects.drone.hive.EnumArtillectType;
 
 /** Drone designed to repair and build structure peaces for the hive
  * 

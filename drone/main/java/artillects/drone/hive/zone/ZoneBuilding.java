@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 import net.minecraft.item.ItemStack;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
+import artillects.core.building.BuildingPart;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityFabricator;
-import artillects.drone.hive.complex.HiveComplex;
-import artillects.drone.hive.structure.Structure;
+import artillects.drone.hive.HiveComplex;
 import calclavia.lib.java.Pair;
 
 public class ZoneBuilding extends Zone
@@ -22,7 +22,7 @@ public class ZoneBuilding extends Zone
         this.complex = complex;
     }
 
-    public HashMap<Vector3, Pair<ItemStack, Structure>> buildPosition = new HashMap<Vector3, Pair<ItemStack, Structure>>();
+    public HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildPosition = new HashMap<Vector3, Pair<ItemStack, BuildingPart>>();
 
     @Override
     public void updateEntity()
@@ -31,7 +31,7 @@ public class ZoneBuilding extends Zone
         if (ticks % 20 == 0 && complex != null)
         {
             this.buildPosition.clear();
-            for (Structure str : complex.damagedPeaces)
+            for (BuildingPart str : complex.damagedPeaces)
             {
                 str.loadBuildingRequest(this.buildPosition);
             }
@@ -45,7 +45,7 @@ public class ZoneBuilding extends Zone
             Vector3 location = null;
             ItemStack stack = null;
 
-            for (Entry<Vector3, Pair<ItemStack, Structure>> entry : buildPosition.entrySet())
+            for (Entry<Vector3, Pair<ItemStack, BuildingPart>> entry : buildPosition.entrySet())
             {
                 if (location == null || entry.getKey().distance(vec) < vec.distance(location))
                 {

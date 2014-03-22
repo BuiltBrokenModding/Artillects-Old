@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.MathHelper;
 import artillects.drone.entity.EntityArtillectGround;
-import artillects.drone.hive.complex.HiveComplex;
+import artillects.drone.hive.HiveComplex;
 
 public class EntityAIArtillectFollow extends EntityArtillectAIBase
 {

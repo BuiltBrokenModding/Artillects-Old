@@ -12,8 +12,8 @@ import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
 import artillects.drone.InventoryHelper;
 import artillects.drone.entity.EntityArtillectGround;
+import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.workers.EntityWorker;
-import artillects.drone.hive.EnumArtillectType;
 import artillects.drone.hive.zone.ZoneMining;
 
 public class EntityAIMining extends EntityAILaborTask

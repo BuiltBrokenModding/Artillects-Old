@@ -10,7 +10,7 @@ import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
 import artillects.drone.CommonProxy.GuiIDs;
-import artillects.drone.hive.complex.HiveComplex;
+import artillects.drone.hive.HiveComplex;
 
 /** Prefab for ground based drones
  * 

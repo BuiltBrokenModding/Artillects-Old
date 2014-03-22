@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import artillects.core.Reference;
-import artillects.drone.block.lightbridge.TileLightbridge;
+import artillects.drone.blocks.lightbridge.TileLightbridge;
 import artillects.drone.client.model.ModelLightbridge;
 
 public class RenderLightbridge extends TileEntitySpecialRenderer {

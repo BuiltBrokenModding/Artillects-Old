@@ -7,13 +7,13 @@ import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.building.GhostObject;
 import artillects.drone.entity.IArtillect;
-import artillects.drone.hive.HiveEntityObject;
 
 /** Class used by the hive mind to ID an area by which a task is to be operated in
  * 
  * @author DarkGuardsman */
-public class Zone extends HiveEntityObject
+public class Zone extends GhostObject
 {
     /** Start is always the min point; end is always the largest point. */
     public World world;

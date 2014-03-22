@@ -9,7 +9,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.drone.hive.complex.HiveComplex;
 import calclavia.lib.utility.nbt.NBTUtility;
 
 /** Hive complex manager mainly used for saving control and grouping of hive complexes.

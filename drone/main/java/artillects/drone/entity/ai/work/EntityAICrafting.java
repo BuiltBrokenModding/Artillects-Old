@@ -11,10 +11,10 @@ import net.minecraft.tileentity.TileEntityChest;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
 import artillects.drone.entity.EntityArtillectGround;
+import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.workers.EntityWorker;
-import artillects.drone.hive.EnumArtillectType;
 import artillects.drone.hive.zone.ZoneProcessing;
-import artillects.drone.item.ItemDroneParts.Part;
+import artillects.drone.items.ItemDroneParts.Part;
 
 public class EntityAICrafting extends EntityAILaborTask
 {

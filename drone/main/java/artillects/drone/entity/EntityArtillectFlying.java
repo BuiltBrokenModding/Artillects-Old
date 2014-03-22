@@ -21,9 +21,8 @@ import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.ai.EntityCombatSelector;
 import artillects.drone.Drone;
-import artillects.drone.hive.EnumArtillectType;
+import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
-import artillects.drone.hive.complex.HiveComplex;
 import artillects.drone.hive.zone.Zone;
 
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect

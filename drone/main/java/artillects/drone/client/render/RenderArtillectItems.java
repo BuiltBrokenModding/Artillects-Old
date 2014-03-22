@@ -6,7 +6,7 @@ import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 import artillects.drone.Drone;
-import artillects.drone.hive.EnumArtillectEntity;
+import artillects.drone.entity.EnumArtillectEntity;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

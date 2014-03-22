@@ -13,8 +13,8 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.InventoryHelper;
 import artillects.drone.entity.EntityArtillectGround;
+import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.workers.EntityWorker;
-import artillects.drone.hive.EnumArtillectType;
 import artillects.drone.hive.zone.ZoneProcessing;
 
 public class EntityAIBlacksmith extends EntityAILaborTask

@@ -12,10 +12,10 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.entity.EntityArtillectGround;
+import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityFabricator;
-import artillects.drone.hive.EnumArtillectType;
-import artillects.drone.hive.complex.HiveComplex;
+import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.zone.ZoneProcessing;
 
 public class EntityAIReproduce extends EntityAIBase

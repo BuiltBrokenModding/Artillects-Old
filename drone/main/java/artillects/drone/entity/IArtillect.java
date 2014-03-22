@@ -2,7 +2,6 @@ package artillects.drone.entity;
 
 import net.minecraft.inventory.IInventory;
 import artillects.core.interfaces.IEntity;
-import artillects.drone.hive.EnumArtillectType;
 import artillects.drone.hive.zone.Zone;
 
 /** Applied to any Entity that is considered to be a drone for the hive
