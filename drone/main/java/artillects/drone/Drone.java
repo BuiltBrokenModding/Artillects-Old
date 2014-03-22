@@ -1,7 +1,6 @@
 package artillects.drone;
 
 import java.io.File;
-import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
@@ -37,23 +36,9 @@ import artillects.drone.item.ItemBuildingGenerator;
 import artillects.drone.item.ItemDroneParts;
 import artillects.drone.item.ItemDroneParts.Part;
 import artillects.drone.item.ItemSchematicCreator;
-import artillects.drone.item.weapons.laser.ItemLaserHeavy;
-import artillects.drone.item.weapons.laser.ItemLaserPistol;
-import artillects.drone.item.weapons.laser.ItemLaserRifle;
-import artillects.drone.item.weapons.laser.ItemLaserSniper;
-import artillects.drone.item.weapons.plasma.ItemPlasmaLight;
-import artillects.drone.item.weapons.plasma.ItemPlasmaPistol;
-import artillects.drone.item.weapons.plasma.ItemPlasmaRifle;
-import artillects.drone.item.weapons.plasma.ItemPlasmaSniper;
-import calclavia.lib.content.ContentRegistry;
-import calclavia.lib.content.IDManager;
-import calclavia.lib.network.PacketEntity;
 import calclavia.lib.network.PacketHandler;
-import calclavia.lib.network.PacketTile;
 import calclavia.lib.prefab.item.ItemBlockMetadata;
-import calclavia.lib.utility.LanguageUtility;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -68,8 +53,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true)
 @NetworkMod(channels = { Reference.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
@@ -88,7 +71,6 @@ public class Drone
     private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US", "de_DE" };
 
     /** Packet Types */
-   
 
     @Instance(Drone.MOD_ID)
     public static Drone instance;
@@ -116,8 +98,8 @@ public class Drone
     public static Item weaponPlasmaLauncher;
     public static Item plasmaBattery;
     public static Item laserRifle, laserSniper, laserPistol, laserHeavy;
-	public static Item plasmaRifle, plasmaSniper, plasmaPistol, plasmaHeavy, plasmaLight;
-    
+    public static Item plasmaRifle, plasmaSniper, plasmaPistol, plasmaHeavy, plasmaLight;
+
     public static boolean enableHiveComplexGenerator = true;
     public static boolean enableHiveChunkLoading = true;
     public static boolean enableHiveCoreChunkLoading = true;
@@ -152,16 +134,6 @@ public class Drone
         itemBuilding = Artillects.contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
         itemSchematicCreator = Artillects.contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
 
-        laserRifle = Artillects.contentRegistry.createItem("laserRifle", ItemLaserRifle.class, false);
-		laserSniper = Artillects.contentRegistry.createItem("laserSniper", ItemLaserSniper.class, false);
-		laserPistol = Artillects.contentRegistry.createItem("laserPistol", ItemLaserPistol.class, false);
-		laserHeavy = Artillects.contentRegistry.createItem("laserHeavy", ItemLaserHeavy.class, false);
-		
-		plasmaRifle = Artillects.contentRegistry.createItem("plasmaRifle", ItemPlasmaRifle.class, false);
-		plasmaPistol = Artillects.contentRegistry.createItem("plasmaPistol", ItemPlasmaPistol.class, false);
-		plasmaLight = Artillects.contentRegistry.createItem("plasmaLight", ItemPlasmaLight.class, false);
-		plasmaSniper = Artillects.contentRegistry.createItem("plasmaSniper", ItemPlasmaSniper.class, false);
-        
         blockSymbol = Artillects.contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
         blockHiveWalling = Artillects.contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
         blockLight = Artillects.contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
