@@ -2,6 +2,7 @@ package artillects.hive.schematics;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
@@ -19,18 +20,23 @@ import calclavia.lib.utility.nbt.NBTUtility;
 
 /** File that represents all the data loaded from a schematic data file
  * 
- * @author Dark */
+ * @author DarkGuardsman */
 public class Schematic implements ISaveObj
 {
-    public static final String BlockList = "BlockList";
+    //TODO save the schematics using block names, include a reference sheet to match block names to IDs instead of saving each block as a string
+    
+    public static final String BLOCK_LIST_SAVE_NAME = "BlockList";
+    public static final String BLOCK_REF_SAVE_NAME = "BlockRef";
+    public static final String BLOCK_MAP_SAVE_NAME = "BlockMap";
 
-    private static HashMap<String, Block> blockSaveMap = new HashMap<String, Block>();
-    private static HashMap<Block, String> blockSaveMapRev = new HashMap<Block, String>();
+    private static final LinkedHashMap<String, Block> BLOCK_SAVE_MAP = new LinkedHashMap<String, Block>();
+    private static final LinkedHashMap<Block, String> BLOCK_SAVE_MAP_REV = new LinkedHashMap<Block, String>();
 
+    /** Manually saves a block by a set name, overrides vanilla block name saving */
     public static void registerSaveBlock(String name, Block block)
     {
-        blockSaveMap.put(name, block);
-        blockSaveMapRev.put(block, name);
+        BLOCK_SAVE_MAP.put(name, block);
+        BLOCK_SAVE_MAP_REV.put(block, name);
     }
 
     static
@@ -124,7 +130,7 @@ public class Schematic implements ISaveObj
                         if (checkIfWorldIsLoaded)
                         {
                             Chunk chunk = spot.world.getChunkFromBlockCoords(setPos.intX(), setPos.intZ());
-                            if(!chunk.isChunkLoaded)
+                            if (!chunk.isChunkLoaded)
                             {
                                 continue;
                             }
@@ -150,7 +156,7 @@ public class Schematic implements ISaveObj
         {
             this.init();
         }
-        NBTTagCompound blockNBT = nbt.getCompoundTag(BlockList);
+        NBTTagCompound blockNBT = nbt.getCompoundTag(BLOCK_LIST_SAVE_NAME);
         if (this.schematicSize != null)
         {
             nbt.setInteger("sizeX", (int) this.schematicSize.x);
@@ -169,9 +175,9 @@ public class Schematic implements ISaveObj
         {
             String output = "";
             Block block = Block.blocksList[entry.getValue()[0]];
-            if (block != null && Schematic.blockSaveMapRev.containsKey(block))
+            if (block != null && Schematic.BLOCK_SAVE_MAP_REV.containsKey(block))
             {
-                output += Schematic.blockSaveMapRev.get(block);
+                output += Schematic.BLOCK_SAVE_MAP_REV.get(block);
             }
             else
             {
@@ -183,7 +189,7 @@ public class Schematic implements ISaveObj
             i++;
         }
         blockNBT.setInteger("count", i);
-        nbt.setCompoundTag(BlockList, blockNBT);
+        nbt.setCompoundTag(BLOCK_LIST_SAVE_NAME, blockNBT);
 
     }
 
@@ -192,7 +198,7 @@ public class Schematic implements ISaveObj
     {
         schematicSize = new Vector3(nbt.getInteger("sizeX"), nbt.getInteger("sizeY"), nbt.getInteger("sizeZ"));
         schematicCenter = new Vector3(nbt.getInteger("centerX"), nbt.getInteger("centerY"), nbt.getInteger("centerZ"));
-        NBTTagCompound blockDataSave = nbt.getCompoundTag(BlockList);
+        NBTTagCompound blockDataSave = nbt.getCompoundTag(BLOCK_LIST_SAVE_NAME);
 
         for (int blockCount = 0; blockCount < blockDataSave.getInteger("count"); blockCount++)
         {
@@ -207,9 +213,9 @@ public class Schematic implements ISaveObj
                 {
                     if (blockData.length > 0)
                     {
-                        if (Schematic.blockSaveMap.containsKey(blockData[0]))
+                        if (Schematic.BLOCK_SAVE_MAP.containsKey(blockData[0]))
                         {
-                            blockID = Schematic.blockSaveMap.get(blockData[0]).blockID;
+                            blockID = Schematic.BLOCK_SAVE_MAP.get(blockData[0]).blockID;
                         }
                         else
                         {
