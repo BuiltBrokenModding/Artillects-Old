@@ -38,6 +38,7 @@ import artillects.drone.item.ItemDroneParts.Part;
 import artillects.drone.item.ItemSchematicCreator;
 import calclavia.lib.network.PacketHandler;
 import calclavia.lib.prefab.item.ItemBlockMetadata;
+import calclavia.lib.schematic.SchematicMap;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -162,6 +163,16 @@ public class Drone
         {
             GameRegistry.registerWorldGenerator(new HiveComplexGenerator());
         }
+        
+        SchematicMap.registerSaveBlock("wall1", Drone.blockHiveWalling);
+        SchematicMap.registerSaveBlock("wall2", Drone.blockHiveWalling);
+        SchematicMap.registerSaveBlock("symbol1", Drone.blockSymbol);
+        SchematicMap.registerSaveBlock("symbol2", Drone.blockSymbol);
+        SchematicMap.registerSaveBlock("symbol3", Drone.blockSymbol);
+        SchematicMap.registerSaveBlock("light", Drone.blockLight);
+        SchematicMap.registerSaveBlock("core", Drone.blockHiveCore);
+        SchematicMap.registerSaveBlock("teleporter", Drone.blockHiveTeleporterNode);
+        SchematicMap.registerSaveBlock("teleporterSymbol", Drone.blockGlyph);
         proxy.init();
     }
 

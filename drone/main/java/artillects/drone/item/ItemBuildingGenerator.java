@@ -2,6 +2,7 @@ package artillects.drone.item;
 
 import java.util.List;
 
+import calclavia.lib.schematic.SchematicMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,7 +10,6 @@ import net.minecraft.world.World;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Reference;
 import artillects.drone.hive.complex.HiveComplex;
-import artillects.drone.hive.schematics.Schematic;
 import artillects.drone.hive.structure.EnumStructurePeaces;
 
 public class ItemBuildingGenerator extends ItemBase
@@ -40,7 +40,7 @@ public class ItemBuildingGenerator extends ItemBase
             {
                 if (EnumStructurePeaces.values()[itemStack.getItemDamage()].makeTool)
                 {
-                    Schematic schematic = EnumStructurePeaces.values()[itemStack.getItemDamage()].getSchematic();
+                    SchematicMap schematic = EnumStructurePeaces.values()[itemStack.getItemDamage()].getSchematic();
                     schematic.build(new VectorWorld(world, x, y, z), false);
                 }
             }

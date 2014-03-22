@@ -1,6 +1,6 @@
 package artillects.drone.hive.structure;
 
-import artillects.drone.hive.schematics.Schematic;
+import calclavia.lib.schematic.SchematicMap;
 
 public enum EnumStructurePeaces
 {
@@ -20,7 +20,7 @@ public enum EnumStructurePeaces
     SMALL_ROOM("smallRoom");
 
     public String saveName, toolName;
-    public Schematic schematic;
+    public SchematicMap schematic;
     public boolean makeTool = false;
 
     private EnumStructurePeaces(String name)
@@ -35,11 +35,11 @@ public enum EnumStructurePeaces
         this.makeTool = true;
     }
 
-    public Schematic getSchematic()
+    public SchematicMap getSchematic()
     {
         if (schematic == null)
         {
-            schematic = new Schematic();
+            schematic = new SchematicMap();
             schematic.getFromResourceFolder(saveName);
         }
         return schematic;

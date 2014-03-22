@@ -6,16 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import calclavia.lib.schematic.SchematicMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatMessageComponent;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.drone.hive.schematics.Schematic;
 
 public class PlayerSelectionHandler
 {
 	private static HashMap<String, VectorWorld[]> playerPointSelection = new HashMap<String, VectorWorld[]>();
-	private static HashMap<String, Schematic> playerSchematic = new HashMap<String, Schematic>();
+	private static HashMap<String, SchematicMap> playerSchematic = new HashMap<String, SchematicMap>();
 
 	public static VectorWorld getPointOne(EntityPlayer player)
 	{
@@ -80,7 +80,7 @@ public class PlayerSelectionHandler
 			if (pointOne.world == pointTwo.world)
 			{
 
-				Schematic schematic = new Schematic().loadWorldSelection(pointOne.world, pointOne, pointTwo);
+				SchematicMap schematic = new SchematicMap().loadWorldSelection(pointOne.world, pointOne, pointTwo);
 				playerSchematic.put(player.username, schematic);
 
 				player.sendChatToPlayer(ChatMessageComponent.createFromText("Loaded selection into memory"));
@@ -115,7 +115,7 @@ public class PlayerSelectionHandler
 		return player != null && playerSchematic.get(player.username) != null;
 	}
 
-	public static Schematic getSchematic(EntityPlayer player)
+	public static SchematicMap getSchematic(EntityPlayer player)
 	{
 		return player != null ? playerSchematic.get(player.username) : null;
 	}
@@ -127,7 +127,7 @@ public class PlayerSelectionHandler
 		{
 			try
 			{
-				Schematic schematic = new Schematic();
+				SchematicMap schematic = new SchematicMap();
 				schematic.load(CompressedStreamTools.readCompressed(file.toURL().openStream()));
 				playerSchematic.put(player.username, schematic);
 			}
