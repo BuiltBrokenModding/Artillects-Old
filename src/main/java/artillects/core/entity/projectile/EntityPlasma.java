@@ -1,4 +1,4 @@
-package artillects.drone.entity.projectile;
+package artillects.core.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
