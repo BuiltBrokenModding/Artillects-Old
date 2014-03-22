@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import artillects.core.Reference;
 import artillects.core.Settings;
 import calclavia.lib.content.ContentRegistry;
+import calclavia.lib.network.PacketEntity;
 import calclavia.lib.network.PacketHandler;
 import calclavia.lib.network.PacketTile;
 import cpw.mods.fml.common.Mod;
@@ -37,10 +38,13 @@ public class Artillects
 
     /** Packets */
     public static final PacketTile PACKET_TILE = new PacketTile(Reference.CHANNEL);
+    public static final PacketEntity PACKET_ENTITY = new PacketEntity(Reference.CHANNEL);
 
     /** Blocks and Items */
     public static final ContentRegistry contentRegistry = new ContentRegistry(Settings.CONFIGURATION, Settings.idManager, ID).setPrefix(Reference.PREFIX).setTab(CreativeTabs.tabMisc);
 
+    
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {

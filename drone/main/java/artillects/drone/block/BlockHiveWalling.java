@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import artillects.drone.Drone;
+import artillects.core.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -38,7 +38,7 @@ public class BlockHiveWalling extends BlockHiveBlock
     {
         for (HiveWallTypes data : HiveWallTypes.values())
         {
-            data.icon = par1IconRegister.registerIcon(Drone.PREFIX + "decorWall." + data.ordinal());
+            data.icon = par1IconRegister.registerIcon(Reference.PREFIX + "decorWall." + data.ordinal());
         }
 
         this.blockIcon = HiveWallTypes.BASE.icon;

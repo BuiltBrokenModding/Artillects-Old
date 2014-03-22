@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.drone.Drone;
+import artillects.core.Reference;
 import artillects.drone.hive.complex.HiveComplex;
 import artillects.drone.hive.schematics.Schematic;
 import artillects.drone.hive.structure.EnumStructurePeaces;
@@ -18,7 +18,7 @@ public class ItemBuildingGenerator extends ItemBase
     {
         super(id, "buildingGenerator");
         this.setHasSubtypes(true);
-        this.setTextureName(Drone.PREFIX + "buildingGenerator");
+        this.setTextureName(Reference.PREFIX + "buildingGenerator");
     }
 
     @Override

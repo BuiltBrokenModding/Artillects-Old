@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import artillects.drone.Drone;
+import artillects.core.Reference;
 import artillects.drone.block.lightbridge.TileLightbridge;
 import artillects.drone.client.model.ModelLightbridge;
 
@@ -26,7 +26,7 @@ public class RenderLightbridge extends TileEntitySpecialRenderer {
 		
 		GL11.glTranslated(d0 + 0.5, d1 + 1.5, d2 + 0.5);
 
-		ResourceLocation textures = new ResourceLocation(Drone.DOMAIN, "textures/blocks/lightbridge.png");
+		ResourceLocation textures = new ResourceLocation(Reference.DOMAIN, "textures/blocks/lightbridge.png");
 
 		bindTexture(textures);
 				

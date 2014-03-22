@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import artillects.drone.Drone;
+import artillects.core.Reference;
 import artillects.drone.client.model.ModelArtillect;
 import artillects.drone.client.model.ModelSeeker;
 import cpw.mods.fml.relauncher.Side;
@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderSeeker extends RenderLiving
 {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Drone.DOMAIN, Drone.MODEL_DIRECTORY + "Seeker.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_DIRECTORY + "Seeker.png");
     public static final ModelArtillect MODEL = new ModelSeeker();
 
     public RenderSeeker()

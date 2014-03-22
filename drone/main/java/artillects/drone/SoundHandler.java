@@ -1,8 +1,8 @@
-package artillects.drone.client;
+package artillects.drone;
 
+import artillects.core.Reference;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
-import artillects.drone.Drone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -38,13 +38,13 @@ public class SoundHandler
             System.out.println("Loading sound file " + SOUND_FILES[i].name);
             if (SOUND_FILES[i].versions == 1)
             {
-                event.manager.addSound(Drone.PREFIX + SOUND_FILES[i].name + ".ogg");
+                event.manager.addSound(Reference.PREFIX + SOUND_FILES[i].name + ".ogg");
             }
             else
             {
                 for (int variation = 1; variation < SOUND_FILES[i].versions; variation++)
                 {
-                    event.manager.addSound(Drone.PREFIX + SOUND_FILES[i].name + variation + ".ogg");
+                    event.manager.addSound(Reference.PREFIX + SOUND_FILES[i].name + variation + ".ogg");
                 }
 
             }

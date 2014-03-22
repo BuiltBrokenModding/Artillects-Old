@@ -6,53 +6,46 @@ import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import artillects.drone.Drone;
+import artillects.core.Reference;
 
-/**
- * @author Calclavia
- * 
- */
+/** @author Calclavia */
 public class GuiBase extends GuiContainer
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Drone.DOMAIN, Drone.GUI_DIRECTORY + "gui_base.png");
-	public static final ResourceLocation COMPONENT_TEXTURE = new ResourceLocation(Drone.DOMAIN, Drone.GUI_DIRECTORY + "gui_components.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.GUI_DIRECTORY + "gui_base.png");
+    public static final ResourceLocation COMPONENT_TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.GUI_DIRECTORY + "gui_components.png");
 
-	/**
-	 * The X size of the inventory window in pixels.
-	 */
-	protected int xSize = 176;
+    /** The X size of the inventory window in pixels. */
+    protected int xSize = 176;
 
-	/**
-	 * The Y size of the inventory window in pixels.
-	 */
-	protected int ySize = 166;
+    /** The Y size of the inventory window in pixels. */
+    protected int ySize = 166;
 
-	protected int containerWidth, containerHeight;
+    protected int containerWidth, containerHeight;
 
-	public GuiBase(Container container)
-	{
-		super(container);
-		this.ySize = 216;
-	}
+    public GuiBase(Container container)
+    {
+        super(container);
+        this.ySize = 216;
+    }
 
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float var1, int x, int y)
-	{
-		this.containerWidth = (this.width - this.xSize) / 2;
-		this.containerHeight = (this.height - this.ySize) / 2;
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float var1, int x, int y)
+    {
+        this.containerWidth = (this.width - this.xSize) / 2;
+        this.containerHeight = (this.height - this.ySize) / 2;
 
-		this.mc.renderEngine.bindTexture(TEXTURE);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        this.mc.renderEngine.bindTexture(TEXTURE);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		this.drawTexturedModalRect(this.containerWidth, this.containerHeight, 0, 0, this.xSize, this.ySize);
-	}
+        this.drawTexturedModalRect(this.containerWidth, this.containerHeight, 0, 0, this.xSize, this.ySize);
+    }
 
-	protected void drawSlot(int x, int y)
-	{
-		this.mc.renderEngine.bindTexture(COMPONENT_TEXTURE);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+    protected void drawSlot(int x, int y)
+    {
+        this.mc.renderEngine.bindTexture(COMPONENT_TEXTURE);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		this.drawTexturedModalRect(this.containerWidth + x, this.containerHeight + y, 0, 0, 18, 18);
-	}
+        this.drawTexturedModalRect(this.containerWidth + x, this.containerHeight + y, 0, 0, 18, 18);
+    }
 
 }

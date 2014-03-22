@@ -12,7 +12,9 @@ import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
+import artillects.core.Reference;
 import artillects.drone.block.BlockHiveComplexCore;
 import artillects.drone.block.BlockHiveLighting;
 import artillects.drone.block.BlockHiveWalling;
@@ -33,8 +35,8 @@ import artillects.drone.hive.worldgen.HiveComplexGenerator;
 import artillects.drone.item.ItemArtillectSpawner;
 import artillects.drone.item.ItemBuildingGenerator;
 import artillects.drone.item.ItemDroneParts;
-import artillects.drone.item.ItemSchematicCreator;
 import artillects.drone.item.ItemDroneParts.Part;
+import artillects.drone.item.ItemSchematicCreator;
 import artillects.drone.item.weapons.laser.ItemLaserHeavy;
 import artillects.drone.item.weapons.laser.ItemLaserPistol;
 import artillects.drone.item.weapons.laser.ItemLaserRifle;
@@ -49,6 +51,7 @@ import calclavia.lib.network.PacketEntity;
 import calclavia.lib.network.PacketHandler;
 import calclavia.lib.network.PacketTile;
 import calclavia.lib.prefab.item.ItemBlockMetadata;
+import calclavia.lib.utility.LanguageUtility;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
@@ -68,53 +71,24 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Drone.VERSION, useMetadata = true)
-@NetworkMod(channels = { Drone.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
+@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true)
+@NetworkMod(channels = { Reference.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Drone
 {
-    // @Mod Prerequisites
-    public static final String MAJOR_VERSION = "@MAJOR@";
-    public static final String MINOR_VERSION = "@MINOR@";
-    public static final String REVIS_VERSION = "@REVIS@";
-    public static final String BUILD_VERSION = "@BUILD@";
-    public static final String VERSION = MAJOR_VERSION + "." + MINOR_VERSION + "." + REVIS_VERSION + "." + BUILD_VERSION;
 
     // @Mod
     public static final String MOD_ID = "Artillects|Drone";
     public static final String NAME = "Artillects";
 
-    @SidedProxy(clientSide = "artillects.drone.client.ClientProxy", serverSide = "artillects.drone.CommonProxy")
+    @SidedProxy(clientSide = "artillects.drone.ClientProxy", serverSide = "artillects.drone.CommonProxy")
     public static CommonProxy proxy;
-
-    public static final String CHANNEL = "Artillects";
 
     public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Artillects.cfg"));
 
     private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US", "de_DE" };
 
-    // Domain and prefix
-    public static final String DOMAIN = "artillects";
-    public static final String PREFIX = DOMAIN + ":";
-
-    // File paths
-    public static final String RESOURCE_DIRECTORY_NO_SLASH = "assets/" + DOMAIN + "/";
-    public static final String RESOURCE_DIRECTORY = "/" + RESOURCE_DIRECTORY_NO_SLASH;
-    public static final String LANGUAGE_PATH = RESOURCE_DIRECTORY + "lang/";
-    public static final String SOUND_PATH = RESOURCE_DIRECTORY + "audio/";
-
-    public static final String TEXTURE_DIRECTORY = "textures/";
-    public static final String BLOCK_DIRECTORY = TEXTURE_DIRECTORY + "blocks/";
-    public static final String ITEM_DIRECTORY = TEXTURE_DIRECTORY + "items/";
-    public static final String MODEL_DIRECTORY = TEXTURE_DIRECTORY + "models/";
-    public static final String GUI_DIRECTORY = TEXTURE_DIRECTORY + "gui/";
-
-    /* START IDS */
-    public static int BLOCK_ID_PRE = 3856;
-    public static int ITEM_ID_PREFIX = 15966;
-
     /** Packet Types */
-    public static final PacketTile PACKET_TILE = new PacketTile(CHANNEL);
-    public static final PacketEntity PACKET_ENTITY = new PacketEntity(CHANNEL);
+   
 
     @Instance(Drone.MOD_ID)
     public static Drone instance;
@@ -123,8 +97,6 @@ public class Drone
     public static ModMetadata meta;
 
     /** Calclavia Gubins */
-    public static IDManager idManager = new IDManager(BLOCK_ID_PRE, ITEM_ID_PREFIX);
-    public static ContentRegistry contentRegistry = new ContentRegistry(CONFIGURATION, new IDManager(3567, 13567), Drone.MOD_ID);
 
     public static Block blockGlyph;
     public static Block blockHiveWalling;
@@ -156,18 +128,6 @@ public class Drone
     {
         MinecraftForge.EVENT_BUS.register(this);
 
-        // Load meta
-        meta.modId = MOD_ID;
-        meta.name = NAME;
-        meta.description = "Alien in nature, it is unknown how these Artillects came to exist. What is do know is that they seem to be focused on stripping the planet of its resources...";
-        meta.url = "www.universalelectricity.com/artillects";
-
-        meta.logoFile = TEXTURE_DIRECTORY + "Artillects_Banner.png";
-        meta.version = VERSION;
-        meta.authorList = Arrays.asList(new String[] { "DarkGuardsman", "Calclavia" });
-        meta.credits = "DarkGuardsman - Head Developer\n" + "Calclavia - Developer\n" + "Archadia - Developer\n" + "Hangcow - A few assets\n";
-        meta.autogenerated = false;
-
         // Register event handlers
         HiveComplexManager.instance();
         NetworkRegistry.instance().registerGuiHandler(this, Drone.proxy);
@@ -187,36 +147,34 @@ public class Drone
         hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
-        itemArtillectSpawner = contentRegistry.createItem("it1" + "emDrones", ItemArtillectSpawner.class, true);
-        itemParts = contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
-        itemBuilding = contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
-        itemSchematicCreator = contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
+        itemArtillectSpawner = Artillects.contentRegistry.createItem("it1" + "emDrones", ItemArtillectSpawner.class, true);
+        itemParts = Artillects.contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
+        itemBuilding = Artillects.contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
+        itemSchematicCreator = Artillects.contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
 
-        laserRifle = contentRegistry.createItem("laserRifle", ItemLaserRifle.class, false);
-		laserSniper = contentRegistry.createItem("laserSniper", ItemLaserSniper.class, false);
-		laserPistol = contentRegistry.createItem("laserPistol", ItemLaserPistol.class, false);
-		laserHeavy = contentRegistry.createItem("laserHeavy", ItemLaserHeavy.class, false);
+        laserRifle = Artillects.contentRegistry.createItem("laserRifle", ItemLaserRifle.class, false);
+		laserSniper = Artillects.contentRegistry.createItem("laserSniper", ItemLaserSniper.class, false);
+		laserPistol = Artillects.contentRegistry.createItem("laserPistol", ItemLaserPistol.class, false);
+		laserHeavy = Artillects.contentRegistry.createItem("laserHeavy", ItemLaserHeavy.class, false);
 		
-		plasmaRifle = contentRegistry.createItem("plasmaRifle", ItemPlasmaRifle.class, false);
-		plasmaPistol = contentRegistry.createItem("plasmaPistol", ItemPlasmaPistol.class, false);
-		plasmaLight = contentRegistry.createItem("plasmaLight", ItemPlasmaLight.class, false);
-		plasmaSniper = contentRegistry.createItem("plasmaSniper", ItemPlasmaSniper.class, false);
+		plasmaRifle = Artillects.contentRegistry.createItem("plasmaRifle", ItemPlasmaRifle.class, false);
+		plasmaPistol = Artillects.contentRegistry.createItem("plasmaPistol", ItemPlasmaPistol.class, false);
+		plasmaLight = Artillects.contentRegistry.createItem("plasmaLight", ItemPlasmaLight.class, false);
+		plasmaSniper = Artillects.contentRegistry.createItem("plasmaSniper", ItemPlasmaSniper.class, false);
         
-        blockSymbol = contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
-        blockHiveWalling = contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
-        blockLight = contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
-        blockGlyph = contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
-        blockHiveTeleporterNode = contentRegistry.createBlock(BlockTeleporterAnchor.class);
-        blockHiveCore = contentRegistry.createBlock(BlockHiveComplexCore.class);
-        blockLightbridgeCore = contentRegistry.createBlock(BlockLightbridgeCore.class);
-        blockLightbridgeFrame = contentRegistry.createBlock(BlockLightbridgeFrame.class);
-        blockLightbridge = contentRegistry.createBlock(BlockLightbridge.class);
+        blockSymbol = Artillects.contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
+        blockHiveWalling = Artillects.contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
+        blockLight = Artillects.contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
+        blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
+        blockHiveTeleporterNode = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
+        blockHiveCore = Artillects.contentRegistry.createBlock(BlockHiveComplexCore.class);
+        blockLightbridgeCore = Artillects.contentRegistry.createBlock(BlockLightbridgeCore.class);
+        blockLightbridgeFrame = Artillects.contentRegistry.createBlock(BlockLightbridgeFrame.class);
+        blockLightbridge = Artillects.contentRegistry.createBlock(BlockLightbridge.class);
 
         CONFIGURATION.save();
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
-
-        System.out.println(NAME + ": Loaded languages: " + loadLanguages(LANGUAGE_PATH, LANGUAGES_SUPPORTED));
 
         // Register entities
         for (EnumArtillectEntity artillect : EnumArtillectEntity.values())
@@ -273,73 +231,6 @@ public class Drone
         // Wall 2
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 2), "GPG", "P P", "GPG", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemDroneParts.Part.GEARS.ordinal())));
         proxy.postInit();
-    }
-
-    /** Loads all the language files for a mod. This supports the loading of "child" language files
-     * for sub-languages to be loaded all from one file instead of creating multiple of them. An
-     * example of this usage would be different Spanish sub-translations (es_MX, es_YU).
-     * 
-     * @param languagePath - The path to the mod's language file folder.
-     * @param languageSupported - The languages supported. E.g: new String[]{"en_US", "en_AU",
-     * "en_UK"}
-     * @return The amount of language files loaded successfully. */
-    public static int loadLanguages(String languagePath, String[] languageSupported)
-    {
-        int languages = 0;
-
-        /** Load all languages. */
-        for (String language : languageSupported)
-        {
-            LanguageRegistry.instance().loadLocalization(languagePath + language + ".properties", language, false);
-
-            if (LanguageRegistry.instance().getStringLocalization("children", language) != "")
-            {
-                try
-                {
-                    String[] children = LanguageRegistry.instance().getStringLocalization("children", language).split(",");
-
-                    for (String child : children)
-                    {
-                        if (child != "" || child != null)
-                        {
-                            LanguageRegistry.instance().loadLocalization(languagePath + language + ".properties", child, false);
-                            languages++;
-                        }
-                    }
-                }
-                catch (Exception e)
-                {
-                    FMLLog.severe("Failed to load a child language file.");
-                    e.printStackTrace();
-                }
-            }
-
-            languages++;
-        }
-
-        return languages;
-    }
-
-    /** Gets the local text of your translation based on the given key. This will look through your
-     * mod's translation file that was previously registered. Make sure you enter the full name
-     * 
-     * @param key - e.g tile.block.name
-     * @return The translated string or the default English translation if none was found. */
-    public static String getLocal(String key)
-    {
-        String text = null;
-
-        if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-        {
-            text = LanguageRegistry.instance().getStringLocalization(key);
-        }
-
-        if (text == null || text == "")
-        {
-            text = LanguageRegistry.instance().getStringLocalization(key, "en_US");
-        }
-
-        return text;
     }
 
     @EventHandler

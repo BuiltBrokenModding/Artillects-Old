@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import artillects.core.Reference;
 import artillects.drone.Drone;
 import artillects.drone.block.BlockBase;
 import artillects.drone.block.IHiveBlock;
@@ -38,7 +39,7 @@ public class BlockGlyph extends BlockBase implements IHiveBlock
 	{
 		for (int i = 0; i < icons.length; i++)
 		{
-			icons[i] = register.registerIcon(Drone.PREFIX + "glyph" + i);
+			icons[i] = register.registerIcon(Reference.PREFIX + "glyph" + i);
 		}
 
 		this.blockIcon = icons[0];

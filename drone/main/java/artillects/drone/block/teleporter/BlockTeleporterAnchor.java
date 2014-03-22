@@ -10,9 +10,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import artillects.core.Reference;
 import artillects.drone.Drone;
 import artillects.drone.block.BlockBase;
 import artillects.drone.block.IHiveBlock;
+import calclavia.lib.utility.LanguageUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -60,7 +62,7 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
                 if (frequency == -1)
                 {
                     if (!world.isRemote)
-                        player.addChatMessage(Drone.getLocal("msg.teleporter.setup"));
+                        player.addChatMessage(LanguageUtility.getLocal("msg.teleporter.setup"));
                 }
                 else
                 {
@@ -68,13 +70,13 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
                     {
                         if (!world.isRemote)
                         {
-                            player.addChatMessage(Drone.getLocal("msg.teleporter.frequency") + " " + frequency);
+                            player.addChatMessage(LanguageUtility.getLocal("msg.teleporter.frequency") + " " + frequency);
                         }
 
                         if (System.currentTimeMillis() - ((TileEntityTeleporterAnchor) tile).lastVoiceActivation > 20 * 600)
                         {
                             ((TileEntityTeleporterAnchor) tile).lastVoiceActivation = System.currentTimeMillis();
-                            world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Drone.PREFIX + "voice-introduce-teleporter", 5F, 1F);
+                            world.playSoundEffect(x + 0.5, y + 0.5, z + 0.5, Reference.PREFIX + "voice-introduce-teleporter", 5F, 1F);
                         }
                     }
                     else
@@ -125,9 +127,9 @@ public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvi
     @Override
     public void registerIcons(IconRegister ir)
     {
-        this.iconTop = ir.registerIcon(Drone.PREFIX + "teleporterNode_top");
-        this.iconSide = ir.registerIcon(Drone.PREFIX + "teleporterNode_side");
-        this.iconBot = ir.registerIcon(Drone.PREFIX + "decorWall1");
+        this.iconTop = ir.registerIcon(Reference.PREFIX + "teleporterNode_top");
+        this.iconSide = ir.registerIcon(Reference.PREFIX + "teleporterNode_side");
+        this.iconBot = ir.registerIcon(Reference.PREFIX + "decorWall1");
     }
 
 }

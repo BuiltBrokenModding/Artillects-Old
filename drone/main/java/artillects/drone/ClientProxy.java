@@ -1,4 +1,4 @@
-package artillects.drone.client;
+package artillects.drone;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -6,8 +6,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import universalelectricity.api.vector.Vector3;
-import artillects.drone.Drone;
-import artillects.drone.CommonProxy;
 import artillects.drone.block.lightbridge.TileLightbridge;
 import artillects.drone.client.gui.GuiArtillect;
 import artillects.drone.client.render.RenderArtillectItems;

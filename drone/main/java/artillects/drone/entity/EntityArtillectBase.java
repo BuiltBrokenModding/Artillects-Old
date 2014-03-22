@@ -13,6 +13,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
+import artillects.core.Artillects;
 import artillects.drone.Drone;
 import artillects.drone.hive.EnumArtillectType;
 import artillects.drone.hive.HiveComplexManager;
@@ -148,7 +149,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         if (this.worldObj.isRemote)
         {
-            PacketDispatcher.sendPacketToServer(Drone.PACKET_ENTITY.getPacket(this, (byte) type.ordinal()));
+            PacketDispatcher.sendPacketToServer(Artillects.PACKET_ENTITY.getPacket(this, (byte) type.ordinal()));
         }
         else
         {
