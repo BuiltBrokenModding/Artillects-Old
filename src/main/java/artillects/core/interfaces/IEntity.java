@@ -1,4 +1,4 @@
-package com.builtbroken.ai;
+package artillects.core.interfaces;
 
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;

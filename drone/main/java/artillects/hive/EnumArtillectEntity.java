@@ -4,15 +4,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import artillects.Artillects;
+import artillects.core.interfaces.IEntityIndex;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.combat.EntityCombatDrone;
 import artillects.entity.combat.EntityDemolisher;
 import artillects.entity.combat.EntitySeeker;
 import artillects.entity.workers.EntityFabricator;
 import artillects.entity.workers.EntityWorker;
-
-import com.builtbroken.ai.IEntityIndex;
-
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 /** Used to quickly generate new drone types without adding data to the main mod class. As well keeps

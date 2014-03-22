@@ -1,4 +1,4 @@
-package com.builtbroken.ai;
+package artillects.core.interfaces;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;

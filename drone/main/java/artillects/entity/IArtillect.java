@@ -1,10 +1,9 @@
 package artillects.entity;
 
 import net.minecraft.inventory.IInventory;
+import artillects.core.interfaces.IEntity;
 import artillects.hive.EnumArtillectType;
 import artillects.hive.zone.Zone;
-
-import com.builtbroken.ai.IEntity;
 
 /** Applied to any Entity that is considered to be a drone for the hive
  * 

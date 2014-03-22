@@ -20,12 +20,11 @@ import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.Artillects;
+import artillects.core.ai.EntityCombatSelector;
 import artillects.hive.EnumArtillectType;
 import artillects.hive.HiveComplexManager;
 import artillects.hive.complex.HiveComplex;
 import artillects.hive.zone.Zone;
-
-import com.builtbroken.ai.combat.EntityCombatSelector;
 
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
 {

@@ -15,12 +15,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import artillects.core.ai.EntityCombatSelector;
 import artillects.entity.EntityArtillectGround;
 import artillects.entity.ai.EntityAIArtillectFollow;
 import artillects.entity.ai.combat.EntityAIRangedAttack;
 import artillects.hive.EnumArtillectType;
-
-import com.builtbroken.ai.combat.EntityCombatSelector;
 
 public class EntityDemolisher extends EntityArtillectGround implements IRangedAttackMob
 {

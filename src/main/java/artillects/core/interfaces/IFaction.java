@@ -1,4 +1,4 @@
-package com.builtbroken.ai;
+package artillects.core.interfaces;
 
 public interface IFaction
 {
