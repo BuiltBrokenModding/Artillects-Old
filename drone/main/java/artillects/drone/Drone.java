@@ -55,7 +55,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true)
+@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true, dependencies = "required-after:ArtillectsCore;")
 @NetworkMod(channels = { Reference.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Drone
 {
@@ -130,10 +130,10 @@ public class Drone
         hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
-        itemArtillectSpawner = Artillects.contentRegistry.createItem("it1" + "emDrones", ItemArtillectSpawner.class, true);
-        itemParts = Artillects.contentRegistry.createItem("itemDroneParts", ItemDroneParts.class, true);
-        itemBuilding = Artillects.contentRegistry.createItem("itemBuildingSpawner", ItemBuildingGenerator.class, true);
-        itemSchematicCreator = Artillects.contentRegistry.createItem("itemSchematicTool", ItemSchematicCreator.class, true);
+        itemArtillectSpawner = Artillects.contentRegistry.createItem(ItemArtillectSpawner.class);
+        itemParts = Artillects.contentRegistry.createItem(ItemDroneParts.class);
+        itemBuilding = Artillects.contentRegistry.createItem(ItemBuildingGenerator.class);
+        itemSchematicCreator = Artillects.contentRegistry.createItem(ItemSchematicCreator.class);
 
         blockSymbol = Artillects.contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
         blockHiveWalling = Artillects.contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);

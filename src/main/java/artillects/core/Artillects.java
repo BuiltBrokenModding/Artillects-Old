@@ -24,7 +24,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 public class Artillects
 {
     /** Mod Information */
-    public static final String ID = "Artillects|Core";
+    public static final String ID = "ArtillectsCore";
     public static final String NAME = Reference.NAME;
 
     @Instance(ID)
