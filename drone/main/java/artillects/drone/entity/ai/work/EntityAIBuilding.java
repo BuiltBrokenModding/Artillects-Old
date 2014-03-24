@@ -8,7 +8,7 @@ import universalelectricity.api.vector.VectorWorld;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.zone.ZoneBuilding;
-import calclavia.lib.java.Pair;
+import calclavia.lib.type.Pair;
 
 public class EntityAIBuilding extends EntityAIBase
 {

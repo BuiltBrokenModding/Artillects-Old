@@ -11,7 +11,7 @@ import artillects.core.utility.AreaScanner;
 import artillects.core.utility.IBlockSelector;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityWorker;
-import calclavia.lib.java.Pair;
+import calclavia.lib.type.Pair;
 
 public class ZoneMining extends Zone implements IBlockSelector
 {

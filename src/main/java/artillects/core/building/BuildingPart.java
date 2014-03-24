@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
-import calclavia.lib.java.Pair;
+import calclavia.lib.type.Pair;
 
 /** Entity that represents a structure peace in a hive complex
  * 

@@ -4,8 +4,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
-import calclavia.lib.java.Triple;
 import calclavia.lib.prefab.tile.TileAdvanced;
+import calclavia.lib.type.Triple;
 
 public class TileLightbridgeCore extends TileAdvanced
 {

@@ -10,7 +10,7 @@ import artillects.core.building.BuildingPart;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.HiveComplex;
-import calclavia.lib.java.Pair;
+import calclavia.lib.type.Pair;
 
 public class ZoneBuilding extends Zone
 {
