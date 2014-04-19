@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
@@ -11,12 +12,12 @@ import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Reference;
 import artillects.drone.commands.PlayerSelectionHandler;
 
-public class ItemSchematicCreator extends ItemBase
+public class ItemSchematicCreator extends Item
 {
 
     public ItemSchematicCreator(int id)
     {
-        super(id, "schematicCreator");
+        super(id);
         this.setHasSubtypes(true);
         this.setTextureName(Reference.PREFIX + "schematicCreator");
     }

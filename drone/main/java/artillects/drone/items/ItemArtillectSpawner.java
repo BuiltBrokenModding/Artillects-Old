@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.Facing;
@@ -27,13 +28,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 /** Debug tool use to spawn drones in the same way that monster spawn eggs do.
  * 
  * @author Dark */
-public class ItemArtillectSpawner extends ItemBase
+public class ItemArtillectSpawner extends Item
 {
-    private long lastVoiceActivation;
-
     public ItemArtillectSpawner(int id)
     {
-        super(id, "artillectSpawner");
+        super(id);
         this.setHasSubtypes(true);
     }
 

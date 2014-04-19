@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import artillects.core.Reference;
@@ -13,11 +14,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 /** Parts and materials used in the machines.
  * 
  * @author DarkGuardsman */
-public class ItemDroneParts extends ItemBase
+public class ItemDroneParts extends Item
 {
     public ItemDroneParts(int id)
     {
-        super(id, "droneParts");
+        super(id);
         this.setHasSubtypes(true);
     }
 

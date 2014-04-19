@@ -98,8 +98,6 @@ public class Drone
     public static Item itemSchematicCreator;
     public static Item weaponPlasmaLauncher;
     public static Item plasmaBattery;
-    public static Item laserRifle, laserSniper, laserPistol, laserHeavy;
-    public static Item plasmaRifle, plasmaSniper, plasmaPistol, plasmaHeavy, plasmaLight;
 
     public static boolean enableHiveComplexGenerator = true;
     public static boolean enableHiveChunkLoading = true;

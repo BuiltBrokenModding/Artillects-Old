@@ -2,23 +2,22 @@ package artillects.drone.items;
 
 import java.util.List;
 
-import calclavia.lib.schematic.SchematicMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.core.Reference;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.drone.hive.HiveComplex;
+import calclavia.lib.schematic.SchematicMap;
 
-public class ItemBuildingGenerator extends ItemBase
+public class ItemBuildingGenerator extends Item
 {
     public ItemBuildingGenerator(int id)
     {
-        super(id, "buildingGenerator");
+        super(id);
         this.setHasSubtypes(true);
-        this.setTextureName(Reference.PREFIX + "buildingGenerator");
     }
 
     @Override
