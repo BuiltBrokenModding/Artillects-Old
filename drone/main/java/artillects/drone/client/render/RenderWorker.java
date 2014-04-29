@@ -13,7 +13,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderWorker extends RenderLiving
 {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_DIRECTORY + "Worker.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "Worker.png");
     public static final ModelArtillect MODEL = new ModelWorker();
 
     public RenderWorker()

@@ -66,7 +66,7 @@ public class Artillects
         idManager = new IDManager(blockIDPrefix, itemIDPrefix);
         
         //create content registry
-        contentRegistry = new ContentRegistry(CONFIG, idManager, null).setPrefix(Reference.PREFIX).setTab(CreativeTabs.tabMisc);
+        contentRegistry = new ContentRegistry(CONFIG, idManager, null).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
         
        
         

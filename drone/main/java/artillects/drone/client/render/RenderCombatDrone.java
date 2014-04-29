@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderCombatDrone extends RenderLiving
 {
-	public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_DIRECTORY + "128x128Blank.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "128x128Blank.png");
 	public static final ModelArtillect MODEL = new ModelCombatDrone();
 
 	public RenderCombatDrone()
