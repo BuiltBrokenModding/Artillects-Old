@@ -1,13 +1,10 @@
 package artillects.drone;
 
-import java.io.File;
-
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -34,13 +31,12 @@ import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.items.ItemArtillectSpawner;
 import artillects.drone.items.ItemBuildingGenerator;
 import artillects.drone.items.ItemDroneParts;
-import artillects.drone.items.ItemSchematicCreator;
 import artillects.drone.items.ItemDroneParts.Part;
+import artillects.drone.items.ItemSchematicCreator;
 import calclavia.lib.network.PacketHandler;
 import calclavia.lib.prefab.item.ItemBlockMetadata;
 import calclavia.lib.schematic.SchematicMap;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -55,21 +51,17 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true, dependencies = "required-after:ArtillectsCore;")
+@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true, dependencies = "required-after:Artillects;")
 @NetworkMod(channels = { Reference.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Drone
 {
 
     // @Mod
-    public static final String MOD_ID = "Artillects|Drone";
-    public static final String NAME = "Artillects";
+    public static final String MOD_ID = "Artillects-Drones";
+    public static final String NAME = "Artillects-Drones";
 
     @SidedProxy(clientSide = "artillects.drone.ClientProxy", serverSide = "artillects.drone.CommonProxy")
     public static CommonProxy proxy;
-
-    public static final Configuration CONFIGURATION = new Configuration(new File(Loader.instance().getConfigDir(), "Artillects.cfg"));
-
-    private static final String[] LANGUAGES_SUPPORTED = new String[] { "en_US", "de_DE" };
 
     /** Packet Types */
 
@@ -78,8 +70,6 @@ public class Drone
 
     @Metadata(Drone.MOD_ID)
     public static ModMetadata meta;
-
-    /** Calclavia Gubins */
 
     public static Block blockGlyph;
     public static Block blockHiveWalling;
@@ -119,13 +109,11 @@ public class Drone
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        // Register blocks and tiles
-        CONFIGURATION.load();
         // Settings
-        enableHiveComplexGenerator = CONFIGURATION.get("HiveComplex", "EnableWorldGen", true).getBoolean(true);
-        enableHiveChunkLoading = CONFIGURATION.get("HiveComplex", "EnableGeneralChunkLoading", true, "Allows drone complexs to chunkload areas outside the core chunk").getBoolean(true);
-        enableHiveCoreChunkLoading = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", true, "Disabling this will cause a hive complex to unload from the map").getBoolean(true);
-        hiveChunkLoadingRange = CONFIGURATION.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
+        enableHiveComplexGenerator = Artillects.CONFIG.get("HiveComplex", "EnableWorldGen", true).getBoolean(true);
+        enableHiveChunkLoading = Artillects.CONFIG.get("HiveComplex", "EnableGeneralChunkLoading", true, "Allows drone complexs to chunkload areas outside the core chunk").getBoolean(true);
+        enableHiveCoreChunkLoading = Artillects.CONFIG.get("HiveComplex", "EnableCoreChunkLoading", true, "Disabling this will cause a hive complex to unload from the map").getBoolean(true);
+        hiveChunkLoadingRange = Artillects.CONFIG.get("HiveComplex", "EnableCoreChunkLoading", 5, "Range by which the hive will chunk load, will enforce a value of 1").getInt(5);
 
         // Item & block ids
         itemArtillectSpawner = Artillects.contentRegistry.createItem(ItemArtillectSpawner.class);
@@ -143,8 +131,6 @@ public class Drone
         blockLightbridgeFrame = Artillects.contentRegistry.createBlock(BlockLightbridgeFrame.class);
         blockLightbridge = Artillects.contentRegistry.createBlock(BlockLightbridge.class);
 
-        CONFIGURATION.save();
-
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
 
         // Register entities
@@ -161,7 +147,7 @@ public class Drone
         {
             GameRegistry.registerWorldGenerator(new HiveComplexGenerator());
         }
-        
+
         SchematicMap.registerSaveBlock("wall1", Drone.blockHiveWalling);
         SchematicMap.registerSaveBlock("wall2", Drone.blockHiveWalling);
         SchematicMap.registerSaveBlock("symbol1", Drone.blockSymbol);

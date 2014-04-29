@@ -6,7 +6,7 @@ package artillects.core;
 public class Reference
 {
     /** The official name of the mod */
-    public static final String NAME = "Artillects|Core";
+    public static final String NAME = "Artillects";
 
     public static final String MAJOR_VERSION = "@MAJOR@";
     public static final String MINOR_VERSION = "@MINOR@";
