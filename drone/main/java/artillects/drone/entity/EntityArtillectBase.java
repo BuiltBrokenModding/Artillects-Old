@@ -34,7 +34,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public EntityArtillectBase(World world)
     {
         super(world);
-        // TODO Auto-generated constructor stub
     }
 
     @Override

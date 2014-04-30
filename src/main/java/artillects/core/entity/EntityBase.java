@@ -1,5 +1,6 @@
 package artillects.core.entity;
 
+import universalelectricity.api.vector.IVectorWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -9,7 +10,7 @@ import net.minecraft.world.World;
 /** Base entity class for all entities created by artillect mod
  * 
  * @author Darkguardsman */
-public class EntityBase extends EntityLiving
+public class EntityBase extends EntityLiving implements IVectorWorld
 {
     public EntityBase(World world)
     {
@@ -51,14 +52,38 @@ public class EntityBase extends EntityLiving
     }
 
     @Override
-    public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeEntityToNBT(NBTTagCompound nbt)
     {
-        super.writeEntityToNBT(par1NBTTagCompound);
+        super.writeEntityToNBT(nbt);
     }
 
     @Override
-    public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readEntityFromNBT(NBTTagCompound nbt)
     {
-        super.readEntityFromNBT(par1NBTTagCompound);
+        super.readEntityFromNBT(nbt);
+    }
+
+    @Override
+    public double z()
+    {
+        return this.posZ;
+    }
+
+    @Override
+    public double x()
+    {
+        return this.posX;
+    }
+
+    @Override
+    public double y()
+    {
+        return this.posY;
+    }
+
+    @Override
+    public World world()
+    {
+        return this.worldObj;
     }
 }

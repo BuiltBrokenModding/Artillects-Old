@@ -5,21 +5,14 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 /** Advanced version of the zombie that can use any weapon, armor, and understand events. Is drawn to
@@ -60,7 +53,7 @@ public class EntityUndead extends EntityMonster
     protected boolean isAIEnabled()
     {
         return true;
-    }   
+    }
 
     /** Returns the sound this mob makes while it's alive. */
     @Override
@@ -108,27 +101,40 @@ public class EntityUndead extends EntityMonster
     public void onKillEntity(EntityLivingBase victum)
     {
         super.onKillEntity(victum);
-        //TODO add support for Artillect NPCs and players
-        if (this.worldObj.difficultySetting >= 2 && victum instanceof EntityVillager)
+        if (this.worldObj.difficultySetting >= 2)
         {
-            if (this.worldObj.difficultySetting == 2 && this.rand.nextBoolean())
+            Entity entity = null;
+            if (victum instanceof EntityVillager)
             {
-                return;
+                entity = new EntityZombie(this.worldObj);
+                ((EntityZombie) entity).onSpawnWithEgg((EntityLivingData) null);
+                ((EntityZombie) entity).setVillager(true);
+                if (victum.isChild())
+                {
+                    ((EntityZombie) entity).setChild(true);
+                }
             }
-
-            EntityZombie entityzombie = new EntityZombie(this.worldObj);
-            entityzombie.copyLocationAndAnglesFrom(victum);
-            this.worldObj.removeEntity(victum);
-            entityzombie.onSpawnWithEgg((EntityLivingData) null);
-            entityzombie.setVillager(true);
-
-            if (victum.isChild())
+            else if (victum instanceof EntityPlayer)
             {
-                entityzombie.setChild(true);
+                //entity = new EntityDeadPlayer((EntityPlayer)victum);
             }
-
-            this.worldObj.spawnEntityInWorld(entityzombie);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+            else if (victum instanceof EntityPlayer)
+            {
+                //entity = new EntityUndead(this.worldObj);
+            }
+            if (entity != null)
+            {
+                this.worldObj.removeEntity(victum);
+                entity.copyLocationAndAnglesFrom(victum);
+                this.worldObj.spawnEntityInWorld(entity);
+                this.worldObj.playAuxSFXAtEntity((EntityPlayer) null, 1016, (int) this.posX, (int) this.posY, (int) this.posZ, 0);
+            }
         }
+    }
+
+    @Override
+    public boolean canBreatheUnderwater()
+    {
+        return true;
     }
 }
