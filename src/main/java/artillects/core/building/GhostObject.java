@@ -15,6 +15,7 @@ public class GhostObject implements ISaveObj, IVectorWorld
     protected long ticks = 0;    
     protected double x, y, z;
     protected World world;
+    protected boolean hasLocation = false;
 
     /** Called on the first tick. Use this to setup the building */
     public void init()

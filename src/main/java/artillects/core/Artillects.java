@@ -3,6 +3,8 @@ package artillects.core;
 import java.io.File;
 import java.util.Arrays;
 
+import artillects.core.faction.Faction;
+import artillects.core.village.Village;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
@@ -12,6 +14,7 @@ import calclavia.lib.network.PacketEntity;
 import calclavia.lib.network.PacketHandler;
 import calclavia.lib.network.PacketTile;
 import calclavia.lib.utility.LanguageUtility;
+import calclavia.lib.utility.nbt.SaveManager;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -54,6 +57,8 @@ public class Artillects
     public void preInit(FMLPreInitializationEvent evt)
     {
         NetworkRegistry.instance().registerGuiHandler(this, proxy);
+        SaveManager.registerClass("Faction", Faction.class);
+        SaveManager.registerClass("Village", Village.class);
         //Create config 
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));
         
