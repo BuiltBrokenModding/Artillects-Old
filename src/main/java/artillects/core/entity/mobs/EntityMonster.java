@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import artillects.core.entity.EntityBase;
 
 public class EntityMonster extends EntityBase implements IMob
-{
+{   
     public EntityMonster(World world)
     {
         super(world);
@@ -16,8 +16,7 @@ public class EntityMonster extends EntityBase implements IMob
     public void onUpdate()
     {
         super.onUpdate();
-
-        if (!this.worldObj.isRemote && this.worldObj.difficultySetting == 0)
+        if (this.isPlayerOwned() && !this.worldObj.isRemote && this.worldObj.difficultySetting == 0)
         {
             this.setDead();
         }
