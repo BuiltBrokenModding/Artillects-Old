@@ -13,6 +13,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 /** Advanced version of the zombie that can use any weapon, armor, and understand events. Is drawn to
@@ -136,5 +137,14 @@ public class EntityUndead extends EntityMonster
     public boolean canBreatheUnderwater()
     {
         return true;
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float damage)
+    {
+        //TODO ignore poisons and gas effects
+        //TODO if skeleton ignore fire
+        //TODO if zombie and dies from fire turn into skeleton
+        return super.attackEntityFrom(source, damage);
     }
 }
