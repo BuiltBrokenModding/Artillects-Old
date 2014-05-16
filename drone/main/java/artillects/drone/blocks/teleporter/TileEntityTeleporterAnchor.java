@@ -4,9 +4,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.ForgeDirection;
+import resonant.lib.prefab.tile.TileAdvanced;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
-import calclavia.lib.prefab.tile.TileAdvanced;
 
 /** @author Archadia */
 public class TileEntityTeleporterAnchor extends TileAdvanced

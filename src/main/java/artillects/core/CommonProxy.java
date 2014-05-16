@@ -1,6 +1,6 @@
 package artillects.core;
 
-import calclavia.lib.prefab.ProxyBase;
+import resonant.lib.prefab.ProxyBase;
 
 public class CommonProxy extends ProxyBase
 {

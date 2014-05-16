@@ -10,11 +10,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import resonant.lib.utility.LanguageUtility;
 import artillects.core.Reference;
 import artillects.drone.Drone;
 import artillects.drone.blocks.BlockBase;
 import artillects.drone.blocks.IHiveBlock;
-import calclavia.lib.utility.LanguageUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

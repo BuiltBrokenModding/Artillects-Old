@@ -8,8 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
+import resonant.lib.utility.nbt.NBTUtility;
 import universalelectricity.api.vector.VectorWorld;
-import calclavia.lib.utility.nbt.NBTUtility;
 
 /** Hive complex manager mainly used for saving control and grouping of hive complexes.
  * 

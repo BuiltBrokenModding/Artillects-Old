@@ -7,10 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import resonant.lib.schematic.SchematicMap;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.drone.hive.HiveComplex;
-import calclavia.lib.schematic.SchematicMap;
 
 public class ItemBuildingGenerator extends Item
 {

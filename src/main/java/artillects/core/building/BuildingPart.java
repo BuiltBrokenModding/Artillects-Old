@@ -5,9 +5,9 @@ import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import resonant.lib.type.Pair;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
-import calclavia.lib.type.Pair;
 
 /** Entity that represents a structure peace in a hive complex
  * 

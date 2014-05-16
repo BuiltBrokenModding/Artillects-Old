@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import artillects.core.Reference;
-import artillects.drone.Drone;
 import artillects.drone.blocks.BlockBase;
 import artillects.drone.blocks.IHiveBlock;
 import cpw.mods.fml.relauncher.Side;

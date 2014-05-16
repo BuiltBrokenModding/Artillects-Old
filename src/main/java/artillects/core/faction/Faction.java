@@ -3,11 +3,11 @@ package artillects.core.faction;
 import java.io.File;
 
 import net.minecraft.nbt.NBTTagCompound;
-import calclavia.lib.access.AccessProfile;
-import calclavia.lib.access.IProfileContainer;
-import calclavia.lib.utility.nbt.IVirtualObject;
-import calclavia.lib.utility.nbt.NBTUtility;
-import calclavia.lib.utility.nbt.SaveManager;
+import resonant.lib.access.AccessProfile;
+import resonant.lib.access.IProfileContainer;
+import resonant.lib.utility.nbt.IVirtualObject;
+import resonant.lib.utility.nbt.NBTUtility;
+import resonant.lib.utility.nbt.SaveManager;
 
 /** Faction is more of a container for all settings and data related to a faction.
  * 

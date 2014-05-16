@@ -2,10 +2,10 @@ package artillects.drone.blocks.lightbridge;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
+import resonant.lib.prefab.tile.TileAdvanced;
+import resonant.lib.type.Triple;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
-import calclavia.lib.prefab.tile.TileAdvanced;
-import calclavia.lib.type.Triple;
 
 public class TileLightbridgeCore extends TileAdvanced
 {

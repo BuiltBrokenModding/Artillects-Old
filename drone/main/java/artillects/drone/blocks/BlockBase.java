@@ -4,7 +4,7 @@ import net.minecraft.block.material.Material;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
 
-public class BlockBase extends calclavia.lib.prefab.block.BlockAdvanced implements IHiveBlock
+public class BlockBase extends resonant.lib.prefab.block.BlockAdvanced implements IHiveBlock
 {
 
     public BlockBase(int id, String name, Material material)

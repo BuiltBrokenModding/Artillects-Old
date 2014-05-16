@@ -5,7 +5,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import artillects.core.Reference;
-import artillects.drone.Drone;
 import artillects.drone.client.model.ModelArtillect;
 import artillects.drone.client.model.ModelCombatDrone;
 import cpw.mods.fml.relauncher.Side;

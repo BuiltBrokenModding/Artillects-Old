@@ -3,8 +3,8 @@ package artillects.core.building;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import resonant.lib.utility.nbt.ISaveObj;
 import universalelectricity.api.vector.IVectorWorld;
-import calclavia.lib.utility.nbt.ISaveObj;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 

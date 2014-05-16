@@ -1,11 +1,11 @@
 package artillects.core.entity;
 
-import universalelectricity.api.vector.IVectorWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.IVectorWorld;
 
 /** Base entity class for all entities created by artillect mod
  * 

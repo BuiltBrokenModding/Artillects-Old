@@ -6,10 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-import calclavia.lib.schematic.SchematicMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatMessageComponent;
+import resonant.lib.schematic.SchematicMap;
 import universalelectricity.api.vector.VectorWorld;
 
 public class PlayerSelectionHandler

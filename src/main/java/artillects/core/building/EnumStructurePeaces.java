@@ -1,6 +1,6 @@
 package artillects.core.building;
 
-import calclavia.lib.schematic.SchematicMap;
+import resonant.lib.schematic.SchematicMap;
 
 public enum EnumStructurePeaces
 {

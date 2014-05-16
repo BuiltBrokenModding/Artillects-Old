@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import resonant.lib.network.IPacketReceiver;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Artillects;
@@ -19,7 +20,6 @@ import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.hive.zone.Zone;
 import artillects.drone.items.ItemDroneParts;
-import calclavia.lib.network.IPacketReceiver;
 
 import com.google.common.io.ByteArrayDataInput;
 

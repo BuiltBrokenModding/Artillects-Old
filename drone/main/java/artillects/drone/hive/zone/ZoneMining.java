@@ -5,13 +5,13 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import resonant.lib.type.Pair;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.utility.AreaScanner;
 import artillects.core.utility.IBlockSelector;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityWorker;
-import calclavia.lib.type.Pair;
 
 public class ZoneMining extends Zone implements IBlockSelector
 {

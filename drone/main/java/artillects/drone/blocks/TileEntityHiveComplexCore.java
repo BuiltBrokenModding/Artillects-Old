@@ -6,11 +6,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.MobSpawnerBaseLogic;
 import net.minecraft.tileentity.WeightedRandomMinecart;
 import net.minecraft.world.World;
+import resonant.lib.prefab.tile.TileAdvanced;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
-import calclavia.lib.prefab.tile.TileAdvanced;
 
 public class TileEntityHiveComplexCore extends TileAdvanced
 {

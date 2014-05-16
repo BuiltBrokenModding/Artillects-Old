@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
+import resonant.lib.type.Pair;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.BuildingPart;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.HiveComplex;
-import calclavia.lib.type.Pair;
 
 public class ZoneBuilding extends Zone
 {

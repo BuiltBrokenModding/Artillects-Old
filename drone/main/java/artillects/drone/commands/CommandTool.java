@@ -7,10 +7,10 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
+import resonant.lib.utility.nbt.NBTUtility;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
-import calclavia.lib.utility.nbt.NBTUtility;
 
 public class CommandTool extends CommandBase
 {

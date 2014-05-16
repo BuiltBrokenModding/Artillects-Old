@@ -8,8 +8,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.Vector3;
-import artillects.drone.Drone;
 import artillects.drone.CommonProxy.GuiIDs;
+import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
 
 /** Prefab for ground based drones
