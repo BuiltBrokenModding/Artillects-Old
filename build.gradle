@@ -32,7 +32,7 @@ buildProps.withReader {
 }
 
 version = "${config.version.mod.major}.${config.version.mod.minor}.${config.version.mod.revis}"
-group = "icbm"
+group = "artillects"
 archivesBaseName = "${System.getenv().JOB_NAME}"
 
 minecraft {
@@ -66,7 +66,7 @@ task copyBuildXml(type: Copy) {
 task apiZip(type: Zip) {
     classifier = 'api'
     from sourceSets*.allSource
-    include 'icbm/api/**'
+    include 'artillects/api/**'
     destinationDir = file 'output'
 }
 
