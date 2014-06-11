@@ -115,8 +115,8 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     public void loadFabricatorDemo()
     {
+        buildZone = new ZoneBuilding(this, 50);
         this.load3x3Room(this.location.clone(), 2);
-        // this.buildZone = new ZoneBuilding(this, 50);
         for (int i = 0; i < 1; i++)
         {
             EntityFabricator fab = new EntityFabricator(this.location.world);

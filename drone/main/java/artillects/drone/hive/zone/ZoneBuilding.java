@@ -12,9 +12,14 @@ import artillects.drone.entity.IArtillect;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.HiveComplex;
 
+/** Zone designed for drone to build a construct
+ * 
+ * @author Darkguardsman */
 public class ZoneBuilding extends Zone
 {
     HiveComplex complex;
+
+    public HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildPosition = new HashMap<Vector3, Pair<ItemStack, BuildingPart>>();
 
     public ZoneBuilding(HiveComplex complex, Vector3 start, Vector3 end)
     {
@@ -22,7 +27,10 @@ public class ZoneBuilding extends Zone
         this.complex = complex;
     }
 
-    public HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildPosition = new HashMap<Vector3, Pair<ItemStack, BuildingPart>>();
+    public ZoneBuilding(HiveComplex hiveComplex, int i)
+    {
+        this(hiveComplex, hiveComplex.location.clone().translate(i), hiveComplex.location.clone().translate(-i));
+    }
 
     @Override
     public void updateEntity()
