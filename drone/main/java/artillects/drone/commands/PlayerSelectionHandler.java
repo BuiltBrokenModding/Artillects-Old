@@ -9,13 +9,13 @@ import java.util.HashMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatMessageComponent;
-import resonant.lib.schematic.SchematicMap;
+import resonant.lib.schematic.BlockMap;
 import universalelectricity.api.vector.VectorWorld;
 
 public class PlayerSelectionHandler
 {
 	private static HashMap<String, VectorWorld[]> playerPointSelection = new HashMap<String, VectorWorld[]>();
-	private static HashMap<String, SchematicMap> playerSchematic = new HashMap<String, SchematicMap>();
+	private static HashMap<String, BlockMap> playerSchematic = new HashMap<String, BlockMap>();
 
 	public static VectorWorld getPointOne(EntityPlayer player)
 	{
@@ -80,7 +80,7 @@ public class PlayerSelectionHandler
 			if (pointOne.world == pointTwo.world)
 			{
 
-				SchematicMap schematic = new SchematicMap().loadWorldSelection(pointOne.world, pointOne, pointTwo);
+				BlockMap schematic = new BlockMap().loadWorldSelection(pointOne.world, pointOne, pointTwo);
 				playerSchematic.put(player.username, schematic);
 
 				player.sendChatToPlayer(ChatMessageComponent.createFromText("Loaded selection into memory"));
@@ -115,7 +115,7 @@ public class PlayerSelectionHandler
 		return player != null && playerSchematic.get(player.username) != null;
 	}
 
-	public static SchematicMap getSchematic(EntityPlayer player)
+	public static BlockMap getSchematic(EntityPlayer player)
 	{
 		return player != null ? playerSchematic.get(player.username) : null;
 	}
@@ -127,7 +127,7 @@ public class PlayerSelectionHandler
 		{
 			try
 			{
-				SchematicMap schematic = new SchematicMap();
+				BlockMap schematic = new BlockMap();
 				schematic.load(CompressedStreamTools.readCompressed(file.toURL().openStream()));
 				playerSchematic.put(player.username, schematic);
 			}

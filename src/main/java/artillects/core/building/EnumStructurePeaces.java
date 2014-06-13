@@ -1,6 +1,6 @@
 package artillects.core.building;
 
-import resonant.lib.schematic.SchematicMap;
+import resonant.lib.schematic.BlockMap;
 
 public enum EnumStructurePeaces
 {
@@ -20,7 +20,7 @@ public enum EnumStructurePeaces
     SMALL_ROOM("smallRoom");
 
     public String saveName, toolName;
-    public SchematicMap schematic;
+    public BlockMap schematic;
     public boolean makeTool = false;
 
     private EnumStructurePeaces(String name)
@@ -35,11 +35,11 @@ public enum EnumStructurePeaces
         this.makeTool = true;
     }
 
-    public SchematicMap getSchematic()
+    public BlockMap getSchematic()
     {
         if (schematic == null)
         {
-            schematic = new SchematicMap();
+            schematic = new BlockMap();
             schematic.getFromResourceFolder(saveName);
         }
         return schematic;
