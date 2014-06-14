@@ -33,9 +33,10 @@ import artillects.drone.hive.zone.Zone;
  * @author Darkguardsman */
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
 {
-    public double maxChangeDistance = 16;
+    public double maxChangeDistance = 4;
     public double maxWaypointDistance = 60;
-    public double speed = 1;
+    public double acceleration = 0.01;
+    public double maxSpeed = 0.04;
     public int courseChangeCooldown;
     protected Vector3 waypoint = new Vector3();
     public Object owner;
@@ -74,7 +75,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
 
     public void createNewWaypoint()
     {
-        double groundDistance = 40;
+        double groundDistance = 0;
         MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY - 1, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
 
         if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
@@ -98,25 +99,50 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         return !hasReachedWaypoint(distance) && distance < maxWaypointDistance;
     }
 
+    protected float criticallyDampedSpring(float distance, float a_Velocity)
+    {
+        return criticallyDampedSpring(distance, a_Velocity, 1, 1);
+    }
+
+    protected float criticallyDampedSpring(float distance, float a_Velocity, float a_TimeStep, float spring)
+    {
+        float springForce = distance * spring;
+        float dampingForce = (float) (-a_Velocity * 2 * Math.sqrt(spring));
+        float force = springForce + dampingForce;
+        a_Velocity += force * a_TimeStep;
+        float displacement = a_Velocity * a_TimeStep;
+        return displacement;
+    }
+
     @Override
     protected void updateEntityActionState()
     {
         this.despawnEntity();
-        double distanceToWaypoint = waypoint().distance((IVector3)this);
-        Vector3 direction = new Vector3(waypoint().toAngle(this));   
-        
+        Vector3 difference = waypoint().clone().difference((IVector3) this);
+        Vector3 direction = new Vector3(waypoint().toAngle(this));
+        double distanceToWaypoint = difference.getMagnitude();
+
+        if (isWaypointValid(distanceToWaypoint))
+        {
+            this.motionX += direction.x * (acceleration);
+            this.motionY += direction.y * (acceleration);
+            this.motionZ += direction.z * (acceleration);
+
+            double mX = Math.min(maxSpeed, Math.abs(motionX));
+            double mY = Math.min(maxSpeed, Math.abs(motionY));
+            double mZ = Math.min(maxSpeed, Math.abs(motionZ));
+
+            this.motionX += motionX < 0 ? -mX : mX;
+            this.motionY += motionY < 0 ? -mY : mY;
+            this.motionZ += motionZ < 0 ? -mZ : mZ;
+        }
+
         //Move if the timer has cooled down
         if (this.courseChangeCooldown-- <= 0)
         {
             this.courseChangeCooldown += this.rand.nextInt(5) + 2;
 
-            if (isWaypointValid(distanceToWaypoint) && this.isCourseTraversable(distanceToWaypoint))
-            {
-                this.motionX += direction.x * speed;
-                this.motionY += direction.y * speed;
-                this.motionZ += direction.z * speed;
-            }
-            else
+            if (!isWaypointValid(distanceToWaypoint) || !this.isCourseTraversable(distanceToWaypoint))
             {
                 createNewWaypoint();
             }
@@ -263,7 +289,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         double distance = range * range;
         for (EntityLivingBase currentEntity : entityList)
         {
-            double d = new Vector3((IVector3)this).distance(new Vector3(currentEntity));
+            double d = new Vector3((IVector3) this).distance(new Vector3(currentEntity));
             if (selector.isEntityApplicable(currentEntity) && d < distance)
             {
                 distance = d;
@@ -293,7 +319,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3) this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
     }
 
     @Override
@@ -337,7 +363,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(new VectorWorld((IVectorWorld)this), 100) != null && super.getCanSpawnHere();
+        return HiveComplexManager.instance().getClosestComplex(new VectorWorld((IVectorWorld) this), 100) != null && super.getCanSpawnHere();
     }
 
 }
