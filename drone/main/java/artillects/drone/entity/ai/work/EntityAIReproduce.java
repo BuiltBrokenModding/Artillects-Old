@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;
@@ -139,7 +140,7 @@ public class EntityAIReproduce extends EntityAIBase
                                 {
                                     if (this.entity.tryToWalkNextTo(chestPosition, this.moveSpeed))
                                     {
-                                        if (new Vector3(this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+                                        if (new Vector3((IVector3)this.entity).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                                         {
                                             this.entity.getNavigator().clearPathEntity();
                                             int resourceToGet = Math.max(stackRequired.stackSize - resourceCount, 0);

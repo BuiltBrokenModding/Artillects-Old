@@ -3,6 +3,7 @@ package artillects.drone.entity.ai.work;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.ai.EntityArtillectAIBase;
@@ -55,7 +56,7 @@ public abstract class EntityAILaborTask extends EntityArtillectAIBase
                                 {
                                     if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
                                     {
-                                        if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+                                        if (new Vector3((IVector3)this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                                         {
                                             this.getArtillect().getNavigator().clearPathEntity();
                                             chest.setInventorySlotContents(i, stackInEntity);
@@ -67,7 +68,7 @@ public abstract class EntityAILaborTask extends EntityArtillectAIBase
                                 {
                                     if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
                                     {
-                                        if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+                                        if (new Vector3((IVector3)this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                                         {
                                             int originalStackSize = itemStack.stackSize;
                                             itemStack.stackSize = Math.min(itemStack.stackSize + stackInEntity.stackSize, itemStack.getMaxStackSize());

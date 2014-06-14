@@ -4,6 +4,8 @@ import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import resonant.lib.type.Pair;
+import universalelectricity.api.vector.IVector3;
+import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.drone.entity.EntityArtillectGround;
@@ -72,7 +74,7 @@ public class EntityAIBuilding extends EntityAIBase
         {
             if (this.placementSpot == null)
             {
-                Pair<Vector3, ItemStack> data = ((ZoneBuilding) this.entity.getZone()).getClosestBlock(new VectorWorld(this.entity));
+                Pair<Vector3, ItemStack> data = ((ZoneBuilding) this.entity.getZone()).getClosestBlock(new VectorWorld((IVectorWorld)this.entity));
                 if (data != null && data.left() != null && data.right() != null)
                 {
                     this.placementItem = data.right();
@@ -82,7 +84,7 @@ public class EntityAIBuilding extends EntityAIBase
 
             if (this.placementSpot != null)
             {
-                if (placementSpot.distance(new Vector3(this.entity)) > EntityArtillectGround.interactionDistance)
+                if (placementSpot.distance(new Vector3((IVector3)this.entity)) > EntityArtillectGround.interactionDistance)
                 {
                     if (!this.entity.tryToWalkNextTo(placementSpot, this.moveSpeed))
                     {

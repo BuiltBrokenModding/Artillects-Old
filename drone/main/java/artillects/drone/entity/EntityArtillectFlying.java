@@ -17,6 +17,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.EulerAngle;
+import universalelectricity.api.vector.IVector3;
+import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.ai.EntityCombatSelector;
@@ -25,12 +28,16 @@ import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.hive.zone.Zone;
 
+/** Flying entity prefab based on ghast code
+ * 
+ * @author Darkguardsman */
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
 {
+    public double maxChangeDistance = 16;
+    public double maxWaypointDistance = 60;
+    public double speed = 1;
     public int courseChangeCooldown;
-    public double waypointX;
-    public double waypointY;
-    public double waypointZ;
+    protected Vector3 waypoint = new Vector3();
     public Object owner;
     private Zone zone;
 
@@ -55,74 +62,78 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         super.setDead();
     }
 
-    @Override
-    protected void updateEntityActionState()
+    /** Next location this drone will fly too */
+    public Vector3 waypoint()
     {
-        if (!this.worldObj.isRemote && this.worldObj.difficultySetting == 0)
+        if (waypoint == null)
         {
-            this.setDead();
+            waypoint = new Vector3();
         }
+        return waypoint;
+    }
 
-        this.despawnEntity();
-        double d0 = this.waypointX - this.posX;
-        double d1 = this.waypointY - this.posY;
-        double d2 = this.waypointZ - this.posZ;
-        double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-
+    public void createNewWaypoint()
+    {
         double groundDistance = 40;
-
-        MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
+        MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY - 1, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
 
         if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             groundDistance = this.posY - mop.blockY;
         }
 
-        if (d3 < 1.0D || d3 > 3600.0D)
-        {
-            this.waypointX = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            if (groundDistance < 50)
-            {
-                this.waypointY = this.posY + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            }
-            else
-            {
-                this.waypointY = this.posY - (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            }
-            this.waypointZ = this.posZ + (this.rand.nextFloat() * 2.0F - 1.0F) * 16.0F;
-        }
+        double dy = (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
+        waypoint().y = this.posY + (groundDistance < 50 ? dy : -dy);
+        waypoint().x = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
+        waypoint().z = this.posZ + (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
+    }
 
+    protected boolean hasReachedWaypoint(double distance)
+    {
+        return distance < 1.0D;
+    }
+
+    protected boolean isWaypointValid(double distance)
+    {
+        return !hasReachedWaypoint(distance) && distance < maxWaypointDistance;
+    }
+
+    @Override
+    protected void updateEntityActionState()
+    {
+        this.despawnEntity();
+        double distanceToWaypoint = waypoint().distance((IVector3)this);
+        Vector3 direction = new Vector3(waypoint().toAngle(this));   
+        
+        //Move if the timer has cooled down
         if (this.courseChangeCooldown-- <= 0)
         {
             this.courseChangeCooldown += this.rand.nextInt(5) + 2;
-            d3 = MathHelper.sqrt_double(d3);
 
-            if (this.isCourseTraversable(this.waypointX, this.waypointY, this.waypointZ, d3))
+            if (isWaypointValid(distanceToWaypoint) && this.isCourseTraversable(distanceToWaypoint))
             {
-                this.motionX += d0 / d3 * 0.1D;
-                this.motionY += d1 / d3 * 0.1D;
-                this.motionZ += d2 / d3 * 0.1D;
+                this.motionX += direction.x * speed;
+                this.motionY += direction.y * speed;
+                this.motionZ += direction.z * speed;
             }
             else
             {
-                this.waypointX = this.posX;
-                this.waypointY = this.posY;
-                this.waypointZ = this.posZ;
+                createNewWaypoint();
             }
         }
     }
 
-    /** Called when the mob is falling. Calculates and applies fall damage. */
+    @Override
     protected void fall(float par1)
-    {}
+    {
+    }
 
-    /** Takes in the distance the entity has fallen this tick and whether its on the ground to update
-     * the fall distance and deal fall damage if landing on the ground. Args:
-     * distanceFallenThisTick, onGround */
+    @Override
     protected void updateFallState(double par1, boolean par3)
-    {}
+    {
+    }
 
-    /** Moves the entity based on the specified heading. Args: strafe, forward */
+    @Override
     public void moveEntityWithHeading(float par1, float par2)
     {
         if (this.isInWater())
@@ -172,9 +183,9 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
             }
 
             this.moveEntity(this.motionX, this.motionY, this.motionZ);
-            this.motionX *= (double) f2;
-            this.motionY *= (double) f2;
-            this.motionZ *= (double) f2;
+            this.motionX *= f2;
+            this.motionY *= f2;
+            this.motionZ *= f2;
         }
 
         this.prevLimbSwingAmount = this.limbSwingAmount;
@@ -191,21 +202,21 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         this.limbSwing += this.limbSwingAmount;
     }
 
-    /** returns true if this entity is by a ladder, false otherwise */
+    @Override
     public boolean isOnLadder()
     {
         return false;
     }
 
     /** True if the ghast has an unobstructed line of travel to the waypoint. */
-    private boolean isCourseTraversable(double par1, double par3, double par5, double par7)
+    private boolean isCourseTraversable(double distance)
     {
-        double d4 = (this.waypointX - this.posX) / par7;
-        double d5 = (this.waypointY - this.posY) / par7;
-        double d6 = (this.waypointZ - this.posZ) / par7;
+        double d4 = (waypoint().x - this.posX) / distance;
+        double d5 = (waypoint().y - this.posY) / distance;
+        double d6 = (waypoint().z - this.posZ) / distance;
         AxisAlignedBB axisalignedbb = this.boundingBox.copy();
 
-        for (int i = 1; i < par7; ++i)
+        for (int i = 1; i < distance; ++i)
         {
             axisalignedbb.offset(d4, d5, d6);
 
@@ -252,7 +263,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
         double distance = range * range;
         for (EntityLivingBase currentEntity : entityList)
         {
-            double d = new Vector3(this).distance(new Vector3(currentEntity));
+            double d = new Vector3((IVector3)this).distance(new Vector3(currentEntity));
             if (selector.isEntityApplicable(currentEntity) && d < distance)
             {
                 distance = d;
@@ -282,7 +293,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Drone.proxy.renderLaser(this.worldObj, new Vector3(this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
     }
 
     @Override
@@ -326,7 +337,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 100) != null && super.getCanSpawnHere();
+        return HiveComplexManager.instance().getClosestComplex(new VectorWorld((IVectorWorld)this), 100) != null && super.getCanSpawnHere();
     }
 
 }

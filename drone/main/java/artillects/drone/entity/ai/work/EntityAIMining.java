@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
 import artillects.drone.InventoryHelper;
@@ -68,13 +69,13 @@ public class EntityAIMining extends EntityAILaborTask
             /** Find closest resource block to mine for. */
             for (Vector3 checkVec : ((ZoneMining) getArtillect().getZone()).scannedBlocks)
             {
-                if (targetPosition == null || checkVec.distance(new Vector3(this.getArtillect())) < targetPosition.distance(new Vector3(this.getArtillect())))
+                if (targetPosition == null || checkVec.distance(new Vector3((IVector3)this.getArtillect())) < targetPosition.distance(new Vector3((IVector3)this.getArtillect())))
                 {
                     targetPosition = checkVec;
                 }
             }
             // checks if the entity is within range before setting the path
-            if (new Vector3(this.getArtillect()).distance(targetPosition.clone().add(0.5)) > 2)
+            if (new Vector3((IVector3)this.getArtillect()).distance(targetPosition.clone().add(0.5)) > 2)
             {
                 if (this.lastMoveTime-- <= 0)
                 {
@@ -123,7 +124,7 @@ public class EntityAIMining extends EntityAILaborTask
 
                         if (this.breakingTime % 10 == 0)
                         {
-                            Drone.proxy.renderLaser(this.world, new Vector3(this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
+                            Drone.proxy.renderLaser(this.world, new Vector3((IVector3)this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
                         }
                     }
                 }
@@ -141,7 +142,7 @@ public class EntityAIMining extends EntityAILaborTask
                 {
                     this.getArtillect().tryToWalkNextTo(optimalChestPosition, this.moveSpeed);
 
-                    if (optimalChestPosition.distance(new Vector3(this.getArtillect())) < EntityArtillectGround.interactionDistance)
+                    if (optimalChestPosition.distance(new Vector3((IVector3)this.getArtillect())) < EntityArtillectGround.interactionDistance)
                     {
                         this.getArtillect().getNavigator().clearPathEntity();
                         this.getArtillect().inventory.setInventorySlotContents(i, InventoryHelper.addStackToInventory(optimalChest, this.getArtillect().inventory.getStackInSlot(i)));

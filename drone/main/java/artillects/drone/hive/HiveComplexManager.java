@@ -9,6 +9,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.world.WorldEvent;
 import resonant.lib.utility.nbt.NBTUtility;
+import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.VectorWorld;
 
 /** Hive complex manager mainly used for saving control and grouping of hive complexes.
@@ -114,14 +115,14 @@ public class HiveComplexManager
 
     }
 
-    public HiveComplex getClosestComplex(VectorWorld pos, int distanceCheck)
+    public HiveComplex getClosestComplex(IVectorWorld pos, int distanceCheck)
     {
         HiveComplex complex = null;
         HashMap<String, HiveComplex> complexCopy = new HashMap();
         complexCopy.putAll(this.complexes);
         for (Entry<String, HiveComplex> entry : complexCopy.entrySet())
         {
-            if (entry.getValue() != null && entry.getValue().location.world == pos.world)
+            if (entry.getValue() != null && entry.getValue().location.world == pos.world())
             {
                 if (complex == null || (entry.getValue().location.distance(pos) < complex.location.distance(pos) && entry.getValue().location.distance(pos) <= distanceCheck))
                 {

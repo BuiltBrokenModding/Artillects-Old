@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.Drone;
 import artillects.drone.entity.EntityArtillectGround;
@@ -141,7 +142,7 @@ public class EntityAICrafting extends EntityAILaborTask
 											{
 												if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
 												{
-													if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+													if (new Vector3((IVector3)this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
 													{
 														this.getArtillect().getNavigator().clearPathEntity();
 														int resourceToGet = Math.max(recipeItem.stackSize - resourceCount, 0);

@@ -12,6 +12,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import resonant.lib.network.IPacketReceiver;
+import universalelectricity.api.vector.IVector3;
+import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Artillects;
@@ -25,7 +27,7 @@ import com.google.common.io.ByteArrayDataInput;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
-public class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver, IRangedAttackMob
+public class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver, IRangedAttackMob, IVectorWorld
 {
     private Zone assignedZone;
     private Object owner;
@@ -118,7 +120,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
             }
             else
             {
-                this.setOwner(HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), -1));
+                this.setOwner(HiveComplexManager.instance().getClosestComplex(this, -1));
             }
         }
         return this.owner;
@@ -196,7 +198,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Drone.proxy.renderLaser(this.worldObj, new Vector3(this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 
@@ -234,7 +236,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(new VectorWorld(this), 200) != null && super.getCanSpawnHere();
+        return HiveComplexManager.instance().getClosestComplex(this, 200) != null && super.getCanSpawnHere();
     }
 
     @Override
@@ -258,15 +260,26 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    public World getWorld()
+    public double z()
     {
-        return this.worldObj;
+        return this.posZ;
     }
 
     @Override
-    public Vector3 pos()
+    public double x()
     {
-        return new Vector3(this);
+        return this.posX;
     }
 
+    @Override
+    public double y()
+    {
+        return this.posY;
+    }
+
+    @Override
+    public World world()
+    {
+        return this.worldObj;
+    }
 }

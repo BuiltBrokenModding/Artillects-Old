@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.drone.InventoryHelper;
 import artillects.drone.entity.EntityArtillectGround;
@@ -169,7 +170,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
                         {
                             if (this.getArtillect().tryToWalkNextTo(chestPosition, this.moveSpeed))
                             {
-                                if (new Vector3(this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+                                if (new Vector3((IVector3)this.getArtillect()).distance(chestPosition.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                                 {
                                     this.getArtillect().getNavigator().clearPathEntity();
 
@@ -202,7 +203,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
         {
             if (this.getArtillect().tryToWalkNextTo(position, this.moveSpeed))
             {
-                if (new Vector3(this.getArtillect()).distance(position.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
+                if (new Vector3((IVector3)this.getArtillect()).distance(position.clone().add(0.5)) <= EntityArtillectGround.interactionDistance)
                 {
                     this.getArtillect().getNavigator().clearPathEntity();
                     ItemStack stackToSet = InventoryHelper.getListContainsStack(checkStacks, this.getArtillect().getInventoryAsList());
