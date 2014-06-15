@@ -33,8 +33,8 @@ import artillects.drone.hive.zone.Zone;
  * @author Darkguardsman */
 public class EntityArtillectFlying extends EntityArtillectGround implements IArtillect
 {
-    public double maxChangeDistance = 4;
-    public double maxWaypointDistance = 60;
+    public double maxChangeDistance = 16;
+    public double maxWaypointDistance = 200;
     public double acceleration = 0.01;
     public double maxSpeed = 0.04;
     public int courseChangeCooldown;
@@ -75,18 +75,20 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
 
     public void createNewWaypoint()
     {
-        double groundDistance = 0;
-        MovingObjectPosition mop = this.worldObj.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.posX, this.posY - 1, this.posZ), Vec3.createVectorHelper(this.posX, this.posY - 100, this.posZ), false, false);
+        double groundDistance = 60;
+        MovingObjectPosition mop = new VectorWorld((IVectorWorld) this).translate(0, -100, 0).rayTraceBlocks(world(), new Vector3((IVector3) this), true);
 
         if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
         {
             groundDistance = this.posY - mop.blockY;
         }
-
+        System.out.println("GroundDistance: " + groundDistance);
         double dy = (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
-        waypoint().y = this.posY + (groundDistance < 50 ? dy : -dy);
+        waypoint().y = this.posY + (groundDistance < 50 ? dy : 20 - groundDistance);
+        waypoint().y = Math.min(Math.max(waypoint().y, 0), 300);
         waypoint().x = this.posX + (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
         waypoint().z = this.posZ + (this.rand.nextFloat() * 2.0F - 1.0F) * maxChangeDistance;
+        System.out.println("Waypoint: " + waypoint());
     }
 
     protected boolean hasReachedWaypoint(double distance)
@@ -119,13 +121,15 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     {
         this.despawnEntity();
         Vector3 difference = waypoint().clone().difference((IVector3) this);
+        System.out.println("Diff: " + difference);
         Vector3 direction = new Vector3(waypoint().toAngle(this));
+        System.out.println("Direction: " + direction);
         double distanceToWaypoint = difference.getMagnitude();
 
         if (isWaypointValid(distanceToWaypoint))
         {
             this.motionX += direction.x * (acceleration);
-            this.motionY += direction.y * (acceleration);
+            this.motionY -= direction.y * (acceleration);
             this.motionZ += direction.z * (acceleration);
 
             double mX = Math.min(maxSpeed, Math.abs(motionX));
@@ -147,6 +151,14 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
                 createNewWaypoint();
             }
         }
+    }
+
+    @Override
+    public boolean interact(EntityPlayer entityPlayer)
+    {
+        if (!this.worldObj.isRemote)
+            entityPlayer.mountEntity(this);
+        return true;
     }
 
     @Override
