@@ -11,8 +11,8 @@ import universalelectricity.api.vector.IVectorWorld;
  * @author DarkGuardsman */
 public class GhostObject implements ISaveObj, IVectorWorld
 {
-    protected boolean isInvalid = false;    
-    protected long ticks = 0;    
+    protected boolean isInvalid = false;
+    protected long ticks = 0;
     protected double x, y, z;
     protected World world;
     protected boolean hasLocation = false;
@@ -46,6 +46,22 @@ public class GhostObject implements ISaveObj, IVectorWorld
     public void invalidate()
     {
         this.isInvalid = true;
+    }
+
+    /** Sets the location of the object */
+    public GhostObject setLocation(double x, double y, double z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        return this;
+    }
+
+    /** Sets the world of the object */
+    public GhostObject setWorld(World world)
+    {
+        this.world = world;
+        return this;
     }
 
     @Override
