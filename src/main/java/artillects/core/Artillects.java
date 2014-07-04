@@ -13,7 +13,7 @@ import resonant.lib.network.PacketTile;
 import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
 import artillects.core.faction.Faction;
-import artillects.core.village.Village;
+import artillects.core.region.Village;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;

@@ -1,4 +1,4 @@
-package artillects.core.village;
+package artillects.core.region;
 
 import java.io.File;
 
@@ -16,7 +16,6 @@ import artillects.core.building.GhostObject;
 public class Village extends GhostObject implements IVirtualObject
 {
     protected int radius = 10;
-    private File saveFile;
     private String name;
     private String saveName;
 
@@ -30,7 +29,6 @@ public class Village extends GhostObject implements IVirtualObject
         {
             saveName = "Village" + System.currentTimeMillis();
         }
-        saveFile = new File(NBTUtility.getSaveDirectory(), "artillects/villages/Village_" + this.saveName);
         SaveManager.register(this);
     }
 
@@ -82,7 +80,7 @@ public class Village extends GhostObject implements IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return this.saveFile;
+        return new File(NBTUtility.getSaveDirectory(), "artillects/villages/Village_" + this.saveName);
     }
 
     @Override
