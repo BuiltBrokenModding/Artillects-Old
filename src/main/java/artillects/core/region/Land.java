@@ -1,23 +1,20 @@
 package artillects.core.region;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import artillects.core.interfaces.IID;
-import resonant.lib.utility.nbt.IVirtualObject;
-import resonant.lib.utility.nbt.NBTUtility;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.Vector2;
+import artillects.core.interfaces.IID;
 
-/** Land based location
+/** 2D top down area of the map
  * 
  * @author Darkguardsman */
 public class Land extends FactionObject implements IID
 {
-    private int x_start = 0, y_start = 0, z_start = 0;
-    private int x_end = 0, y_end = 0, z_end = 0;
+    private Plane area;
 
     /** Name of the region of land */
     private String name = "Land";
@@ -37,12 +34,7 @@ public class Land extends FactionObject implements IID
         this.x = x;
         this.y = y;
         this.z = z;
-        this.x_start = x - size;
-        this.y_start = y - size;
-        this.z_start = z - size;
-        this.x_end = x + size;
-        this.y_end = y + size;
-        this.z_end = z + size;
+        area = new Plane( new Vector2(x - size, z - size), new Vector2(x + size, z + size));
     }
 
     @Override
@@ -133,7 +125,5 @@ public class Land extends FactionObject implements IID
             }
         }
     }
-
-   
 
 }

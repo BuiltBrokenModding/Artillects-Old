@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import resonant.lib.utility.nbt.ISaveObj;
+import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.IVectorWorld;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
@@ -16,6 +17,30 @@ public class GhostObject implements ISaveObj, IVectorWorld
     protected double x, y, z;
     protected World world;
     protected boolean hasLocation = false;
+    
+    public GhostObject()
+    {
+        
+    }
+    
+    public GhostObject(IVectorWorld vec)
+    {
+        this(vec.world(), vec);
+    }
+    
+    public GhostObject(World world, IVector3 vec)
+    {
+        this(world, vec.x(), vec.y(), vec.z());
+    }
+    
+    public GhostObject(World world, double x, double y, double z)
+    {
+        this.hasLocation = true;
+        this.world = world;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
     /** Called on the first tick. Use this to setup the building */
     public void init()
