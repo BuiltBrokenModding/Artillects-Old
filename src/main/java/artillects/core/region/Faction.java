@@ -1,4 +1,4 @@
-package artillects.core.faction;
+package artillects.core.region;
 
 import java.io.File;
 
@@ -14,9 +14,14 @@ import resonant.lib.utility.nbt.SaveManager;
  * @author Darkguardsman */
 public class Faction implements IProfileContainer, IVirtualObject
 {
+    //Permissions for factions
+    public static final String FACTION = "faction";
+    
+    //vars
     private AccessProfile accessProfile;
     private File saveFile;
     private String name;
+    
     
     public Faction()
     {        
