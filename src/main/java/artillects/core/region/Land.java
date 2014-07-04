@@ -1,22 +1,27 @@
 package artillects.core.region;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
+import artillects.core.interfaces.IID;
+import resonant.lib.utility.nbt.IVirtualObject;
+import resonant.lib.utility.nbt.NBTUtility;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /** Land based location
  * 
  * @author Darkguardsman */
-public class Land extends FactionObject
+public class Land extends FactionObject implements IID
 {
     private int x_start = 0, y_start = 0, z_start = 0;
     private int x_end = 0, y_end = 0, z_end = 0;
 
     /** Name of the region of land */
     private String name = "Land";
-    private String id = "na";
+    private UUID id = null;
 
     /** Names this has been called in the past */
     private List<String> oldNames;
@@ -24,7 +29,6 @@ public class Land extends FactionObject
     public Land()
     {
         oldNames = new LinkedList<String>();
-        id = "landx" + System.currentTimeMillis();
     }
 
     public Land(World world, int x, int y, int z, int size)
@@ -39,6 +43,33 @@ public class Land extends FactionObject
         this.x_end = x + size;
         this.y_end = y + size;
         this.z_end = z + size;
+    }
+
+    @Override
+    public void init()
+    {
+        super.init();
+        if (getID() == null)
+            newID();
+    }
+
+    @Override
+    public UUID getID()
+    {
+        return id;
+    }
+
+    @Override
+    public Land setID(UUID id)
+    {
+        this.id = id;
+        return this;
+    }
+
+    /** Creates a new id for this land */
+    protected void newID()
+    {
+        id = UUID.randomUUID();
     }
 
     /** Sets the name of the region of land */
@@ -73,7 +104,7 @@ public class Land extends FactionObject
     {
         super.save(nbt);
         nbt.setString("name", this.name);
-        nbt.setString("landid", this.id);
+        nbt.setString("landid", this.id.toString());
         if (this.oldNames != null && !this.oldNames.isEmpty())
         {
             NBTTagCompound oldNames = new NBTTagCompound();
@@ -91,7 +122,7 @@ public class Land extends FactionObject
     {
         this.load(nbt);
         this.name = nbt.getString("name");
-        this.id = nbt.getString("landid");
+        this.id = UUID.fromString(nbt.getString("landid"));
         if (nbt.hasKey("oldnames"))
         {
             NBTTagCompound oldNames = nbt.getCompoundTag("oldnames");
@@ -102,4 +133,7 @@ public class Land extends FactionObject
             }
         }
     }
+
+   
+
 }

@@ -2,25 +2,28 @@ package artillects.core.region;
 
 import java.io.File;
 
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import resonant.lib.utility.nbt.SaveManager;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.core.building.GhostObject;
 
 /** Small area of buildings grouped together into an area of living.
  * 
  * @author Darkguardsman */
 public class Village extends Land implements IVirtualObject
 {
-    protected int radius = 10;
-    private String saveName;
+    private TownType townType = null;
 
-    private Village()
+    /** Empty constructor should only be used for loading */
+    public Village()
     {
 
+    }
+
+    public Village(TownType type, VectorWorld vec, int radius)
+    {
+        this(vec, radius);
+        this.townType = type;
     }
 
     public Village(VectorWorld vec, int radius)
@@ -31,7 +34,6 @@ public class Village extends Land implements IVirtualObject
     public Village(World world, int x, int y, int z, int radius)
     {
         super(world, x, y, z, radius);
-        SaveManager.register(this);
     }
 
     @Override
@@ -40,25 +42,31 @@ public class Village extends Land implements IVirtualObject
         super.init();
         if (getName() == null)
             this.setName("Village");
-        if (saveName == null)
-            saveName = "Village" + System.currentTimeMillis();
     }
 
-    public static void loadVillageFromSave(NBTTagCompound tag)
+    /** Sets the type of the town */
+    public Village setTownType(TownType type)
     {
-        Village village = new Village();
-        village.load(tag);
-        SaveManager.register(this);
+        this.townType = type;
+        return this;
+    }
+
+    /** Type of the town */
+    public TownType getType()
+    {
+        return townType;
     }
 
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "artillects/villages/Village_" + this.saveName);
+        return new File(NBTUtility.getSaveDirectory(), "artillects/areas/" + getName() + "/Village.dat");
     }
 
     @Override
     public void setSaveFile(File file)
     {
+        // TODO Auto-generated method stub
+
     }
 }
