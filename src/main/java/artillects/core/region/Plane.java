@@ -155,12 +155,15 @@ public class Plane
         return false;
     }
 
-    /** Adds the two planes together, does a canAddTo check */
+    /** Adds the two planes together, does a canAddTo() check */
     public Plane add(Plane other)
     {
         if (canAddTo(other))
         {
-
+            Vector2 newStart = new Vector2(other.negNegCorner.x() < negNegCorner.x() ? other.negNegCorner.x() : negNegCorner.x(), other.negNegCorner.y() < negNegCorner.y() ? other.negNegCorner.y() : negNegCorner.y());
+            Vector2 newEnd = new Vector2(other.posPosCorner.x() > posPosCorner.x() ? other.posPosCorner.x() : posPosCorner.x(), other.posPosCorner.y() > posPosCorner.y() ? other.posPosCorner.y() : posPosCorner.y());
+            this.negNegCorner = newStart;
+            this.posPosCorner = newEnd;
         }
         return this;
     }
