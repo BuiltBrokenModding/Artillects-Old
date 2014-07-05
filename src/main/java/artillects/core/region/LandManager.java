@@ -1,5 +1,7 @@
 package artillects.core.region;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.world.World;
 import resonant.lib.access.AccessUser;
+import universalelectricity.api.vector.IVector2;
 import universalelectricity.api.vector.Vector2;
 import artillects.core.FactionPerms;
 import artillects.core.interfaces.IFaction;
@@ -18,6 +21,7 @@ public class LandManager
 {
     private World world;
     private IFaction faction;
+    private HashMap<String, Land> controlledLand = new LinkedHashMap<String, Land>();
 
     public LandManager(IFaction faction, World world)
     {
@@ -65,6 +69,20 @@ public class LandManager
         if (world != null)
         {
 
+        }
+        return false;
+    }
+
+    /** Does this manager contain this point as part of one of its land areas */
+    public boolean controls(IVector2 vec)
+    {
+        if (world != null && !controlledLand.isEmpty())
+        {
+            for(Land land : controlledLand.values())
+            {
+                if(land.controls(vec))
+                    return true;
+            }
         }
         return false;
     }

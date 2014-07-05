@@ -1,8 +1,10 @@
 package artillects.core.interfaces;
 
+import artillects.core.region.Faction;
+
 public interface IFactionMember
 {
-    public IFaction getFaction();
+    public Faction getFaction();
 
-    public void setFaction(IFaction faction);
+    public void setFaction(Faction faction);
 }

@@ -5,23 +5,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import universalelectricity.api.vector.IVector2;
 import universalelectricity.api.vector.Vector2;
 import artillects.core.interfaces.IID;
 
 /** 2D top down area of the map
  * 
  * @author Darkguardsman */
-public class Land extends FactionObject implements IID<String, Land>
+public class Land extends FactionObject
 {
     private Plane area;
 
     /** Name of the region of land */
     private String name = "Land";
-    private String id = null;
 
     /** Names this has been called in the past */
     private List<String> oldNames;
@@ -37,28 +36,7 @@ public class Land extends FactionObject implements IID<String, Land>
         this.x = x;
         this.y = y;
         this.z = z;
-        area = new Plane(new Vector2(x - size, z - size), new Vector2(x + size, z + size));        
-    }
-
-    @Override
-    public void init()
-    {
-        super.init();
-        if (getID() == null)
-            newID();
-    }
-
-    @Override
-    public String getID()
-    {
-        return id;
-    }
-
-    @Override
-    public Land setID(String id)
-    {
-        this.id = id;
-        return this;
+        area = new Plane(new Vector2(x - size, z - size), new Vector2(x + size, z + size));
     }
 
     protected String newID()
@@ -116,7 +94,6 @@ public class Land extends FactionObject implements IID<String, Land>
     {
         super.save(nbt);
         nbt.setString("name", this.name);
-        nbt.setString("landid", this.id);
         if (this.oldNames != null && !this.oldNames.isEmpty())
         {
             NBTTagCompound oldNames = new NBTTagCompound();
@@ -134,7 +111,6 @@ public class Land extends FactionObject implements IID<String, Land>
     {
         this.load(nbt);
         this.name = nbt.getString("name");
-        this.id = nbt.getString("landid");
         if (nbt.hasKey("oldnames"))
         {
             NBTTagCompound oldNames = nbt.getCompoundTag("oldnames");
@@ -144,6 +120,12 @@ public class Land extends FactionObject implements IID<String, Land>
                 this.oldNames.add(oldNames.getString("name" + i));
             }
         }
+    }
+
+    /** Does this land control this area */
+    public boolean controls(IVector2 vec)
+    {
+        return this.area.contains(vec);
     }
 
 }

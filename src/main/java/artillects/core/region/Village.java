@@ -10,7 +10,7 @@ import universalelectricity.api.vector.VectorWorld;
 /** Small area of buildings grouped together into an area of living.
  * 
  * @author Darkguardsman */
-public class Village extends Land implements IVirtualObject
+public class Village extends LandController implements IVirtualObject
 {
     private TownType townType = null;
 

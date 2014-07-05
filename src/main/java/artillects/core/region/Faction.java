@@ -2,24 +2,27 @@ package artillects.core.region;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.UUID;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import resonant.lib.access.AccessProfile;
 import resonant.lib.access.IProfileContainer;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import artillects.core.interfaces.IID;
+import universalelectricity.api.vector.IVector2;
+import artillects.core.interfaces.IFaction;
+import artillects.core.interfaces.IFactionMember;
 
 /** Faction is more of a container for all settings and data related to a faction.
  * 
  * @author Darkguardsman */
-public class Faction implements IProfileContainer, IVirtualObject, IID<Integer, Faction>
+public class Faction implements IFaction, IProfileContainer, IVirtualObject
 {
     //vars
     private AccessProfile globalProfile;
     private HashMap<World, AccessProfile> worldAccessProfiles = new HashMap<World, AccessProfile>();
+    private HashMap<World, LandManager> worldLandManagers = new HashMap<World, LandManager>();
     private String name;
     private int id;
     private static int nextID = 0;
@@ -33,8 +36,8 @@ public class Faction implements IProfileContainer, IVirtualObject, IID<Integer, 
     {
         this.name = name;
         this.id = nextID++;
-    } 
-    
+    }
+
     public Faction(NBTTagCompound tag)
     {
         this.load(tag);
@@ -103,6 +106,35 @@ public class Faction implements IProfileContainer, IVirtualObject, IID<Integer, 
     {
         this.id = id;
         return this;
+    }    
+
+    /** Display name of the faction */
+    public void setName(String name)
+    {
+        this.name = name;        
+    }
+
+    /** Does this faction control this land */
+    public boolean controls(World world, IVector2 vec)
+    {
+        if(worldLandManagers.containsKey(world) && worldLandManagers.get(world) != null)
+        {
+            worldLandManagers.get(world).controls(vec);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isMember(Object obj)
+    {
+        Faction faction = null;
+        if (obj instanceof IFactionMember)
+            faction = ((IFactionMember) obj).getFaction();
+        else if (obj instanceof Entity)
+            faction = FactionManager.getFaction((Entity) obj);
+        if (faction != null && faction.getID() == getID())
+            return true;
+        return false;
     }
 
 }
