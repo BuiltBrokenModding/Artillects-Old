@@ -3,6 +3,7 @@ package artillects.core;
 import java.io.File;
 import java.util.Arrays;
 
+import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
 import resonant.lib.content.ContentRegistry;
@@ -12,6 +13,8 @@ import resonant.lib.network.PacketHandler;
 import resonant.lib.network.PacketTile;
 import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
+import artillects.core.items.ItemSurveyor;
+import artillects.core.items.claim.ItemClaimFlag;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -43,7 +46,6 @@ public class Artillects
     public static ModMetadata metadata;
     
     public static Configuration CONFIG;
-    public static IDManager idManager;
 
     /** Packets */
     public static final PacketTile PACKET_TILE = new PacketTile(Reference.CHANNEL);
@@ -51,6 +53,8 @@ public class Artillects
 
     /** Blocks and Items */
     public static ContentRegistry contentRegistry;
+    public static Item itemClaimFlag;
+    public static Item itemSurveyor;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
@@ -67,12 +71,11 @@ public class Artillects
         //create id manager
         int blockIDPrefix = CONFIG.get(Configuration.CATEGORY_GENERAL, "BlockIDPrefix", 1700).getInt(1700);
         int itemIDPrefix = CONFIG.get(Configuration.CATEGORY_GENERAL, "ItemIDPrefix", 20150).getInt(20150);
-        idManager = new IDManager(blockIDPrefix, itemIDPrefix);
         
         //create content registry
-        contentRegistry = new ContentRegistry(CONFIG, idManager, null).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
-        
-       
+        contentRegistry = new ContentRegistry(CONFIG,  new IDManager(blockIDPrefix, itemIDPrefix), Reference.NAME).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance()); 
+        itemClaimFlag = contentRegistry.createItem(ItemClaimFlag.class);
+        itemSurveyor = contentRegistry.createItem(ItemSurveyor.class);
         
         proxy.preInit();
         setModMetadata();

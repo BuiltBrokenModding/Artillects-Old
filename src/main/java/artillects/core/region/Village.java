@@ -60,7 +60,7 @@ public class Village extends Land implements IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "artillects/areas/" + getName() + "/Village.dat");
+        return new File(NBTUtility.getSaveDirectory(), "artillects/areas/" + getID() + "/Village.dat");
     }
 
     @Override
