@@ -1,5 +1,8 @@
 package artillects.core.region;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -12,13 +15,13 @@ import artillects.core.interfaces.IID;
 /** 2D top down area of the map
  * 
  * @author Darkguardsman */
-public class Land extends FactionObject implements IID
+public class Land extends FactionObject implements IID<String, Land>
 {
     private Plane area;
 
     /** Name of the region of land */
     private String name = "Land";
-    private UUID id = null;
+    private String id = null;
 
     /** Names this has been called in the past */
     private List<String> oldNames;
@@ -34,7 +37,7 @@ public class Land extends FactionObject implements IID
         this.x = x;
         this.y = y;
         this.z = z;
-        area = new Plane( new Vector2(x - size, z - size), new Vector2(x + size, z + size));
+        area = new Plane(new Vector2(x - size, z - size), new Vector2(x + size, z + size));        
     }
 
     @Override
@@ -46,22 +49,39 @@ public class Land extends FactionObject implements IID
     }
 
     @Override
-    public UUID getID()
+    public String getID()
     {
         return id;
     }
 
     @Override
-    public Land setID(UUID id)
+    public Land setID(String id)
     {
         this.id = id;
         return this;
     }
 
-    /** Creates a new id for this land */
-    protected void newID()
+    protected String newID()
     {
-        id = UUID.randomUUID();
+        MessageDigest digest;
+        try
+        {
+            digest = MessageDigest.getInstance("SHA-256");
+
+            byte[] hash = digest.digest(("" + 1 + this.x() + this.y() + this.z()).getBytes("UTF-8"));
+            String id = hash.toString();
+            System.out.println("ID: " + id);
+            return id;
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /** Sets the name of the region of land */
@@ -96,7 +116,7 @@ public class Land extends FactionObject implements IID
     {
         super.save(nbt);
         nbt.setString("name", this.name);
-        nbt.setString("landid", this.id.toString());
+        nbt.setString("landid", this.id);
         if (this.oldNames != null && !this.oldNames.isEmpty())
         {
             NBTTagCompound oldNames = new NBTTagCompound();
@@ -114,7 +134,7 @@ public class Land extends FactionObject implements IID
     {
         this.load(nbt);
         this.name = nbt.getString("name");
-        this.id = UUID.fromString(nbt.getString("landid"));
+        this.id = nbt.getString("landid");
         if (nbt.hasKey("oldnames"))
         {
             NBTTagCompound oldNames = nbt.getCompoundTag("oldnames");
