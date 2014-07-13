@@ -1,4 +1,4 @@
-package artillects.core.items;
+package artillects.core.surveyor;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

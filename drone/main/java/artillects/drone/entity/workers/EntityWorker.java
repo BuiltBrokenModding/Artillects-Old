@@ -7,9 +7,9 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.entity.ai.AIRangedAttack;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;
-import artillects.drone.entity.ai.combat.EntityAIRangedAttack;
 import artillects.drone.entity.ai.work.EntityAIBlacksmith;
 import artillects.drone.entity.ai.work.EntityAICrafting;
 import artillects.drone.entity.ai.work.EntityAIMining;
@@ -27,7 +27,7 @@ public class EntityWorker extends EntityArtillectDrone
     public EntityWorker(World par1World)
     {
         super(par1World);
-        this.tasks.addTask(1, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
+        this.tasks.addTask(1, new AIRangedAttack(this, 1.0D, 5, 10, 30.0F));
         this.tasks.addTask(2, new EntityAIMining(this, 1));
         this.tasks.addTask(2, new EntityAIBlacksmith(this, 1));
         this.tasks.addTask(2, new EntityAICrafting(this, 1));

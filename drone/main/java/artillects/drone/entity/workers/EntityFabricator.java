@@ -7,9 +7,9 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.core.entity.ai.AIFollow;
+import artillects.core.entity.ai.AIRangedAttack;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;
-import artillects.drone.entity.ai.combat.EntityAIRangedAttack;
 import artillects.drone.entity.ai.work.EntityAIBuilding;
 import artillects.drone.entity.ai.work.EntityAIReproduce;
 
@@ -21,7 +21,7 @@ public class EntityFabricator extends EntityArtillectDrone
     public EntityFabricator(World par1World)
     {
         super(par1World);
-        this.tasks.addTask(1, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
+        this.tasks.addTask(1, new AIRangedAttack(this, 1.0D, 5, 10, 30.0F));
         this.tasks.addTask(2, new EntityAIReproduce(this, 0.5f));
         this.tasks.addTask(2, new EntityAIBuilding(this, 0.5f));
         this.tasks.addTask(3, new AIFollow(this, this.moveForward, 3, 100));

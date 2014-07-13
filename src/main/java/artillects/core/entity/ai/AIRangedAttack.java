@@ -1,4 +1,4 @@
-package artillects.drone.entity.ai.combat;
+package artillects.core.entity.ai;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -6,7 +6,7 @@ import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.MathHelper;
 
-public class EntityAIRangedAttack extends EntityAIBase
+public class AIRangedAttack extends EntityAIBase
 {
     /** The entity the AI instance has been applied to */
     private final EntityLiving entityHost;
@@ -27,12 +27,12 @@ public class EntityAIRangedAttack extends EntityAIBase
     private float attackRange;
     private float followDistance;
 
-    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int attackTime, float attackRange)
+    public AIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int attackTime, float attackRange)
     {
         this(rangeAttacker, moveSpeed, attackTime, attackTime, attackRange);
     }
 
-    public EntityAIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int minAttackTime, int maxAttackTime, float attackRange)
+    public AIRangedAttack(IRangedAttackMob rangeAttacker, double moveSpeed, int minAttackTime, int maxAttackTime, float attackRange)
     {
         this.rangedAttackTime = -1;
 
