@@ -2,12 +2,9 @@ package artillects.core.entity.ai;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.MathHelper;
 import artillects.core.interfaces.IFollower;
-import artillects.drone.entity.EntityArtillectGround;
-import artillects.drone.hive.HiveComplex;
 
 /** Modified version of MC's follow task that allows custom follow settings.
  * 

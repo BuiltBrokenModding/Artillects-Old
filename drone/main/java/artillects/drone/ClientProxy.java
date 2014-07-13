@@ -53,10 +53,4 @@ public class ClientProxy extends CommonProxy
 
         return null;
     }
-
-    @Override
-    public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b)
-    {
-        FMLClientHandler.instance().getClient().effectRenderer.addEffect(new FxLaser(world, start, end, r, g, b, 20));
-    }
 }

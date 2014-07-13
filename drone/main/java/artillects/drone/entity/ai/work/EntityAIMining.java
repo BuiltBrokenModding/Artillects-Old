@@ -10,6 +10,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.Artillects;
 import artillects.drone.Drone;
 import artillects.drone.InventoryHelper;
 import artillects.drone.entity.EntityArtillectGround;
@@ -124,7 +125,7 @@ public class EntityAIMining extends EntityAILaborTask
 
                         if (this.breakingTime % 10 == 0)
                         {
-                            Drone.proxy.renderLaser(this.world(), new Vector3((IVector3)this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
+                            Artillects.proxy.renderLaser(this.world(), new Vector3((IVector3)this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
                         }
                     }
                 }

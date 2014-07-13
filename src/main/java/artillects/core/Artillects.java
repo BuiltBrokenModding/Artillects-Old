@@ -3,6 +3,7 @@ package artillects.core;
 import java.io.File;
 import java.util.Arrays;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
@@ -17,6 +18,7 @@ import artillects.core.items.claim.ItemClaimFlag;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
 import artillects.core.surveyor.ItemSurveyor;
+import artillects.core.surveyor.TileSurveyor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -55,6 +57,7 @@ public class Artillects
     public static ContentRegistry contentRegistry;
     public static Item itemClaimFlag;
     public static Item itemSurveyor;
+    public static Block blockSurveyor;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
@@ -75,7 +78,8 @@ public class Artillects
         //create content registry
         contentRegistry = new ContentRegistry(CONFIG,  new IDManager(blockIDPrefix, itemIDPrefix), Reference.NAME).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance()); 
         itemClaimFlag = contentRegistry.createItem(ItemClaimFlag.class);
-        itemSurveyor = contentRegistry.createItem(ItemSurveyor.class);
+        
+        blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         
         proxy.preInit();
         setModMetadata();

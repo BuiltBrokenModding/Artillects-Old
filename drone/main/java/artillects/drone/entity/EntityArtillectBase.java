@@ -198,7 +198,7 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 

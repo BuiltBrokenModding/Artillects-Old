@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.Artillects;
 import artillects.drone.CommonProxy.GuiIDs;
 import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
@@ -98,7 +99,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Drone.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 

@@ -52,9 +52,4 @@ public class CommonProxy implements IGuiHandler
 		return null;
 	}
 
-	public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b)
-	{
-
-	}
-
 }

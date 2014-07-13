@@ -1,13 +1,9 @@
 package artillects.core.entity.ai;
 
-import universalelectricity.api.vector.IVectorWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.world.World;
-import artillects.drone.entity.EntityArtillectGround;
+import universalelectricity.api.vector.IVectorWorld;
 
 /** Task prefab
  * 
