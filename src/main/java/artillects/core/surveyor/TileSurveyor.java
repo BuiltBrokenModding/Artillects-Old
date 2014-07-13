@@ -19,9 +19,10 @@ import universalelectricity.api.vector.Vector3;
 public class TileSurveyor extends TileBase
 {
     protected EulerAngle angle;
-    protected Color beamColor = Color.RED;
+    protected Color beamColor = Color.orange;
     protected Vector3 lastRayHit = null;
     protected Vector3 loc = null;
+    protected Vector3 offset = new Vector3(0.5, 0.5, 0.5);
 
     public TileSurveyor()
     {
@@ -37,17 +38,16 @@ public class TileSurveyor extends TileBase
     public void updateEntity()
     {
         super.updateEntity();
-        if (this.ticks % 3 == 0)
+        if (!world().isRemote && this.ticks % 3 == 0)
         {
             lastRayHit = null;
             if (this.loc == null)
-                loc = new Vector3(this).translate(0.5, 0.5, 0.5);
+                loc = new Vector3(this).translate(offset);
 
             MovingObjectPosition hit = getRayHit();
             if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
             {
-                lastRayHit = new Vector3(hit).translate(0.5, 0.5, 0.5);
-                System.out.println("Ray hit = " + lastRayHit);
+                lastRayHit = new Vector3(hit).translate(offset);
             }
             //TODO render distance above tile
             if (lastRayHit != null && !world().isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
@@ -67,12 +67,12 @@ public class TileSurveyor extends TileBase
     {
         Vector3 surveyor = new Vector3(this);
         Vector3 destination = new Vector3(angle);
-        
+
         surveyor.add(destination);
-        surveyor.translate(0.5, 0.5, 0.5);
+        surveyor.translate(offset);
         destination.scale(1000);
         destination.add(surveyor);
-        
+
         return surveyor.rayTraceBlocks(world(), destination, true);
     }
 
