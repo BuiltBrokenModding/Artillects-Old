@@ -21,7 +21,8 @@ public class LandManager
 {
     private World world;
     private IFaction faction;
-    private HashMap<String, Land> controlledLand = new LinkedHashMap<String, Land>();
+    private int nextLandID = 0;
+    private HashMap<Integer, Land> controlledLand = new LinkedHashMap<Integer, Land>();
 
     public LandManager(IFaction faction, World world)
     {
@@ -70,6 +71,10 @@ public class LandManager
         {
 
         }
+        else
+        {
+            log.add("Fail:World is null");
+        }
         return false;
     }
 
@@ -78,9 +83,9 @@ public class LandManager
     {
         if (world != null && !controlledLand.isEmpty())
         {
-            for(Land land : controlledLand.values())
+            for (Land land : controlledLand.values())
             {
-                if(land.controls(vec))
+                if (land.controls(vec))
                     return true;
             }
         }

@@ -10,10 +10,10 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.item.ItemBlockMetadata;
-import resonant.lib.schematic.BlockMap;
 import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
+import artillects.core.building.BuildFile;
 import artillects.drone.blocks.BlockHiveComplexCore;
 import artillects.drone.blocks.BlockHiveLighting;
 import artillects.drone.blocks.BlockHiveWalling;
@@ -148,15 +148,15 @@ public class Drone
             GameRegistry.registerWorldGenerator(new HiveComplexGenerator());
         }
 
-        BlockMap.registerSaveBlock("wall1", Drone.blockHiveWalling);
-        BlockMap.registerSaveBlock("wall2", Drone.blockHiveWalling);
-        BlockMap.registerSaveBlock("symbol1", Drone.blockSymbol);
-        BlockMap.registerSaveBlock("symbol2", Drone.blockSymbol);
-        BlockMap.registerSaveBlock("symbol3", Drone.blockSymbol);
-        BlockMap.registerSaveBlock("light", Drone.blockLight);
-        BlockMap.registerSaveBlock("core", Drone.blockHiveCore);
-        BlockMap.registerSaveBlock("teleporter", Drone.blockHiveTeleporterNode);
-        BlockMap.registerSaveBlock("teleporterSymbol", Drone.blockGlyph);
+        BuildFile.registerSaveBlock("wall1", Drone.blockHiveWalling);
+        BuildFile.registerSaveBlock("wall2", Drone.blockHiveWalling);
+        BuildFile.registerSaveBlock("symbol1", Drone.blockSymbol);
+        BuildFile.registerSaveBlock("symbol2", Drone.blockSymbol);
+        BuildFile.registerSaveBlock("symbol3", Drone.blockSymbol);
+        BuildFile.registerSaveBlock("light", Drone.blockLight);
+        BuildFile.registerSaveBlock("core", Drone.blockHiveCore);
+        BuildFile.registerSaveBlock("teleporter", Drone.blockHiveTeleporterNode);
+        BuildFile.registerSaveBlock("teleporterSymbol", Drone.blockGlyph);
         proxy.init();
     }
 

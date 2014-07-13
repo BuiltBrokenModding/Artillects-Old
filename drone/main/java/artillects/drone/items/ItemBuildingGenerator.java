@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import resonant.lib.schematic.BlockMap;
 import universalelectricity.api.vector.VectorWorld;
+import artillects.core.building.BuildFile;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.drone.hive.HiveComplex;
 
@@ -39,7 +39,7 @@ public class ItemBuildingGenerator extends Item
             {
                 if (EnumStructurePeaces.values()[itemStack.getItemDamage()].makeTool)
                 {
-                    BlockMap schematic = EnumStructurePeaces.values()[itemStack.getItemDamage()].getSchematic();
+                    BuildFile schematic = EnumStructurePeaces.values()[itemStack.getItemDamage()].getSchematic();
                     schematic.build(new VectorWorld(world, x, y, z), false);
                 }
             }

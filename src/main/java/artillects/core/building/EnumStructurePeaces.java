@@ -1,7 +1,5 @@
 package artillects.core.building;
 
-import resonant.lib.schematic.BlockMap;
-
 public enum EnumStructurePeaces
 {
     TEST("", "[Laggy]Hive complex Test [A]"),
@@ -20,7 +18,7 @@ public enum EnumStructurePeaces
     SMALL_ROOM("smallRoom");
 
     public String saveName, toolName;
-    public BlockMap schematic;
+    public BuildFile schematic;
     public boolean makeTool = false;
 
     private EnumStructurePeaces(String name)
@@ -35,11 +33,11 @@ public enum EnumStructurePeaces
         this.makeTool = true;
     }
 
-    public BlockMap getSchematic()
+    public BuildFile getSchematic()
     {
         if (schematic == null)
         {
-            schematic = new BlockMap();
+            schematic = new BuildFile();
             schematic.getFromResourceFolder(saveName);
         }
         return schematic;
