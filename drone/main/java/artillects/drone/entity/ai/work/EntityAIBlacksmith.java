@@ -1,5 +1,6 @@
 package artillects.drone.entity.ai.work;
 
+import java.lang.ref.WeakReference;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -71,11 +72,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
     @Override
     public void updateTask()
     {
-        if (this.lastUseChest != null)
-        {
-            this.lastUseChest.closeChest();
-            this.lastUseChest = null;
-        }
+        closeChest();
 
         if (((ZoneProcessing) getArtillect().getZone()).chestPositions.size() > 0 && ((ZoneProcessing) getArtillect().getZone()).furnacePositions.size() > 0)
         {
@@ -117,7 +114,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
         for (Vector3 furnacePosition : ((ZoneProcessing) getArtillect().getZone()).furnacePositions)
         {
             boolean didDump = false;
-            TileEntity tileEntity = this.world.getBlockTileEntity((int) furnacePosition.x, (int) furnacePosition.y, (int) furnacePosition.z);
+            TileEntity tileEntity = world().getBlockTileEntity((int) furnacePosition.x, (int) furnacePosition.y, (int) furnacePosition.z);
 
             if (tileEntity instanceof TileEntityFurnace)
             {
@@ -154,7 +151,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
     {
         for (Vector3 chestPosition : ((ZoneProcessing) getArtillect().getZone()).chestPositions)
         {
-            TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+            TileEntity tileEntity = world().getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
 
             if (tileEntity instanceof TileEntityChest)
             {
@@ -182,7 +179,7 @@ public class EntityAIBlacksmith extends EntityAILaborTask
                                     }
 
                                     chest.openChest();
-                                    this.lastUseChest = chest;
+                                    this.lastAccessedStorage = new WeakReference<TileEntity>(chest);
                                 }
 
                                 return true;

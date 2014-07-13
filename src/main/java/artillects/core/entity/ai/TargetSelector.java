@@ -1,4 +1,4 @@
-package artillects.core.ai;
+package artillects.core.entity.ai;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
@@ -11,12 +11,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import artillects.core.interfaces.IEntity;
 import artillects.core.interfaces.IFactionMember;
 
-public class EntityCombatSelector implements IEntitySelector
+public class TargetSelector implements IEntitySelector
 {
     IEntity drone;
     boolean monsters = true, animals = false, npcs = false, players = true, flying = true;
 
-    public EntityCombatSelector(IEntity drone)
+    public TargetSelector(IEntity drone)
     {
         this.drone = drone;
     }

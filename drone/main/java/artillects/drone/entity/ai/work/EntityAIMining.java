@@ -88,7 +88,7 @@ public class EntityAIMining extends EntityAILaborTask
                 this.getArtillect().setPathToEntity(null);
             }
 
-            MovingObjectPosition mop = this.world.rayTraceBlocks_do_do(Vec3.createVectorHelper(this.getArtillect().posX, this.getArtillect().posY, this.getArtillect().posZ), targetPosition.clone().add(0.5).toVec3(), false, false);
+            MovingObjectPosition mop = world().rayTraceBlocks_do_do(Vec3.createVectorHelper(this.getArtillect().posX, this.getArtillect().posY, this.getArtillect().posZ), targetPosition.clone().add(0.5).toVec3(), false, false);
 
             if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE)
             {
@@ -97,7 +97,7 @@ public class EntityAIMining extends EntityAILaborTask
 
                 this.getArtillect().getLookHelper().setLookPosition(centerVector.x, centerVector.y, centerVector.z, 10, 0);
 
-                int blockID = this.world.getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+                int blockID = world().getBlockId((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
 
                 if (blockID != 0)
                 {
@@ -105,26 +105,26 @@ public class EntityAIMining extends EntityAILaborTask
 
                     if (this.breakingTime >= this.maxBreakTime)
                     {
-                        List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world.getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
+                        List<ItemStack> droppedStacks = Block.blocksList[blockID].getBlockDropped(world(), (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, this.world().getBlockMetadata((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z), 0);
 
                         for (ItemStack stack : droppedStacks)
                         {
                             this.getArtillect().increaseStackSize(stack);
                         }
 
-                        this.world.setBlockToAir((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
-                        this.world.playAuxSFX(1012, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, 0);
-                        this.world.destroyBlockInWorldPartially(this.getArtillect().entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, -1);
+                        this.world().setBlockToAir((int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z);
+                        this.world().playAuxSFX(1012, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, 0);
+                        this.world().destroyBlockInWorldPartially(this.getArtillect().entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, -1);
                         this.resetTask();
                     }
                     else
                     {
                         int i = (int) (this.breakingTime / this.maxBreakTime * 10f);
-                        this.world.destroyBlockInWorldPartially(this.getArtillect().entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
+                        this.world().destroyBlockInWorldPartially(this.getArtillect().entityId, (int) breakPosition.x, (int) breakPosition.y, (int) breakPosition.z, i);
 
                         if (this.breakingTime % 10 == 0)
                         {
-                            Drone.proxy.renderLaser(this.world, new Vector3((IVector3)this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
+                            Drone.proxy.renderLaser(this.world(), new Vector3((IVector3)this.getArtillect()).translate(0, 0.2, 0), centerVector, 1, 0, 0);
                         }
                     }
                 }

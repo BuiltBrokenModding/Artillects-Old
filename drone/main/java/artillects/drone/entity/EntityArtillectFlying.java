@@ -22,7 +22,7 @@ import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.core.ai.EntityCombatSelector;
+import artillects.core.entity.ai.TargetSelector;
 import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.HiveComplexManager;
@@ -295,7 +295,7 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     public EntityLivingBase getTarget(double range)
     {
         EntityLivingBase entity = null;
-        EntityCombatSelector selector = new EntityCombatSelector(this);
+        TargetSelector selector = new TargetSelector(this);
         List<EntityLivingBase> entityList = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.boundingBox.expand(range, range, range));
 
         double distance = range * range;

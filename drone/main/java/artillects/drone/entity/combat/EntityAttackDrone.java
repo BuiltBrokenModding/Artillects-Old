@@ -15,10 +15,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import artillects.core.ai.EntityCombatSelector;
+import artillects.core.entity.ai.AIFollow;
+import artillects.core.entity.ai.TargetSelector;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;
-import artillects.drone.entity.ai.EntityAIArtillectFollow;
 import artillects.drone.entity.ai.combat.EntityAIRangedAttack;
 
 /** @author DarkGuardsman */
@@ -30,12 +30,12 @@ public class EntityAttackDrone extends EntityArtillectGround implements IRangedA
         this.setSize(1f, 1.5f);
         this.experienceValue = 5;
         this.tasks.addTask(2, new EntityAIRangedAttack(this, 1.0D, 5, 10, 30.0F));
-        this.tasks.addTask(3, new EntityAIArtillectFollow(this, this.moveForward, 3, 100));
+        this.tasks.addTask(3, new AIFollow(this, this.moveForward, 3, 100));
         this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(5, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new EntityCombatSelector(this)));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 0, true, false, new TargetSelector(this)));
     }
 
     @Override

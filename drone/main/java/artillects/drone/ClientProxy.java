@@ -7,13 +7,11 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import resonant.lib.render.fx.FxLaser;
 import universalelectricity.api.vector.Vector3;
-import artillects.drone.blocks.lightbridge.TileLightbridge;
 import artillects.drone.client.gui.GuiArtillect;
 import artillects.drone.client.render.RenderArtillectItems;
 import artillects.drone.client.render.RenderCombatDrone;
 import artillects.drone.client.render.RenderDemolisher;
 import artillects.drone.client.render.RenderFabricator;
-import artillects.drone.client.render.RenderLightbridge;
 import artillects.drone.client.render.RenderSeeker;
 import artillects.drone.client.render.RenderWorker;
 import artillects.drone.entity.IArtillect;
@@ -23,7 +21,6 @@ import artillects.drone.entity.combat.EntityShiv;
 import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.entity.workers.EntityWorker;
 import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy
@@ -37,7 +34,6 @@ public class ClientProxy extends CommonProxy
         RenderingRegistry.registerEntityRenderingHandler(EntityWorker.class, new RenderWorker());
         RenderingRegistry.registerEntityRenderingHandler(EntityShiv.class, new RenderCombatDrone());
 
-        ClientRegistry.bindTileEntitySpecialRenderer(TileLightbridge.class, new RenderLightbridge());
         MinecraftForgeClient.registerItemRenderer(Drone.itemArtillectSpawner.itemID, new RenderArtillectItems());
         MinecraftForge.EVENT_BUS.register(new SoundHandler());
     }

@@ -19,11 +19,6 @@ import artillects.drone.blocks.BlockHiveLighting;
 import artillects.drone.blocks.BlockHiveWalling;
 import artillects.drone.blocks.BlockSymbol;
 import artillects.drone.blocks.TileEntityHiveComplexCore;
-import artillects.drone.blocks.lightbridge.BlockLightbridge;
-import artillects.drone.blocks.lightbridge.BlockLightbridgeCore;
-import artillects.drone.blocks.lightbridge.BlockLightbridgeFrame;
-import artillects.drone.blocks.lightbridge.TileLightbridge;
-import artillects.drone.blocks.lightbridge.TileLightbridgeCore;
 import artillects.drone.blocks.teleporter.BlockGlyph;
 import artillects.drone.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.drone.blocks.teleporter.TileEntityTeleporterAnchor;
@@ -127,9 +122,6 @@ public class Drone
         blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         blockHiveTeleporterNode = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
         blockHiveCore = Artillects.contentRegistry.createBlock(BlockHiveComplexCore.class);
-        blockLightbridgeCore = Artillects.contentRegistry.createBlock(BlockLightbridgeCore.class);
-        blockLightbridgeFrame = Artillects.contentRegistry.createBlock(BlockLightbridgeFrame.class);
-        blockLightbridge = Artillects.contentRegistry.createBlock(BlockLightbridge.class);
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
 
@@ -139,8 +131,6 @@ public class Drone
             artillect.register();
         }
 
-        GameRegistry.registerTileEntity(TileLightbridgeCore.class, "tileLightbridgeCore");
-        GameRegistry.registerTileEntity(TileLightbridge.class, "tileLightbridge");
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
         GameRegistry.registerTileEntity(TileEntityHiveComplexCore.class, "tileHiveComplexCore");
         if (Drone.enableHiveComplexGenerator)

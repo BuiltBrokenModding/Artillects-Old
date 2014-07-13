@@ -1,26 +1,49 @@
 package artillects.drone.entity.ai.work;
 
+import java.lang.ref.WeakReference;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.entity.ai.AITask;
 import artillects.drone.entity.EntityArtillectGround;
-import artillects.drone.entity.ai.EntityArtillectAIBase;
 import artillects.drone.entity.workers.EntityArtillectDrone;
 import artillects.drone.hive.zone.ZoneProcessing;
 
-public abstract class EntityAILaborTask extends EntityArtillectAIBase
+public abstract class EntityAILaborTask extends AITask
 {
     private EntityArtillectDrone drone;
+    protected double moveSpeed;
+    protected WeakReference<TileEntity> lastAccessedTile = null;
+    protected WeakReference<TileEntity> lastAccessedStorage = null;
 
     public EntityAILaborTask(EntityArtillectDrone drone, double moveSpeed)
     {
-        super(drone.worldObj, moveSpeed);
+        super(drone);
         this.drone = drone;
+        this.moveSpeed = moveSpeed;
+    }
+    
+    public TileEntity lastChest()
+    {
+        if(lastAccessedStorage != null)
+        {
+            return lastAccessedStorage.get();
+        }
+        return null;
+    }
+    
+    public void closeChest()
+    {
+        if (this.lastChest() instanceof TileEntityChest)
+        {
+            ((TileEntityChest) lastChest()).closeChest();
+            this.lastAccessedStorage = null;
+        }
     }
 
-    @Override
     public EntityArtillectDrone getArtillect()
     {
         return this.drone;
@@ -36,7 +59,7 @@ public abstract class EntityAILaborTask extends EntityArtillectAIBase
         {
             for (Vector3 chestPosition : ((ZoneProcessing) getArtillect().getZone()).chestPositions)
             {
-                TileEntity tileEntity = this.world.getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
+                TileEntity tileEntity = world().getBlockTileEntity((int) chestPosition.x, (int) chestPosition.y, (int) chestPosition.z);
 
                 if (tileEntity instanceof TileEntityChest)
                 {
@@ -82,7 +105,7 @@ public abstract class EntityAILaborTask extends EntityArtillectAIBase
                                     }
                                 }
                                 chest.openChest();
-                                this.lastUseChest = chest;
+                                this.lastAccessedStorage = new WeakReference<TileEntity>(chest);
                                 return true;
                             }
                         }
