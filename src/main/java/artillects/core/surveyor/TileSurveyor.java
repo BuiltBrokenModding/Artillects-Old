@@ -5,36 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.AdvancedModelLoader;
-import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.ForgeDirection;
-
-import org.lwjgl.opengl.GL11;
-
 import resonant.api.IRemovable.ISneakPickup;
 import resonant.lib.content.module.TileBase;
-import resonant.lib.content.module.TileRender;
 import resonant.lib.network.IPacketReceiverWithID;
 import resonant.lib.network.PacketHandler;
-import resonant.lib.prefab.vector.Cuboid;
-import resonant.lib.render.RenderUtility;
 import universalelectricity.api.vector.EulerAngle;
 import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
-import artillects.core.Reference;
 
 import com.google.common.io.ByteArrayDataInput;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
@@ -67,6 +53,8 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             lastRayHit = null;
             if (this.loc == null)
                 loc = new Vector3(this).translate(offset);
+            
+            this.angle.pitch += 1;
 
             MovingObjectPosition hit = getRayHit();
             if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
