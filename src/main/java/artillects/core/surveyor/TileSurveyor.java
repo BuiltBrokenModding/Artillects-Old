@@ -53,11 +53,13 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
         super.updateEntity();
         if (this.ticks % 3 == 0)
         {
+            //Clean up
             lastRayHit = null;
+            angle.yaw = EulerAngle.clampAngleTo360(angle.yaw);
+            angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);           
+            
             if (this.loc == null)
                 loc = new Vector3(this).translate(offset);
-
-            this.angle.pitch += 1;
 
             MovingObjectPosition hit = getRayHit();
             if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)

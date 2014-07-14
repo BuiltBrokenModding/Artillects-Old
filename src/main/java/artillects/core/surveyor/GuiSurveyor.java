@@ -16,7 +16,7 @@ public class GuiSurveyor extends GuiContainerBase
 {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.GUI_DIRECTORY + "gui_empty.png");
 
-    private TileSurveyor tileEntity;
+    private TileSurveyor tile;
     private GuiTextField yaw_field;
     private GuiTextField pitch_field;
 
@@ -26,7 +26,7 @@ public class GuiSurveyor extends GuiContainerBase
     public GuiSurveyor(TileSurveyor tileEntity)
     {
         super(new ContainerDummy());
-        this.tileEntity = tileEntity;
+        this.tile = tileEntity;
         ySize = 166;
     }
 
@@ -37,10 +37,14 @@ public class GuiSurveyor extends GuiContainerBase
         super.initGui();
         this.yaw_field = new GuiTextField(fontRenderer, 110, 37, 45, 12);
         this.pitch_field = new GuiTextField(fontRenderer, 110, 52, 45, 12);
-        
+
         this.yaw_field.setMaxStringLength(6);
+        this.yaw_field.setText("" + tile.angle.yaw);
+        
         this.pitch_field.setMaxStringLength(6);
-        this.buttonList.add(new GuiButton(1, this.guiLeft + 40, this.guiTop + 130, 50, 20, LanguageUtility.getLocal("gui.surveyor.apply")));
+        this.pitch_field.setText("" + tile.angle.pitch);
+        
+        this.buttonList.add(new GuiButton(0, this.guiLeft + 40, this.guiTop + 130, 50, 20, LanguageUtility.getLocal("gui.surveyor.apply")));
     }
 
     /** Call this method from you GuiScreen to process the keys into textbox. */
@@ -70,7 +74,7 @@ public class GuiSurveyor extends GuiContainerBase
 
         this.fontRenderer.drawString("", 45, 6, 4210752);
         this.fontRenderer.drawString("\u00a77" + LanguageUtility.getLocal("gui.surveyor.name"), 30, 6, 4210752);
-        
+
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.yaw"), 25, 40, 4210752);
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.pitch"), 25, 55, 4210752);
     }
@@ -87,8 +91,34 @@ public class GuiSurveyor extends GuiContainerBase
     }
 
     @Override
-    public void updateScreen()
+    protected void actionPerformed(GuiButton button)
     {
-        super.updateScreen();
+        super.actionPerformed(button);
+        if (button.id == 0)
+        {
+            double yaw = 0;
+            double pitch = 0;
+            try
+            {
+                yaw = Double.parseDouble(yaw_field.getText());
+                tile.setYaw(yaw);
+            }
+            catch (Exception e)
+            {
+                yaw_field.setText("0");
+                return;
+            }
+            try
+            {
+                pitch = Double.parseDouble(pitch_field.getText());
+                tile.setPitch(pitch);
+            }
+            catch (Exception e)
+            {
+                yaw_field.setText("0");
+                return;
+            }         
+           
+        }
     }
 }
