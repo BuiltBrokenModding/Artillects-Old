@@ -10,6 +10,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.item.ItemBlockMetadata;
+import resonant.lib.recipe.UniversalRecipe;
 import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
@@ -153,40 +154,12 @@ public class Drone
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        /* Load Artillect Recipes */
-        // Worker
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.WORKER.ordinal()), "G G", "GCG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
-
-        // Fabriactor
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.FABRICATOR.ordinal()), "GCG", "GGG", "GCG", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
-
-        // Demolisher
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.DEMOLISHER.ordinal()), "C C", "GGG", "G G", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
-
-        // Seeker
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemArtillectSpawner, 1, EnumArtillectEntity.SEEKER.ordinal()), "G G", "GGG", " C ", 'G', itemParts, 'C', new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal())));
-
-        /* Load Recipe Item Recipes */
-        // Metal Plate
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.METAL_PLATE.ordinal()), "II ", "II ", 'I', Item.ingotIron));
-
-        // Metal Gear
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 4, Part.GEARS.ordinal()), "G G", " G ", "G G", 'G', Item.ingotGold));
-
-        // Circuit 1
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.METAL_PLATE.ordinal()), 'I', Item.ingotGold));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T1.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T1.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T1.ordinal())));
-        // Circuit 2
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T2.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_T1.ordinal()), 'I', Item.ingotGold));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T2.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T2.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T2.ordinal())));
-        // Circuit 3
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T3.ordinal()), "III", "IPI", "III", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_T2.ordinal()), 'I', new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_T1.ordinal())));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(itemParts, 1, Part.CIRCUITS_T3.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T3.ordinal()), new ItemStack(itemParts, 1, ItemDroneParts.Part.CIRCUITS_MELTED_T3.ordinal())));
-
-        // Wall 1
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 0), "PGP", "G G", "PGP", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemDroneParts.Part.GEARS.ordinal())));
-        // Wall 2
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 2), "GPG", "P P", "GPG", 'P', new ItemStack(itemParts, 1, ItemDroneParts.Part.METAL_PLATE.ordinal()), 'G', new ItemStack(itemParts, 1, ItemDroneParts.Part.GEARS.ordinal())));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 1), new ItemStack(blockSymbol, 1, 0)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 2), new ItemStack(blockSymbol, 1, 1)));
+        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 3), new ItemStack(blockSymbol, 1, 2)));
+        
         proxy.postInit();
     }
 
