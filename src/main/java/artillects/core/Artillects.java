@@ -81,6 +81,7 @@ public class Artillects
         
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         
+        LanguageUtility.loadLanguages(Reference.LANGUAGE_DIRECTORY, Reference.LANGUAGES);
         proxy.preInit();
         setModMetadata();
     }
