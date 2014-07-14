@@ -2,6 +2,7 @@ package artillects.core.surveyor;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.block.material.Material;
@@ -13,6 +14,7 @@ import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.ForgeDirection;
 import resonant.api.IRemovable.ISneakPickup;
+import resonant.api.ITagRender;
 import resonant.lib.content.module.TileBase;
 import resonant.lib.network.IPacketReceiverWithID;
 import resonant.lib.network.PacketHandler;
@@ -27,7 +29,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
  * @author Darkguardsman */
-public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISneakPickup
+public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISneakPickup, ITagRender
 {
     protected EulerAngle angle;
     protected Color beamColor = Color.orange;
@@ -56,8 +58,8 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             //Clean up
             lastRayHit = null;
             angle.yaw = EulerAngle.clampAngleTo360(angle.yaw);
-            angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);           
-            
+            angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);
+
             if (this.loc == null)
                 loc = new Vector3(this).translate(offset);
 
@@ -242,5 +244,18 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
         ItemStack stack = new ItemStack(this.blockID(), 1, 0);
         stacks.add(stack);
         return stacks;
+    }
+
+    @Override
+    public float addInformation(HashMap<String, Integer> map, EntityPlayer player)
+    {
+        if (laserOn)
+        {
+            double distance = distance();
+            int i = (int) (distance * 100);
+            distance = i / 100;
+            map.put("" + distance, 0xFFFFFF);
+        }
+        return 1.5f;
     }
 }
