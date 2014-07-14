@@ -32,7 +32,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISneakPickup, ITagRender
 {
     protected EulerAngle angle;
-    protected Color beamColor = Color.orange;
+    protected Color beamColor = Color.cyan;
     protected Vector3 lastRayHit = null;
     protected Vector3 loc = null;
     protected Vector3 offset = new Vector3(0.5, 0.5, 0.5);
@@ -125,8 +125,10 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
         if (nbt.hasKey("beamColor"))
         {
             NBTTagCompound tag = nbt.getCompoundTag("beamColor");
-            this.beamColor = new Color(tag.getInteger("red"), tag.getInteger("blue"), tag.getInteger("green"));
+            this.beamColor = new Color(tag.getInteger("red"), tag.getInteger("green"), tag.getInteger("blue"));
         }
+        if(nbt.hasKey("laserOn"))
+            this.laserOn = nbt.getBoolean("laserOn");
     }
 
     @Override
@@ -135,14 +137,14 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
         super.writeToNBT(nbt);
         nbt.setDouble("yaw", angle.yaw());
         nbt.setDouble("pitch", angle.pitch());
-        if (beamColor != Color.RED)
-        {
-            NBTTagCompound colorBeamTag = new NBTTagCompound();
-            colorBeamTag.setInteger("red", beamColor.getRed());
-            colorBeamTag.setInteger("blue", beamColor.getBlue());
-            colorBeamTag.setInteger("green", beamColor.getGreen());
-            nbt.setCompoundTag("beamColor", colorBeamTag);
-        }
+        
+        NBTTagCompound colorBeamTag = new NBTTagCompound();
+        colorBeamTag.setInteger("red", beamColor.getRed());
+        colorBeamTag.setInteger("blue", beamColor.getBlue());
+        colorBeamTag.setInteger("green", beamColor.getGreen());
+        nbt.setCompoundTag("beamColor", colorBeamTag);
+        
+        nbt.setBoolean("laserOn", this.laserOn);
     }
 
     @Override
@@ -168,6 +170,11 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 this.laserOn = data.readBoolean();
                 return true;
             }
+            else if (id == 3)
+            {
+                this.beamColor = new Color(data.readInt(), data.readInt(), data.readInt());               
+                return true;
+            }
         }
         else
         {
@@ -186,6 +193,13 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 this.laserOn = data.readBoolean();
                 return true;
             }
+            else if (id == 3)
+            {
+                this.beamColor = new Color(data.readInt(), data.readInt(), data.readInt());
+                Packet packet = Artillects.PACKET_TILE.getPacketWithID(3, this, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());                
+                PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
+                return true;
+            }
         }
         return false;
     }
@@ -198,17 +212,13 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
 
     public void sendOnStatus()
     {
-        Packet packet = Artillects.PACKET_TILE.getPacketWithID(2, this, this.laserOn);
         if (world().isRemote)
-            PacketDispatcher.sendPacketToServer(packet);
-        else
-            PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
+            PacketDispatcher.sendPacketToServer(Artillects.PACKET_TILE.getPacketWithID(2, this, this.laserOn));
     }
 
     public void sendAngles()
     {
-        Packet packet = Artillects.PACKET_TILE.getPacketWithID(1, this, this.angle.yaw, this.angle.pitch);
-        PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
+        PacketHandler.sendPacketToClients(Artillects.PACKET_TILE.getPacketWithID(1, this, this.angle.yaw, this.angle.pitch), world(), new Vector3(this), 100);
     }
 
     public void setYaw(double yaw)
@@ -235,6 +245,14 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 PacketDispatcher.sendPacketToServer(packet);
             }
         }
+    }
+
+    public void setColor(Color color)
+    {
+        this.beamColor = color;
+        Packet packet = Artillects.PACKET_TILE.getPacketWithID(3, this, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
+        if (world().isRemote)
+            PacketDispatcher.sendPacketToServer(packet);
     }
 
     @Override

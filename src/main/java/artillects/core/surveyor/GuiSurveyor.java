@@ -1,5 +1,7 @@
 package artillects.core.surveyor;
 
+import java.awt.Color;
+
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.ResourceLocation;
@@ -19,12 +21,12 @@ public class GuiSurveyor extends GuiContainerBase
     public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.GUI_DIRECTORY + "gui_empty.png");
 
     private TileSurveyor tile;
-    private GuiTextField yaw_field;
-    private GuiTextField pitch_field;
+    private NumericField yaw_field;
+    private NumericField pitch_field;
 
-    private GuiTextField red_field;
-    private GuiTextField blue_field;
-    private GuiTextField green_field;
+    private NumericField red_field;
+    private NumericField blue_field;
+    private NumericField green_field;
 
     private int containerWidth;
     private int containerHeight;
@@ -41,18 +43,18 @@ public class GuiSurveyor extends GuiContainerBase
     public void initGui()
     {
         super.initGui();
-        this.yaw_field = new NumericField(fontRenderer, NumericType.DOUBLE, 110, 37, 45, 12);
-        this.pitch_field = new NumericField(fontRenderer, NumericType.DOUBLE, 110, 52, 45, 12);
+        this.yaw_field = (NumericField) new NumericField(fontRenderer, 110, 37, 45, 12).setLength(10);
+        this.pitch_field = (NumericField) new NumericField(fontRenderer, 110, 52, 45, 12).setLength(10);
 
-        this.red_field = new NumericField(fontRenderer, NumericType.INT, 110, 60, 45, 12);
-        this.blue_field = new NumericField(fontRenderer, NumericType.INT, 110, 75, 45, 12);
-        this.green_field = new NumericField(fontRenderer, NumericType.INT, 110, 90, 45, 12);
+        this.red_field = (NumericField) new NumericField(fontRenderer, NumericType.INT, 110, 67, 45, 12).setLength(5);
+        this.blue_field = (NumericField) new NumericField(fontRenderer, NumericType.INT, 110, 82, 45, 12).setLength(5);
+        this.green_field = (NumericField) new NumericField(fontRenderer, NumericType.INT, 110, 97, 45, 12).setLength(5);
 
-        this.yaw_field.setMaxStringLength(6);
         this.yaw_field.setText("" + tile.angle.yaw);
-
-        this.pitch_field.setMaxStringLength(6);
         this.pitch_field.setText("" + tile.angle.pitch);
+        this.red_field.setText("" + tile.beamColor.getRed());
+        this.blue_field.setText("" + tile.beamColor.getBlue());
+        this.green_field.setText("" + tile.beamColor.getGreen());
 
         this.buttonList.add(new GuiButton(0, this.guiLeft + 40, this.guiTop + 130, 50, 20, LanguageUtility.getLocal("gui.surveyor.apply")));
     }
@@ -64,6 +66,10 @@ public class GuiSurveyor extends GuiContainerBase
         super.keyTyped(par1, par2);
         this.yaw_field.textboxKeyTyped(par1, par2);
         this.pitch_field.textboxKeyTyped(par1, par2);
+        this.red_field.textboxKeyTyped(par1, par2);
+        this.blue_field.textboxKeyTyped(par1, par2);
+        this.green_field.textboxKeyTyped(par1, par2);
+        
     }
 
     /** Args: x, y, buttonClicked */
@@ -73,6 +79,9 @@ public class GuiSurveyor extends GuiContainerBase
         super.mouseClicked(par1, par2, par3);
         this.yaw_field.mouseClicked(par1 - containerWidth, par2 - containerHeight, par3);
         this.pitch_field.mouseClicked(par1 - containerWidth, par2 - containerHeight, par3);
+        this.red_field.mouseClicked(par1 - containerWidth, par2 - containerHeight, par3);
+        this.blue_field.mouseClicked(par1 - containerWidth, par2 - containerHeight, par3);
+        this.green_field.mouseClicked(par1 - containerWidth, par2 - containerHeight, par3);
     }
 
     /** Draw the foreground layer for the GuiContainer (everything in front of the items) */
@@ -81,12 +90,19 @@ public class GuiSurveyor extends GuiContainerBase
     {
         this.yaw_field.drawTextBox();
         this.pitch_field.drawTextBox();
+        this.red_field.drawTextBox();
+        this.blue_field.drawTextBox();
+        this.green_field.drawTextBox();
 
         this.fontRenderer.drawString("", 45, 6, 4210752);
         this.fontRenderer.drawString("\u00a77" + LanguageUtility.getLocal("gui.surveyor.name"), 30, 6, 4210752);
 
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.yaw"), 25, 40, 4210752);
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.pitch"), 25, 55, 4210752);
+        
+        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.red"), 25, 67, 4210752);
+        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.blue"), 25, 82, 4210752);
+        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.surveyor.green"), 25, 97, 4210752);
     }
 
     @Override
@@ -106,29 +122,9 @@ public class GuiSurveyor extends GuiContainerBase
         super.actionPerformed(button);
         if (button.id == 0)
         {
-            double yaw = 0;
-            double pitch = 0;
-            try
-            {
-                yaw = Double.parseDouble(yaw_field.getText());
-                tile.setYaw(yaw);
-            }
-            catch (Exception e)
-            {
-                yaw_field.setText("0");
-                return;
-            }
-            try
-            {
-                pitch = Double.parseDouble(pitch_field.getText());
-                tile.setPitch(pitch);
-            }
-            catch (Exception e)
-            {
-                yaw_field.setText("0");
-                return;
-            }
-
+            tile.setYaw(yaw_field.getTextAsDouble());
+            tile.setPitch(pitch_field.getTextAsDouble());
+            tile.setColor(new Color(red_field.getTextAsInt(), green_field.getTextAsInt(), blue_field.getTextAsInt()));
         }
     }
 }
