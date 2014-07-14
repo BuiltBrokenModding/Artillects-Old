@@ -10,6 +10,8 @@ import resonant.lib.gui.ContainerDummy;
 import resonant.lib.gui.GuiContainerBase;
 import resonant.lib.utility.LanguageUtility;
 import artillects.core.Reference;
+import artillects.core.prefab.gui.NumericField;
+import artillects.core.prefab.gui.NumericField.NumericType;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class GuiSurveyor extends GuiContainerBase
@@ -19,6 +21,10 @@ public class GuiSurveyor extends GuiContainerBase
     private TileSurveyor tile;
     private GuiTextField yaw_field;
     private GuiTextField pitch_field;
+
+    private GuiTextField red_field;
+    private GuiTextField blue_field;
+    private GuiTextField green_field;
 
     private int containerWidth;
     private int containerHeight;
@@ -35,15 +41,19 @@ public class GuiSurveyor extends GuiContainerBase
     public void initGui()
     {
         super.initGui();
-        this.yaw_field = new GuiTextField(fontRenderer, 110, 37, 45, 12);
-        this.pitch_field = new GuiTextField(fontRenderer, 110, 52, 45, 12);
+        this.yaw_field = new NumericField(fontRenderer, NumericType.DOUBLE, 110, 37, 45, 12);
+        this.pitch_field = new NumericField(fontRenderer, NumericType.DOUBLE, 110, 52, 45, 12);
+
+        this.red_field = new NumericField(fontRenderer, NumericType.INT, 110, 60, 45, 12);
+        this.blue_field = new NumericField(fontRenderer, NumericType.INT, 110, 75, 45, 12);
+        this.green_field = new NumericField(fontRenderer, NumericType.INT, 110, 90, 45, 12);
 
         this.yaw_field.setMaxStringLength(6);
         this.yaw_field.setText("" + tile.angle.yaw);
-        
+
         this.pitch_field.setMaxStringLength(6);
         this.pitch_field.setText("" + tile.angle.pitch);
-        
+
         this.buttonList.add(new GuiButton(0, this.guiLeft + 40, this.guiTop + 130, 50, 20, LanguageUtility.getLocal("gui.surveyor.apply")));
     }
 
@@ -117,8 +127,8 @@ public class GuiSurveyor extends GuiContainerBase
             {
                 yaw_field.setText("0");
                 return;
-            }         
-           
+            }
+
         }
     }
 }
