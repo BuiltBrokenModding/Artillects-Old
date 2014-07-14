@@ -22,6 +22,8 @@ import artillects.core.Artillects;
 
 import com.google.common.io.ByteArrayDataInput;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
+
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
  * @author Darkguardsman */
@@ -32,6 +34,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
     protected Vector3 lastRayHit = null;
     protected Vector3 loc = null;
     protected Vector3 offset = new Vector3(0.5, 0.5, 0.5);
+    protected boolean laserOn = true;
 
     public TileSurveyor()
     {
@@ -53,7 +56,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             lastRayHit = null;
             if (this.loc == null)
                 loc = new Vector3(this).translate(offset);
-            
+
             this.angle.pitch += 1;
 
             MovingObjectPosition hit = getRayHit();
@@ -62,12 +65,23 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 lastRayHit = new Vector3(hit.hitVec).translate(offset);
             }
             //TODO render distance above tile
-            if (world().isRemote)
-                if (lastRayHit != null && !world().isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord))
-                {
-                    Artillects.proxy.renderLaser(world(), loc, lastRayHit, beamColor, 3);
-                }
+            if (lastRayHit != null && world().isRemote && laserOn)
+                Artillects.proxy.renderLaser(world(), loc, lastRayHit, beamColor, 3);
         }
+    }
+
+    @Override
+    protected boolean use(EntityPlayer player, int side, Vector3 hit)
+    {
+        if (player.isSneaking())
+        {
+            this.laserOn = !this.laserOn;
+        }
+        else
+        {
+            player.openGui(Artillects.INSTANCE, 0, world(), x(), y(), z());
+        }
+        return true;
     }
 
     @Override
@@ -145,6 +159,11 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 this.angle.pitch = data.readDouble();
                 return true;
             }
+            else if (id == 2)
+            {
+                this.laserOn = data.readBoolean();
+                return true;
+            }
         }
         else
         {
@@ -158,6 +177,11 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
                 this.angle.pitch = data.readDouble();
                 return true;
             }
+            else if (id == 2)
+            {
+                this.laserOn = data.readBoolean();
+                return true;
+            }
         }
         return false;
     }
@@ -166,6 +190,15 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
     public Packet getDescriptionPacket()
     {
         return Artillects.PACKET_TILE.getPacketWithID(1, this, this.angle.yaw, this.angle.pitch, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
+    }
+
+    public void sendOnStatus()
+    {
+        Packet packet = Artillects.PACKET_TILE.getPacketWithID(2, this, this.laserOn);
+        if (world().isRemote)
+            PacketDispatcher.sendPacketToServer(packet);
+        else
+            PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
     }
 
     public void sendAngles()
@@ -182,7 +215,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             if (world().isRemote)
             {
                 Packet packet = Artillects.PACKET_TILE.getPacketWithID(0, this, yaw);
-                PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
+                PacketDispatcher.sendPacketToServer(packet);
             }
         }
     }
@@ -195,7 +228,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             if (world().isRemote)
             {
                 Packet packet = Artillects.PACKET_TILE.getPacketWithID(1, this, pitch);
-                PacketHandler.sendPacketToClients(packet, world(), new Vector3(this), 100);
+                PacketDispatcher.sendPacketToServer(packet);
             }
         }
     }
