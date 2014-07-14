@@ -5,23 +5,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.ForgeDirection;
+
+import org.lwjgl.opengl.GL11;
+
 import resonant.api.IRemovable.ISneakPickup;
 import resonant.lib.content.module.TileBase;
+import resonant.lib.content.module.TileRender;
 import resonant.lib.network.IPacketReceiverWithID;
 import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.vector.Cuboid;
+import resonant.lib.render.RenderUtility;
 import universalelectricity.api.vector.EulerAngle;
 import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
+import artillects.core.Reference;
 
 import com.google.common.io.ByteArrayDataInput;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
@@ -38,10 +51,11 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
     {
         super(Material.iron);
         angle = new EulerAngle(ForgeDirection.NORTH);
-        bounds = new Cuboid(0, 0, 0, 1, 0.9f, 1);
         isOpaqueCube = false;
-        //normalRender = false;
+        normalRender = false;
+        customItemRender = true;
         itemBlock = ItemSurveyor.class;
+        textureName = "material_steel";
     }
 
     @Override
@@ -57,7 +71,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             MovingObjectPosition hit = getRayHit();
             if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
             {
-                lastRayHit = new Vector3(hit).translate(offset);
+                lastRayHit = new Vector3(hit.hitVec).translate(offset);
             }
             //TODO render distance above tile
             if (world().isRemote)
