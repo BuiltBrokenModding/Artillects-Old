@@ -64,7 +64,7 @@ public class TileSurveyor extends TileBase implements IPacketReceiverWithID, ISn
             MovingObjectPosition hit = getRayHit();
             if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
             {
-                lastRayHit = new Vector3(hit.hitVec).translate(offset);
+                lastRayHit = new Vector3(hit.hitVec);
             }
             //TODO render distance above tile
             if (lastRayHit != null && world().isRemote && laserOn)
