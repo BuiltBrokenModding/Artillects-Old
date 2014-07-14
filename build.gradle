@@ -13,14 +13,6 @@ buildscript {
 
 apply plugin: 'forge'
 
-sourceSets {
-	main {
-		java {
-			srcDirs 'src/main/java', 'archaic/src/main/java', 'imperial/src/main/java', 'drone/src/main/java', 'imperial/src/main/java', 'industrial/src/main/java'
-		}
-	}
-}
-
 def ENV = System.getenv()
 
 ext.buildProps = file "build.properties"
@@ -82,7 +74,7 @@ jar {
 
 repositories {
 			maven {
-				url "file://var/www/maven"
+				url "http://calclavia.com/maven"
 			}
 		}
 dependencies {
