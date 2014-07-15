@@ -161,10 +161,10 @@ public class Drone
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 1), "B", 'B', new ItemStack(blockSymbol, 1, 0)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 2), "B", 'B', new ItemStack(blockSymbol, 1, 1)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 3), "B", 'B', new ItemStack(blockSymbol, 1, 2)));
-        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 1), "B", 'B', new ItemStack(blockGlyph, 1, 0)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 2), "B", 'B', new ItemStack(blockGlyph, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 3), "B", 'B', new ItemStack(blockGlyph, 1, 2)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "B", 'B', new ItemStack(blockGlyph, 1, 3)));
         proxy.postInit();
     }
 
