@@ -119,18 +119,18 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         this.load3x3Room(this.location.clone(), 2);
         for (int i = 0; i < 1; i++)
         {
-            EntityFabricator fab = new EntityFabricator(this.location.world);
-            fab.setPosition(this.location.x + 0.5, this.location.y + 1 + (i * 0.5), this.location.z + 0.5);
-            fab.setOwner(HiveComplexManager.instance());
-            buildZone.assignArtillect(fab);
-            this.location.world.spawnEntityInWorld(fab);
+            //EntityFabricator fab = new EntityFabricator(this.location.world);
+            //fab.setPosition(this.location.x + 0.5, this.location.y + 1 + (i * 0.5), this.location.z + 0.5);
+            //fab.setOwner(HiveComplexManager.instance());
+            //buildZone.assignArtillect(fab);
+            //this.location.world.spawnEntityInWorld(fab);
         }
     }
 
     public void loadGeneralBuilding(boolean worldGen)
     {
         final int width = 4;
-        final int height = 8;
+        final int height = 3;
         final int tunnelSpacing = 18;
         for (int floor = 0; floor <= height; floor++)
         {
@@ -235,11 +235,11 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
         for (int i = 0; i < 4; i++)
         {
-            EntityFabricator fab = new EntityFabricator(this.location.world);
-            fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
-            fab.setOwner(HiveComplexManager.instance());
+            //EntityFabricator fab = new EntityFabricator(this.location.world);
+            //fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
+            //fab.setOwner(HiveComplexManager.instance());
             //this.buildZone.assignArtillect(fab);
-            this.location.world.spawnEntityInWorld(fab);
+            //this.location.world.spawnEntityInWorld(fab);
         }
     }
 

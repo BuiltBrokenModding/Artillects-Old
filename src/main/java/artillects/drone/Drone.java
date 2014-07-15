@@ -154,11 +154,16 @@ public class Drone
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 16, 0), "CBC", "BCB", "CBC", 'C', UniversalRecipe.PRIMARY_METAL.get(), 'B', Block.stone ));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 0), "CB", 'C', blockHiveWalling, 'B', Item.glowstone));
+        
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
+        
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 1), new ItemStack(blockSymbol, 1, 0)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 2), new ItemStack(blockSymbol, 1, 1)));
-        GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(blockGlyph, 1, 3), new ItemStack(blockSymbol, 1, 2)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 1), "B", 'B', new ItemStack(blockSymbol, 1, 0)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 2), "B", 'B', new ItemStack(blockSymbol, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 3), "B", 'B', new ItemStack(blockSymbol, 1, 2)));
         
         proxy.postInit();
     }
