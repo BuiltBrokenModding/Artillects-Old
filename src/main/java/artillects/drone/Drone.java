@@ -155,10 +155,16 @@ public class Drone
     public void postInit(FMLPostInitializationEvent event)
     {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 16, 0), "CBC", "BCB", "CBC", 'C', UniversalRecipe.PRIMARY_METAL.get(), 'B', Block.stone ));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 1), "C", 'C', new ItemStack(blockHiveWalling, 1, 0)));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 0), "CB", 'C', blockHiveWalling, 'B', Item.glowstone));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 3), "CB", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', Item.glowstone));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
+        
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 0), "CB", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 1), "BC", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 2), "C", "B", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 3), "B", "C", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
         
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 1), "B", 'B', new ItemStack(blockGlyph, 1, 0)));
