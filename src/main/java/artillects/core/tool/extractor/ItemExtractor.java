@@ -16,7 +16,11 @@ public class ItemExtractor extends ItemPlaceableTool
     @Override
     public boolean used(EntityPlayer player, World world, int x, int y, int z, int side)
     {
-        TileExtractor.extractBlocks(player.inventory, world, new Vector3(x, y, z), ForgeDirection.getOrientation(side), 3);
+        if (!world.isRemote)
+        {
+            TileExtractor.extractBlocks(player.inventory, world, new Vector3(x, y, z), ForgeDirection.getOrientation(side), 3);
+            player.inventoryContainer.detectAndSendChanges();
+        }
         return true;
     }
 }

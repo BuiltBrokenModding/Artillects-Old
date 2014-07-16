@@ -5,6 +5,7 @@ import java.util.List;
 
 import resonant.lib.utility.inventory.InventoryUtility;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -44,14 +45,18 @@ public class TileExtractor extends TilePlaceableTool
             if (block != null)
             {
                 ArrayList<ItemStack> drops = block.getBlockDropped(world, h.intX(), h.intY(), h.intZ(), h.getBlockMetadata(world), 0);
+                h.setBlock(world, 0);
                 for (ItemStack stack : drops)
                 {
-                    for (int slot = 0; slot < inv.getSizeInventory(); slot++)
+                    for (int slot = 0; slot < inv.getSizeInventory() - (inv instanceof InventoryPlayer ? 4 : 0); slot++)
                     {
+                        System.out.println("Stack: " + stack + "  Slot: " + slot);
                         ItemStack slotStack = inv.getStackInSlot(slot);
                         if (slotStack == null)
                         {
+                            System.out.println("\tPlaced in empty slot");
                             inv.setInventorySlotContents(slot, stack);
+                            stack = null;
                             break;
                         }
                         else if (slotStack.isItemEqual(stack) && stack.getTagCompound() == null && slotStack.getTagCompound() == null)
@@ -60,13 +65,16 @@ public class TileExtractor extends TilePlaceableTool
                             {
                                 int space = slotStack.getMaxStackSize() - slotStack.stackSize;
                                 if (stack.stackSize <= space)
-                                {                                    
+                                {
+                                    System.out.println("\tAdded all to slot");
                                     slotStack.stackSize += stack.stackSize;
                                     inv.setInventorySlotContents(slot, slotStack);
                                     stack = null;
+                                    break;
                                 }
                                 else
                                 {
+                                    System.out.println("\tAdded some to slot");
                                     slotStack.stackSize += space;
                                     stack.stackSize -= space;
                                     inv.setInventorySlotContents(slot, slotStack);
@@ -74,11 +82,15 @@ public class TileExtractor extends TilePlaceableTool
                             }
                         }
                     }
-                    if(stack != null && stack.stackSize > 0)
+                    if (stack != null && stack.stackSize > 0)
+                    {
                         InventoryUtility.dropItemStack(world, h, stack);
+                        System.out.println("\tDropped on ground");
+                    }
                 }
             }
         }
+        inv.onInventoryChanged();
     }
 
     public static List<Vector3> getBlocksHit(World world, Vector3 hit, ForgeDirection side, int range)
