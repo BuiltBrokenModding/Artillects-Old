@@ -1,4 +1,4 @@
-package artillects.core.surveyor;
+package artillects.core.tool.surveyor;
 
 import org.lwjgl.opengl.GL11;
 

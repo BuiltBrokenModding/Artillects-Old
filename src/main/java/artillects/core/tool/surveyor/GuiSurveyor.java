@@ -1,4 +1,4 @@
-package artillects.core.surveyor;
+package artillects.core.tool.surveyor;
 
 import java.awt.Color;
 
@@ -122,8 +122,7 @@ public class GuiSurveyor extends GuiContainerBase
         super.actionPerformed(button);
         if (button.id == 0)
         {
-            tile.setYaw(yaw_field.getTextAsDouble());
-            tile.setPitch(pitch_field.getTextAsDouble());
+            tile.setRotation(yaw_field.getTextAsDouble(), pitch_field.getTextAsDouble());
             tile.setColor(new Color(red_field.getTextAsInt(), green_field.getTextAsInt(), blue_field.getTextAsInt()));
         }
     }

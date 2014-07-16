@@ -7,8 +7,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import resonant.lib.render.fx.FxLaser;
 import universalelectricity.api.vector.Vector3;
-import artillects.core.surveyor.GuiSurveyor;
-import artillects.core.surveyor.TileSurveyor;
+import artillects.core.tool.surveyor.GuiSurveyor;
+import artillects.core.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy

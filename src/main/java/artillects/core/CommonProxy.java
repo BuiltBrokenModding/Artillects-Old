@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import resonant.lib.gui.ContainerDummy;
 import resonant.lib.prefab.ProxyBase;
 import universalelectricity.api.vector.Vector3;
-import artillects.core.surveyor.TileSurveyor;
+import artillects.core.tool.surveyor.TileSurveyor;
 
 public class CommonProxy extends ProxyBase
 {

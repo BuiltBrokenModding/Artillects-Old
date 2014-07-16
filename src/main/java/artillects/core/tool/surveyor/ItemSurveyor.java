@@ -1,5 +1,6 @@
-package artillects.core.surveyor;
+package artillects.core.tool.surveyor;
 
+import artillects.core.tool.ItemPlaceableTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
  * for areas.
  * 
  * @author Darkguardsman */
-public class ItemSurveyor extends ItemBlock
+public class ItemSurveyor extends ItemPlaceableTool
 {
     public ItemSurveyor(int id)
     {
@@ -18,12 +19,8 @@ public class ItemSurveyor extends ItemBlock
     }
     
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ)
+    public boolean used(EntityPlayer player, World world, int x, int y, int z)
     {
-        if(!player.isSneaking())
-        {
-            super.onItemUse(itemStack, player, world, x, y, z, side, hitX, hitY, hitZ);
-        }
         return false;
     }
 }
