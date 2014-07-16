@@ -19,7 +19,7 @@ public class ItemSurveyor extends ItemPlaceableTool
     }
     
     @Override
-    public boolean used(EntityPlayer player, World world, int x, int y, int z)
+    public boolean used(EntityPlayer player, World world, int x, int y, int z, int side)
     {
         return false;
     }

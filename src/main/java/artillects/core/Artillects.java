@@ -20,6 +20,7 @@ import resonant.lib.utility.nbt.SaveManager;
 import artillects.core.items.claim.ItemClaimFlag;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
+import artillects.core.tool.extractor.TileExtractor;
 import artillects.core.tool.surveyor.ItemSurveyor;
 import artillects.core.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -60,8 +61,8 @@ public class Artillects
     /** Blocks and Items */
     public static ContentRegistry contentRegistry;
     public static Item itemClaimFlag;
-    public static Item itemSurveyor;
     public static Block blockSurveyor;
+    public static Block blockExtractor;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
@@ -84,6 +85,7 @@ public class Artillects
         itemClaimFlag = contentRegistry.createItem(ItemClaimFlag.class);
 
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
+        blockExtractor = contentRegistry.newBlock(TileExtractor.class);
 
         LanguageUtility.loadLanguages(Reference.LANGUAGE_DIRECTORY, Reference.LANGUAGES);
         proxy.preInit();

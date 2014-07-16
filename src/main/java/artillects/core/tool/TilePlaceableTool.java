@@ -99,7 +99,7 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
 
         surveyor.add(destination);
         surveyor.translate(offset);
-        destination.scale(10);
+        destination.scale(rayDistance);
         destination.add(surveyor);
 
         return surveyor.rayTraceBlocks(world(), destination, true);
@@ -204,16 +204,19 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
         if (pitch == -90)
             return ForgeDirection.DOWN;
         
-        if(yaw <= 45 && yaw >= -45)
+        if(45 >= yaw && yaw >= -45)
             return ForgeDirection.NORTH;
-        if(yaw <= 127 && yaw >= 45)
+        
+        if(127 >= yaw && yaw >= 45)
+            return ForgeDirection.WEST;       
+        
+        if(-45 >= yaw && yaw >= -127)
             return ForgeDirection.EAST;
-        if(yaw <= 127 && yaw >= -127)
+        
+        if(127 >= yaw || yaw >= -127)
             return ForgeDirection.SOUTH;
-        if(yaw <= -45 && yaw >= -127)
-            return ForgeDirection.WEST;
 
-        return ForgeDirection.NORTH;
+        return ForgeDirection.UNKNOWN;
     }
 
     @Override

@@ -17,7 +17,7 @@ public class ItemPlaceableTool extends ItemBlock
     {
         if (!player.isSneaking())
         {
-            return used(player, world, x, y, z);
+            return used(player, world, x, y, z, side);
         }
         else
         {
@@ -25,7 +25,7 @@ public class ItemPlaceableTool extends ItemBlock
         }
     }
 
-    public boolean used(EntityPlayer player, World world, int x, int y, int z)
+    public boolean used(EntityPlayer player, World world, int x, int y, int z, int side)
     {
         return false;
     }
