@@ -13,7 +13,6 @@ import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.UniversalElectricity;
 import universalelectricity.api.vector.Vector3;
 import artillects.core.tool.TilePlaceableTool;
-import artillects.core.tool.surveyor.ItemSurveyor;
 
 /** Used to pick up blocks without mining them. Has the option to exact only one block type. As well
  * has the option to extract in an area.
@@ -28,6 +27,9 @@ public class TileExtractor extends TilePlaceableTool
     {
         super(UniversalElectricity.machine);
         itemBlock = ItemExtractor.class;
+        isOpaqueCube = false;
+        normalRender = false;
+        customItemRender = true;
     }
 
     public void extractBlocks()
