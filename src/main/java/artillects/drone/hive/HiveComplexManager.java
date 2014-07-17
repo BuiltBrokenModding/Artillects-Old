@@ -68,7 +68,8 @@ public class HiveComplexManager
     @ForgeSubscribe
     public void onWorldLoad(WorldEvent.Load event)
     {
-        this.loadObjectsForDim(event.world.provider.dimensionId);
+        if(!event.world.isRemote)
+            this.loadObjectsForDim(event.world.provider.dimensionId);
     }
 
     /** Temp loads all the villages from file so the manager can record what villages exist */
