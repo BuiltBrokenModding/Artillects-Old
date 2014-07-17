@@ -37,7 +37,7 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
     protected boolean doRayTrace = false;
     protected int rayTiming = 3;
 
-    protected boolean enabled = true;
+    public boolean enabled = true;
 
     public static final int ROTATION_ID = 0;
     public static final int ENABLE_ID = 1;

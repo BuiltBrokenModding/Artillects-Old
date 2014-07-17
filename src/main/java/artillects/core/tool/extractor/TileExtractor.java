@@ -52,11 +52,9 @@ public class TileExtractor extends TilePlaceableTool
                 {
                     for (int slot = 0; slot < inv.getSizeInventory() - (inv instanceof InventoryPlayer ? 4 : 0); slot++)
                     {
-                        System.out.println("Stack: " + stack + "  Slot: " + slot);
                         ItemStack slotStack = inv.getStackInSlot(slot);
                         if (slotStack == null)
                         {
-                            System.out.println("\tPlaced in empty slot");
                             inv.setInventorySlotContents(slot, stack);
                             stack = null;
                             break;
@@ -68,7 +66,6 @@ public class TileExtractor extends TilePlaceableTool
                                 int space = slotStack.getMaxStackSize() - slotStack.stackSize;
                                 if (stack.stackSize <= space)
                                 {
-                                    System.out.println("\tAdded all to slot");
                                     slotStack.stackSize += stack.stackSize;
                                     inv.setInventorySlotContents(slot, slotStack);
                                     stack = null;
@@ -76,7 +73,6 @@ public class TileExtractor extends TilePlaceableTool
                                 }
                                 else
                                 {
-                                    System.out.println("\tAdded some to slot");
                                     slotStack.stackSize += space;
                                     stack.stackSize -= space;
                                     inv.setInventorySlotContents(slot, slotStack);
@@ -87,7 +83,6 @@ public class TileExtractor extends TilePlaceableTool
                     if (stack != null && stack.stackSize > 0)
                     {
                         InventoryUtility.dropItemStack(world, h, stack);
-                        System.out.println("\tDropped on ground");
                     }
                 }
             }

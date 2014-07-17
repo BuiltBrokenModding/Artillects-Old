@@ -22,7 +22,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
  * @author Darkguardsman */
-public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWithID, ISneakPickup, ITagRender
+public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWithID, ISneakPickup
 {
     protected Color beamColor = Color.cyan;
 
@@ -128,19 +128,5 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
         Packet packet = Artillects.PACKET_TILE.getPacketWithID(3, this, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
         if (world().isRemote)
             PacketDispatcher.sendPacketToServer(packet);
-    }
-
-    @Override
-    public float addInformation(HashMap<String, Integer> map, EntityPlayer player)
-    {
-        if (enabled)
-        {
-            double distance = distance();
-            int i = (int) (distance * 100);
-            distance = i / 100;
-            map.put("" + distance, 0xFFFFFF);
-            map.put("" + getDirection().name(), 0xFFFFFF);
-        }
-        return 1.5f;
     }
 }
