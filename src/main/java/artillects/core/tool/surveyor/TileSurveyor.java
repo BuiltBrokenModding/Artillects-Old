@@ -49,7 +49,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
                 Artillects.proxy.renderLaser(world(), loc, lastRayHit, beamColor, 3);
         }
     }
-    
+
     @Override
     protected boolean use(EntityPlayer player, int side, Vector3 hit)
     {
@@ -65,7 +65,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
     {
         if (lastRayHit != null)
         {
-            return lastRayHit.distance(xCoord, yCoord, zCoord);
+            return lastRayHit.distance(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
         }
         return -1;
     }
