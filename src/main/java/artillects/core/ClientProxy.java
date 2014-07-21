@@ -22,7 +22,7 @@ public class ClientProxy extends CommonProxy
         if (tile instanceof TileSurveyor)
         {
             if (ID == 0)
-                return new GuiSurveyor((TileSurveyor) tile);
+                return new GuiSurveyor(player, (TileSurveyor) tile);
         }
         return null;
     }
