@@ -29,6 +29,8 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class TilePlaceableTool extends TileElectrical implements IPacketReceiverWithID, ISneakPickup
 {
     public EulerAngle angle;
+    
+    protected ForgeDirection sideHit;
     protected Vector3 lastRayHit;
     protected Vector3 loc;
     protected Vector3 offset;
@@ -79,6 +81,7 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
     public void doRayTrace()
     {
         lastRayHit = null;
+        sideHit = null;
         angle.yaw = EulerAngle.clampAngleTo360(angle.yaw);
         angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);
 
@@ -89,6 +92,7 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
         if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
         {
             lastRayHit = new Vector3(hit.hitVec);
+            sideHit = ForgeDirection.getOrientation(hit.sideHit);
         }
     }
 
