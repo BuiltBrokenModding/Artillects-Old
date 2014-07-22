@@ -3,18 +3,20 @@ package artillects.core.prefab.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
-import artillects.core.Reference;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.opengl.GL11;
+
 import resonant.lib.gui.ContainerDummy;
 import resonant.lib.gui.GuiContainerBase;
+import artillects.core.Reference;
+import cpw.mods.fml.client.FMLClientHandler;
 
 /** Prefab for all tiles
  * 
@@ -25,7 +27,7 @@ public class GuiTile extends GuiContainerBase
     public static final ResourceLocation BLANK_GUI = new ResourceLocation(Reference.DOMAIN, Reference.GUI_DIRECTORY + "gui_empty.png");
     protected ResourceLocation texture;
     
-    protected List<TextField> textBoxes;
+    protected List<GuiTextField> textBoxes;
 
     public GuiTile(EntityPlayer player, TileEntity tile)
     {
@@ -35,18 +37,19 @@ public class GuiTile extends GuiContainerBase
     public GuiTile(Container container)
     {
         super(container);
-        textBoxes = new ArrayList<TextField>();
+        textBoxes = new ArrayList<GuiTextField>();
     }
 
+    @SuppressWarnings("unchecked")
     public void add(Gui object)
     {
-        if (object instanceof TextField)
+        if (object instanceof GuiTextField)
         {
-            textBoxes.add((TextField) object);
+            textBoxes.add((GuiTextField) object);
         }
         else if (object instanceof GuiButton)
         {
-            this.buttonList.add(object);
+            buttonList.add(object);
         }
     }
 
@@ -54,7 +57,7 @@ public class GuiTile extends GuiContainerBase
     public void keyTyped(char par1, int par2)
     {
         super.keyTyped(par1, par2);
-        for (TextField field : textBoxes)
+        for (GuiTextField field : textBoxes)
         {
             field.textboxKeyTyped(par1, par2);
         }
@@ -64,9 +67,9 @@ public class GuiTile extends GuiContainerBase
     public void mouseClicked(int x, int y, int button)
     {
         super.mouseClicked(x, y, button);
-        for (TextField field : textBoxes)
+        for (GuiTextField field : textBoxes)
         {
-            field.mouseClicked(x, y, button);
+            field.mouseClicked(x - containerWidth, y - containerHeight, button);
         }
     }
 
@@ -74,7 +77,7 @@ public class GuiTile extends GuiContainerBase
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        for (TextField field : textBoxes)
+        for (GuiTextField field : textBoxes)
         {
             field.drawTextBox();
         }

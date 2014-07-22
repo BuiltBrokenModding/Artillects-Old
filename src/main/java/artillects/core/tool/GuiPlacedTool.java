@@ -20,12 +20,11 @@ import cpw.mods.fml.client.FMLClientHandler;
  * @author Darkguardsman */
 public class GuiPlacedTool extends GuiTile
 {
-
     protected TilePlaceableTool tile;
 
-    private NumericField yaw_field;
-    private NumericField pitch_field;
-    private GuiButton apply_button;
+    protected NumericField yaw_field;
+    protected NumericField pitch_field;
+    protected GuiButton apply_button;
 
     public GuiPlacedTool(EntityPlayer player, TilePlaceableTool tileEntity)
     {
@@ -59,17 +58,13 @@ public class GuiPlacedTool extends GuiTile
 
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.yaw"), 25, 40, 4210752);
         this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.pitch"), 25, 55, 4210752);
-
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.red"), 25, 67, 4210752);
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.blue"), 25, 82, 4210752);
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.green"), 25, 97, 4210752);
     }   
 
     @Override
     protected void actionPerformed(GuiButton button)
     {
         super.actionPerformed(button);
-        if (button.id == 0)
+        if (button.id == apply_button.id)
         {
             tile.setRotation(yaw_field.getTextAsDouble(), pitch_field.getTextAsDouble());
         }

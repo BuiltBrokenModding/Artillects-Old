@@ -29,7 +29,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 public class TilePlaceableTool extends TileElectrical implements IPacketReceiverWithID, ISneakPickup
 {
     public EulerAngle angle;
-    
+
     protected ForgeDirection sideHit;
     protected Vector3 lastRayHit;
     protected Vector3 loc;
@@ -66,9 +66,9 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
     protected boolean use(EntityPlayer player, int side, Vector3 hit)
     {
         if (player.isSneaking())
-        {
             this.enabled = !this.enabled;
-        }
+        else
+            player.openGui(Artillects.INSTANCE, 0, world(), x(), y(), z());
         return true;
     }
 
@@ -207,17 +207,17 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
             return ForgeDirection.UP;
         if (pitch == -90)
             return ForgeDirection.DOWN;
-        
-        if(45 >= yaw && yaw >= -45)
+
+        if (45 >= yaw && yaw >= -45)
             return ForgeDirection.NORTH;
-        
-        if(127 >= yaw && yaw >= 45)
-            return ForgeDirection.WEST;       
-        
-        if(-45 >= yaw && yaw >= -127)
+
+        if (127 >= yaw && yaw >= 45)
+            return ForgeDirection.WEST;
+
+        if (-45 >= yaw && yaw >= -127)
             return ForgeDirection.EAST;
-        
-        if(127 >= yaw || yaw >= -127)
+
+        if (127 >= yaw || yaw >= -127)
             return ForgeDirection.SOUTH;
 
         return ForgeDirection.UNKNOWN;

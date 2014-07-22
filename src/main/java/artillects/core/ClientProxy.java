@@ -7,13 +7,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import resonant.lib.render.fx.FxLaser;
 import universalelectricity.api.vector.Vector3;
+import artillects.core.tool.GuiPlacedTool;
+import artillects.core.tool.TilePlaceableTool;
+import artillects.core.tool.extractor.TileExtractor;
 import artillects.core.tool.surveyor.GuiSurveyor;
 import artillects.core.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy
 {
-    
+
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
@@ -24,9 +27,14 @@ public class ClientProxy extends CommonProxy
             if (ID == 0)
                 return new GuiSurveyor(player, (TileSurveyor) tile);
         }
+        else if (tile instanceof TileExtractor)
+        {
+            if (ID == 0)
+                return new GuiPlacedTool(player, (TilePlaceableTool) tile);
+        }
         return null;
     }
-    
+
     @Override
     public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b, int ticks)
     {

@@ -129,4 +129,31 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
         if (world().isRemote)
             PacketDispatcher.sendPacketToServer(packet);
     }
+
+    public void setColor(String color)
+    {
+        try
+        {
+            setColor(hex2Rgb(color));
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    public static Color hex2Rgb(String colorStr)
+    {
+        return new Color(Integer.valueOf(colorStr.substring(1, 3), 16), Integer.valueOf(colorStr.substring(3, 5), 16), Integer.valueOf(colorStr.substring(5, 7), 16));
+    }
+
+    public static String rgb2hex(Color color)
+    {
+        String hex = Integer.toHexString(color.getRGB() & 0xffffff);
+        if (hex.length() < 6)
+        {
+            hex = "0" + hex;
+        }
+        return hex;
+    }
 }
