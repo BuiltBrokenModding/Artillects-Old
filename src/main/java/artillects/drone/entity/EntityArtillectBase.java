@@ -7,7 +7,6 @@ import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -15,13 +14,9 @@ import resonant.lib.network.IPacketReceiver;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Artillects;
-import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
-import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.hive.zone.Zone;
-import artillects.drone.items.ItemDroneParts;
 
 import com.google.common.io.ByteArrayDataInput;
 
@@ -112,17 +107,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public Object getOwner()
     {
-        if (this.owner == null)
-        {
-            if (this.isPlayerOwned)
-            {
-                this.setOwner(HiveComplex.getPlayerHive());
-            }
-            else
-            {
-                this.setOwner(HiveComplexManager.instance().getClosestComplex(this, -1));
-            }
-        }
         return this.owner;
     }
 
@@ -187,10 +171,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
         super.readEntityFromNBT(nbt);
         this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
         this.isPlayerOwned = nbt.getBoolean("playerOwned");
-        if (nbt.hasKey("hiveID") && HiveComplexManager.instance().getHive(nbt.getString("hiveID")) != null)
-        {
-            this.setOwner(HiveComplexManager.instance().getHive(nbt.getString("hiveID")));
-        }
     }
 
     @Override
@@ -215,20 +195,13 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    protected int getDropItemId()
-    {
-        // TODO: Drop some kind of circuit
-        return Drone.itemParts.itemID;
-    }
-
-    @Override
     protected void dropFewItems(boolean par1, int par2)
     {
         super.dropFewItems(par1, par2);
         if (par1)
         {
-            this.entityDropItem(new ItemStack(Drone.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
-            this.entityDropItem(new ItemStack(Drone.itemParts, 1 + this.worldObj.rand.nextInt(5 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
+            //this.entityDropItem(new ItemStack(Drone.itemParts, 1 + this.worldObj.rand.nextInt(2 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
+            //this.entityDropItem(new ItemStack(Drone.itemParts, 1 + this.worldObj.rand.nextInt(5 + par2), this.worldObj.rand.nextInt(ItemDroneParts.Part.values().length - 1)), 0.0F);
 
         }
     }
@@ -236,7 +209,8 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(this, 200) != null && super.getCanSpawnHere();
+        //return HiveComplexManager.instance().getClosestComplex(this, 200) != null && super.getCanSpawnHere();
+        return true;
     }
 
     @Override

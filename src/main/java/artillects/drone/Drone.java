@@ -7,7 +7,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.item.ItemBlockMetadata;
 import resonant.lib.recipe.UniversalRecipe;
@@ -15,22 +14,16 @@ import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
 import artillects.core.building.BuildFile;
-import artillects.drone.blocks.BlockHiveComplexCore;
 import artillects.drone.blocks.BlockHiveLighting;
 import artillects.drone.blocks.BlockHiveWalling;
 import artillects.drone.blocks.BlockSymbol;
-import artillects.drone.blocks.TileEntityHiveComplexCore;
 import artillects.drone.blocks.teleporter.BlockGlyph;
 import artillects.drone.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.drone.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.drone.commands.CommandTool;
 import artillects.drone.entity.EnumArtillectEntity;
-import artillects.drone.hive.HiveComplexGenerator;
-import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.items.ItemArtillectSpawner;
 import artillects.drone.items.ItemBuildingGenerator;
-import artillects.drone.items.ItemDroneParts;
-import artillects.drone.items.ItemDroneParts.Part;
 import artillects.drone.items.ItemSchematicCreator;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -79,7 +72,6 @@ public class Drone
     public static Block blockHiveCore;
 
     public static Item itemArtillectSpawner;
-    public static Item itemParts;
     public static Item itemBuilding;
     public static Item itemSchematicCreator;
     public static Item weaponPlasmaLauncher;
@@ -96,7 +88,6 @@ public class Drone
         MinecraftForge.EVENT_BUS.register(this);
 
         // Register event handlers
-        HiveComplexManager.instance();
         NetworkRegistry.instance().registerGuiHandler(this, Drone.proxy);
 
         proxy.preInit();
@@ -113,7 +104,6 @@ public class Drone
 
         // Item & block ids
         itemArtillectSpawner = Artillects.contentRegistry.createItem(ItemArtillectSpawner.class);
-        itemParts = Artillects.contentRegistry.createItem(ItemDroneParts.class);
         itemBuilding = Artillects.contentRegistry.createItem(ItemBuildingGenerator.class);
         itemSchematicCreator = Artillects.contentRegistry.createItem(ItemSchematicCreator.class);
 
@@ -122,7 +112,6 @@ public class Drone
         blockLight = Artillects.contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
         blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         blockHiveTeleporterNode = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
-        blockHiveCore = Artillects.contentRegistry.createBlock(BlockHiveComplexCore.class);
 
         ArtillectsTab.itemStack = new ItemStack(blockSymbol);
 
@@ -133,11 +122,6 @@ public class Drone
         }
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
-        GameRegistry.registerTileEntity(TileEntityHiveComplexCore.class, "tileHiveComplexCore");
-        if (Drone.enableHiveComplexGenerator)
-        {
-            GameRegistry.registerWorldGenerator(new HiveComplexGenerator());
-        }
 
         BuildFile.registerSaveBlock("wall1", Drone.blockHiveWalling);
         BuildFile.registerSaveBlock("wall2", Drone.blockHiveWalling);

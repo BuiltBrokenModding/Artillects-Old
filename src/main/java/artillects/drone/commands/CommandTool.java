@@ -9,8 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatMessageComponent;
 import resonant.lib.utility.nbt.NBTUtility;
 import universalelectricity.api.vector.VectorWorld;
-import artillects.drone.hive.HiveComplex;
-import artillects.drone.hive.HiveComplexManager;
 
 public class CommandTool extends CommandBase
 {
@@ -131,26 +129,6 @@ public class CommandTool extends CommandBase
                     else
                     {
                         player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool help"));
-                    }
-                }
-                else if (args.length >= 1 && args[0].equalsIgnoreCase("hive"))
-                {
-                    if (args.length >= 2 && args[1].equalsIgnoreCase("ls"))
-                    {
-                        player.sendChatToPlayer(ChatMessageComponent.createFromText("There are currently " + HiveComplexManager.instance().complexes.size() + " hive complexs loaded in the world."));
-                    }
-                    else if (args.length >= 2 && args[1].equalsIgnoreCase("get"))
-                    {
-                        HiveComplex complex = HiveComplexManager.instance().getClosestComplex(new VectorWorld(player), 10000);
-                        if (complex != null)
-                        {
-                            player.sendChatToPlayer(ChatMessageComponent.createFromText("Closest within 10,000 blocks hive is at " + complex.location.toString()));
-                        }
-                        else
-                        {
-                            player.sendChatToPlayer(ChatMessageComponent.createFromText("No hive buildings found with in 10,000 blocks"));
-                        }
-
                     }
                 }
                 else

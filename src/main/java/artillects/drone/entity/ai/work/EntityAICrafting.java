@@ -4,18 +4,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
-import artillects.drone.Drone;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;
 import artillects.drone.entity.workers.EntityWorker;
 import artillects.drone.hive.zone.ZoneProcessing;
-import artillects.drone.items.ItemDroneParts.Part;
 
 public class EntityAICrafting extends EntityAILaborTask
 {
@@ -31,16 +28,6 @@ public class EntityAICrafting extends EntityAILaborTask
     public EntityAICrafting(EntityWorker entity, double moveSpeed)
     {
         super(entity, moveSpeed);
-    }
-
-    @Override
-    public void startExecuting()
-    {
-        /** TODO: Prioritize crafting based on what is needed. */
-        // Gear
-        stacksToCraft.put(new ItemStack(Drone.itemParts), new ItemStack[] { new ItemStack(Item.ingotIron, 4) });
-        stacksToCraft.put(new ItemStack(Drone.itemParts, 1, Part.CIRCUITS_T1.ordinal()), new ItemStack[] { new ItemStack(Item.ingotIron, 4), new ItemStack(Item.ingotGold, 4) });
-
     }
 
     /** Returns whether the EntityAIBase should begin execution. */

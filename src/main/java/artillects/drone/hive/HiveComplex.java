@@ -19,9 +19,7 @@ import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.BuildingPart;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.core.building.GhostObject;
-import artillects.drone.blocks.TileEntityHiveComplexCore;
 import artillects.drone.entity.IArtillect;
-import artillects.drone.entity.workers.EntityFabricator;
 import artillects.drone.hive.zone.Zone;
 import artillects.drone.hive.zone.ZoneBuilding;
 
@@ -44,7 +42,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     private HashSet<IArtillect> artillects = new HashSet<IArtillect>();
 
     public HashSet<Zone> zones = new HashSet<Zone>();
-    public TileEntityHiveComplexCore core;
 
     public boolean playerZone = false;
 
@@ -70,24 +67,13 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         this();
         this.setName(name);
         this.location = location;
-        HiveComplexManager.instance().register(this);
+        //HiveComplexManager.instance().register(this);
     }
 
     public HiveComplex(boolean player)
     {
         this("PlayerZone", new VectorWorld(WorldProvider.getProviderForDimension(0).worldObj, 0, 255, 0));
         this.playerZone = true;
-    }
-
-    public HiveComplex(TileEntityHiveComplexCore tileEntityHiveComplexCore)
-    {
-        this("HiveComplexTR" + System.currentTimeMillis(), new VectorWorld(tileEntityHiveComplexCore));
-        this.updateTileLink(tileEntityHiveComplexCore);
-    }
-
-    public void updateTileLink(TileEntityHiveComplexCore core)
-    {
-        this.core = core;
     }
 
     /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
@@ -492,7 +478,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         if (event.world == this.location.world)
         {
             this.invalidate();
-            HiveComplexManager.instance().unloadHive(this);
+            //HiveComplexManager.instance().unloadHive(this);
         }
     }
 }

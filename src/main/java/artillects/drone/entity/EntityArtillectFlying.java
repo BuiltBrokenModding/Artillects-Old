@@ -17,16 +17,13 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.EulerAngle;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.IVectorWorld;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Artillects;
 import artillects.core.entity.ai.TargetSelector;
-import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
-import artillects.drone.hive.HiveComplexManager;
 import artillects.drone.hive.zone.Zone;
 
 /** Flying entity prefab based on ghast code
@@ -376,7 +373,8 @@ public class EntityArtillectFlying extends EntityArtillectGround implements IArt
     @Override
     public boolean getCanSpawnHere()
     {
-        return HiveComplexManager.instance().getClosestComplex(new VectorWorld((IVectorWorld) this), 100) != null && super.getCanSpawnHere();
+        //return HiveComplexManager.instance().getClosestComplex(new VectorWorld((IVectorWorld) this), 100) != null && super.getCanSpawnHere();
+        return true;
     }
 
 }
