@@ -14,9 +14,6 @@ import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
 import artillects.core.building.BuildFile;
-import artillects.drone.blocks.BlockHiveLighting;
-import artillects.drone.blocks.BlockHiveWalling;
-import artillects.drone.blocks.BlockSymbol;
 import artillects.drone.blocks.teleporter.BlockGlyph;
 import artillects.drone.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.drone.blocks.teleporter.TileEntityTeleporterAnchor;
@@ -107,9 +104,9 @@ public class Drone
         itemBuilding = Artillects.contentRegistry.createItem(ItemBuildingGenerator.class);
         itemSchematicCreator = Artillects.contentRegistry.createItem(ItemSchematicCreator.class);
 
-        blockSymbol = Artillects.contentRegistry.createBlock(BlockSymbol.class, ItemBlockMetadata.class);
-        blockHiveWalling = Artillects.contentRegistry.createBlock(BlockHiveWalling.class, ItemBlockMetadata.class);
-        blockLight = Artillects.contentRegistry.createBlock(BlockHiveLighting.class, ItemBlockMetadata.class);
+        blockSymbol = Artillects.contentRegistry.createBlock("hiveSymbol", Block.class, ItemBlockMetadata.class, null);
+        blockHiveWalling = Artillects.contentRegistry.createBlock("hiveWall", Block.class, ItemBlockMetadata.class, null);
+        blockLight = Artillects.contentRegistry.createBlock("hiveLight", Block.class, ItemBlockMetadata.class, null);
         blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         blockHiveTeleporterNode = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
 

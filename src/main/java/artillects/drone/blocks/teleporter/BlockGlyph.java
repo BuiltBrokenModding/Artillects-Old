@@ -2,25 +2,25 @@ package artillects.drone.blocks.teleporter;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import artillects.core.Reference;
-import artillects.drone.blocks.BlockBase;
-import artillects.drone.blocks.IHiveBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockGlyph extends BlockBase implements IHiveBlock
+public class BlockGlyph extends Block
 {
 	public static final int MAX_GLYPH = 4;
 	public static final Icon[] icons = new Icon[MAX_GLYPH];
 
 	public BlockGlyph(int id)
 	{
-		super(id, "glyph", Material.iron);
+		super(id, Material.iron);
+		this.setUnlocalizedName("glyph");
 		this.setHardness(32F);
 		this.setResistance(1000F);
 	}

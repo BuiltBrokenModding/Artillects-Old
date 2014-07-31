@@ -2,6 +2,7 @@ package artillects.drone.blocks.teleporter;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -13,18 +14,17 @@ import net.minecraft.world.World;
 import resonant.lib.utility.LanguageUtility;
 import artillects.core.Reference;
 import artillects.drone.Drone;
-import artillects.drone.blocks.BlockBase;
-import artillects.drone.blocks.IHiveBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockTeleporterAnchor extends BlockBase implements ITileEntityProvider, IHiveBlock
+public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
 {
     public Icon iconTop, iconSide, iconBot;
 
     public BlockTeleporterAnchor(int id)
     {
-        super(id, "teleporterAnchor", Material.iron);
+        super(id, Material.iron);
+        this.setUnlocalizedName("teleporterAnchor");
         this.setHardness(32F);
         this.setResistance(1000F);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.7F, 1.0F);
