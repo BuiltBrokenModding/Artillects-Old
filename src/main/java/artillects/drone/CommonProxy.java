@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.Vector3;
-import artillects.drone.container.ContainerArtillect;
 import artillects.drone.entity.workers.EntityWorker;
 import cpw.mods.fml.common.network.IGuiHandler;
 
@@ -33,16 +32,6 @@ public class CommonProxy implements IGuiHandler
 	@Override
 	public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z)
 	{
-		if (id == GuiIDs.ARTILLECT_ENTITY.ordinal())
-		{
-			Entity entity = world.getEntityByID(x);
-
-			if (entity instanceof EntityWorker)
-			{
-				return new ContainerArtillect((EntityWorker) entity, player);
-			}
-		}
-
 		return null;
 	}
 

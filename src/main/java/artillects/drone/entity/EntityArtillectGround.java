@@ -40,10 +40,6 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
         {
             return -1000;
         }
-        if (block == Drone.blockLight || block == Drone.blockHiveWalling)
-        {
-            return 1000;
-        }
         return 0.5F + this.worldObj.getLightBrightness(x, y, z);
     } 
 

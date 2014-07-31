@@ -7,11 +7,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import resonant.lib.render.fx.FxLaser;
 import universalelectricity.api.vector.Vector3;
-import artillects.core.tool.GuiPlacedTool;
-import artillects.core.tool.TilePlaceableTool;
-import artillects.core.tool.extractor.TileExtractor;
-import artillects.core.tool.surveyor.GuiSurveyor;
-import artillects.core.tool.surveyor.TileSurveyor;
+import artillects.content.tool.GuiPlacedTool;
+import artillects.content.tool.TilePlaceableTool;
+import artillects.content.tool.extractor.TileExtractor;
+import artillects.content.tool.surveyor.GuiSurveyor;
+import artillects.content.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.client.FMLClientHandler;
 
 public class ClientProxy extends CommonProxy

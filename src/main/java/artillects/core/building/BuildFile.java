@@ -1,6 +1,7 @@
 package artillects.core.building;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
@@ -238,7 +239,9 @@ public class BuildFile extends Schematic implements ISaveObj
     {
         try
         {
-            this.load(CompressedStreamTools.readCompressed(BuildFile.class.getResource("/assets/artillects/schematics/" + fileName + ".dat").openStream()));
+            URL file = BuildFile.class.getResource("/assets/artillects/schematics/" + fileName + ".dat");
+            NBTTagCompound save = CompressedStreamTools.readCompressed(file.openStream());
+            this.load(save);
             this.name = fileName;
             this.init();
         }

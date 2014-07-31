@@ -10,18 +10,18 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.item.ItemBlockMetadata;
 import resonant.lib.recipe.UniversalRecipe;
+import artillects.content.blocks.teleporter.BlockGlyph;
+import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
+import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
+import artillects.content.items.ItemArtillectSpawner;
+import artillects.content.items.ItemBuildingGenerator;
+import artillects.content.items.ItemSchematicCreator;
 import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
 import artillects.core.Reference;
 import artillects.core.building.BuildFile;
-import artillects.drone.blocks.teleporter.BlockGlyph;
-import artillects.drone.blocks.teleporter.BlockTeleporterAnchor;
-import artillects.drone.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.drone.commands.CommandTool;
 import artillects.drone.entity.EnumArtillectEntity;
-import artillects.drone.items.ItemArtillectSpawner;
-import artillects.drone.items.ItemBuildingGenerator;
-import artillects.drone.items.ItemSchematicCreator;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -37,8 +37,6 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = Drone.MOD_ID, name = Drone.NAME, version = Reference.VERSION, useMetadata = true, dependencies = "required-after:Artillects;")
-@NetworkMod(channels = { Reference.CHANNEL }, clientSideRequired = true, serverSideRequired = false, packetHandler = PacketHandler.class)
 public class Drone
 {
 
@@ -57,16 +55,7 @@ public class Drone
     @Metadata(Drone.MOD_ID)
     public static ModMetadata meta;
 
-    public static Block blockGlyph;
-    public static Block blockHiveWalling;
-    public static Block blockLight;
-    public static Block blockHiveTeleporterNode;
-    public static Block blockLightbridgeCore;
-    public static Block blockLightbridgeFrame;
-    public static Block blockLightbridge;
-
-    public static Block blockSymbol;
-    public static Block blockHiveCore;
+    
 
     public static Item itemArtillectSpawner;
     public static Item itemBuilding;
@@ -78,6 +67,7 @@ public class Drone
     public static boolean enableHiveChunkLoading = true;
     public static boolean enableHiveCoreChunkLoading = true;
     public static int hiveChunkLoadingRange = 5;
+    public static Block blockGlyph;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -104,13 +94,13 @@ public class Drone
         itemBuilding = Artillects.contentRegistry.createItem(ItemBuildingGenerator.class);
         itemSchematicCreator = Artillects.contentRegistry.createItem(ItemSchematicCreator.class);
 
-        blockSymbol = Artillects.contentRegistry.createBlock("hiveSymbol", Block.class, ItemBlockMetadata.class, null);
-        blockHiveWalling = Artillects.contentRegistry.createBlock("hiveWall", Block.class, ItemBlockMetadata.class, null);
-        blockLight = Artillects.contentRegistry.createBlock("hiveLight", Block.class, ItemBlockMetadata.class, null);
+        Artillects.contentRegistry.createBlock("hiveSymbol", Block.class, ItemBlockMetadata.class, null);
+        Artillects.contentRegistry.createBlock("hiveWall", Block.class, ItemBlockMetadata.class, null);
+        Artillects.contentRegistry.createBlock("hiveLight", Block.class, ItemBlockMetadata.class, null);
         blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
-        blockHiveTeleporterNode = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
+        Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
 
-        ArtillectsTab.itemStack = new ItemStack(blockSymbol);
+        ArtillectsTab.itemStack = new ItemStack(Block.anvil);
 
         // Register entities
         for (EnumArtillectEntity artillect : EnumArtillectEntity.values())
@@ -119,40 +109,30 @@ public class Drone
         }
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
-
-        BuildFile.registerSaveBlock("wall1", Drone.blockHiveWalling);
-        BuildFile.registerSaveBlock("wall2", Drone.blockHiveWalling);
-        BuildFile.registerSaveBlock("symbol1", Drone.blockSymbol);
-        BuildFile.registerSaveBlock("symbol2", Drone.blockSymbol);
-        BuildFile.registerSaveBlock("symbol3", Drone.blockSymbol);
-        BuildFile.registerSaveBlock("light", Drone.blockLight);
-        BuildFile.registerSaveBlock("core", Drone.blockHiveCore);
-        BuildFile.registerSaveBlock("teleporter", Drone.blockHiveTeleporterNode);
-        BuildFile.registerSaveBlock("teleporterSymbol", Drone.blockGlyph);
         proxy.init();
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 16, 0), "CBC", "BCB", "CBC", 'C', UniversalRecipe.PRIMARY_METAL.get(), 'B', Block.stone ));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 1), "C", 'C', new ItemStack(blockHiveWalling, 1, 0)));
+       /** GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockHiveWalling, 16, 0), "CBC", "BCB", "CBC", 'C', UniversalRecipe.PRIMARY_METAL.get(), 'B', Block.stone ));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockHiveWalling, 1, 1), "C", 'C', new ItemStack(Tiles.blockHiveWalling, 1, 0)));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveWalling, 1, 3), "CB", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', Item.glowstone));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockHiveWalling, 1, 3), "CB", 'C', new ItemStack(Tiles.blockHiveWalling, 1, 0), 'B', Item.glowstone));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockHiveTeleporterNode), "CBC", "BEB", "CBC", 'E', Item.eyeOfEnder, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'B', Block.blockIron ));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 0), "CB", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 1), "BC", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 2), "C", "B", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockSymbol, 1, 0), "CB", 'C', new ItemStack(Tiles.blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockSymbol, 1, 1), "BC", 'C', new ItemStack(Tiles.blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockSymbol, 1, 2), "C", "B", 'C', new ItemStack(Tiles.blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
         //GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSymbol, 1, 3), "B", "C", 'C', new ItemStack(blockHiveWalling, 1, 0), 'B', new ItemStack(Item.dyePowder, 1, 4)));
         
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 1), "B", 'B', new ItemStack(blockGlyph, 1, 0)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 2), "B", 'B', new ItemStack(blockGlyph, 1, 1)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 3), "B", 'B', new ItemStack(blockGlyph, 1, 2)));
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockGlyph, 1, 0), "B", 'B', new ItemStack(blockGlyph, 1, 3)));
-        proxy.postInit();
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockGlyph, 1, 0), "BC", "QQ", 'B', UniversalRecipe.PRIMARY_METAL.get(), 'Q', Item.netherQuartz, 'C', UniversalRecipe.CIRCUIT_T1.get()));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockGlyph, 1, 1), "B", 'B', new ItemStack(Tiles.blockGlyph, 1, 0)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockGlyph, 1, 2), "B", 'B', new ItemStack(Tiles.blockGlyph, 1, 1)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockGlyph, 1, 3), "B", 'B', new ItemStack(Tiles.blockGlyph, 1, 2)));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Tiles.blockGlyph, 1, 0), "B", 'B', new ItemStack(Tiles.blockGlyph, 1, 3)));
+        */ proxy.postInit();
     }
 
     @EventHandler

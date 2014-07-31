@@ -17,12 +17,12 @@ import resonant.lib.network.PacketTile;
 import resonant.lib.recipe.UniversalRecipe;
 import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
-import artillects.core.items.claim.ItemClaimFlag;
+import artillects.content.items.claim.ItemClaimFlag;
+import artillects.content.tool.extractor.TileExtractor;
+import artillects.content.tool.surveyor.TileSurveyor;
+import artillects.core.creation.ContentLoader;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
-import artillects.core.tool.extractor.TileExtractor;
-import artillects.core.tool.surveyor.ItemSurveyor;
-import artillects.core.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -75,13 +75,23 @@ public class Artillects
 
         //load configs
         CONFIG.load();
-
+        
         //create id manager
         int blockIDPrefix = CONFIG.get(Configuration.CATEGORY_GENERAL, "BlockIDPrefix", 1700).getInt(1700);
         int itemIDPrefix = CONFIG.get(Configuration.CATEGORY_GENERAL, "ItemIDPrefix", 20150).getInt(20150);
 
         //create content registry
         contentRegistry = new ContentRegistry(CONFIG, new IDManager(blockIDPrefix, itemIDPrefix), Reference.NAME).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
+        
+        ContentLoader loader = new ContentLoader(contentRegistry);
+        try
+        {
+            loader.load();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         itemClaimFlag = contentRegistry.createItem(ItemClaimFlag.class);
 
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
