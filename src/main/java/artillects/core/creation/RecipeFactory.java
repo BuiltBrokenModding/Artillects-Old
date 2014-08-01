@@ -1,6 +1,8 @@
 package artillects.core.creation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
@@ -8,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -24,12 +27,12 @@ public class RecipeFactory
     public static IRecipe create(Product product, Element element)
     {
         ItemStack stack = null;
-        int stackSize = 1;
         Item item = product instanceof ItemProduct ? ((ItemProduct) product).getProduct() : null;
         Block block = product instanceof BlockProduct ? ((BlockProduct) product).getProduct() : null;
         if (element.hasAttribute("result"))
         {
             String res = element.getAttribute("result");
+            int stackSize = element.hasAttribute("stackSize") ? Integer.parseInt(element.getAttribute("stackSize")) : 1;
             if (res.startsWith("meta"))
             {
                 if (item != null)
@@ -66,16 +69,23 @@ public class RecipeFactory
         return recipe;
     }
 
-    public static IRecipe createShapeless(ItemStack result, Element element)
+    public static ShapelessOreRecipe createShapeless(ItemStack result, Element element)
     {
-        IRecipe recipe = null;
-
-        return recipe;
+        List<Object> objects = new ArrayList<Object>();
+        NodeList list = element.getElementsByTagName("item");
+        for (int i = 0; i < list.getLength(); i++)
+        {
+            Object object = getPart((Element) list.item(i));
+            if(object != null)
+            {
+                objects.add(object);
+            }
+        }
+        return new ShapelessOreRecipe(result, objects.toArray());
     }
 
-    public static IRecipe createShaped(ItemStack result, Element element)
+    public static ShapedOreRecipe createShaped(ItemStack result, Element element)
     {
-        IRecipe recipe = null;
         HashMap<Character, Object> parts = new HashMap<Character, Object>();
         String r = element.getAttribute("recipe");
         String[] rLines = r.split(",");
@@ -103,8 +113,7 @@ public class RecipeFactory
             objects[s + 1] = entry.getValue();
             s += 2;
         }
-        recipe = new ShapedOreRecipe(result, objects);
-        return recipe;
+        return new ShapedOreRecipe(result, objects);
     }
 
     public static void createFurnace(ItemStack result, Element element)
