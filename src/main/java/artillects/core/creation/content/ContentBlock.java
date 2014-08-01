@@ -1,4 +1,4 @@
-package artillects.core.creation;
+package artillects.core.creation.content;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -10,15 +10,19 @@ import org.w3c.dom.NodeList;
 
 import resonant.lib.content.ContentRegistry;
 import resonant.lib.prefab.item.ItemBlockMetadata;
+import artillects.core.creation.ContentLoader;
+import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
 
 public class ContentBlock extends Content
 {
-    float hardness = 1;
-    float resistance = 1;
-    String unlocalizedName;
-    Material material = Material.circuits;
-    Subblock[] subBlocks;
+    public float hardness = 1;
+    public float resistance = 1;
+    public String unlocalizedName;
+    public Material material = Material.circuits;
+    public Subblock[] subBlocks;
+
+    public Block block;
 
     public ContentBlock(ContentLoader loader)
     {
@@ -26,7 +30,7 @@ public class ContentBlock extends Content
     }
 
     /** Called to load the content's data from an xml document */
-    protected void loadData(Document doc)
+    public void loadData(Document doc)
     {
         subBlocks = new Subblock[16];
         NodeList blockList = doc.getElementsByTagName("block");
@@ -38,15 +42,16 @@ public class ContentBlock extends Content
                 if (block.hasAttribute("name"))
                 {
                     unlocalizedName = block.getAttribute("name");
-                    if(block.hasAttribute("hardness"))
+                    if (block.hasAttribute("hardness"))
                     {
                         this.hardness = Float.parseFloat(block.getAttribute("hardness"));
                     }
-                    if(block.hasAttribute("resistance"))
+                    if (block.hasAttribute("resistance"))
                     {
                         this.resistance = Float.parseFloat(block.getAttribute("resistance"));
                     }
                     NodeList metaList = block.getElementsByTagName("meta");
+                    int aMeta = 0;
                     for (int m = 0; m < metaList.getLength(); m++)
                     {
                         if (metaList.item(m).getNodeType() == Node.ELEMENT_NODE)
@@ -55,10 +60,28 @@ public class ContentBlock extends Content
                             if (meta.hasAttribute("id"))
                             {
                                 Subblock subblock = new Subblock();
-                                subblock.meta = Integer.parseInt(meta.getAttribute("id"));
                                 subblock.unlocalizedName = meta.hasAttribute("name") ? meta.getAttribute("name") : unlocalizedName;
                                 subblock.iconName = meta.hasAttribute("icon") ? meta.getAttribute("icon") : null;
-                                subBlocks[m] = subblock;
+                                if (meta.hasAttribute("id"))
+                                {
+                                    subBlocks[Integer.parseInt(meta.getAttribute("id"))] = subblock;
+                                }
+                                else
+                                {
+                                    while (true)
+                                    {
+                                        if (aMeta == 15)
+                                        {
+                                            break;
+                                        }
+                                        if (subBlocks[aMeta] == null)
+                                        {
+                                            subBlocks[aMeta] = subblock;
+                                            break;
+                                        }
+                                        aMeta++;
+                                    }
+                                }
                             }
                             else
                             {
@@ -80,11 +103,12 @@ public class ContentBlock extends Content
     {
         int assignedID = creator.idManager.getNextBlockID();
         int actualID = creator.config.getBlock(unlocalizedName, assignedID).getInt(assignedID);
-        Block block = new BlockTemplate(actualID, material);
+        block = new BlockTemplate(actualID, material);
         block.setUnlocalizedName(unlocalizedName);
         block.setHardness(this.hardness);
         block.setResistance(this.resistance);
         block.setCreativeTab(creator.defaultTab);
         ContentRegistry.proxy.registerBlock(creator, block, ItemBlockMetadata.class, unlocalizedName, creator.modID);
+        ((BlockTemplate)block).subblocks = this.subBlocks;
     }
 }

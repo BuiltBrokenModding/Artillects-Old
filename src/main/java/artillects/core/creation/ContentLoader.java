@@ -1,15 +1,11 @@
 package artillects.core.creation;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.RandomAccessFile;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -17,15 +13,18 @@ import java.util.zip.ZipFile;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
 
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.ForgeSubscribe;
+
+import org.w3c.dom.Document;
+
 import resonant.lib.content.ContentRegistry;
-import resonant.lib.render.RenderUtility;
 import artillects.core.building.BuildFile;
+import artillects.core.creation.content.Content;
+import artillects.core.creation.content.ContentBlock;
+import artillects.core.creation.content.ContentItem;
+import artillects.core.creation.content.ContentType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,21 +33,19 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author Darkguardsman */
 public class ContentLoader
 {
-
-    public static byte[] ZIP_BYTES = { 'P', 'K', 0x3, 0x4 };
-
-    ContentRegistry creator;
+    private ContentRegistry creator;
     List<Content> loadedContent;
 
-    protected List<DirectTexture> blockTextures;
-    protected List<DirectTexture> itemTextures;
+    protected static HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
+    protected static HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
+
+    protected static HashMap<String, ContentBlock> blocks = new HashMap<String, ContentBlock>();
+    protected static HashMap<String, ContentItem> items = new HashMap<String, ContentItem>();
 
     public ContentLoader(ContentRegistry contentRegistry)
     {
         this.creator = contentRegistry;
         loadedContent = new LinkedList<Content>();
-        blockTextures = new LinkedList<DirectTexture>();
-        itemTextures = new LinkedList<DirectTexture>();
     }
 
     public void load() throws Exception
@@ -81,20 +78,24 @@ public class ContentLoader
 
     public void load(File file) throws Exception
     {
-        ContentBlock content = null;
+        Content content = null;
+        ContentType type = null;
         String name = file.getName();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 
         if (file.getName().endsWith(".png"))
         {
+            String textureName = file.getName().replace(".png", "");
             if (file.getName().startsWith("block."))
             {
-                blockTextures.add(new DirectTexture(file.getName().replace(".png", "").replace("block.", ""), file));
+                textureName = textureName.replace("block.", "");
+                blockTextures.put(textureName, new DirectTexture(textureName, file));
             }
             else if (file.getName().startsWith("item."))
             {
-                itemTextures.add(new DirectTexture(file.getName().replace(".png", "").replace("item.", ""), file));
+                textureName = textureName.replace("item.", "");
+                itemTextures.put(textureName, new DirectTexture(textureName, file));
             }
         }
         else if (name.endsWith(".xml"))
@@ -105,19 +106,20 @@ public class ContentLoader
 
             if (doc.getElementsByTagName("block").getLength() > 0)
             {
+                type = ContentType.BLOCK;
                 content = new ContentBlock(this);
             }
             else if (doc.getElementsByTagName("item").getLength() > 0)
             {
-
+                type = ContentType.ITEM;
             }
             else if (doc.getElementsByTagName("tile").getLength() > 0)
             {
-
+                type = ContentType.TILE;
             }
             else if (doc.getElementsByTagName("entity").getLength() > 0)
             {
-
+                type = ContentType.ENTITY;
             }
             else
             {
@@ -125,8 +127,6 @@ public class ContentLoader
             }
             content.loadData(doc);
             stream.close();
-            loadedContent.add(content);
-            return;
         }
         else if (name.endsWith(".zip"))
         {
@@ -143,19 +143,20 @@ public class ContentLoader
                     doc.getDocumentElement().normalize();
                     if (doc.getElementsByTagName("block").getLength() > 0)
                     {
+                        type = ContentType.BLOCK;
                         content = new ContentBlock(this);
                     }
                     else if (doc.getElementsByTagName("item").getLength() > 0)
                     {
-
+                        type = ContentType.ITEM;
                     }
                     else if (doc.getElementsByTagName("tile").getLength() > 0)
                     {
-
+                        type = ContentType.TILE;
                     }
                     else if (doc.getElementsByTagName("entity").getLength() > 0)
                     {
-
+                        type = ContentType.ENTITY;
                     }
                     else
                     {
@@ -166,17 +167,34 @@ public class ContentLoader
                 }
                 else if (entry.getName().endsWith(".png"))
                 {
-                    if (entry.getName().startsWith("block."))
+                    String textureName = entry.getName().replace(".png", "");
+                    if (file.getName().startsWith("block."))
                     {
-                        blockTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("block.", ""), zipFile));
+                        textureName = textureName.replace("block.", "");
+                        blockTextures.put(textureName, new DirectTexture(textureName, file));
                     }
-                    else if (entry.getName().startsWith("item."))
+                    else if (file.getName().startsWith("item."))
                     {
-                        itemTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("item.", ""), zipFile));
+                        textureName = textureName.replace("item.", "");
+                        itemTextures.put(textureName, new DirectTexture(textureName, file));
                     }
                 }
             }
-            loadedContent.add(content);
+        }
+        if (content != null)
+        {
+            if (type == ContentType.BLOCK)
+            {
+                blocks.put(((ContentBlock) content).unlocalizedName, (ContentBlock) content);
+            }
+            else if (type == ContentType.ITEM)
+            {
+                items.put(((ContentItem) content).unlocalizedName, (ContentItem) content);
+            }
+            else
+            {
+                loadedContent.add(content);
+            }
         }
     }
 
@@ -185,6 +203,14 @@ public class ContentLoader
         for (Content content : this.loadedContent)
         {
             create(content);
+        }
+        for(ContentBlock block : blocks.values())
+        {
+            block.create(creator);
+        }        
+        for(ContentItem item : items.values())
+        {
+            item.create(creator);
         }
     }
 
@@ -199,78 +225,17 @@ public class ContentLoader
     {
         if (event.map.textureType == 0)
         {
-            for (DirectTexture texture : blockTextures)
+            for (DirectTexture texture : blockTextures.values())
             {
                 event.map.setTextureEntry(texture.getIconName(), texture);
             }
         }
         else if (event.map.textureType == 1)
         {
-            for (DirectTexture texture : itemTextures)
+            for (DirectTexture texture : itemTextures.values())
             {
                 event.map.setTextureEntry(texture.getIconName(), texture);
             }
         }
-    }
-
-    /** The method to test if a input stream is a zip archive.
-     * 
-     * @param in the input stream to test.
-     * @return */
-    public static boolean isZipStream(InputStream in)
-    {
-        if (!in.markSupported())
-        {
-            in = new BufferedInputStream(in);
-        }
-        boolean isZip = true;
-        try
-        {
-            in.mark(ZIP_BYTES.length);
-            for (int i = 0; i < ZIP_BYTES.length; i++)
-            {
-                if (ZIP_BYTES[i] != (byte) in.read())
-                {
-                    isZip = false;
-                    break;
-                }
-            }
-            in.reset();
-        }
-        catch (IOException e)
-        {
-            isZip = false;
-        }
-        return isZip;
-    }
-
-    /** Test if a file is a zip file.
-     * 
-     * @param f the file to test.
-     * @return */
-    public static boolean isZipFile(File f)
-    {
-
-        boolean isZip = true;
-        byte[] buffer = new byte[ZIP_BYTES.length];
-        try
-        {
-            RandomAccessFile raf = new RandomAccessFile(f, "r");
-            raf.readFully(buffer);
-            for (int i = 0; i < ZIP_BYTES.length; i++)
-            {
-                if (buffer[i] != ZIP_BYTES[i])
-                {
-                    isZip = false;
-                    break;
-                }
-            }
-            raf.close();
-        }
-        catch (Throwable e)
-        {
-            isZip = false;
-        }
-        return isZip;
     }
 }

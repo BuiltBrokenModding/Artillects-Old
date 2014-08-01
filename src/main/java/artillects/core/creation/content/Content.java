@@ -1,7 +1,8 @@
-package artillects.core.creation;
+package artillects.core.creation.content;
 
 import org.w3c.dom.Document;
 
+import artillects.core.creation.ContentLoader;
 import resonant.lib.content.ContentRegistry;
 
 public abstract class Content
@@ -14,7 +15,7 @@ public abstract class Content
     }
 
     /** Called to load the content's data from an xml document */
-    protected abstract void loadData(Document doc);
+    public abstract void loadData(Document doc);
 
     /** Creates the object */
     public abstract void create(ContentRegistry creator);
