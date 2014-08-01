@@ -21,10 +21,10 @@ import org.w3c.dom.Document;
 
 import resonant.lib.content.ContentRegistry;
 import artillects.core.building.BuildFile;
-import artillects.core.creation.content.Content;
-import artillects.core.creation.content.ContentBlock;
-import artillects.core.creation.content.ContentItem;
-import artillects.core.creation.content.ContentType;
+import artillects.core.creation.content.Product;
+import artillects.core.creation.content.BlockProduct;
+import artillects.core.creation.content.ItemProduct;
+import artillects.core.creation.content.ProductType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,18 +34,18 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContentFactory
 {
     private ContentRegistry creator;
-    List<Content> loadedContent;
+    List<Product> loadedContent;
 
     public static HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
     public static HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
 
-    public static HashMap<String, ContentBlock> blocks = new HashMap<String, ContentBlock>();
-    public static HashMap<String, ContentItem> items = new HashMap<String, ContentItem>();
+    public static HashMap<String, BlockProduct> blocks = new HashMap<String, BlockProduct>();
+    public static HashMap<String, ItemProduct> items = new HashMap<String, ItemProduct>();
 
     public ContentFactory(ContentRegistry contentRegistry)
     {
         this.creator = contentRegistry;
-        loadedContent = new LinkedList<Content>();
+        loadedContent = new LinkedList<Product>();
     }
 
     public void load() throws Exception
@@ -78,8 +78,8 @@ public class ContentFactory
 
     public void load(File file) throws Exception
     {
-        Content content = null;
-        ContentType type = null;
+        Product product = null;
+        ProductType type = null;
         String name = file.getName();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -106,26 +106,26 @@ public class ContentFactory
 
             if (doc.getElementsByTagName("block").getLength() > 0)
             {
-                type = ContentType.BLOCK;
-                content = new ContentBlock(this);
+                type = ProductType.BLOCK;
+                product = new BlockProduct(this);
             }
             else if (doc.getElementsByTagName("item").getLength() > 0)
             {
-                type = ContentType.ITEM;
+                type = ProductType.ITEM;
             }
             else if (doc.getElementsByTagName("tile").getLength() > 0)
             {
-                type = ContentType.TILE;
+                type = ProductType.TILE;
             }
             else if (doc.getElementsByTagName("entity").getLength() > 0)
             {
-                type = ContentType.ENTITY;
+                type = ProductType.ENTITY;
             }
             else
             {
                 return;
             }
-            content.loadData(doc);
+            product.loadData(doc);
             stream.close();
         }
         else if (name.endsWith(".zip"))
@@ -143,26 +143,26 @@ public class ContentFactory
                     doc.getDocumentElement().normalize();
                     if (doc.getElementsByTagName("block").getLength() > 0)
                     {
-                        type = ContentType.BLOCK;
-                        content = new ContentBlock(this);
+                        type = ProductType.BLOCK;
+                        product = new BlockProduct(this);
                     }
                     else if (doc.getElementsByTagName("item").getLength() > 0)
                     {
-                        type = ContentType.ITEM;
+                        type = ProductType.ITEM;
                     }
                     else if (doc.getElementsByTagName("tile").getLength() > 0)
                     {
-                        type = ContentType.TILE;
+                        type = ProductType.TILE;
                     }
                     else if (doc.getElementsByTagName("entity").getLength() > 0)
                     {
-                        type = ContentType.ENTITY;
+                        type = ProductType.ENTITY;
                     }
                     else
                     {
                         continue;
                     }
-                    content.loadData(doc);
+                    product.loadData(doc);
                     stream.close();
                 }
                 else if (entry.getName().endsWith(".png"))
@@ -181,42 +181,42 @@ public class ContentFactory
                 }
             }
         }
-        if (content != null)
+        if (product != null)
         {
-            if (type == ContentType.BLOCK)
+            if (type == ProductType.BLOCK)
             {
-                blocks.put(((ContentBlock) content).unlocalizedName, (ContentBlock) content);
+                blocks.put(((BlockProduct) product).unlocalizedName, (BlockProduct) product);
             }
-            else if (type == ContentType.ITEM)
+            else if (type == ProductType.ITEM)
             {
-                items.put(((ContentItem) content).unlocalizedName, (ContentItem) content);
+                items.put(((ItemProduct) product).unlocalizedName, (ItemProduct) product);
             }
             else
             {
-                loadedContent.add(content);
+                loadedContent.add(product);
             }
         }
     }
 
     public void createAll()
     {
-        for (Content content : this.loadedContent)
+        for (Product product : this.loadedContent)
         {
-            create(content);
+            create(product);
         }
-        for(ContentBlock block : blocks.values())
+        for(BlockProduct block : blocks.values())
         {
             block.create(creator);
         }        
-        for(ContentItem item : items.values())
+        for(ItemProduct item : items.values())
         {
             item.create(creator);
         }
     }
 
-    public void create(Content content)
+    public void create(Product product)
     {
-        content.create(creator);
+        product.create(creator);
     }
 
     @ForgeSubscribe

@@ -1,6 +1,6 @@
 package artillects.core.creation.content;
 
-public enum ContentType
+public enum ProductType
 {
     BLOCK, ITEM, ENTITY, TILE, MACHINE;
 }

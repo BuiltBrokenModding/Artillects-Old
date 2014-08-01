@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import artillects.core.Reference;
 import artillects.core.creation.ContentFactory;
 import artillects.core.creation.Subblock;
-import artillects.core.creation.content.ContentBlock;
+import artillects.core.creation.content.BlockProduct;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -24,7 +24,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class BlockTemplate extends Block
 {
     /** Data for the block */
-    public ContentBlock content;
+    public BlockProduct content;
 
     public BlockTemplate(int id, Material material)
     {

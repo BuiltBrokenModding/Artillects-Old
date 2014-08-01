@@ -18,7 +18,7 @@ import artillects.core.creation.templates.ItemBlockTemplate;
 /** Creation system and data storage for creating new basic blocks from xml data
  * 
  * @author Darkguardsman */
-public class ContentBlock extends Content
+public class BlockProduct extends Product
 {
     public float hardness = 1;
     public float resistance = 1;
@@ -29,7 +29,7 @@ public class ContentBlock extends Content
 
     public Block block;
 
-    public ContentBlock(ContentFactory loader)
+    public BlockProduct(ContentFactory loader)
     {
         super(loader);
     }

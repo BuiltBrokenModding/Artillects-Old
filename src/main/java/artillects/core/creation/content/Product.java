@@ -5,11 +5,11 @@ import org.w3c.dom.Document;
 import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
-public abstract class Content
+public abstract class Product
 {
     protected ContentFactory loader;
 
-    public Content(ContentFactory loader)
+    public Product(ContentFactory loader)
     {
         this.loader = loader;
     }

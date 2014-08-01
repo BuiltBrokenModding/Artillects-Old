@@ -7,12 +7,12 @@ import org.w3c.dom.Document;
 import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
-public class ContentItem extends Content
+public class ItemProduct extends Product
 {
     public Item item;
     public String unlocalizedName;
     
-    public ContentItem(ContentFactory loader)
+    public ItemProduct(ContentFactory loader)
     {
         super(loader);
     }
