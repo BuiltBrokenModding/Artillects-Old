@@ -1,6 +1,6 @@
 package artillects.core.creation.content;
 
-import li.cil.oc.api.driver.Item;
+import net.minecraft.item.Item;
 
 import org.w3c.dom.Document;
 
