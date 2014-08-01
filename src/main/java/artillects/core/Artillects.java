@@ -87,6 +87,7 @@ public class Artillects
         try
         {
             loader.load();
+            loader.createAll();
         }
         catch (Exception e)
         {

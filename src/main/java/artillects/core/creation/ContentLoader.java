@@ -91,92 +91,108 @@ public class ContentLoader
     public void load(File file) throws Exception
     {
         ContentBlock content = null;
-        if (file.getName().endsWith(".block"))
-        {
-            content = new ContentBlock(this);
-        }
-        else if (file.getName().endsWith(".tile"))
-        {
-            //loadTile(file);
-        }
-        else if (file.getName().endsWith(".entity"))
-        {
-            //loadEntity(file);
-        }
-        else if (file.getName().endsWith(".item"))
-        {
-            //loadItem(file);
-        }
-        if (content != null)
-        {
-            if (isZipFile(file))
-            {
-                ZipFile zipFile = new ZipFile(file);
-                Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        String name = file.getName();
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+       
+        if (name.equalsIgnoreCase("content.xml"))
+        {           
+            InputStream stream = new FileInputStream(file);
+            Document doc = dBuilder.parse(stream);
+            doc.getDocumentElement().normalize();
 
-                while (entries.hasMoreElements())
-                {
-                    ZipEntry entry = entries.nextElement();
-                    if (entry.getName().equalsIgnoreCase("content.xml"))
-                    {
-                        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                        InputStream stream = zipFile.getInputStream(entry);
-                        Document doc = dBuilder.parse(stream);
-                        doc.getDocumentElement().normalize();
-                        content.loadData(doc);
-                        stream.close();
-                    }
-                    else if (entry.getName().endsWith(".png"))
-                    {
-                        if (entry.getName().startsWith("block."))
-                        {
-                            blockTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("block.", ""), zipFile));
-                        }
-                        else if (entry.getName().startsWith("item."))
-                        {
-                            itemTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("item.", ""), zipFile));
-                        }
-                    }
-                }
-                loadedContent.add(content);
-            }
-            else if (file.getName().equalsIgnoreCase("content.xml"))
+            if (doc.getElementsByTagName("block").getLength() > 0)
             {
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                InputStream stream = new FileInputStream(file);
-                Document doc = dBuilder.parse(stream);
-                doc.getDocumentElement().normalize();
-                content.loadData(doc);
-                stream.close();
-                loadedContent.add(content);
-                for (File pFile : file.getParentFile().listFiles())
+                content = new ContentBlock(this);               
+            }
+            else if (doc.getElementsByTagName("item").getLength() > 0)
+            {
+
+            }
+            else if (doc.getElementsByTagName("tile").getLength() > 0)
+            {
+
+            }
+            else if (doc.getElementsByTagName("entity").getLength() > 0)
+            {
+
+            }
+            content.loadData(doc);
+            for (File pFile : file.getParentFile().listFiles())
+            {
+                if (pFile.getName().endsWith(".png"))
                 {
-                    if (pFile.getName().endsWith(".png"))
+                    if (pFile.getName().startsWith("block."))
                     {
-                        if (pFile.getName().startsWith("block."))
-                        {
-                            blockTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("block.", ""), pFile));
-                        }
-                        else if (pFile.getName().startsWith("item."))
-                        {
-                            itemTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("item.", ""), pFile));
-                        }
+                        blockTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("block.", ""), pFile));
+                    }
+                    else if (pFile.getName().startsWith("item."))
+                    {
+                        itemTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("item.", ""), pFile));
                     }
                 }
             }
+            stream.close();
+            loadedContent.add(content);
+            return;
+        }
+        else if (isZipFile(file))
+        {            
+            ZipFile zipFile = new ZipFile(file);
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+            if (name.endsWith(".block"))
+            {
+                content = new ContentBlock(this);
+            }
+            else if (name.endsWith(".tile"))
+            {
+                //loadTile(file);
+            }
+            else if (name.endsWith(".entity"))
+            {
+                //loadEntity(file);
+            }
+            else if (name.endsWith(".item"))
+            {
+                //loadItem(file);
+            }
+            
+            while (entries.hasMoreElements())
+            {
+                ZipEntry entry = entries.nextElement();
+                if (entry.getName().equalsIgnoreCase("content.xml"))
+                {
+                    InputStream stream = zipFile.getInputStream(entry);
+                    Document doc = dBuilder.parse(stream);
+                    doc.getDocumentElement().normalize();
+                    content.loadData(doc);
+                    stream.close();
+                }
+                else if (entry.getName().endsWith(".png"))
+                {
+                    if (entry.getName().startsWith("block."))
+                    {
+                        blockTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("block.", ""), zipFile));
+                    }
+                    else if (entry.getName().startsWith("item."))
+                    {
+                        itemTextures.add(new DirectTexture(entry.getName().replace(".png", "").replace("item.", ""), zipFile));
+                    }
+                }
+            }
+            loadedContent.add(content);
         }
     }
-    
+
     public void createAll()
     {
-        for(Content content : this.loadedContent)
+        for (Content content : this.loadedContent)
         {
             create(content);
         }
     }
-    
+
     public void create(Content content)
     {
         content.create(creator);

@@ -14,6 +14,8 @@ import artillects.core.creation.templates.BlockTemplate;
 
 public class ContentBlock extends Content
 {
+    float hardness = 1;
+    float resistance = 1;
     String unlocalizedName;
     Material material = Material.circuits;
     Subblock[] subBlocks;
@@ -36,6 +38,14 @@ public class ContentBlock extends Content
                 if (block.hasAttribute("name"))
                 {
                     unlocalizedName = block.getAttribute("name");
+                    if(block.hasAttribute("hardness"))
+                    {
+                        this.hardness = Float.parseFloat(block.getAttribute("hardness"));
+                    }
+                    if(block.hasAttribute("resistance"))
+                    {
+                        this.resistance = Float.parseFloat(block.getAttribute("resistance"));
+                    }
                     NodeList metaList = block.getElementsByTagName("meta");
                     for (int m = 0; m < metaList.getLength(); m++)
                     {
@@ -68,18 +78,13 @@ public class ContentBlock extends Content
     @Override
     public void create(ContentRegistry creator)
     {
-        try
-        {
-            int assignedID = creator.idManager.getNextBlockID();
-            int actualID = creator.config.getBlock(unlocalizedName, assignedID).getInt(assignedID);
-            Block block = new BlockTemplate(actualID, material);
-            ContentRegistry.proxy.registerBlock(creator, block, ItemBlockMetadata.class, unlocalizedName, creator.modID);
-            creator.finishCreation(block, null);
-        }
-        catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-
+        int assignedID = creator.idManager.getNextBlockID();
+        int actualID = creator.config.getBlock(unlocalizedName, assignedID).getInt(assignedID);
+        Block block = new BlockTemplate(actualID, material);
+        block.setUnlocalizedName(unlocalizedName);
+        block.setHardness(this.hardness);
+        block.setResistance(this.resistance);
+        block.setCreativeTab(creator.defaultTab);
+        ContentRegistry.proxy.registerBlock(creator, block, ItemBlockMetadata.class, unlocalizedName, creator.modID);
     }
 }
