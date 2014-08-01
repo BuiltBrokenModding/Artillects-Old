@@ -70,16 +70,7 @@ public class ContentLoader
         {
             if (file.isDirectory())
             {
-                List<String> files = Arrays.asList(file.list());
-                if (files.contains("content.xml"))
-                {
-                    load(new File(file, "content.xml"));
-                    break;
-                }
-                else
-                {
-                    loadAll(file);
-                }
+                loadAll(file);
             }
             else
             {
@@ -94,16 +85,27 @@ public class ContentLoader
         String name = file.getName();
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-       
-        if (name.equalsIgnoreCase("content.xml"))
-        {           
+
+        if (file.getName().endsWith(".png"))
+        {
+            if (file.getName().startsWith("block."))
+            {
+                blockTextures.add(new DirectTexture(file.getName().replace(".png", "").replace("block.", ""), file));
+            }
+            else if (file.getName().startsWith("item."))
+            {
+                itemTextures.add(new DirectTexture(file.getName().replace(".png", "").replace("item.", ""), file));
+            }
+        }
+        else if (name.endsWith(".xml"))
+        {
             InputStream stream = new FileInputStream(file);
             Document doc = dBuilder.parse(stream);
             doc.getDocumentElement().normalize();
 
             if (doc.getElementsByTagName("block").getLength() > 0)
             {
-                content = new ContentBlock(this);               
+                content = new ContentBlock(this);
             }
             else if (doc.getElementsByTagName("item").getLength() > 0)
             {
@@ -117,55 +119,48 @@ public class ContentLoader
             {
 
             }
-            content.loadData(doc);
-            for (File pFile : file.getParentFile().listFiles())
+            else
             {
-                if (pFile.getName().endsWith(".png"))
-                {
-                    if (pFile.getName().startsWith("block."))
-                    {
-                        blockTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("block.", ""), pFile));
-                    }
-                    else if (pFile.getName().startsWith("item."))
-                    {
-                        itemTextures.add(new DirectTexture(pFile.getName().replace(".png", "").replace("item.", ""), pFile));
-                    }
-                }
+                return;
             }
+            content.loadData(doc);
             stream.close();
             loadedContent.add(content);
             return;
         }
-        else if (isZipFile(file))
-        {            
+        else if (name.endsWith(".zip"))
+        {
             ZipFile zipFile = new ZipFile(file);
             Enumeration<? extends ZipEntry> entries = zipFile.entries();
 
-            if (name.endsWith(".block"))
-            {
-                content = new ContentBlock(this);
-            }
-            else if (name.endsWith(".tile"))
-            {
-                //loadTile(file);
-            }
-            else if (name.endsWith(".entity"))
-            {
-                //loadEntity(file);
-            }
-            else if (name.endsWith(".item"))
-            {
-                //loadItem(file);
-            }
-            
             while (entries.hasMoreElements())
             {
                 ZipEntry entry = entries.nextElement();
-                if (entry.getName().equalsIgnoreCase("content.xml"))
+                if (entry.getName().endsWith(".xml"))
                 {
                     InputStream stream = zipFile.getInputStream(entry);
                     Document doc = dBuilder.parse(stream);
                     doc.getDocumentElement().normalize();
+                    if (doc.getElementsByTagName("block").getLength() > 0)
+                    {
+                        content = new ContentBlock(this);
+                    }
+                    else if (doc.getElementsByTagName("item").getLength() > 0)
+                    {
+
+                    }
+                    else if (doc.getElementsByTagName("tile").getLength() > 0)
+                    {
+
+                    }
+                    else if (doc.getElementsByTagName("entity").getLength() > 0)
+                    {
+
+                    }
+                    else
+                    {
+                        continue;
+                    }
                     content.loadData(doc);
                     stream.close();
                 }
