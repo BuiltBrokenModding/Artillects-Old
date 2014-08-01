@@ -94,7 +94,6 @@ public class BlockTemplate extends Block
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(int id, CreativeTabs tab, List list)
     {
-        super.getSubBlocks(id, tab, list);
         if (content.subBlocks != null)
         {
             for (int i = 0; i < content.subBlocks.length; i++)
