@@ -11,6 +11,7 @@ import net.minecraft.util.Icon;
 import resonant.lib.render.RenderUtility;
 import artillects.core.Reference;
 import artillects.core.creation.ContentLoader;
+import artillects.core.creation.Subblock;
 import artillects.core.creation.content.ContentBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,7 +47,7 @@ public class BlockTemplate extends Block
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register)
     {
-        if (this.blockIcon == null)
+        if (this.blockIcon == null && content.iconName != null)
         {
             if (ContentLoader.blockTextures.containsKey(content.iconName))
             {
@@ -65,23 +66,24 @@ public class BlockTemplate extends Block
         {
             for (int i = 0; i < content.subBlocks.length; i++)
             {
-                if (content.subBlocks[i] != null)
+                Subblock sub = content.subBlocks[i];
+                if (sub != null)
                 {
-                    if (content.subBlocks[i].hasSides)
+                    if (sub.hasSides)
                     {
                         for (int side = 0; side < 6; side++)
                         {
-                            if (content.subBlocks[i].getIcon(side) == null)
+                            if (sub.getIcon(side) == null && sub.iconSideName[side] != null)
                             {
                                 String name = content.subBlocks[i].iconSideName[side];
-                                content.subBlocks[i].iconSide[side] = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
+                                sub.iconSide[side] = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
                             }
                         }
                     }
-                    else if (content.subBlocks[i].getIcon(0) == null)
+                    else if (sub.getIcon(0) == null && sub.iconName != null)
                     {
-                        String name = content.subBlocks[i].iconName;
-                        content.subBlocks[i].iconMain = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
+                        String name = sub.iconName;
+                        sub.iconMain = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
                     }
                 }
             }
