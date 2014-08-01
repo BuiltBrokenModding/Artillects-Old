@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<content>
+    <block name="test">
+        <meta id="0" name="testZero" icon="test.png"></meta>
+        <meta id="1" name="testOne" icon="test.png"></meta>
+    </block>
+</content>
