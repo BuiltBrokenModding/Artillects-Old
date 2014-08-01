@@ -8,8 +8,8 @@ import resonant.lib.render.RenderUtility;
  * @author Darkguardsman */
 public class Subblock
 {
-    public float hardness = 1;
-    public float resistance = 1;
+    public float hardness = -2;
+    public float resistance = -2;
     public boolean hasSides = false;
     public String unlocalizedName;
     public String iconName;

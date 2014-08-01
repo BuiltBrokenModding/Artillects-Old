@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
@@ -106,13 +107,24 @@ public class BlockTemplate extends Block
 
     @Override
     public float getBlockHardness(World world, int x, int y, int z)
-    {
+    {        
         int meta = world.getBlockMetadata(x, y, z);
-        if(content.subBlocks != null && content.subBlocks[meta] != null)
+        if(content.subBlocks != null && content.subBlocks[meta] != null && content.subBlocks[meta].hardness != -2)
         {
             return content.subBlocks[meta].hardness;
         }
         return super.getBlockHardness(world, x, y, z);
+    }
+    
+    @Override
+    public float getExplosionResistance(Entity entity, World world,int x, int y, int z, double explosionX, double explosionY, double explosionZ)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+        if(content.subBlocks != null && content.subBlocks[meta] != null && content.subBlocks[meta].resistance != -2)
+        {
+            return content.subBlocks[meta].resistance;
+        }
+        return super.getExplosionResistance(entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
