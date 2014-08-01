@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import resonant.lib.render.RenderUtility;
+import net.minecraft.world.World;
 import artillects.core.Reference;
 import artillects.core.creation.ContentLoader;
 import artillects.core.creation.Subblock;
@@ -34,6 +34,7 @@ public class BlockTemplate extends Block
     @SideOnly(Side.CLIENT)
     public Icon getIcon(int side, int meta)
     {
+
         if (content.subBlocks != null && content.subBlocks[meta] != null)
         {
             Icon icon = content.subBlocks[meta].getIcon(side);
@@ -101,6 +102,17 @@ public class BlockTemplate extends Block
                 }
             }
         }
+    }
+
+    @Override
+    public float getBlockHardness(World world, int x, int y, int z)
+    {
+        int meta = world.getBlockMetadata(x, y, z);
+        if(content.subBlocks != null && content.subBlocks[meta] != null)
+        {
+            return content.subBlocks[meta].hardness;
+        }
+        return super.getBlockHardness(world, x, y, z);
     }
 
     @Override
