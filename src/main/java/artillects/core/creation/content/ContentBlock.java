@@ -81,7 +81,7 @@ public class ContentBlock extends Content
                             if (meta.hasAttribute("id"))
                             {
                                 Subblock subblock = new Subblock();
-                                subblock.unlocalizedName = meta.hasAttribute("name") ? meta.getAttribute("name") : unlocalizedName;                            
+                                subblock.unlocalizedName = meta.hasAttribute("name") ? meta.getAttribute("name") : unlocalizedName;
                                 if (meta.hasAttribute("hardness"))
                                 {
                                     subblock.hardness = Float.parseFloat(meta.getAttribute("hardness"));
@@ -144,12 +144,15 @@ public class ContentBlock extends Content
     {
         int assignedID = creator.idManager.getNextBlockID();
         int actualID = creator.config.getBlock(unlocalizedName, assignedID).getInt(assignedID);
-        block = new BlockTemplate(actualID, material);
-        block.setUnlocalizedName(unlocalizedName);
-        block.setHardness(this.hardness);
-        block.setResistance(this.resistance);
-        block.setCreativeTab(creator.defaultTab);
-        ContentRegistry.proxy.registerBlock(creator, block, ItemBlockTemplate.class, unlocalizedName, creator.modID);
-        ((BlockTemplate) block).content = this;
+        if (actualID != -1)
+        {
+            block = new BlockTemplate(actualID, material);
+            block.setUnlocalizedName(unlocalizedName);
+            block.setHardness(this.hardness);
+            block.setResistance(this.resistance);
+            block.setCreativeTab(creator.defaultTab);
+            ContentRegistry.proxy.registerBlock(creator, block, ItemBlockTemplate.class, unlocalizedName, creator.modID);
+            ((BlockTemplate) block).content = this;
+        }
     }
 }
