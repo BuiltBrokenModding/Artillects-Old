@@ -38,32 +38,10 @@ public class Subblock
         {
             if (iconSide == null)
                 iconSide = new Icon[6];
-
-            if (iconSide[side] == null)
-            {
-                if (ContentLoader.blockTextures.containsKey(iconSideName[side]))
-                {
-                    iconSide[side] = ContentLoader.blockTextures.get(iconSideName[side]);
-                }
-                else if (RenderUtility.getIcon(iconSideName[side]) != null)
-                {
-                    iconSide[side] = RenderUtility.getIcon(iconSideName[side]);
-                }
-            }
+            
             if (iconSide[side] != null)
             {
                 return iconSide[side];
-            }
-        }
-        if (iconMain == null)
-        {
-            if (ContentLoader.blockTextures.containsKey(iconName))
-            {
-                iconMain = ContentLoader.blockTextures.get(iconName);
-            }
-            else if (RenderUtility.getIcon(iconName) != null)
-            {
-                iconMain = RenderUtility.getIcon(iconName);
             }
         }
         return iconMain;

@@ -91,7 +91,7 @@ public class ContentBlock extends Content
                                     subblock.resistance = Float.parseFloat(meta.getAttribute("resistance"));
                                 }
                                 //Icon per side
-                                NodeList iconList = block.getElementsByTagName("icon");
+                                NodeList iconList = meta.getElementsByTagName("icon");
                                 for (int i = 0; i < iconList.getLength(); i++)
                                 {
                                     Element icon = (Element) iconList.item(i);

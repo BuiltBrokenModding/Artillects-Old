@@ -47,20 +47,20 @@ public class BlockTemplate extends Block
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register)
     {
-        if (this.blockIcon == null && content.iconName != null)
+        if (content.iconName != null)
         {
             if (ContentLoader.blockTextures.containsKey(content.iconName))
             {
                 blockIcon = ContentLoader.blockTextures.get(content.iconName);
             }
-            else if (RenderUtility.getIcon(content.iconName) != null)
-            {
-                blockIcon = RenderUtility.getIcon(content.iconName);
-            }
             else
             {
                 blockIcon = register.registerIcon((content.iconName.contains(":") ? "" : Reference.PREFIX) + content.iconName);
             }
+        }
+        else
+        {
+            blockIcon = register.registerIcon(Reference.PREFIX + "lightbridgeCore_top");
         }
         if (content.subBlocks != null)
         {
@@ -73,17 +73,30 @@ public class BlockTemplate extends Block
                     {
                         for (int side = 0; side < 6; side++)
                         {
-                            if (sub.getIcon(side) == null && sub.iconSideName[side] != null)
+                            if (sub.iconSideName[side] != null)
                             {
-                                String name = content.subBlocks[i].iconSideName[side];
-                                sub.iconSide[side] = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
+                                String name = sub.iconSideName[side];
+                                if (ContentLoader.blockTextures.containsKey(name))
+                                {
+                                    sub.iconSide[side] = ContentLoader.blockTextures.get(name);
+                                }
+                                else
+                                {
+                                    sub.iconSide[side] = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
+                                }
                             }
                         }
                     }
-                    else if (sub.getIcon(0) == null && sub.iconName != null)
+                    else if (sub.iconName != null)
                     {
-                        String name = sub.iconName;
-                        sub.iconMain = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
+                        if (ContentLoader.blockTextures.containsKey(sub.iconName))
+                        {
+                            sub.iconMain = ContentLoader.blockTextures.get(sub.iconName);
+                        }
+                        else
+                        {
+                            sub.iconMain = register.registerIcon((sub.iconName.contains(":") ? "" : Reference.PREFIX) + sub.iconName);
+                        }
                     }
                 }
             }

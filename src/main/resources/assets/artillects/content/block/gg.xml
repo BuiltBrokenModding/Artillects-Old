@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<content>
-    <block name="ggggg">
-        <meta id="0" name="testZero" icon="test"></meta>
-        <meta id="1" name="testOne" icon="test"></meta>
-    </block>
-</content>
