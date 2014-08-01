@@ -143,7 +143,8 @@ public class ContentBlock extends Content
     public void create(ContentRegistry creator)
     {
         int assignedID = creator.idManager.getNextBlockID();
-        int actualID = creator.config.getBlock(unlocalizedName, assignedID).getInt(assignedID);
+        int actualID = creator.config.getBlock("XML_Blocks", unlocalizedName, assignedID).getInt(assignedID);
+        creator.config.addCustomCategoryComment("XML_Blocks", "Blocks created threw XML data. Can be disabled by setting to -1, disable at own risk.");
         if (actualID != -1)
         {
             block = new BlockTemplate(actualID, material);
