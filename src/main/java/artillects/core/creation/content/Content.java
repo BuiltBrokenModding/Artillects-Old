@@ -2,14 +2,14 @@ package artillects.core.creation.content;
 
 import org.w3c.dom.Document;
 
-import artillects.core.creation.ContentLoader;
+import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
 public abstract class Content
 {
-    protected ContentLoader loader;
+    protected ContentFactory loader;
 
-    public Content(ContentLoader loader)
+    public Content(ContentFactory loader)
     {
         this.loader = loader;
     }

@@ -31,7 +31,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 /** Loads data from xml files to be used in creating content objects such as blocks
  * 
  * @author Darkguardsman */
-public class ContentLoader
+public class ContentFactory
 {
     private ContentRegistry creator;
     List<Content> loadedContent;
@@ -42,7 +42,7 @@ public class ContentLoader
     public static HashMap<String, ContentBlock> blocks = new HashMap<String, ContentBlock>();
     public static HashMap<String, ContentItem> items = new HashMap<String, ContentItem>();
 
-    public ContentLoader(ContentRegistry contentRegistry)
+    public ContentFactory(ContentRegistry contentRegistry)
     {
         this.creator = contentRegistry;
         loadedContent = new LinkedList<Content>();

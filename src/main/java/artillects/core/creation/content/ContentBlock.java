@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import resonant.lib.content.ContentRegistry;
-import artillects.core.creation.ContentLoader;
+import artillects.core.creation.ContentFactory;
 import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
@@ -29,7 +29,7 @@ public class ContentBlock extends Content
 
     public Block block;
 
-    public ContentBlock(ContentLoader loader)
+    public ContentBlock(ContentFactory loader)
     {
         super(loader);
     }

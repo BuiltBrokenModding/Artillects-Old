@@ -20,7 +20,7 @@ import resonant.lib.utility.nbt.SaveManager;
 import artillects.content.items.claim.ItemClaimFlag;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
-import artillects.core.creation.ContentLoader;
+import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -83,7 +83,7 @@ public class Artillects
         //create content registry
         contentRegistry = new ContentRegistry(CONFIG, new IDManager(blockIDPrefix, itemIDPrefix), Reference.NAME).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
         
-        ContentLoader loader = new ContentLoader(contentRegistry);
+        ContentFactory loader = new ContentFactory(contentRegistry);
         try
         {
             loader.load();

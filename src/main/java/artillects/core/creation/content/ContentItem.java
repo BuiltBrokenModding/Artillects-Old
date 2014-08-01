@@ -4,7 +4,7 @@ import li.cil.oc.api.driver.Item;
 
 import org.w3c.dom.Document;
 
-import artillects.core.creation.ContentLoader;
+import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
 public class ContentItem extends Content
@@ -12,7 +12,7 @@ public class ContentItem extends Content
     public Item item;
     public String unlocalizedName;
     
-    public ContentItem(ContentLoader loader)
+    public ContentItem(ContentFactory loader)
     {
         super(loader);
     }

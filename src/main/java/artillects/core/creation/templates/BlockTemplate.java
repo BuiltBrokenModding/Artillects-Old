@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import artillects.core.Reference;
-import artillects.core.creation.ContentLoader;
+import artillects.core.creation.ContentFactory;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.content.ContentBlock;
 import cpw.mods.fml.relauncher.Side;
@@ -51,9 +51,9 @@ public class BlockTemplate extends Block
     {
         if (content.iconName != null)
         {
-            if (ContentLoader.blockTextures.containsKey(content.iconName))
+            if (ContentFactory.blockTextures.containsKey(content.iconName))
             {
-                blockIcon = ContentLoader.blockTextures.get(content.iconName);
+                blockIcon = ContentFactory.blockTextures.get(content.iconName);
             }
             else
             {
@@ -78,9 +78,9 @@ public class BlockTemplate extends Block
                             if (sub.iconSideName[side] != null)
                             {
                                 String name = sub.iconSideName[side];
-                                if (ContentLoader.blockTextures.containsKey(name))
+                                if (ContentFactory.blockTextures.containsKey(name))
                                 {
-                                    sub.iconSide[side] = ContentLoader.blockTextures.get(name);
+                                    sub.iconSide[side] = ContentFactory.blockTextures.get(name);
                                 }
                                 else
                                 {
@@ -91,9 +91,9 @@ public class BlockTemplate extends Block
                     }
                     else if (sub.iconName != null)
                     {
-                        if (ContentLoader.blockTextures.containsKey(sub.iconName))
+                        if (ContentFactory.blockTextures.containsKey(sub.iconName))
                         {
-                            sub.iconMain = ContentLoader.blockTextures.get(sub.iconName);
+                            sub.iconMain = ContentFactory.blockTextures.get(sub.iconName);
                         }
                         else
                         {
