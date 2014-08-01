@@ -9,11 +9,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import resonant.lib.content.ContentRegistry;
-import resonant.lib.prefab.item.ItemBlockMetadata;
 import artillects.core.creation.ContentLoader;
+import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
+import artillects.core.creation.templates.ItemBlockTemplate;
 
+/** Creation system and data storage for creating new basic blocks from xml data
+ * 
+ * @author Darkguardsman */
 public class ContentBlock extends Content
 {
     public float hardness = 1;
@@ -49,6 +53,18 @@ public class ContentBlock extends Content
                     if (block.hasAttribute("resistance"))
                     {
                         this.resistance = Float.parseFloat(block.getAttribute("resistance"));
+                    }
+                    if (block.hasAttribute("material"))
+                    {
+                        String matName = block.getAttribute("material");
+                        for(MaterialData data : MaterialData.values())
+                        {
+                            if(data.name().equalsIgnoreCase(matName))
+                            {
+                                this.material = data.material;
+                                break;
+                            }
+                        }
                     }
                     NodeList metaList = block.getElementsByTagName("meta");
                     int aMeta = 0;
@@ -108,7 +124,7 @@ public class ContentBlock extends Content
         block.setHardness(this.hardness);
         block.setResistance(this.resistance);
         block.setCreativeTab(creator.defaultTab);
-        ContentRegistry.proxy.registerBlock(creator, block, ItemBlockMetadata.class, unlocalizedName, creator.modID);
-        ((BlockTemplate)block).subblocks = this.subBlocks;
+        ContentRegistry.proxy.registerBlock(creator, block, ItemBlockTemplate.class, unlocalizedName, creator.modID);
+        ((BlockTemplate) block).subblocks = this.subBlocks;
     }
 }

@@ -13,8 +13,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
+/** Basic block template used to create single or metadata based blocks. This is not designed for any
+ * advanced application but can be extended to offer more features.
+ * 
+ * @author Darkguardsman */
 public class BlockTemplate extends Block
 {
+    /** Data for block metadata */
     public Subblock[] subblocks;
 
     public BlockTemplate(int id, Material material)
