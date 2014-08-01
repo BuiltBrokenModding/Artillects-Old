@@ -5,9 +5,10 @@ import org.w3c.dom.Document;
 import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
-public abstract class Product
+public abstract class Product<N>
 {
     protected ContentFactory loader;
+    protected N product;
 
     public Product(ContentFactory loader)
     {
@@ -15,8 +16,14 @@ public abstract class Product
     }
 
     /** Called to load the content's data from an xml document */
-    public abstract void loadData(Document doc);
+    public abstract Product<N> loadData(Document doc);
 
     /** Creates the object */
-    public abstract void create(ContentRegistry creator);
+    public abstract N create(ContentRegistry creator);
+    
+    /** Gets the created product */
+    public N getProduct()
+    {
+        return product;
+    }
 }

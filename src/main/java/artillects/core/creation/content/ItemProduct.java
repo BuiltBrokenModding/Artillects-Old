@@ -7,7 +7,7 @@ import org.w3c.dom.Document;
 import artillects.core.creation.ContentFactory;
 import resonant.lib.content.ContentRegistry;
 
-public class ItemProduct extends Product
+public class ItemProduct extends Product<Item>
 {
     public Item item;
     public String unlocalizedName;
@@ -18,17 +18,15 @@ public class ItemProduct extends Product
     }
 
     @Override
-    public void loadData(Document doc)
+    public ItemProduct loadData(Document doc)
     {
-        // TODO Auto-generated method stub
-
+        return this;
     }
 
     @Override
-    public void create(ContentRegistry creator)
+    public Item create(ContentRegistry creator)
     {
-        // TODO Auto-generated method stub
-
+        return product;
     }
 
 }

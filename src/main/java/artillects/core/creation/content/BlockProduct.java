@@ -18,7 +18,7 @@ import artillects.core.creation.templates.ItemBlockTemplate;
 /** Creation system and data storage for creating new basic blocks from xml data
  * 
  * @author Darkguardsman */
-public class BlockProduct extends Product
+public class BlockProduct extends Product<Block>
 {
     public float hardness = 1;
     public float resistance = 1;
@@ -27,15 +27,13 @@ public class BlockProduct extends Product
     public Subblock[] subBlocks;
     public String iconName;
 
-    public Block block;
-
     public BlockProduct(ContentFactory loader)
     {
         super(loader);
     }
 
     /** Called to load the content's data from an xml document */
-    public void loadData(Document doc)
+    public BlockProduct loadData(Document doc)
     {
         subBlocks = new Subblock[16];
         NodeList blockList = doc.getElementsByTagName("block");
@@ -137,23 +135,25 @@ public class BlockProduct extends Product
                 }
             }
         }
+        return this;
     }
 
     @Override
-    public void create(ContentRegistry creator)
+    public Block create(ContentRegistry creator)
     {
         int assignedID = creator.idManager.getNextBlockID();
         int actualID = creator.config.getBlock("XML_Blocks", unlocalizedName, assignedID).getInt(assignedID);
         creator.config.addCustomCategoryComment("XML_Blocks", "Blocks created threw XML data. Can be disabled by setting to -1, disable at own risk.");
         if (actualID != -1)
         {
-            block = new BlockTemplate(actualID, material);
-            block.setUnlocalizedName(unlocalizedName);
-            block.setHardness(this.hardness);
-            block.setResistance(this.resistance);
-            block.setCreativeTab(creator.defaultTab);
-            ContentRegistry.proxy.registerBlock(creator, block, ItemBlockTemplate.class, unlocalizedName, creator.modID);
-            ((BlockTemplate) block).content = this;
+            product = new BlockTemplate(actualID, material);
+            product.setUnlocalizedName(unlocalizedName);
+            product.setHardness(this.hardness);
+            product.setResistance(this.resistance);
+            product.setCreativeTab(creator.defaultTab);
+            ContentRegistry.proxy.registerBlock(creator, product, ItemBlockTemplate.class, unlocalizedName, creator.modID);
+            ((BlockTemplate) product).content = this;
         }
+        return product;
     }
 }
