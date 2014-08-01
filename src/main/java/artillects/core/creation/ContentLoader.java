@@ -36,11 +36,11 @@ public class ContentLoader
     private ContentRegistry creator;
     List<Content> loadedContent;
 
-    protected static HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
-    protected static HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
+    public static HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
+    public static HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
 
-    protected static HashMap<String, ContentBlock> blocks = new HashMap<String, ContentBlock>();
-    protected static HashMap<String, ContentItem> items = new HashMap<String, ContentItem>();
+    public static HashMap<String, ContentBlock> blocks = new HashMap<String, ContentBlock>();
+    public static HashMap<String, ContentItem> items = new HashMap<String, ContentItem>();
 
     public ContentLoader(ContentRegistry contentRegistry)
     {

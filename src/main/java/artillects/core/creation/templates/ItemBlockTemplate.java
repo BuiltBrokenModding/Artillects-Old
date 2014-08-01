@@ -67,9 +67,9 @@ public class ItemBlockTemplate extends ItemBlock
         Block block = Block.blocksList[getBlockID()];
         if (meta >= 0 && meta < 16 && block instanceof BlockTemplate)
         {
-            if (((BlockTemplate) block).subblocks != null && ((BlockTemplate) block).subblocks[meta] != null)
+            if (((BlockTemplate) block).content.subBlocks != null && ((BlockTemplate) block).content.subBlocks[meta] != null)
             {
-                localized = LanguageUtility.getLocal("tile." + ((BlockTemplate) block).subblocks[meta].unlocalizedName + ".name");
+                localized = LanguageUtility.getLocal("tile." + ((BlockTemplate) block).content.subBlocks[meta].unlocalizedName + ".name");
             }
         }
         if (localized == null || localized.isEmpty())

@@ -25,6 +25,7 @@ public class ContentBlock extends Content
     public String unlocalizedName;
     public Material material = Material.circuits;
     public Subblock[] subBlocks;
+    public String iconName;
 
     public Block block;
 
@@ -46,6 +47,10 @@ public class ContentBlock extends Content
                 if (block.hasAttribute("name"))
                 {
                     unlocalizedName = block.getAttribute("name");
+                    if (block.hasAttribute("icon"))
+                    {
+                        iconName = block.getAttribute("icon");
+                    }
                     if (block.hasAttribute("hardness"))
                     {
                         this.hardness = Float.parseFloat(block.getAttribute("hardness"));
@@ -57,9 +62,9 @@ public class ContentBlock extends Content
                     if (block.hasAttribute("material"))
                     {
                         String matName = block.getAttribute("material");
-                        for(MaterialData data : MaterialData.values())
+                        for (MaterialData data : MaterialData.values())
                         {
-                            if(data.name().equalsIgnoreCase(matName))
+                            if (data.name().equalsIgnoreCase(matName))
                             {
                                 this.material = data.material;
                                 break;
@@ -76,8 +81,28 @@ public class ContentBlock extends Content
                             if (meta.hasAttribute("id"))
                             {
                                 Subblock subblock = new Subblock();
-                                subblock.unlocalizedName = meta.hasAttribute("name") ? meta.getAttribute("name") : unlocalizedName;
-                                subblock.iconName = meta.hasAttribute("icon") ? meta.getAttribute("icon") : null;
+                                subblock.unlocalizedName = meta.hasAttribute("name") ? meta.getAttribute("name") : unlocalizedName;                            
+                                if (meta.hasAttribute("hardness"))
+                                {
+                                    subblock.hardness = Float.parseFloat(meta.getAttribute("hardness"));
+                                }
+                                if (meta.hasAttribute("resistance"))
+                                {
+                                    subblock.resistance = Float.parseFloat(meta.getAttribute("resistance"));
+                                }
+                                //Icon per side
+                                NodeList iconList = block.getElementsByTagName("icon");
+                                for (int i = 0; i < iconList.getLength(); i++)
+                                {
+                                    Element icon = (Element) iconList.item(i);
+                                    int side = icon.hasAttribute("side") ? Integer.parseInt(icon.getAttribute("side")) : -1;
+                                    String name = icon.hasAttribute("name") ? icon.getAttribute("name") : null;
+                                    if (name != null)
+                                    {
+                                        subblock.addSideIcon(side, name);
+                                    }
+                                }
+                                //Meta value
                                 if (meta.hasAttribute("id"))
                                 {
                                     subBlocks[Integer.parseInt(meta.getAttribute("id"))] = subblock;
@@ -86,7 +111,7 @@ public class ContentBlock extends Content
                                 {
                                     while (true)
                                     {
-                                        if (aMeta == 15)
+                                        if (aMeta >= 15)
                                         {
                                             break;
                                         }
@@ -125,6 +150,6 @@ public class ContentBlock extends Content
         block.setResistance(this.resistance);
         block.setCreativeTab(creator.defaultTab);
         ContentRegistry.proxy.registerBlock(creator, block, ItemBlockTemplate.class, unlocalizedName, creator.modID);
-        ((BlockTemplate) block).subblocks = this.subBlocks;
+        ((BlockTemplate) block).content = this;
     }
 }

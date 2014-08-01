@@ -19,10 +19,17 @@ public class Subblock
 
     public void addSideIcon(int side, String name)
     {
-        this.hasSides = true;
-        if (this.iconSideName == null)
-            this.iconSideName = new String[6];
-        this.iconSideName[side] = name;
+        if (side == -1)
+        {
+            this.iconName = name;
+        }
+        else
+        {
+            this.hasSides = true;
+            if (this.iconSideName == null)
+                this.iconSideName = new String[6];
+            this.iconSideName[side] = name;
+        }
     }
 
     public Icon getIcon(int side)
