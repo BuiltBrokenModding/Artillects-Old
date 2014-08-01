@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<content>
+    <block name="symbol" icon="symbol.gu">
+        <meta id="0" name="gu">
+            <icon name="symbol.gu"></icon>
+        </meta>
+        <meta id="1" name="zhi">
+            <icon name="symbol.zhi"></icon>
+        </meta>
+        <meta id="2" name="zhuang">
+            <icon name="symbol.zhuang"></icon>
+        </meta>
+    </block>
+</content>

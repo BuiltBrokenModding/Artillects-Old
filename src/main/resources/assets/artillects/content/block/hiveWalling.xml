@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <content>
     <block name="hiveWalling" icon="decorWall.0">
-        <meta id="0" name="testZero">
-            <icon name="decorWall.1"></icon>
+        <meta id="0" name="decorWall.0">
+            <icon name="decorWall.0"></icon>
         </meta>
-        <meta id="1" name="testOne">
-            <icon name="decorLight"></icon>
+        <meta id="1" name="decorWall.1">
+            <icon name="decorWall.1"></icon>
         </meta>
     </block>
 </content>
