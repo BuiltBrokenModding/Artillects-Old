@@ -8,7 +8,9 @@ import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -76,7 +78,7 @@ public class RecipeFactory
         for (int i = 0; i < list.getLength(); i++)
         {
             Object object = getPart((Element) list.item(i));
-            if(object != null)
+            if (object != null)
             {
                 objects.add(object);
             }
@@ -118,7 +120,33 @@ public class RecipeFactory
 
     public static void createFurnace(ItemStack result, Element element)
     {
-
+        NodeList list = element.getElementsByTagName("item");
+        float xp = element.hasAttribute("xp") ? Float.parseFloat(element.getAttribute("xp")) : 0f;
+        for (int i = 0; i < list.getLength(); i++)
+        {
+            Element e = (Element) list.item(i);
+            Object object = getPart(e);
+            if (object instanceof Item)
+            {
+                FurnaceRecipes.smelting().addSmelting(((Item) object).itemID, result, xp);
+            }
+            else if (object instanceof Block)
+            {
+                FurnaceRecipes.smelting().addSmelting(((Block) object).blockID, result, xp);
+            }
+            else if (object instanceof ItemStack)
+            {
+                FurnaceRecipes.smelting().addSmelting(((ItemStack) object).itemID, ((ItemStack) object).getItemDamage(), result, xp);
+            }
+            else if (object instanceof String)
+            {
+                List<ItemStack> stacks = OreDictionary.getOres(((String) object));
+                for (ItemStack stack : stacks)
+                {
+                    FurnaceRecipes.smelting().addSmelting(stack.itemID, stack.getItemDamage(), result, xp);
+                }
+            }
+        }
     }
 
     public static Object getPart(Element e)

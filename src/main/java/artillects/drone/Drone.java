@@ -6,11 +6,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import resonant.lib.network.PacketHandler;
 import resonant.lib.prefab.item.ItemBlockMetadata;
-import resonant.lib.recipe.UniversalRecipe;
-import artillects.content.blocks.teleporter.BlockGlyph;
 import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemArtillectSpawner;
@@ -18,12 +14,9 @@ import artillects.content.items.ItemBuildingGenerator;
 import artillects.content.items.ItemSchematicCreator;
 import artillects.core.Artillects;
 import artillects.core.ArtillectsTab;
-import artillects.core.Reference;
-import artillects.core.building.BuildFile;
 import artillects.drone.commands.CommandTool;
 import artillects.drone.entity.EnumArtillectEntity;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.Metadata;
@@ -33,7 +26,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -67,7 +59,6 @@ public class Drone
     public static boolean enableHiveChunkLoading = true;
     public static boolean enableHiveCoreChunkLoading = true;
     public static int hiveChunkLoadingRange = 5;
-    public static Block blockGlyph;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
@@ -97,7 +88,6 @@ public class Drone
         Artillects.contentRegistry.createBlock("hiveSymbol", Block.class, ItemBlockMetadata.class, null);
         Artillects.contentRegistry.createBlock("hiveWall", Block.class, ItemBlockMetadata.class, null);
         Artillects.contentRegistry.createBlock("hiveLight", Block.class, ItemBlockMetadata.class, null);
-        blockGlyph = Artillects.contentRegistry.createBlock(BlockGlyph.class, ItemBlockMetadata.class);
         Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
 
         ArtillectsTab.itemStack = new ItemStack(Block.anvil);

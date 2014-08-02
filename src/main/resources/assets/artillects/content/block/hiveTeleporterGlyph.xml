@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<content>
+    <block name="glyph" icon="glyph0">
+        <meta id="0" name="glyph.0">
+            <icon name="glyph0"></icon>
+        </meta>
+        <meta id="1" name="glyph.1">
+            <icon name="glyph1"></icon>
+        </meta>
+        <meta id="2" name="glyph.2">
+            <icon name="glyph2"></icon>
+        </meta>
+        <meta id="3" name="glyph.3">
+            <icon name="glyph3"></icon>
+        </meta>
+    </block>
+</content>
