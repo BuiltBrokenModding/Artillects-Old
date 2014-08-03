@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
+import artillects.core.Artillects;
 import artillects.core.Reference;
 import artillects.core.creation.ContentFactory;
 import artillects.core.creation.Subblock;
@@ -51,9 +52,9 @@ public class BlockTemplate extends Block
     {
         if (content.iconName != null)
         {
-            if (ContentFactory.blockTextures.containsKey(content.iconName))
+            if (Artillects.contentFactory.blockTextures.containsKey(content.iconName))
             {
-                blockIcon = ContentFactory.blockTextures.get(content.iconName);
+                blockIcon = Artillects.contentFactory.blockTextures.get(content.iconName);
             }
             else
             {
@@ -78,9 +79,9 @@ public class BlockTemplate extends Block
                             if (sub.iconSideName[side] != null)
                             {
                                 String name = sub.iconSideName[side];
-                                if (ContentFactory.blockTextures.containsKey(name))
+                                if (Artillects.contentFactory.blockTextures.containsKey(name))
                                 {
-                                    sub.iconSide[side] = ContentFactory.blockTextures.get(name);
+                                    sub.iconSide[side] = Artillects.contentFactory.blockTextures.get(name);
                                 }
                                 else
                                 {
@@ -91,9 +92,9 @@ public class BlockTemplate extends Block
                     }
                     else if (sub.iconName != null)
                     {
-                        if (ContentFactory.blockTextures.containsKey(sub.iconName))
+                        if (Artillects.contentFactory.blockTextures.containsKey(sub.iconName))
                         {
-                            sub.iconMain = ContentFactory.blockTextures.get(sub.iconName);
+                            sub.iconMain = Artillects.contentFactory.blockTextures.get(sub.iconName);
                         }
                         else
                         {

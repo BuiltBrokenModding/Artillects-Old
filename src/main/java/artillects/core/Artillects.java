@@ -78,6 +78,8 @@ public class Artillects
     public static Block blockTeleporter;
     public static Block blockLockedDoor;
 
+    public static ContentFactory contentFactory;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
@@ -93,11 +95,11 @@ public class Artillects
         //create content registry
         contentRegistry = new ContentRegistry(CONFIG, new IDManager(1700, 20150), Reference.NAME).setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
 
-        ContentFactory loader = new ContentFactory(contentRegistry);
+        contentFactory = new ContentFactory(contentRegistry);
         try
         {
-            loader.load();
-            loader.createAll();
+            contentFactory.load();
+            contentFactory.createAll();
         }
         catch (Exception e)
         {

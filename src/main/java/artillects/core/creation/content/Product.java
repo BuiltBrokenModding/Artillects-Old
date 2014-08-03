@@ -7,13 +7,7 @@ import resonant.lib.content.ContentRegistry;
 
 public abstract class Product<N>
 {
-    protected ContentFactory loader;
     protected N product;
-
-    public Product(ContentFactory loader)
-    {
-        this.loader = loader;
-    }
 
     /** Called to load the content's data from an xml document */
     public abstract Product<N> loadData(Document doc);

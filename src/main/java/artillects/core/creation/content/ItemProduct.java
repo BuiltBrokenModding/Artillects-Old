@@ -9,13 +9,7 @@ import resonant.lib.content.ContentRegistry;
 
 public class ItemProduct extends Product<Item>
 {
-    public Item item;
     public String unlocalizedName;
-    
-    public ItemProduct(ContentFactory loader)
-    {
-        super(loader);
-    }
 
     @Override
     public ItemProduct loadData(Document doc)

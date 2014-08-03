@@ -6,14 +6,15 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 
@@ -21,9 +22,9 @@ import org.w3c.dom.Document;
 
 import resonant.lib.content.ContentRegistry;
 import artillects.core.building.BuildFile;
-import artillects.core.creation.content.Product;
 import artillects.core.creation.content.BlockProduct;
 import artillects.core.creation.content.ItemProduct;
+import artillects.core.creation.content.Product;
 import artillects.core.creation.content.ProductType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -34,18 +35,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ContentFactory
 {
     private ContentRegistry creator;
-    List<Product> loadedContent;
 
-    public static HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
-    public static HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
+    public HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
+    public HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
 
-    public static HashMap<String, BlockProduct> blocks = new HashMap<String, BlockProduct>();
-    public static HashMap<String, ItemProduct> items = new HashMap<String, ItemProduct>();
+    public HashMap<Class<?>, HashMap<String, Product>> content = new HashMap<Class<?>, HashMap<String, Product>>();
 
     public ContentFactory(ContentRegistry contentRegistry)
     {
         this.creator = contentRegistry;
-        loadedContent = new LinkedList<Product>();
     }
 
     public void load() throws Exception
@@ -107,19 +105,12 @@ public class ContentFactory
             if (doc.getElementsByTagName("block").getLength() > 0)
             {
                 type = ProductType.BLOCK;
-                product = new BlockProduct(this);
+                product = new BlockProduct();
             }
             else if (doc.getElementsByTagName("item").getLength() > 0)
             {
                 type = ProductType.ITEM;
-            }
-            else if (doc.getElementsByTagName("tile").getLength() > 0)
-            {
-                type = ProductType.TILE;
-            }
-            else if (doc.getElementsByTagName("entity").getLength() > 0)
-            {
-                type = ProductType.ENTITY;
+                product = new ItemProduct();
             }
             else
             {
@@ -144,19 +135,11 @@ public class ContentFactory
                     if (doc.getElementsByTagName("block").getLength() > 0)
                     {
                         type = ProductType.BLOCK;
-                        product = new BlockProduct(this);
+                        product = new BlockProduct();
                     }
                     else if (doc.getElementsByTagName("item").getLength() > 0)
                     {
                         type = ProductType.ITEM;
-                    }
-                    else if (doc.getElementsByTagName("tile").getLength() > 0)
-                    {
-                        type = ProductType.TILE;
-                    }
-                    else if (doc.getElementsByTagName("entity").getLength() > 0)
-                    {
-                        type = ProductType.ENTITY;
                     }
                     else
                     {
@@ -185,32 +168,33 @@ public class ContentFactory
         {
             if (type == ProductType.BLOCK)
             {
-                blocks.put(((BlockProduct) product).unlocalizedName, (BlockProduct) product);
+                HashMap<String, Product> c = content.containsKey(Block.class) ? content.get(Block.class) : new HashMap<String, Product>();
+                c.put(((BlockProduct) product).unlocalizedName, product);
+                content.put(Block.class, c);
             }
             else if (type == ProductType.ITEM)
             {
-                items.put(((ItemProduct) product).unlocalizedName, (ItemProduct) product);
-            }
-            else
-            {
-                loadedContent.add(product);
+                HashMap<String, Product> c = content.containsKey(Item.class) ? content.get(Item.class) : new HashMap<String, Product>();
+                c.put(((ItemProduct) product).unlocalizedName, product);
+                content.put(Item.class, c);
             }
         }
     }
 
     public void createAll()
     {
-        for (Product product : this.loadedContent)
+        for (Entry<Class<?>, HashMap<String, Product>> entry : content.entrySet())
         {
-            create(product);
-        }
-        for(BlockProduct block : blocks.values())
-        {
-            block.create(creator);
-        }        
-        for(ItemProduct item : items.values())
-        {
-            item.create(creator);
+            if(entry.getValue() != null)
+            {
+                for(Entry<String, Product> e : entry.getValue().entrySet())
+                {
+                    if(e.getValue() != null)
+                    {
+                        create(e.getValue());
+                    }
+                }
+            }
         }
     }
 

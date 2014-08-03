@@ -27,11 +27,6 @@ public class BlockProduct extends Product<Block>
     public Subblock[] subBlocks;
     public String iconName;
 
-    public BlockProduct(ContentFactory loader)
-    {
-        super(loader);
-    }
-
     /** Called to load the content's data from an xml document */
     public BlockProduct loadData(Document doc)
     {
