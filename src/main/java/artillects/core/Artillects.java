@@ -19,6 +19,8 @@ import resonant.lib.network.PacketTile;
 import resonant.lib.recipe.UniversalRecipe;
 import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
+import artillects.content.blocks.door.BlockLockedDoor;
+import artillects.content.blocks.door.ItemLockedDoor;
 import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemSchematicCreator;
@@ -69,10 +71,12 @@ public class Artillects
     public static ContentRegistry contentRegistry;
     public static Item itemClaimFlag;
     public static Item itemSchematicCreator;
+    public static Item itemLockedDoor;
 
     public static Block blockSurveyor;
     public static Block blockExtractor;
     public static Block blockTeleporter;
+    public static Block blockLockedDoor;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
@@ -100,11 +104,13 @@ public class Artillects
             e.printStackTrace();
         }
         itemClaimFlag = contentRegistry.createItem(ItemClaimFlag.class);
-        itemSchematicCreator = Artillects.contentRegistry.createItem(ItemSchematicCreator.class);
+        itemSchematicCreator = contentRegistry.createItem(ItemSchematicCreator.class);
+        itemLockedDoor = contentRegistry.createItem(ItemLockedDoor.class);
 
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         blockExtractor = contentRegistry.newBlock(TileExtractor.class);
-        blockTeleporter = Artillects.contentRegistry.createBlock(BlockTeleporterAnchor.class);
+        blockTeleporter = contentRegistry.createBlock(BlockTeleporterAnchor.class);
+        blockLockedDoor = contentRegistry.createBlock(BlockLockedDoor.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 
