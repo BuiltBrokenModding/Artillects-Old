@@ -13,7 +13,6 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import resonant.lib.utility.LanguageUtility;
 import artillects.core.Reference;
-import artillects.drone.Drone;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

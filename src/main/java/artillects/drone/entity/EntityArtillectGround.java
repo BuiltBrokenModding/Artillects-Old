@@ -10,8 +10,6 @@ import net.minecraftforge.common.ForgeDirection;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
-import artillects.drone.CommonProxy.GuiIDs;
-import artillects.drone.Drone;
 import artillects.drone.hive.HiveComplex;
 
 /** Prefab for ground based drones
@@ -53,10 +51,6 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
             {
                 this.setType(this.getType().toggle(this));
                 entityPlayer.addChatMessage("Toggled to: " + this.getType().name());
-            }
-            else
-            {
-                entityPlayer.openGui(Drone.instance, GuiIDs.ARTILLECT_ENTITY.ordinal(), this.worldObj, this.entityId, 0, 0);
             }
             return true;
         }

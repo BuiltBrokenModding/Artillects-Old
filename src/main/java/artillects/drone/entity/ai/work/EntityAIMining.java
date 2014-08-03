@@ -11,7 +11,6 @@ import net.minecraft.util.Vec3;
 import universalelectricity.api.vector.IVector3;
 import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
-import artillects.drone.Drone;
 import artillects.drone.InventoryHelper;
 import artillects.drone.entity.EntityArtillectGround;
 import artillects.drone.entity.EnumArtillectType;

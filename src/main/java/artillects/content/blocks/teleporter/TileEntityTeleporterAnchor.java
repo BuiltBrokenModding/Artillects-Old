@@ -45,7 +45,7 @@ public class TileEntityTeleporterAnchor extends TileEntity
 
     public void doTeleport(Entity entity)
     {
-        if (this.getFrequency() > 0)
+        if (this.getFrequency() > -1)
         {
             TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
             if (teleporter != null)
@@ -61,23 +61,24 @@ public class TileEntityTeleporterAnchor extends TileEntity
         if (System.currentTimeMillis() - this.lastFrequencyCheck > 10)
         {
             this.lastFrequencyCheck = System.currentTimeMillis();
-            this.frequency = 0;
-            for (int i = 2; i < 6; i++)
+            this.frequency = -1;
+            int s = 0;
+            for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
             {
-                ForgeDirection direction = ForgeDirection.getOrientation(i);
-                Vector3 position = new Vector3(this.xCoord + direction.offsetX, this.yCoord + direction.offsetY, this.zCoord + direction.offsetZ);
+                VectorWorld pos = (VectorWorld) new VectorWorld(this).translate(direction);
 
-                Block block = Block.blocksList[this.worldObj.getBlockId((int) position.x, (int) position.y, (int) position.z)];
+                Block block = Block.blocksList[pos.getBlockID()];
 
                 if (block != null && block.getUnlocalizedName().contains("glyph"))
                 {
-                    int metadata = this.worldObj.getBlockMetadata((int) position.x, (int) position.y, (int) position.z);
-                    this.frequency += Math.pow(4, i - 2) * metadata;
+                    s++;
+                    int metadata = this.worldObj.getBlockMetadata((int) pos.x, (int) pos.y, (int) pos.z);
+                    this.frequency += direction.ordinal() * metadata;
                 }
-                else
-                {
-                    return -1;
-                }
+            }
+            if(s < 4)
+            {
+                this.frequency = -1;
             }
         }
         return this.frequency;
