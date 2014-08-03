@@ -3,28 +3,17 @@ package artillects.content.blocks.teleporter;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 import resonant.lib.prefab.tile.TileAdvanced;
 import universalelectricity.api.vector.Vector3;
 import universalelectricity.api.vector.VectorWorld;
 
 /** @author Archadia */
-public class TileEntityTeleporterAnchor extends TileAdvanced
+public class TileEntityTeleporterAnchor extends TileEntity
 {
     private long lastFrequencyCheck = 0;
-    public long lastVoiceActivation = 0;
     private int frequency = 0;
-    private boolean forceXYZ = false;
-    private Vector3 teleportSpot = null;
-
-    public void setTeleportLocation(Vector3 location)
-    {
-        if (location != null)
-        {
-            this.forceXYZ = true;
-            this.teleportSpot = location;
-        }
-    }
 
     @Override
     public void validate()
@@ -56,23 +45,13 @@ public class TileEntityTeleporterAnchor extends TileAdvanced
 
     public void doTeleport(Entity entity)
     {
-        VectorWorld teleportSpot = null;
-        if (this.forceXYZ && this.teleportSpot != null)
-        {
-            teleportSpot = new VectorWorld(this.worldObj, this.teleportSpot);
-        }
-        else if (this.getFrequency() > 0)
+        if (this.getFrequency() > 0)
         {
             TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
             if (teleporter != null)
             {
-                teleportSpot = new VectorWorld(teleporter).translate(0.5, 2, 0.5);
+                TeleportManager.moveEntity(entity, new VectorWorld(teleporter).translate(0.5, 2, 0.5));
             }
-        }
-
-        if (teleportSpot != null)
-        {
-            TeleportManager.moveEntity(entity, teleportSpot);
         }
     }
 
@@ -102,26 +81,5 @@ public class TileEntityTeleporterAnchor extends TileAdvanced
             }
         }
         return this.frequency;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        if (this.teleportSpot != null)
-        {
-            nbt.setCompoundTag("teleportLocation", this.teleportSpot.writeToNBT(new NBTTagCompound()));
-        }
-    }
-
-    @Override
-    public void writeToNBT(NBTTagCompound nbt)
-    {
-        super.writeToNBT(nbt);
-        if (nbt.hasKey("teleportLocation"))
-        {
-            this.teleportSpot = new Vector3(nbt.getCompoundTag("teleportLocation"));
-            this.forceXYZ = true;
-        }
     }
 }
