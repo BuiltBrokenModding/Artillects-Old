@@ -1,16 +1,18 @@
 package artillects.core.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import universalelectricity.api.vector.IVectorWorld;
 
 /** Base entity class for all entities created by artillect mod
  * 
  * @author Darkguardsman */
-public class EntityBase extends EntityLiving implements IVectorWorld
+public class EntityBase extends EntityCreature implements IVectorWorld
 {
     private boolean playerOwned = false;
     
@@ -95,5 +97,47 @@ public class EntityBase extends EntityLiving implements IVectorWorld
     public World world()
     {
         return this.worldObj;
+    }
+    
+    //--------------------------------
+    //--------Helper methods----------
+    //--------------------------------
+    
+    /** Causes the entity to blow up */
+    public Explosion blowUp()
+    {
+        return blowUp(2);
+    }
+    
+    /** Causes the entity to blow up */
+    public Explosion blowUp(double size)
+    {
+        return blowUp(size, true);
+    }
+    
+    /**
+     * Causes the entity to blow up
+     * @param doDie - should the entity die 
+     */
+    public Explosion blowUp(double size, boolean doDie)
+    {
+        Explosion e = causeExplosion(x(), y(), z(), size);
+        if(doDie)
+        {
+            setDead();
+        }
+        return e;
+    }
+    
+    /**
+     * Creates an explosion causes by this entity
+     * @param x - x location
+     * @param y - y location
+     * @param z - z locaion
+     * @param size - radius of the explosion
+     */
+    public Explosion causeExplosion(double x, double y, double z, double size)
+    {
+        return this.worldObj.createExplosion(this, x, y, z, (float)(size * 2), this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"));
     }
 }
