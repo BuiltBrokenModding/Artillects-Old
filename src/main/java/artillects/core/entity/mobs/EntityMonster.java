@@ -5,6 +5,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import artillects.core.entity.EntityBase;
 
+/**
+ * Base class for any create that is a monster 
+ * @author robert
+ *
+ */
 public class EntityMonster extends EntityBase implements IMob
 {   
     public EntityMonster(World world)
