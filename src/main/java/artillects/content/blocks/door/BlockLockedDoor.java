@@ -16,9 +16,10 @@ import net.minecraft.world.World;
  * @author Darkguardsman */
 public class BlockLockedDoor extends BlockDoor
 {
-    protected BlockLockedDoor(int id)
+    public BlockLockedDoor(int id)
     {
         super(id, Material.rock);
+        setUnlocalizedName("CustomLockedDoor");
     }
 
     @Override

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.Configuration;
@@ -21,6 +22,7 @@ import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
 import artillects.content.blocks.door.BlockLockedDoor;
 import artillects.content.blocks.door.ItemLockedDoor;
+import artillects.content.blocks.door.TileLockedDoor;
 import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemSchematicCreator;
@@ -112,7 +114,7 @@ public class Artillects
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         blockExtractor = contentRegistry.newBlock(TileExtractor.class);
         blockTeleporter = contentRegistry.createBlock(BlockTeleporterAnchor.class);
-        blockLockedDoor = contentRegistry.createBlock(BlockLockedDoor.class);
+        blockLockedDoor = contentRegistry.createBlock("CustomLockedDoor", BlockLockedDoor.class, ItemBlock.class, TileLockedDoor.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 
