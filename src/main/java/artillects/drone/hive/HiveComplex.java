@@ -6,22 +6,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldProvider;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
 import resonant.lib.utility.nbt.SaveManager;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.BuildingPart;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.core.building.GhostObject;
 import artillects.drone.entity.IArtillect;
 import artillects.drone.hive.zone.Zone;
 import artillects.drone.hive.zone.ZoneBuilding;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Hive village in other words. This represents a single location in the hive. Each hive complex has
  * a task and set of structure peaces.
@@ -120,7 +120,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         final int tunnelSpacing = 18;
         for (int floor = 0; floor <= height; floor++)
         {
-            VectorWorld floorBase = this.location.clone().translate(0, 8 * floor, 0);
+            VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
             // Center room
             peaces.add(new BuildingPart(EnumStructurePeaces.NODE, floorBase.clone()));
             if (floor == 0)
@@ -142,29 +142,29 @@ public class HiveComplex extends GhostObject implements IVirtualObject
             if (floor != height)
             {
                 // NorthTunnel
-                this.loadTunnel(floorBase.clone().translate(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
-                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().translate(0, 0, -tunnelSpacing - (6 * width))));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, floorBase.clone().translate(0, 1, -tunnelSpacing - (6 * width) - 4)));
-                this.loadTunnel(floorBase.clone().translate(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width + 1);
-                this.loadTunnel(floorBase.clone().translate(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width + 1);
+                this.loadTunnel(floorBase.clone().add(0, 0, -tunnelSpacing), ForgeDirection.NORTH, width);
+                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().add(0, 0, -tunnelSpacing - (6 * width))));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, floorBase.clone().add(0, 1, -tunnelSpacing - (6 * width) - 4)));
+                this.loadTunnel(floorBase.clone().add(-6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.WEST, width + 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, -tunnelSpacing - (6 * width)), ForgeDirection.EAST, width + 1);
                 // SouthTunnel
-                this.loadTunnel(floorBase.clone().translate(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
-                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().translate(0, 0, +tunnelSpacing + (6 * width))));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, floorBase.clone().translate(0, 1, +tunnelSpacing + (6 * width) + 4)));
-                this.loadTunnel(floorBase.clone().translate(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width + 1);
-                this.loadTunnel(floorBase.clone().translate(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width + 1);
+                this.loadTunnel(floorBase.clone().add(0, 0, +tunnelSpacing), ForgeDirection.SOUTH, width);
+                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().add(0, 0, +tunnelSpacing + (6 * width))));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, floorBase.clone().add(0, 1, +tunnelSpacing + (6 * width) + 4)));
+                this.loadTunnel(floorBase.clone().add(-6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.WEST, width + 1);
+                this.loadTunnel(floorBase.clone().add(+6, 0, +tunnelSpacing + (6 * width)), ForgeDirection.EAST, width + 1);
                 // EastTunnel
-                this.loadTunnel(floorBase.clone().translate(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
-                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, 0)));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, floorBase.clone().translate(+tunnelSpacing + (6 * width) + 4, 1, 0)));
-                this.loadTunnel(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
-                this.loadTunnel(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing, 0, 0), ForgeDirection.EAST, width);
+                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 0)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, floorBase.clone().add(+tunnelSpacing + (6 * width) + 4, 1, 0)));
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
                 // WestTunnel
-                this.loadTunnel(floorBase.clone().translate(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
-                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, 0)));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, floorBase.clone().translate(-tunnelSpacing - (6 * width) - 4, 1, 0)));
-                this.loadTunnel(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
-                this.loadTunnel(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing, 0, 0), ForgeDirection.WEST, width);
+                peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 0)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, floorBase.clone().add(-tunnelSpacing - (6 * width) - 4, 1, 0)));
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -6), ForgeDirection.NORTH, width + 1);
+                this.loadTunnel(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, 6), ForgeDirection.SOUTH, width + 1);
 
                 // Corner room
                 int cornerA = 0, cornerB = 0, cornerC = 0, cornerD = 0;
@@ -199,13 +199,13 @@ public class HiveComplex extends GhostObject implements IVirtualObject
                         break;
                 }
                 // NorthWest
-                this.load3x3Room(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
+                this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, -(6 * (width + 1)) - 12), cornerA);
                 // NorthEast
-                this.load3x3Room(floorBase.clone().translate(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
+                this.load3x3Room(floorBase.clone().add(-tunnelSpacing - (6 * width), 0, +(6 * (width + 1)) + 12), cornerB);
                 // SouthEast
-                this.load3x3Room(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerC);
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, +(6 * (width + 1)) + 12), cornerC);
                 // SouthWest
-                this.load3x3Room(floorBase.clone().translate(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
+                this.load3x3Room(floorBase.clone().add(+tunnelSpacing + (6 * width), 0, -(6 * (width + 1)) - 12), cornerD);
             }
         }
 
@@ -234,42 +234,42 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         // Center
         if (center == 0)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, 0)));
         }
         else if (center == 1)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().translate(0, +7, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().translate(0, 0, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.TELEFLOOR, start.clone().translate(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.TELEFLOOR, start.clone().add(0, 0, 0)));
         }
         else if (center == 2)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().translate(0, +7, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().translate(0, 0, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.COREFLOOR, start.clone().translate(0, 0, 0)).worldGen());
+            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.COREFLOOR, start.clone().add(0, 0, 0)).worldGen());
         }
         // South
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, 6)));
         // North
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, -6)));
         // East
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, 0)));
         // West
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, 0)));
         // Corners
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, -6)));
         // Walls
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(10, 1, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(6, 1, 10)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-10, 1, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-6, 1, 10)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(10, 1, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(6, 1, -10)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-10, 1, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-6, 1, -10)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(10, 1, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(6, 1, 10)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-10, 1, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-6, 1, 10)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(10, 1, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(6, 1, -10)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-10, 1, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-6, 1, -10)));
 
     }
 
@@ -278,66 +278,66 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         // Center
         if (center == 0)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, 0)));
         }
         else if (center == 1)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().translate(0, +7, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().translate(0, 0, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.TELEFLOOR, start.clone().translate(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.TELEFLOOR, start.clone().add(0, 0, 0)));
         }
         else if (center == 2)
         {
-            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().translate(0, +7, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().translate(0, 0, 0)));
-            peaces.add(new BuildingPart(EnumStructurePeaces.COREFLOOR, start.clone().translate(0, 0, 0)).worldGen());
+            peaces.add(new BuildingPart(EnumStructurePeaces.SKYLIGHT, start.clone().add(0, +7, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.NODE, start.clone().add(0, 0, 0)));
+            peaces.add(new BuildingPart(EnumStructurePeaces.COREFLOOR, start.clone().add(0, 0, 0)).worldGen());
         }
         // South
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(+6, 0, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(+6, 0, 12)));
         // North
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(0, 0, -12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, -12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(+6, 0, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(0, 0, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(+6, 0, -12)));
         // East
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, 0)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(12, 0, 0)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(12, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(12, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(12, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(12, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(12, 0, 6)));
         // West
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, 0)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-12, 0, 0)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-12, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-12, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-12, 0, 0)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-12, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-12, 0, 6)));
         // Corners
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-6, 0, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(6, 0, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(12, 0, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-12, 0, -12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(-12, 0, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().translate(12, 0, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-6, 0, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(6, 0, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(12, 0, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-12, 0, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(-12, 0, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELC, start.clone().add(12, 0, -12)));
         // Walls
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(16, 1, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(6, 1, 16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-16, 1, 6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-6, 1, 16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(16, 1, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(6, 1, -16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-16, 1, -6)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-6, 1, -16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(16, 1, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(12, 1, 16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-16, 1, 12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-12, 1, 16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(16, 1, -12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(12, 1, -16)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().translate(-16, 1, -12)));
-        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().translate(-12, 1, -16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(16, 1, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(6, 1, 16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-16, 1, 6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-6, 1, 16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(16, 1, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(6, 1, -16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-16, 1, -6)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-6, 1, -16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(16, 1, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(12, 1, 16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-16, 1, 12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-12, 1, 16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(16, 1, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(12, 1, -16)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, start.clone().add(-16, 1, -12)));
+        peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, start.clone().add(-12, 1, -16)));
 
     }
 
@@ -345,7 +345,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     {
         for (int i = 0; i < tunnelPeaces; i++)
         {
-            VectorWorld spot = start.clone().translate(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
+            VectorWorld spot = start.clone().add(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
             if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH)
             {
                 peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELZ, spot));
@@ -357,10 +357,10 @@ public class HiveComplex extends GhostObject implements IVirtualObject
             else if (direction == ForgeDirection.UP || direction == ForgeDirection.DOWN)
             {
                 peaces.add(new BuildingPart(EnumStructurePeaces.NODE, spot));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, spot.clone().translate(3, 1, 0)));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, spot.clone().translate(-3, 1, 0)));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, spot.clone().translate(0, 1, -3)));
-                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, spot.clone().translate(0, 1, 3)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, spot.clone().add(3, 1, 0)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, spot.clone().add(-3, 1, 0)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLX, spot.clone().add(0, 1, -3)));
+                peaces.add(new BuildingPart(EnumStructurePeaces.WALLZ, spot.clone().add(0, 1, 3)));
             }
         }
     }
@@ -437,7 +437,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     @Override
     public void save(NBTTagCompound nbt)
     {
-        nbt.setCompoundTag("location", this.location.writeToNBT(new NBTTagCompound()));
+        nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
         nbt.setString("name", this.getName());
     }
 
@@ -446,7 +446,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     {
         this.location = new VectorWorld(nbt.getCompoundTag("location"));
         this.loadGeneralBuilding(false);
-        this.setName(nbt.getName());
     }
 
     public String getName()
@@ -462,7 +461,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "hive/" + this.location.world.provider.dimensionId + "/complex_" + this.name);
+        return new File(NBTUtility.getSaveDirectory(), "hive/" + this.location.world().provider.dimensionId + "/complex_" + this.name);
     }
 
     @Override
@@ -472,10 +471,10 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     }
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onWorldunLoad(Unload event)
     {
-        if (event.world == this.location.world)
+        if (event.world == this.location.world())
         {
             this.invalidate();
             //HiveComplexManager.instance().unloadHive(this);

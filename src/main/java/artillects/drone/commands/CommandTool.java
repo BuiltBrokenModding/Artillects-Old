@@ -6,9 +6,9 @@ import java.util.List;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentText;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 public class CommandTool extends CommandBase
 {
@@ -34,14 +34,14 @@ public class CommandTool extends CommandBase
                 EntityPlayer player = (EntityPlayer) sender;
                 if (args == null || args.length == 0 || args[0].equalsIgnoreCase("help"))
                 {
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection copy - copies the selected area"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection load <name> - loads a schematic from file"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection save [name] - saves the loaded schematic"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection build pointOne - build a schematic at first selection point"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection build pointTwo - build a schematic at second selection point"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool slection build x y z - builds a schematic at the location"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool hive ls - gets the number of active hives"));
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool hive get - gets the closest hive"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection copy - copies the selected area"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection load <name> - loads a schematic from file"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection save [name] - saves the loaded schematic"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection build pointOne - build a schematic at first selection point"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection build pointTwo - build a schematic at second selection point"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool slection build x y z - builds a schematic at the location"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool hive ls - gets the number of active hives"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool hive get - gets the closest hive"));
                 }
                 else if (args.length >= 1 && args[0].equalsIgnoreCase("selection"))
                 {
@@ -56,17 +56,17 @@ public class CommandTool extends CommandBase
                             File file = new File(NBTUtility.getBaseDirectory(), "schematics/" + args[2] + ".dat");
                             if (file.exists())
                             {
-                                player.sendChatToPlayer(ChatMessageComponent.createFromText("Loading " + args[2] + " from file"));
+                                player.addChatComponentMessage(new ChatComponentText("Loading " + args[2] + " from file"));
                                 PlayerSelectionHandler.getSchematic(player, file);
                             }
                             else
                             {
-                                player.sendChatToPlayer(ChatMessageComponent.createFromText("File not found! .mincraft/schematics/" + args[2] + ".dat"));
+                                player.addChatComponentMessage(new ChatComponentText("File not found! .mincraft/schematics/" + args[2] + ".dat"));
                             }
                         }
                         else
                         {
-                            player.sendChatToPlayer(ChatMessageComponent.createFromText("Name is required to load schematics"));
+                            player.addChatComponentMessage(new ChatComponentText("Name is required to load schematics"));
                         }
                     }
                     else if (args.length >= 2 && args[1].equalsIgnoreCase("copy"))
@@ -81,24 +81,24 @@ public class CommandTool extends CommandBase
                             {
                                 if (PlayerSelectionHandler.hasPointOne(player))
                                 {
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at point one"));
+                                    player.addChatComponentMessage(new ChatComponentText("Building schematic at point one"));
                                     PlayerSelectionHandler.getSchematic(player).build(PlayerSelectionHandler.getPointOne(player), false);
                                 }
                                 else
                                 {
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a location"));
+                                    player.addChatComponentMessage(new ChatComponentText("Can't build without a location"));
                                 }
                             }
                             else if (args.length >= 3 && args[2].equalsIgnoreCase("pointTwo"))
                             {
                                 if (PlayerSelectionHandler.hasPointTwo(player))
                                 {
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at point two"));
+                                    player.addChatComponentMessage(new ChatComponentText("Building schematic at point two"));
                                     PlayerSelectionHandler.getSchematic(player).build(PlayerSelectionHandler.getPointTwo(player), false);
                                 }
                                 else
                                 {
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a location"));
+                                    player.addChatComponentMessage(new ChatComponentText("Can't build without a location"));
                                 }
                             }
                             else if (args.length >= 5)
@@ -108,12 +108,12 @@ public class CommandTool extends CommandBase
                                     int x = Integer.parseInt(args[2]);
                                     int y = Integer.parseInt(args[3]);
                                     int z = Integer.parseInt(args[4]);
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Building schematic at " + x + "x " + y + "y " + z + "z "));
+                                    player.addChatComponentMessage(new ChatComponentText("Building schematic at " + x + "x " + y + "y " + z + "z "));
                                     PlayerSelectionHandler.getSchematic(player).build(new VectorWorld(player.worldObj, x, y, z), false);
                                 }
                                 catch (IllegalArgumentException e)
                                 {
-                                    player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build due to location parsing xyz"));
+                                    player.addChatComponentMessage(new ChatComponentText("Can't build due to location parsing xyz"));
                                 }
                                 catch (Exception e)
                                 {
@@ -123,17 +123,17 @@ public class CommandTool extends CommandBase
                         }
                         else
                         {
-                            player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't build without a schematic loaded!"));
+                            player.addChatComponentMessage(new ChatComponentText("Can't build without a schematic loaded!"));
                         }
                     }
                     else
                     {
-                        player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool help"));
+                        player.addChatComponentMessage(new ChatComponentText("/tool help"));
                     }
                 }
                 else
                 {
-                    player.sendChatToPlayer(ChatMessageComponent.createFromText("/tool help"));
+                    player.addChatComponentMessage(new ChatComponentText("/tool help"));
                 }
             }
         }

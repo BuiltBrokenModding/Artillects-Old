@@ -7,26 +7,23 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import resonant.api.IRemovable.ISneakPickup;
-import resonant.lib.network.IPacketReceiverWithID;
-import resonant.lib.network.PacketHandler;
-import resonant.lib.prefab.tile.TileElectrical;
-import universalelectricity.api.vector.EulerAngle;
-import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
 
 import com.google.common.io.ByteArrayDataInput;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
+import resonant.engine.ResonantEngine;
+import resonant.lib.network.discriminator.PacketTile;
+import resonant.lib.network.handle.IPacketIDReceiver;
+import universalelectricity.core.transform.rotation.EulerAngle;
+import universalelectricity.core.transform.vector.Vector3;
+import resonant.lib.content.prefab.java.TileElectric;
 
 /** Prefab for tools that can be place and function while placed
  * 
  * @author Darkguardsman */
-public class TilePlaceableTool extends TileElectrical implements IPacketReceiverWithID, ISneakPickup
+public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver, ISneakPickup
 {
     public EulerAngle angle;
 
@@ -53,17 +50,17 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-        if (doRayTrace && this.ticks % rayTiming == 0)
+        super.update();
+        if (doRayTrace && this.ticks() % rayTiming == 0)
         {
             doRayTrace();
         }
     }
 
     @Override
-    protected boolean use(EntityPlayer player, int side, Vector3 hit)
+    public boolean use(EntityPlayer player, int side, Vector3 hit)
     {
         if (player.isSneaking())
             this.enabled = !this.enabled;
@@ -127,7 +124,7 @@ public class TilePlaceableTool extends TileElectrical implements IPacketReceiver
     public void sendOnStatus()
     {
         if (world().isRemote)
-            PacketDispatcher.sendPacketToServer(Artillects.PACKET_TILE.getPacketWithID(ENABLE_ID, this, this.enabled));
+            ResonantEngine.instance.packetHandler.sendToServer(new PacketTile(this, ENABLE_ID, this.enabled));
     }
 
     public void sendAngles()

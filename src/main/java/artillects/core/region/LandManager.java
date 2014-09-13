@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import resonant.lib.access.AccessUser;
-import universalelectricity.api.vector.IVector2;
-import universalelectricity.api.vector.Vector2;
 import artillects.core.FactionPerms;
 import artillects.core.interfaces.IFaction;
+import resonant.lib.access.java.AccessUser;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.Vector2;
 
 /** Manager of all land creation, destruction, and claiming
  * 
@@ -40,7 +40,7 @@ public class LandManager
     {
         if (faction != null)
         {
-            AccessUser user = faction.getAccessProfile().getUserAccess(player.username);
+            AccessUser user = faction.getAccessProfile().getUserAccess(player);
             if (user != null && user.getGroup() != null)
             {
                 if (user.hasNode(FactionPerms.CLAIM.node()))
@@ -50,7 +50,7 @@ public class LandManager
                     for (String string : log)
                     {
                         if (string.startsWith("out:"))
-                            player.sendChatToPlayer(ChatMessageComponent.createFromText(string.replace("out:", "")));
+                            player.addChatComponentMessage(new ChatComponentText(string.replace("out:", "")));
                     }
                     return claimed;
                 }

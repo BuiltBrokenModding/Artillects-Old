@@ -3,7 +3,7 @@ package artillects.core.creation.content;
 import org.w3c.dom.Document;
 
 import artillects.core.creation.ContentFactory;
-import resonant.lib.content.ContentRegistry;
+import resonant.content.loader.ModManager;
 
 public abstract class Product<N>
 {
@@ -13,7 +13,7 @@ public abstract class Product<N>
     public abstract Product<N> loadData(Document doc);
 
     /** Creates the object */
-    public abstract N create(ContentRegistry creator);
+    public abstract N create(ModManager creator);
     
     /** Gets the created product */
     public N getProduct()

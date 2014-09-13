@@ -5,14 +5,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import resonant.lib.render.fx.FxLaser;
-import universalelectricity.api.vector.Vector3;
 import artillects.content.tool.GuiPlacedTool;
 import artillects.content.tool.TilePlaceableTool;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.GuiSurveyor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import cpw.mods.fml.client.FMLClientHandler;
+import universalelectricity.core.transform.vector.Vector3;
 
 public class ClientProxy extends CommonProxy
 {
@@ -20,7 +19,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
 
         if (tile instanceof TileSurveyor)
         {
@@ -41,7 +40,7 @@ public class ClientProxy extends CommonProxy
         EntityLivingBase renderentity = Minecraft.getMinecraft().renderViewEntity;
         if (renderentity != null)
         {
-            FMLClientHandler.instance().getClient().effectRenderer.addEffect(new FxLaser(world, start, end, r, g, b, 20));
+            //FMLClientHandler.instance().getClient().effectRenderer.addEffect(new FxBeam(world, start, end, r, g, b, 20));
         }
     }
 }

@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.util.ChatMessageComponent;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.BuildFile;
+import net.minecraft.util.ChatComponentText;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 public class PlayerSelectionHandler
 {
@@ -19,12 +19,12 @@ public class PlayerSelectionHandler
 
 	public static VectorWorld getPointOne(EntityPlayer player)
 	{
-		return playerPointSelection.get(player.username) != null ? playerPointSelection.get(player.username)[0] : null;
+		return playerPointSelection.get(player.getCommandSenderName()) != null ? playerPointSelection.get(player.getCommandSenderName())[0] : null;
 	}
 
 	public static VectorWorld getPointTwo(EntityPlayer player)
 	{
-		return playerPointSelection.get(player.username) != null ? playerPointSelection.get(player.username)[1] : null;
+		return playerPointSelection.get(player.getCommandSenderName()) != null ? playerPointSelection.get(player.getCommandSenderName())[1] : null;
 	}
 
 	public static void setPointOne(EntityPlayer player, VectorWorld point)
@@ -32,18 +32,18 @@ public class PlayerSelectionHandler
 		if (player != null)
 		{
 			VectorWorld b = null;
-			if (playerPointSelection.get(player.username) != null)
-				b = playerPointSelection.get(player.username)[1];
+			if (playerPointSelection.get(player.getCommandSenderName()) != null)
+				b = playerPointSelection.get(player.getCommandSenderName())[1];
 
-			playerPointSelection.put(player.username, new VectorWorld[] { point, b });
+			playerPointSelection.put(player.getCommandSenderName(), new VectorWorld[] { point, b });
 			if (point != null)
-				player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos one set to " + point.toString()));
+				player.addChatComponentMessage(new ChatComponentText("Pos one set to " + point.toString()));
 		}
 	}
 
 	public static boolean hasPointOne(EntityPlayer player)
 	{
-		return playerPointSelection.get(player.username) != null && playerPointSelection.get(player.username)[0] != null;
+		return playerPointSelection.get(player.getCommandSenderName()) != null && playerPointSelection.get(player.getCommandSenderName())[0] != null;
 	}
 
 	public static void setPointTwo(EntityPlayer player, VectorWorld point)
@@ -51,19 +51,19 @@ public class PlayerSelectionHandler
 		if (player != null)
 		{
 			VectorWorld a = null;
-			if (playerPointSelection.get(player.username) != null)
-				a = playerPointSelection.get(player.username)[0];
+			if (playerPointSelection.get(player.getCommandSenderName()) != null)
+				a = playerPointSelection.get(player.getCommandSenderName())[0];
 
-			playerPointSelection.put(player.username, new VectorWorld[] { a, point });
+			playerPointSelection.put(player.getCommandSenderName(), new VectorWorld[] { a, point });
 
 			if (point != null)
-				player.sendChatToPlayer(ChatMessageComponent.createFromText("Pos two set to " + point.toString()));
+				player.addChatComponentMessage(new ChatComponentText("Pos two set to " + point.toString()));
 		}
 	}
 
 	public static boolean hasPointTwo(EntityPlayer player)
 	{
-		return playerPointSelection.get(player.username) != null && playerPointSelection.get(player.username)[1] != null;
+		return playerPointSelection.get(player.getCommandSenderName()) != null && playerPointSelection.get(player.getCommandSenderName())[1] != null;
 	}
 
 	public static boolean hasBothPoints(EntityPlayer player)
@@ -75,19 +75,19 @@ public class PlayerSelectionHandler
 	{
 		if (hasBothPoints(player))
 		{
-			VectorWorld pointOne = PlayerSelectionHandler.playerPointSelection.get(player.username)[0];
-			VectorWorld pointTwo = PlayerSelectionHandler.playerPointSelection.get(player.username)[1];
-			if (pointOne.world == pointTwo.world)
+			VectorWorld pointOne = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[0];
+			VectorWorld pointTwo = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[1];
+			if (pointOne.world() == pointTwo.world())
 			{
 
-				BuildFile schematic = new BuildFile().loadWorldSelection(pointOne.world, pointOne, pointTwo);
-				playerSchematic.put(player.username, schematic);
+				BuildFile schematic = new BuildFile().loadWorldSelection(pointOne.world(), pointOne, pointTwo);
+				playerSchematic.put(player.getCommandSenderName(), schematic);
 
-				player.sendChatToPlayer(ChatMessageComponent.createFromText("Loaded selection into memory"));
+				player.addChatComponentMessage(new ChatComponentText("Loaded selection into memory"));
 			}
 			else
 			{
-				player.sendChatToPlayer(ChatMessageComponent.createFromText("Selection points must be in the same world"));
+				player.addChatComponentMessage(new ChatComponentText("Selection points must be in the same world"));
 			}
 		}
 	}
@@ -99,25 +99,25 @@ public class PlayerSelectionHandler
 			if (name == null)
 			{
 				DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_hh.mm.ss");
-				name = player.username + "_Schematic_" + dateFormat.format(new Date());
+				name = player.getCommandSenderName() + "_Schematic_" + dateFormat.format(new Date());
 			}
-			player.sendChatToPlayer(ChatMessageComponent.createFromText("Schematic saved to .minecraft/schematics/" + name));
+			player.addChatComponentMessage(new ChatComponentText("Schematic saved to .minecraft/schematics/" + name));
 			getSchematic(player).saveToBaseDirectory(name);
 		}
 		else
 		{
-			player.sendChatToPlayer(ChatMessageComponent.createFromText("Can't save! Load a selection first"));
+			player.addChatComponentMessage(new ChatComponentText("Can't save! Load a selection first"));
 		}
 	}
 
 	public static boolean hasSchematicLoaded(EntityPlayer player)
 	{
-		return player != null && playerSchematic.get(player.username) != null;
+		return player != null && playerSchematic.get(player.getCommandSenderName()) != null;
 	}
 
 	public static BuildFile getSchematic(EntityPlayer player)
 	{
-		return player != null ? playerSchematic.get(player.username) : null;
+		return player != null ? playerSchematic.get(player.getCommandSenderName()) : null;
 	}
 
 	@SuppressWarnings("deprecation")
@@ -129,12 +129,12 @@ public class PlayerSelectionHandler
 			{
 				BuildFile schematic = new BuildFile();
 				schematic.load(CompressedStreamTools.readCompressed(file.toURL().openStream()));
-				playerSchematic.put(player.username, schematic);
+				playerSchematic.put(player.getCommandSenderName(), schematic);
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
-				player.sendChatToPlayer(ChatMessageComponent.createFromText("Error loading schematic from file see  game logs for details"));
+				player.addChatComponentMessage(new ChatComponentText("Error loading schematic from file see  game logs for details"));
 			}
 		}
 	}

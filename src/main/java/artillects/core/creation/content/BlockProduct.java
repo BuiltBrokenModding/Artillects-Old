@@ -1,5 +1,6 @@
 package artillects.core.creation.content;
 
+import artillects.core.ArtillectsTab;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -8,8 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import resonant.lib.content.ContentRegistry;
-import artillects.core.creation.ContentFactory;
+import resonant.content.loader.ModManager;
 import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
@@ -134,21 +134,16 @@ public class BlockProduct extends Product<Block>
     }
 
     @Override
-    public Block create(ContentRegistry creator)
+    public Block create(ModManager creator)
     {
-        int assignedID = creator.idManager.getNextBlockID();
-        int actualID = creator.config.getBlock("XML_Blocks", unlocalizedName, assignedID).getInt(assignedID);
-        creator.config.addCustomCategoryComment("XML_Blocks", "Blocks created threw XML data. Can be disabled by setting to -1, disable at own risk.");
-        if (actualID != -1)
-        {
-            product = new BlockTemplate(actualID, material);
-            product.setUnlocalizedName(unlocalizedName);
-            product.setHardness(this.hardness);
-            product.setResistance(this.resistance);
-            product.setCreativeTab(creator.defaultTab);
-            ContentRegistry.proxy.registerBlock(creator, product, ItemBlockTemplate.class, unlocalizedName, creator.modID);
-            ((BlockTemplate) product).content = this;
-        }
+        product = new BlockTemplate(material);
+        product.setBlockName(unlocalizedName);
+        product.setHardness(this.hardness);
+        product.setResistance(this.resistance);
+        product.setCreativeTab(ArtillectsTab.instance());
+        creator.newBlock(unlocalizedName, product, ItemBlockTemplate.class);
+        ((BlockTemplate) product).content = this;
+
         return product;
     }
 }

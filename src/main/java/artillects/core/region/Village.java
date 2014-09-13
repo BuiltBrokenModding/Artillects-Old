@@ -5,7 +5,7 @@ import java.io.File;
 import net.minecraft.world.World;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Small area of buildings grouped together into an area of living.
  * 
@@ -28,7 +28,7 @@ public class Village extends LandController implements IVirtualObject
 
     public Village(VectorWorld vec, int radius)
     {
-        this(vec.world, vec.intX(), vec.intY(), vec.intZ(), radius);
+        this(vec.world(), vec.xi(), vec.yi(), vec.zi(), radius);
     }
 
     public Village(World world, int x, int y, int z, int radius)

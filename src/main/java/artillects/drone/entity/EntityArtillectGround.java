@@ -3,14 +3,15 @@ package artillects.drone.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import universalelectricity.api.vector.IVector3;
-import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
 import artillects.drone.hive.HiveComplex;
+import net.minecraftforge.common.util.ForgeDirection;
+import universalelectricity.core.transform.vector.IVector3;
+import universalelectricity.core.transform.vector.Vector3;
 
 /** Prefab for ground based drones
  * 
@@ -32,29 +33,13 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     @Override
     public float getBlockPathWeight(int x, int y, int z)
     {
-        Block block = Block.blocksList[this.worldObj.getBlockId(x, y, z)];
-        Block blockAbove = Block.blocksList[this.worldObj.getBlockId(x, y + 1, z)];
-        if (block == Block.fire || blockAbove == Block.fire || block == Block.lavaMoving || blockAbove == Block.lavaStill)
+        Block block = this.worldObj.getBlock(x, y, z);
+        Block blockAbove = this.worldObj.getBlock(x, y + 1, z);
+        if (block == Blocks.fire || blockAbove == Blocks.fire || block == Blocks.flowing_lava || blockAbove == Blocks.lava)
         {
             return -1000;
         }
         return 0.5F + this.worldObj.getLightBrightness(x, y, z);
-    } 
-
-    @Override
-    public boolean interact(EntityPlayer entityPlayer)
-    {
-
-        if (this.getOwner() instanceof HiveComplex && ((HiveComplex) this.getOwner()).playerZone)
-        {
-            if (entityPlayer.isSneaking())
-            {
-                this.setType(this.getType().toggle(this));
-                entityPlayer.addChatMessage("Toggled to: " + this.getType().name());
-            }
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -73,11 +58,11 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
         {
-            PathEntity path = this.getNavigator().getPathToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ);
+            PathEntity path = this.getNavigator().getPathToXYZ(position.x() + direction.offsetX, position.y() + direction.offsetY, position.z() + direction.offsetZ);
 
             if (path != null)
             {
-                return this.getNavigator().tryMoveToXYZ(position.x + direction.offsetX, position.y + direction.offsetY, position.z + direction.offsetZ, moveSpeed);
+                return this.getNavigator().tryMoveToXYZ(position.x() + direction.offsetX, position.y() + direction.offsetY, position.z() + direction.offsetZ, moveSpeed);
             }
         }
 
@@ -89,7 +74,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 

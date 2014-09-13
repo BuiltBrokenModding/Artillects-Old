@@ -3,11 +3,12 @@ package artillects.core.building;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import resonant.lib.type.Pair;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Entity that represents a structure peace in a hive complex
  * 
@@ -49,7 +50,7 @@ public class BuildingPart extends GhostObject
     {
         super.updateEntity();
         /** Tick is setup to make sure that only a few structures update per tick */
-        if (this.ticks % (60 + location.x + location.y + location.z) == 0)
+        if (this.ticks % (60 + location.x() + location.y() + location.z()) == 0)
         {
             HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
             building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true, true);
@@ -77,7 +78,7 @@ public class BuildingPart extends GhostObject
     {
         if (stack != null)
         {
-            location.setBlock(this.location.world, stack.itemID, stack.getItemDamage());
+            location.setBlock(this.location.world(), Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
             if (this.missingBlocks.containsKey(location))
             {
                 if (this.missingBlocks.get(location) != null)
@@ -103,7 +104,7 @@ public class BuildingPart extends GhostObject
     public void save(NBTTagCompound nbt)
     {
         nbt.setInteger("buildingID", building.ordinal());
-        nbt.setCompoundTag("location", this.location.writeToNBT(new NBTTagCompound()));
+        nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
     }
 
     @Override

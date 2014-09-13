@@ -10,9 +10,9 @@ import net.minecraft.world.World;
  * @author Darkguardsman */
 public class ItemClaimFlag extends Item
 {
-    public ItemClaimFlag(int id)
+    public ItemClaimFlag()
     {
-        super(id);
+        super();
     }
 
     @Override

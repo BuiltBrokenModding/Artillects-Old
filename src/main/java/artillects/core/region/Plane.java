@@ -1,8 +1,9 @@
 package artillects.core.region;
 
-import net.minecraftforge.common.ForgeDirection;
-import universalelectricity.api.vector.IVector2;
-import universalelectricity.api.vector.Vector2;
+
+import net.minecraftforge.common.util.ForgeDirection;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.Vector2;
 
 /** 2D area of space
  * 
@@ -53,27 +54,7 @@ public class Plane
     {
         if (by > 0)
         {
-            switch (direction)
-            {
-                case EAST:
-                    posPosCorner.x += by;
-                    break;
-                case NORTH:
-                    negNegCorner.y -= by;
-                    break;
-                case SOUTH:
-                    posPosCorner.y += by;
-                    break;
-                case WEST:
-                    negNegCorner.x -= by;
-                    break;
-                case UNKNOWN:
-                    posPosCorner.x += by;
-                    negNegCorner.y -= by;
-                    posPosCorner.y += by;
-                    negNegCorner.x -= by;
-                    break;
-            }
+            contract(direction, -by);
             update();
         }
         return this;
@@ -86,22 +67,22 @@ public class Plane
             switch (direction)
             {
                 case EAST:
-                    posPosCorner.x -= by;
+                    posPosCorner.add(-by, 0);
                     break;
                 case NORTH:
-                    negNegCorner.y += by;
+                    negNegCorner.add(0, by);
                     break;
                 case SOUTH:
-                    posPosCorner.y -= by;
+                    posPosCorner.add(0, -by);
                     break;
                 case WEST:
-                    negNegCorner.x += by;
+                    negNegCorner.add(by, 0);
                     break;
                 case UNKNOWN:
-                    posPosCorner.x -= by;
-                    negNegCorner.y += by;
-                    posPosCorner.y -= by;
-                    negNegCorner.x += by;
+                    posPosCorner.add(-by, 0);
+                    negNegCorner.add(0, by);
+                    posPosCorner.add(0, -by);
+                    negNegCorner.add(by, 0);
                     break;
             }
             update();
@@ -113,24 +94,24 @@ public class Plane
     public boolean isConnected(Plane other)
     {
         //Edge only connecton test
-        if (other.posPosCorner.x == negNegCorner.x)
+        if (other.posPosCorner.x() == negNegCorner.x())
         {
-            if (inside(posPosCorner.y, negNegCorner.y, other.posPosCorner.y))
+            if (inside(posPosCorner.y(), negNegCorner.y(), other.posPosCorner.y()))
                 return true;
         }
-        if (other.posPosCorner.y == negNegCorner.y)
+        if (other.posPosCorner.y() == negNegCorner.y())
         {
-            if (inside(posPosCorner.x, negNegCorner.x, other.posPosCorner.x))
+            if (inside(posPosCorner.x(), negNegCorner.x(), other.posPosCorner.x()))
                 return true;
         }
-        if (other.negNegCorner.x == posPosCorner.x)
+        if (other.negNegCorner.x() == posPosCorner.x())
         {
-            if (inside(posPosCorner.y, negNegCorner.y, other.negNegCorner.y))
+            if (inside(posPosCorner.y(), negNegCorner.y(), other.negNegCorner.y()))
                 return true;
         }
-        if (other.negNegCorner.y == posPosCorner.y)
+        if (other.negNegCorner.y() == posPosCorner.y())
         {
-            if (inside(posPosCorner.x, negNegCorner.x, other.negNegCorner.x))
+            if (inside(posPosCorner.x(), negNegCorner.x(), other.negNegCorner.x()))
                 return true;
         }
         //overlap test
@@ -250,6 +231,6 @@ public class Plane
     @Override
     public String toString()
     {
-        return "Plane[(" + negPosCorner.x + "," + negPosCorner.y + "),(" + posPosCorner.x + "," + posPosCorner.y + "),(" + posNegCorner.x + "," + posNegCorner.y + "),(" + negNegCorner.x + "," + negNegCorner.y + ")]";
+        return "Plane[(" + negPosCorner.x() + "," + negPosCorner.y() + "),(" + posPosCorner.x() + "," + posPosCorner.y() + "),(" + posNegCorner.x() + "," + posNegCorner.y() + "),(" + negNegCorner.x() + "," + negNegCorner.y() + ")]";
     }
 }

@@ -6,13 +6,13 @@ import java.util.HashMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import resonant.lib.access.AccessProfile;
-import resonant.lib.access.IProfileContainer;
+import resonant.lib.access.java.AccessProfile;
+import resonant.lib.access.java.IProfileContainer;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.api.vector.IVector2;
 import artillects.core.interfaces.IFaction;
 import artillects.core.interfaces.IFactionMember;
+import universalelectricity.core.transform.vector.IVector2;
 
 /** Faction is more of a container for all settings and data related to a faction.
  * 

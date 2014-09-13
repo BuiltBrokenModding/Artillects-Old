@@ -5,10 +5,10 @@ import java.util.HashMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.IVector2;
-import universalelectricity.api.vector.IVector3;
-import universalelectricity.api.vector.IVectorWorld;
 import artillects.core.interfaces.IFactionMember;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.IVector3;
+import universalelectricity.core.transform.vector.IVectorWorld;
 
 /** Manager that handles everything related to faction control, setup, and interaction
  * 
@@ -40,13 +40,13 @@ public class FactionManager
         }
         if (entity instanceof EntityPlayer)
         {
-            if (playerToFaction.containsKey(((EntityPlayer) entity).username))
+            if (playerToFaction.containsKey(((EntityPlayer) entity).getCommandSenderName()))
             {
-                int id = playerToFaction.get(((EntityPlayer) entity).username);
+                int id = playerToFaction.get(((EntityPlayer) entity).getCommandSenderName());
                 if(factions.containsKey(id))
                     return factions.get(id);
             }
-            playerToFaction.put(((EntityPlayer) entity).username, 0);
+            playerToFaction.put(((EntityPlayer) entity).getCommandSenderName(), 0);
         }
         return neutralFaction;
     }

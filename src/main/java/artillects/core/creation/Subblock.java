@@ -1,7 +1,6 @@
 package artillects.core.creation;
 
-import net.minecraft.util.Icon;
-import resonant.lib.render.RenderUtility;
+import net.minecraft.util.IIcon;
 
 /** Metadata sub version of a block
  * 
@@ -13,8 +12,8 @@ public class Subblock
     public boolean hasSides = false;
     public String unlocalizedName;
     public String iconName;
-    public Icon iconMain = null;
-    public Icon[] iconSide;
+    public IIcon iconMain = null;
+    public IIcon[] iconSide;
     public String[] iconSideName;
 
     public void addSideIcon(int side, String name)
@@ -32,12 +31,12 @@ public class Subblock
         }
     }
 
-    public Icon getIcon(int side)
+    public IIcon getIcon(int side)
     {
         if (hasSides && iconSideName != null)
         {
             if (iconSide == null)
-                iconSide = new Icon[6];
+                iconSide = new IIcon[6];
             
             if (iconSide[side] != null)
             {

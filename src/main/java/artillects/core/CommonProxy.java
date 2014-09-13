@@ -6,9 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import resonant.lib.gui.ContainerDummy;
-import resonant.lib.prefab.ProxyBase;
-import universalelectricity.api.vector.Vector3;
 import artillects.content.tool.surveyor.TileSurveyor;
+import universalelectricity.core.transform.vector.Vector3;
 
 public class CommonProxy extends ProxyBase
 {
@@ -16,7 +15,7 @@ public class CommonProxy extends ProxyBase
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
-        TileEntity tile = world.getBlockTileEntity(x, y, z);
+        TileEntity tile = world.getTileEntity(x, y, z);
         if (tile instanceof TileSurveyor)
         {
             if (ID == 0)

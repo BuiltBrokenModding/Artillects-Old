@@ -1,9 +1,9 @@
 package artillects.core.region;
 
 import net.minecraft.world.World;
-import universalelectricity.api.vector.IVector3;
-import universalelectricity.api.vector.IVectorWorld;
 import artillects.core.building.GhostObject;
+import universalelectricity.core.transform.vector.IVector3;
+import universalelectricity.core.transform.vector.IVectorWorld;
 
 /** Extended version of the ghost object with faction related info */
 public class FactionObject extends GhostObject

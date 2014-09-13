@@ -1,6 +1,7 @@
 package artillects.core;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -28,12 +29,22 @@ public class ArtillectsTab extends CreativeTabs
 	{
 		if (itemStack == null)
 		{
-			itemStack = new ItemStack(Item.ingotIron);
+			itemStack = new ItemStack(Items.iron_door);
 		}
 		return ArtillectsTab.itemStack;
 	}
 
-	public static void setIconItemStack(ItemStack stack)
+    @Override
+    public Item getTabIconItem()
+    {
+        if (itemStack == null)
+        {
+            itemStack = new ItemStack(Items.iron_door);
+        }
+        return ArtillectsTab.itemStack.getItem();
+    }
+
+    public static void setIconItemStack(ItemStack stack)
 	{
 		ArtillectsTab.itemStack = stack;
 	}

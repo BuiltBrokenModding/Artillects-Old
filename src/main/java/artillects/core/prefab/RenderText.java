@@ -3,7 +3,7 @@ package artillects.core.prefab;
 import java.awt.Color;
 
 import resonant.lib.render.RenderUtility;
-import universalelectricity.api.vector.Vector3;
+import universalelectricity.core.transform.vector.Vector3;
 
 public class RenderText
 {

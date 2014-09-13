@@ -1,7 +1,7 @@
 package test.common;
 
-import universalelectricity.api.vector.Vector2;
 import artillects.core.region.Plane;
+import universalelectricity.core.transform.vector.Vector2;
 
 public class PlaneTest
 {

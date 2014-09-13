@@ -4,15 +4,14 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import artillects.core.Artillects;
 import artillects.core.Reference;
-import artillects.core.creation.ContentFactory;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.content.BlockProduct;
 import cpw.mods.fml.relauncher.Side;
@@ -27,19 +26,19 @@ public class BlockTemplate extends Block
     /** Data for the block */
     public BlockProduct content;
 
-    public BlockTemplate(int id, Material material)
+    public BlockTemplate(Material material)
     {
-        super(id, material);
+        super(material);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public Icon getIcon(int side, int meta)
+    public IIcon getIcon(int side, int meta)
     {
 
         if (content.subBlocks != null && content.subBlocks[meta] != null)
         {
-            Icon icon = content.subBlocks[meta].getIcon(side);
+            IIcon icon = content.subBlocks[meta].getIcon(side);
             if (icon != null)
                 return icon;
         }
@@ -48,18 +47,11 @@ public class BlockTemplate extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister register)
+    public void registerBlockIcons(IIconRegister register)
     {
         if (content.iconName != null)
         {
-            if (Artillects.contentFactory.blockTextures.containsKey(content.iconName))
-            {
-                blockIcon = Artillects.contentFactory.blockTextures.get(content.iconName);
-            }
-            else
-            {
                 blockIcon = register.registerIcon((content.iconName.contains(":") ? "" : Reference.PREFIX) + content.iconName);
-            }
         }
         else
         {
@@ -79,27 +71,15 @@ public class BlockTemplate extends Block
                             if (sub.iconSideName[side] != null)
                             {
                                 String name = sub.iconSideName[side];
-                                if (Artillects.contentFactory.blockTextures.containsKey(name))
-                                {
-                                    sub.iconSide[side] = Artillects.contentFactory.blockTextures.get(name);
-                                }
-                                else
-                                {
                                     sub.iconSide[side] = register.registerIcon((name.contains(":") ? "" : Reference.PREFIX) + name);
-                                }
+
                             }
                         }
                     }
                     else if (sub.iconName != null)
                     {
-                        if (Artillects.contentFactory.blockTextures.containsKey(sub.iconName))
-                        {
-                            sub.iconMain = Artillects.contentFactory.blockTextures.get(sub.iconName);
-                        }
-                        else
-                        {
                             sub.iconMain = register.registerIcon((sub.iconName.contains(":") ? "" : Reference.PREFIX) + sub.iconName);
-                        }
+
                     }
                 }
             }
@@ -130,7 +110,7 @@ public class BlockTemplate extends Block
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(int id, CreativeTabs tab, List list)
+    public void getSubBlocks(Item id, CreativeTabs tab, List list)
     {
         if (content.subBlocks != null)
         {

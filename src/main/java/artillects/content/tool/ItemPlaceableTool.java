@@ -2,9 +2,9 @@ package artillects.content.tool;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import org.lwjgl.input.Keyboard;
 
-import resonant.lib.prefab.item.ItemBlockTooltip;
 import resonant.lib.render.EnumColor;
 import resonant.lib.utility.LanguageUtility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 
 public class ItemPlaceableTool extends ItemBlock
 {
-    public ItemPlaceableTool(int id)
+    public ItemPlaceableTool(Block block)
     {
-        super(id);
+        super(block);
     }
 
     @SuppressWarnings("unchecked")

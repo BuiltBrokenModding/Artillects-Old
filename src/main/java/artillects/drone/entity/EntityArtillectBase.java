@@ -10,19 +10,17 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import resonant.lib.network.IPacketReceiver;
-import universalelectricity.api.vector.IVector3;
-import universalelectricity.api.vector.IVectorWorld;
-import universalelectricity.api.vector.Vector3;
 import artillects.core.Artillects;
 import artillects.drone.hive.HiveComplex;
 import artillects.drone.hive.zone.Zone;
 
 import com.google.common.io.ByteArrayDataInput;
+import resonant.lib.network.handle.IPacketReceiver;
+import universalelectricity.core.transform.vector.IVector3;
+import universalelectricity.core.transform.vector.IVectorWorld;
+import universalelectricity.core.transform.vector.Vector3;
 
-import cpw.mods.fml.common.network.PacketDispatcher;
-
-public class EntityArtillectBase extends EntityCreature implements IArtillect, IPacketReceiver, IRangedAttackMob, IVectorWorld
+public class EntityArtillectBase extends EntityCreature implements IArtillect, IRangedAttackMob, IVectorWorld
 {
     private Zone assignedZone;
     private Object owner;
@@ -44,11 +42,11 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setAttribute(10.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.3D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(1.0D);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.3D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
     }
 
     @Override
@@ -123,30 +121,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    public EnumArtillectType getType()
-    {
-        return EnumArtillectType.get(this.getDataWatcher().getWatchableObjectByte(EntityArtillectGround.DATA_TYPE_ID));
-    }
-
-    @Override
-    public void setType(EnumArtillectType type)
-    {
-        if (this.worldObj.isRemote)
-        {
-            PacketDispatcher.sendPacketToServer(Artillects.PACKET_ENTITY.getPacket(this, (byte) type.ordinal()));
-        }
-        else
-        {
-            EnumArtillectType t = this.getType();
-            if (t != type)
-            {
-                this.getDataWatcher().updateObject(EntityArtillectGround.DATA_TYPE_ID, (byte) (type.ordinal()));
-                this.setZone(null);
-            }
-        }
-    }
-
-    @Override
     public IInventory getInventory()
     {
         // TODO Auto-generated method stub
@@ -157,7 +131,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public void writeEntityToNBT(NBTTagCompound nbt)
     {
         super.writeEntityToNBT(nbt);
-        nbt.setByte("type", (byte) this.getType().ordinal());
         nbt.setBoolean("playerOwned", this.isPlayerOwned);
         if (this.getOwner() instanceof HiveComplex)
         {
@@ -169,7 +142,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     public void readEntityFromNBT(NBTTagCompound nbt)
     {
         super.readEntityFromNBT(nbt);
-        this.setType(EnumArtillectType.values()[nbt.getByte("type")]);
         this.isPlayerOwned = nbt.getBoolean("playerOwned");
     }
 
@@ -178,14 +150,8 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).translate(0, 0.2, 0), new Vector3(entity).translate(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
-    }
-
-    @Override
-    public void onReceivePacket(ByteArrayDataInput data, EntityPlayer player, Object... extra)
-    {
-        this.setType(EnumArtillectType.values()[data.readByte()]);
     }
 
     @Override

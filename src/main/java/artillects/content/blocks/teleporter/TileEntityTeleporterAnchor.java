@@ -2,12 +2,9 @@ package artillects.content.blocks.teleporter;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
-import resonant.lib.prefab.tile.TileAdvanced;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
+import net.minecraftforge.common.util.ForgeDirection;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** @author Archadia */
 public class TileEntityTeleporterAnchor extends TileEntity
@@ -50,7 +47,7 @@ public class TileEntityTeleporterAnchor extends TileEntity
             TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
             if (teleporter != null)
             {
-                TeleportManager.moveEntity(entity, new VectorWorld(teleporter).translate(0.5, 2, 0.5));
+                TeleportManager.moveEntity(entity, new VectorWorld(teleporter).add(0.5, 2, 0.5));
             }
         }
     }
@@ -65,14 +62,14 @@ public class TileEntityTeleporterAnchor extends TileEntity
             int s = 0;
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
             {
-                VectorWorld pos = (VectorWorld) new VectorWorld(this).translate(direction);
+                VectorWorld pos = (VectorWorld) new VectorWorld(this).add(direction);
 
-                Block block = Block.blocksList[pos.getBlockID()];
+                Block block = pos.getBlock();
 
                 if (block != null && block.getUnlocalizedName().contains("glyph"))
                 {
                     s++;
-                    int metadata = this.worldObj.getBlockMetadata((int) pos.x, (int) pos.y, (int) pos.z);
+                    int metadata = this.worldObj.getBlockMetadata((int) pos.x(), (int) pos.y(), (int) pos.z());
                     this.frequency += direction.ordinal() * metadata;
                 }
             }

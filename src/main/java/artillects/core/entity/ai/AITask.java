@@ -3,7 +3,7 @@ package artillects.core.entity.ai;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.IVectorWorld;
+import universalelectricity.core.transform.vector.IVectorWorld;
 
 /** Task prefab
  * 

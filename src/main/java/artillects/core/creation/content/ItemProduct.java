@@ -4,8 +4,7 @@ import net.minecraft.item.Item;
 
 import org.w3c.dom.Document;
 
-import artillects.core.creation.ContentFactory;
-import resonant.lib.content.ContentRegistry;
+import resonant.content.loader.ModManager;
 
 public class ItemProduct extends Product<Item>
 {
@@ -18,7 +17,7 @@ public class ItemProduct extends Product<Item>
     }
 
     @Override
-    public Item create(ContentRegistry creator)
+    public Item create(ModManager creator)
     {
         return product;
     }

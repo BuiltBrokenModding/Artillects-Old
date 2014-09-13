@@ -12,13 +12,13 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import resonant.lib.schematic.Schematic;
 import resonant.lib.type.Pair;
 import resonant.lib.utility.nbt.ISaveObj;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** File that represents all the data loaded from a schematic data file
  * 
@@ -70,7 +70,7 @@ public class BuildFile extends Schematic implements ISaveObj
             this.getBlocksToPlace(spot, blocksToPlace, doWorldCheck, doWorldCheck);
             for (Entry<Vector3, ItemStack> entry : blocksToPlace.entrySet())
             {
-                entry.getKey().setBlock(spot.world, entry.getValue().itemID, entry.getValue().getItemDamage());
+                entry.getKey().setBlock(spot.world(), entry.getValue().itemID, entry.getValue().getItemDamage());
             }
         }
     }
@@ -318,7 +318,7 @@ public class BuildFile extends Schematic implements ISaveObj
     }
 
     @Override
-    public HashMap<Vector3, Pair<Integer, Integer>> getStructure(ForgeDirection dir, int size)
+    public HashMap<Vector3, Pair<Block, Integer>> getStructure(ForgeDirection dir, int size)
     {
         return this.block_map;
     }

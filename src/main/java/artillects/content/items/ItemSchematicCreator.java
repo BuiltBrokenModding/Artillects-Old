@@ -6,18 +6,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.core.Reference;
 import artillects.drone.commands.PlayerSelectionHandler;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 public class ItemSchematicCreator extends Item
 {
 
-    public ItemSchematicCreator(int id)
+    public ItemSchematicCreator()
     {
-        super(id);
+        super();
         this.setHasSubtypes(true);
         this.setTextureName(Reference.PREFIX + "schematicCreator");
     }
@@ -52,7 +52,7 @@ public class ItemSchematicCreator extends Item
             }
             else
             {
-                player.sendChatToPlayer(ChatMessageComponent.createFromText("Selection cleared"));
+                player.addChatComponentMessage(new ChatComponentText("Selection cleared"));
                 PlayerSelectionHandler.setPointOne(player, null);
                 PlayerSelectionHandler.setPointTwo(player, null);
             }
@@ -61,9 +61,9 @@ public class ItemSchematicCreator extends Item
     }
 
     @Override
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List par3List)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List)
     {
-        par3List.add(new ItemStack(this.itemID, 1, 0));
+        par3List.add(new ItemStack(par1, 1, 0));
     }
 
 }

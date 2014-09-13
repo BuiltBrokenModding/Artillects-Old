@@ -2,12 +2,11 @@ package artillects.core.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.IVectorWorld;
+import universalelectricity.core.transform.vector.IVectorWorld;
 
 /** Base entity class for all entities created by artillect mod
  * 
@@ -25,7 +24,7 @@ public class EntityBase extends EntityCreature implements IVectorWorld
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getAttributeMap().func_111150_b(SharedMonsterAttributes.attackDamage);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         boolean didAttack = super.attackEntityAsMob(target);
         if (didAttack && this.getHeldItem() == null && this.isBurning())
         {
-            target.setFire(2 * this.worldObj.difficultySetting);
+            target.setFire(2 * this.worldObj.difficultySetting.ordinal());
         }
         return didAttack;
     }

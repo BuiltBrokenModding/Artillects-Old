@@ -1,6 +1,6 @@
 package artillects.core.utility;
 
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Call back interface for AreaScanner when it looks at each block
  * 

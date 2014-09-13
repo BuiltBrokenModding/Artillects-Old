@@ -15,12 +15,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.ForgeSubscribe;
 
 import org.w3c.dom.Document;
 
-import resonant.lib.content.ContentRegistry;
+import resonant.content.loader.ModManager;
 import artillects.core.building.BuildFile;
 import artillects.core.creation.content.BlockProduct;
 import artillects.core.creation.content.ItemProduct;
@@ -34,14 +32,11 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author Darkguardsman */
 public class ContentFactory
 {
-    private ContentRegistry creator;
-
-    public HashMap<String, DirectTexture> blockTextures = new HashMap<String, DirectTexture>();
-    public HashMap<String, DirectTexture> itemTextures = new HashMap<String, DirectTexture>();
+    private ModManager creator;
 
     public HashMap<Class<?>, HashMap<String, Product>> content = new HashMap<Class<?>, HashMap<String, Product>>();
 
-    public ContentFactory(ContentRegistry contentRegistry)
+    public ContentFactory(ModManager contentRegistry)
     {
         this.creator = contentRegistry;
     }
@@ -88,12 +83,12 @@ public class ContentFactory
             if (file.getName().startsWith("block."))
             {
                 textureName = textureName.replace("block.", "");
-                blockTextures.put(textureName, new DirectTexture(textureName, file));
+                //blockTextures.put(textureName, new DirectTexture(textureName, file));
             }
             else if (file.getName().startsWith("item."))
             {
                 textureName = textureName.replace("item.", "");
-                itemTextures.put(textureName, new DirectTexture(textureName, file));
+                //itemTextures.put(textureName, new DirectTexture(textureName, file));
             }
         }
         else if (name.endsWith(".xml"))
@@ -154,12 +149,12 @@ public class ContentFactory
                     if (file.getName().startsWith("block."))
                     {
                         textureName = textureName.replace("block.", "");
-                        blockTextures.put(textureName, new DirectTexture(textureName, file));
+                        //blockTextures.put(textureName, new DirectTexture(textureName, file));
                     }
                     else if (file.getName().startsWith("item."))
                     {
                         textureName = textureName.replace("item.", "");
-                        itemTextures.put(textureName, new DirectTexture(textureName, file));
+                        //itemTextures.put(textureName, new DirectTexture(textureName, file));
                     }
                 }
             }
@@ -203,23 +198,4 @@ public class ContentFactory
         product.create(creator);
     }
 
-    @ForgeSubscribe
-    @SideOnly(Side.CLIENT)
-    public void preTextureHook(TextureStitchEvent.Pre event)
-    {
-        if (event.map.textureType == 0)
-        {
-            for (DirectTexture texture : blockTextures.values())
-            {
-                event.map.setTextureEntry(texture.getIconName(), texture);
-            }
-        }
-        else if (event.map.textureType == 1)
-        {
-            for (DirectTexture texture : itemTextures.values())
-            {
-                event.map.setTextureEntry(texture.getIconName(), texture);
-            }
-        }
-    }
 }

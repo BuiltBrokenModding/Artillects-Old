@@ -10,8 +10,8 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 public class TeleportManager
 {
@@ -33,7 +33,7 @@ public class TeleportManager
 	{
 		if (anch != null)
 		{
-			TeleportManager manager = getManagerForDim(anch.worldObj.provider.dimensionId);
+			TeleportManager manager = getManagerForDim(anch.getWorldObj().provider.dimensionId);
 			if (!manager.teleporters.contains(anch))
 			{
 				manager.teleporters.add(anch);
@@ -46,7 +46,7 @@ public class TeleportManager
 	{
 		if (anch != null)
 		{
-			TeleportManager manager = getManagerForDim(anch.worldObj.provider.dimensionId);
+			TeleportManager manager = getManagerForDim(anch.getWorldObj().provider.dimensionId);
 			manager.teleporters.remove(anch);
 		}
 	}
@@ -69,7 +69,7 @@ public class TeleportManager
 		{
 			ignore.addAll(Arrays.asList(anchors));
 		}
-		Iterator<TileEntityTeleporterAnchor> it = new ArrayList(TeleportManager.getConnectedAnchors(vec.world)).iterator();
+		Iterator<TileEntityTeleporterAnchor> it = new ArrayList(TeleportManager.getConnectedAnchors(vec.world())).iterator();
 		while (it.hasNext())
 		{
 			TileEntityTeleporterAnchor teleporter = it.next();
@@ -88,18 +88,18 @@ public class TeleportManager
 	{
 		if (entity != null && location != null)
 		{
-			location.world.markBlockForUpdate((int) location.x, (int) location.y, (int) location.z);
+			location.world().markBlockForUpdate((int) location.x(), (int) location.y(), (int) location.z());
 			if (entity instanceof EntityPlayerMP)
 			{
-				if (coolDown.get(((EntityPlayerMP) entity).username) == null || (System.currentTimeMillis() - coolDown.get(((EntityPlayerMP) entity).username) > 30))
+				if (coolDown.get(((EntityPlayerMP) entity).getCommandSenderName()) == null || (System.currentTimeMillis() - coolDown.get(((EntityPlayerMP) entity).getCommandSenderName()) > 30))
 				{
-					((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x, location.y, location.z, 0, 0);
-					coolDown.put(((EntityPlayerMP) entity).username, System.currentTimeMillis());
+					((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x(), location.y(), location.z(), 0, 0);
+					coolDown.put(((EntityPlayerMP) entity).getCommandSenderName(), System.currentTimeMillis());
 				}
 			}
 			else
 			{
-				entity.setPosition(location.x, location.y, location.z);
+				entity.setPosition(location.x(), location.y(), location.z());
 			}
 		}
 	}

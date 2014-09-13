@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import resonant.lib.type.Pair;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Collection of structure peaces that forms a building. Essential in code this acts as a contain
  * for several structure peaces so its easier to manage larger HiveComplexs.
@@ -86,7 +86,7 @@ public class Building extends GhostObject
     @Override
     public void save(NBTTagCompound nbt)
     {
-        nbt.setCompoundTag("location", this.location.writeToNBT(new NBTTagCompound()));
+        nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
         if (peaces.size() > 0)
         {
             NBTTagList list = new NBTTagList();
@@ -104,10 +104,10 @@ public class Building extends GhostObject
     public void load(NBTTagCompound nbt)
     {
         this.location = new VectorWorld(nbt.getCompoundTag("location"));
-        NBTTagList nbttaglist = nbt.getTagList("Structures");
+        NBTTagList nbttaglist = nbt.getTagList("Structures", 0);
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
-            NBTTagCompound tag = (NBTTagCompound) nbttaglist.tagAt(i);
+            NBTTagCompound tag = nbttaglist.getCompoundTagAt(i);
             BuildingPart structure = new BuildingPart(tag);
         }
     }

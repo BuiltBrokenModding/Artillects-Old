@@ -9,18 +9,13 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
 import resonant.api.IExternalInventory;
-import resonant.api.IExternalInventoryBox;
 import resonant.lib.utility.inventory.ExternalInventory;
 import resonant.lib.utility.inventory.InventoryUtility;
-import universalelectricity.api.UniversalElectricity;
-import universalelectricity.api.vector.EulerAngle;
-import universalelectricity.api.vector.Vector3;
 import artillects.content.tool.TilePlaceableTool;
+import universalelectricity.core.UniversalElectricity;
 
 /** Used to pick up blocks without mining them. Has the option to exact only one block type. As well
  * has the option to extract in an area.

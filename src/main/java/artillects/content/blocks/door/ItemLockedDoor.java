@@ -10,9 +10,9 @@ import artillects.core.Artillects;
 
 public class ItemLockedDoor extends ItemDoor
 {
-    public ItemLockedDoor(int id)
+    public ItemLockedDoor()
     {
-        super(id, null);
+        super(null);
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -128,22 +129,22 @@ public class RecipeFactory
             Object object = getPart(e);
             if (object instanceof Item)
             {
-                FurnaceRecipes.smelting().addSmelting(((Item) object).itemID, result, xp);
+                GameRegistry.addSmelting(((Item) object), result, xp);
             }
             else if (object instanceof Block)
             {
-                FurnaceRecipes.smelting().addSmelting(((Block) object).blockID, result, xp);
+                GameRegistry.addSmelting(((Block) object), result, xp);
             }
             else if (object instanceof ItemStack)
             {
-                FurnaceRecipes.smelting().addSmelting(((ItemStack) object).itemID, ((ItemStack) object).getItemDamage(), result, xp);
+                GameRegistry.addSmelting(((ItemStack) object), result, xp);
             }
             else if (object instanceof String)
             {
                 List<ItemStack> stacks = OreDictionary.getOres(((String) object));
                 for (ItemStack stack : stacks)
                 {
-                    FurnaceRecipes.smelting().addSmelting(stack.itemID, stack.getItemDamage(), result, xp);
+                    GameRegistry.addSmelting(stack, result, xp);
                 }
             }
         }
@@ -224,18 +225,19 @@ public class RecipeFactory
 
     public static Block getBlock(String name)
     {
-        for (Block block : Block.blocksList)
+        for (Object obj : Block.blockRegistry.getKeys())
         {
-            if (block == null)
-            {
-                continue;
-            }
+            if(obj instanceof Block) {
+                Block block = (Block) obj;
+                if (block == null) {
+                    continue;
+                }
 
-            String blockName = block.getUnlocalizedName().replace("item.", "").replace(".name", "").replace("minecraft.", "");
+                String blockName = block.getUnlocalizedName().replace("item.", "").replace(".name", "").replace("minecraft.", "");
 
-            if (blockName.equalsIgnoreCase(name))
-            {
-                return block;
+                if (blockName.equalsIgnoreCase(name)) {
+                    return block;
+                }
             }
         }
         return null;
@@ -243,18 +245,20 @@ public class RecipeFactory
 
     public static Item getItem(String name)
     {
-        for (Item item : Item.itemsList)
+        for (Object obj: Item.itemRegistry.getKeys())
         {
-            if (item == null)
+            if(obj instanceof Item)
             {
-                continue;
-            }
+                Item item = (Item) obj;
+                if (item == null) {
+                    continue;
+                }
 
-            String itemName = item.getUnlocalizedName().replace("item.", "").replace(".name", "").replace("minecraft.", "");
+                String itemName = item.getUnlocalizedName().replace("item.", "").replace(".name", "").replace("minecraft.", "");
 
-            if (itemName.equalsIgnoreCase(name))
-            {
-                return item;
+                if (itemName.equalsIgnoreCase(name)) {
+                    return item;
+                }
             }
         }
         return null;

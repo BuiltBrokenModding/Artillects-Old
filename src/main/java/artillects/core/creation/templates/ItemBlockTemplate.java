@@ -15,9 +15,9 @@ import resonant.lib.utility.TooltipUtility;
 
 public class ItemBlockTemplate extends ItemBlock
 {
-    public ItemBlockTemplate(int id)
+    public ItemBlockTemplate(Block block)
     {
-        super(id);
+        super(block);
         this.setHasSubtypes(true);
     }
 
@@ -64,7 +64,7 @@ public class ItemBlockTemplate extends ItemBlock
     {
         int meta = itemstack.getItemDamage();
         String localized = null;
-        Block block = Block.blocksList[getBlockID()];
+        Block block = field_150939_a;
         if (meta >= 0 && meta < 16 && block instanceof BlockTemplate)
         {
             if (((BlockTemplate) block).content.subBlocks != null && ((BlockTemplate) block).content.subBlocks[meta] != null)

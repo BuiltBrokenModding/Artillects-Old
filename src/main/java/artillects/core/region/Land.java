@@ -8,9 +8,8 @@ import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import universalelectricity.api.vector.IVector2;
-import universalelectricity.api.vector.Vector2;
-import artillects.core.interfaces.IID;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.Vector2;
 
 /** 2D top down area of the map
  * 
@@ -102,7 +101,7 @@ public class Land extends FactionObject
             {
                 oldNames.setString("name" + i, this.oldNames.get(i));
             }
-            nbt.setCompoundTag("oldnames", oldNames);
+            nbt.setTag("oldnames", oldNames);
         }
     }
 

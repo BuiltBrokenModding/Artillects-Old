@@ -10,9 +10,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
-import universalelectricity.api.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import universalelectricity.core.transform.vector.Vector3;
 
 /** @author Rseifert & Calclavia */
 @SideOnly(Side.CLIENT)
@@ -50,7 +50,7 @@ public abstract class RenderTaggedTile extends TileEntitySpecialRenderer
 
                     for (RenderText text : list)
                     {
-                        text.render(new Vector3(x, y, z).translate(0.5, i * 0.25f + tagRenderHeight, 0.5f));
+                        text.render(new Vector3(x, y, z).add(0.5, i * 0.25f + tagRenderHeight, 0.5f));
                         i++;
                     }
                 }
@@ -63,7 +63,7 @@ public abstract class RenderTaggedTile extends TileEntitySpecialRenderer
     /** gets the player linked with the renderer */
     public EntityPlayer getPlayer()
     {
-        EntityLivingBase entity = this.tileEntityRenderer.entityLivingPlayer;
+        EntityLivingBase entity = this.field_147501_a.field_147551_g;
 
         if (entity instanceof EntityPlayer)
         {

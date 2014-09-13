@@ -5,11 +5,12 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import resonant.lib.utility.LanguageUtility;
 import artillects.core.Reference;
@@ -18,12 +19,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
 {
-    public Icon iconTop, iconSide, iconBot;
+    public IIcon iconTop, iconSide, iconBot;
 
-    public BlockTeleporterAnchor(int id)
+    public BlockTeleporterAnchor()
     {
-        super(id, Material.iron);
-        this.setUnlocalizedName("teleporterAnchor");
+        super(Material.iron);
+        this.setBlockName("teleporterAnchor");
         this.setHardness(32F);
         this.setResistance(1000F);
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.7F, 1.0F);
@@ -52,7 +53,7 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
     {
         if (player != null && player.getHeldItem() == null)
         {
-            TileEntity tile = world.getBlockTileEntity(x, y, z);
+            TileEntity tile = world.getTileEntity(x, y, z);
 
             if (tile instanceof TileEntityTeleporterAnchor)
             {
@@ -61,7 +62,7 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
                 if (frequency == -1)
                 {
                     if (!world.isRemote)
-                        player.addChatMessage(LanguageUtility.getLocal("msg.teleporter.setup"));
+                        player.addChatMessage(new ChatComponentText(LanguageUtility.getLocal("msg.teleporter.setup")));
                 }
                 else
                 {
@@ -69,7 +70,7 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
                     {
                         if (!world.isRemote)
                         {
-                            player.addChatMessage(LanguageUtility.getLocal("msg.teleporter.frequency") + " " + frequency);
+                            player.addChatMessage(new ChatComponentText(LanguageUtility.getLocal("msg.teleporter.frequency") + " " + frequency));
                         }
                     }
                     else
@@ -91,11 +92,18 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world)
+    public TileEntity createTileEntity(World world, int meta)
     {
         return new TileEntityTeleporterAnchor();
     }
 
+
+
+    @Override
+    public TileEntity createNewTileEntity(World world, int meta)
+    {
+        return new TileEntityTeleporterAnchor();
+    }
     @Override
     public boolean isOpaqueCube()
     {
@@ -103,7 +111,7 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
     }
 
     @Override
-    public Icon getIcon(int side, int metadata)
+    public IIcon getIcon(int side, int metadata)
     {
         if (side == 0)
         {
@@ -118,11 +126,10 @@ public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
     }
 
     @Override
-    public void registerIcons(IconRegister ir)
+    public void registerBlockIcons(IIconRegister ir)
     {
         this.iconTop = ir.registerIcon(Reference.PREFIX + "teleporterNode_top");
         this.iconSide = ir.registerIcon(Reference.PREFIX + "teleporterNode_side");
         this.iconBot = ir.registerIcon(Reference.PREFIX + "decorWall1");
     }
-
 }

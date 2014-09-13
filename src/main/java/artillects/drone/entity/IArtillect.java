@@ -21,12 +21,6 @@ public interface IArtillect extends IEntity
     /** Gets the drone's working area */
     public Zone getZone();
 
-    /** Sets the drone's objective type */
-    public void setType(EnumArtillectType type);
-
-    /** Gets the drone's objective type */
-    public EnumArtillectType getType();
-
     /** Gets the drone's working inventory */
     public IInventory getInventory();
 }

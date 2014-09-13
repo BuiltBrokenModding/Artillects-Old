@@ -3,11 +3,15 @@ package artillects.content.blocks.door;
 import java.util.Random;
 
 import artillects.core.Artillects;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -16,22 +20,30 @@ import net.minecraft.world.World;
  * @author Darkguardsman */
 public class BlockLockedDoor extends BlockDoor
 {
-    public BlockLockedDoor(int id)
+    public BlockLockedDoor()
     {
-        super(id, Material.rock);
-        setUnlocalizedName("CustomLockedDoor");
+        super(Material.rock);
+        setBlockName("CustomLockedDoor");
     }
 
     @Override
-    public int idDropped(int par1, Random par2Random, int par3)
+    public Item getItemDropped(int par1, Random par2Random, int par3)
     {
-        return (par1 & 8) != 0 ? 0 : (Artillects.itemLockedDoor != null ? Artillects.itemLockedDoor.itemID : 0);
+        return (par1 & 8) != 0 ? null : (Artillects.itemLockedDoor != null ? Artillects.itemLockedDoor : null);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public Item getItem(World world, int x, int y, int z)
+    {
+        return Artillects.itemLockedDoor;
     }
 
     @Override
-    public int idPicked(World world, int x, int y, int z)
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {
-        return Artillects.itemLockedDoor  != null ? Artillects.itemLockedDoor.itemID : 0;
+        //TODO encode nbt for placing the door with settings
+        return Artillects.itemLockedDoor  != null ? new ItemStack(Artillects.itemLockedDoor) : null;
     }
 
     public TileEntity getTileEntity(World world, int x, int y, int z)
@@ -41,11 +53,11 @@ public class BlockLockedDoor extends BlockDoor
 
         if ((blockMeta & 8) == 0)
         {
-            ent = world.getBlockTileEntity(x, y, z);
+            ent = world.getTileEntity(x, y, z);
         }
         else
         {
-            ent = world.getBlockTileEntity(x, y - 1, z);
+            ent = world.getTileEntity(x, y - 1, z);
         }
         return ent;
     }
@@ -80,7 +92,7 @@ public class BlockLockedDoor extends BlockDoor
     public void activateDoor(World world, int x, int y, int z)
     {
 
-        int fullMeta = getFullMetadata(world, x, y, z);
+        int fullMeta = func_150012_g(world, x, y, z);
         int newMeta = fullMeta & 7;
         newMeta ^= 4;
 
@@ -100,19 +112,9 @@ public class BlockLockedDoor extends BlockDoor
         world.playAuxSFXAtEntity(null, 1003, x, y, z, 0);
     }
 
-    @Override
-    public void onPoweredBlockChange(World world, int x, int y, int z, boolean par5)
-    {
-        TileLockedDoor door = getDoorTile(world, x, y, z);
-        if (door != null && door.allowRedstone)
-        {
-            activateDoor(world, x, y, z);
-        }
-    }
-
     public boolean isDoorOpen(IBlockAccess world, int x, int y, int z)
     {
-        return (getFullMetadata(world, x, y, z) & 4) != 0;
+        return (func_150012_g(world, x, y, z) & 4) != 0;
     }
 
 }
