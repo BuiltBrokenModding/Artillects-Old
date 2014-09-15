@@ -1,7 +1,8 @@
 package artillects.content.blocks.teleporter;
 
-import java.util.Random;
-
+import artillects.core.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -13,9 +14,8 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import resonant.lib.utility.LanguageUtility;
-import artillects.core.Reference;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class BlockTeleporterAnchor extends Block implements ITileEntityProvider
 {

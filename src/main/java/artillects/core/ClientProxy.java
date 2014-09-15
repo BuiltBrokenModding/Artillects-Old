@@ -1,16 +1,15 @@
 package artillects.core;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import artillects.content.tool.GuiPlacedTool;
 import artillects.content.tool.TilePlaceableTool;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.GuiSurveyor;
 import artillects.content.tool.surveyor.TileSurveyor;
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import universalelectricity.core.transform.vector.Vector3;
 
 public class ClientProxy extends CommonProxy

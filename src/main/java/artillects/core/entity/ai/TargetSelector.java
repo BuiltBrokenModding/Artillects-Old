@@ -1,5 +1,7 @@
 package artillects.core.entity.ai;
 
+import artillects.core.interfaces.IEntity;
+import artillects.core.interfaces.IFactionMember;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
@@ -8,8 +10,6 @@ import net.minecraft.entity.INpc;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.core.interfaces.IEntity;
-import artillects.core.interfaces.IFactionMember;
 
 public class TargetSelector implements IEntitySelector
 {

@@ -1,11 +1,5 @@
 package artillects.core.building;
 
-import java.io.File;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -21,6 +15,12 @@ import resonant.lib.utility.nbt.ISaveObj;
 import resonant.lib.utility.nbt.NBTUtility;
 import universalelectricity.core.transform.vector.Vector3;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.io.File;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 /** File that represents all the data loaded from a schematic data file
  * 

@@ -1,11 +1,10 @@
 package artillects.drone;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
+import artillects.core.building.BuildingPart;
+import artillects.core.building.EnumStructurePeaces;
+import artillects.core.building.GhostObject;
+import artillects.core.zone.Zone;
+import artillects.core.zone.ZoneBuilding;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldProvider;
@@ -15,12 +14,13 @@ import net.minecraftforge.event.world.WorldEvent.Unload;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
 import resonant.lib.utility.nbt.SaveManager;
-import artillects.core.building.BuildingPart;
-import artillects.core.building.EnumStructurePeaces;
-import artillects.core.building.GhostObject;
-import artillects.core.zone.Zone;
-import artillects.core.zone.ZoneBuilding;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 /** Hive village in other words. This represents a single location in the hive. Each hive complex has
  * a task and set of structure peaces.

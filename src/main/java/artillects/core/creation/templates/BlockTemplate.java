@@ -1,7 +1,10 @@
 package artillects.core.creation.templates;
 
-import java.util.List;
-
+import artillects.core.Reference;
+import artillects.core.creation.Subblock;
+import artillects.core.creation.content.BlockProduct;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,11 +14,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import artillects.core.Reference;
-import artillects.core.creation.Subblock;
-import artillects.core.creation.content.BlockProduct;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.List;
 
 /** Basic block template used to create single or metadata based blocks. This is not designed for any
  * advanced application but can be extended to offer more features.

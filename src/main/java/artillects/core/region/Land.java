@@ -1,15 +1,15 @@
 package artillects.core.region;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.Vector2;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
-import universalelectricity.core.transform.vector.IVector2;
-import universalelectricity.core.transform.vector.Vector2;
 
 /** 2D top down area of the map
  * 

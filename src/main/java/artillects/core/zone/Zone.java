@@ -1,14 +1,14 @@
 package artillects.core.zone;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
+import artillects.core.building.GhostObject;
 import artillects.core.interfaces.IWorker;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import artillects.core.building.GhostObject;
 import universalelectricity.core.transform.vector.Vector3;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /** Class used by the hive mind to ID an area by which a task is to be operated in
  * 

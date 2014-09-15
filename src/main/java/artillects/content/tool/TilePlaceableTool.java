@@ -1,8 +1,6 @@
 package artillects.content.tool;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import artillects.core.Artillects;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,16 +9,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
 import resonant.api.IRemovable.ISneakPickup;
-import artillects.core.Artillects;
-
-import com.google.common.io.ByteArrayDataInput;
 import resonant.engine.ResonantEngine;
+import resonant.lib.content.prefab.java.TileElectric;
 import resonant.lib.network.discriminator.PacketTile;
 import resonant.lib.network.discriminator.PacketType;
 import resonant.lib.network.handle.IPacketIDReceiver;
 import universalelectricity.core.transform.rotation.EulerAngle;
 import universalelectricity.core.transform.vector.Vector3;
-import resonant.lib.content.prefab.java.TileElectric;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Prefab for tools that can be place and function while placed
  * 

@@ -1,7 +1,7 @@
 package artillects.core.region;
 
-import net.minecraft.world.World;
 import artillects.core.building.GhostObject;
+import net.minecraft.world.World;
 import universalelectricity.core.transform.vector.IVector3;
 import universalelectricity.core.transform.vector.IVectorWorld;
 

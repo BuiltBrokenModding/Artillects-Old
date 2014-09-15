@@ -1,24 +1,24 @@
-package artillects.drone.client.render;
+package artillects.client.render;
 
+import artillects.client.model.ModelArtillect;
+import artillects.client.model.ModelSeeker;
+import artillects.core.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import artillects.core.Reference;
-import artillects.drone.client.model.ModelArtillect;
-import artillects.drone.client.model.ModelWorker;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderWorker extends RenderLiving
+public class RenderSeeker extends RenderLiving
 {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "Worker.png");
-    public static final ModelArtillect MODEL = new ModelWorker();
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "Seeker.png");
+    public static final ModelArtillect MODEL = new ModelSeeker();
 
-    public RenderWorker()
+    public RenderSeeker()
     {
-        super(MODEL, 1.0F);
+        super(new ModelSeeker(), 1.0F);
     }
 
     @Override

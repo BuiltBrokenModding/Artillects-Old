@@ -1,8 +1,6 @@
 package artillects.content.tool.extractor;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import artillects.content.tool.TilePlaceableTool;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,10 +15,11 @@ import resonant.api.IExternalInventory;
 import resonant.api.IInventoryProvider;
 import resonant.lib.utility.inventory.ExternalInventory;
 import resonant.lib.utility.inventory.InventoryUtility;
-import artillects.content.tool.TilePlaceableTool;
-import universalelectricity.core.UniversalElectricity;
 import universalelectricity.core.transform.rotation.EulerAngle;
 import universalelectricity.core.transform.vector.Vector3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Used to pick up blocks without mining them. Has the option to exact only one block type. As well
  * has the option to extract in an area.

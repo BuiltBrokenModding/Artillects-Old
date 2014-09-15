@@ -1,18 +1,18 @@
 package artillects.core.region;
 
+import artillects.core.FactionPerms;
+import artillects.core.interfaces.IFaction;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.world.World;
+import resonant.lib.access.java.AccessUser;
+import universalelectricity.core.transform.vector.IVector2;
+import universalelectricity.core.transform.vector.Vector2;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.world.World;
-import artillects.core.FactionPerms;
-import artillects.core.interfaces.IFaction;
-import resonant.lib.access.java.AccessUser;
-import universalelectricity.core.transform.vector.IVector2;
-import universalelectricity.core.transform.vector.Vector2;
 
 /** Manager of all land creation, destruction, and claiming
  * 

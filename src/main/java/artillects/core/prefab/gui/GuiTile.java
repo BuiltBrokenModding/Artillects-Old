@@ -1,8 +1,7 @@
 package artillects.core.prefab.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import artillects.core.Reference;
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiTextField;
@@ -10,13 +9,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
-
 import resonant.lib.gui.ContainerDummy;
 import resonant.lib.gui.GuiContainerBase;
-import artillects.core.Reference;
-import cpw.mods.fml.client.FMLClientHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Prefab for all tiles
  * 

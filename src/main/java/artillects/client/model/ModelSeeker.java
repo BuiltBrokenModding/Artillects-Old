@@ -4,7 +4,7 @@
 // Keep in mind that you still need to fill in some blanks
 // - ZeuX
 
-package artillects.drone.client.model;
+package artillects.client.model;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;

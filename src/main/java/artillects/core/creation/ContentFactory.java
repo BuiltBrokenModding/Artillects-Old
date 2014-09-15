@@ -1,5 +1,17 @@
 package artillects.core.creation;
 
+import artillects.core.building.BuildFile;
+import artillects.core.creation.content.BlockProduct;
+import artillects.core.creation.content.ItemProduct;
+import artillects.core.creation.content.Product;
+import artillects.core.creation.content.ProductType;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import org.w3c.dom.Document;
+import resonant.content.loader.ModManager;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -9,23 +21,6 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-
-import org.w3c.dom.Document;
-
-import resonant.content.loader.ModManager;
-import artillects.core.building.BuildFile;
-import artillects.core.creation.content.BlockProduct;
-import artillects.core.creation.content.ItemProduct;
-import artillects.core.creation.content.Product;
-import artillects.core.creation.content.ProductType;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /** Loads data from xml files to be used in creating content objects such as blocks
  * 

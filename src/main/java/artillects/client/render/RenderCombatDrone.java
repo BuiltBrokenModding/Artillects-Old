@@ -1,24 +1,24 @@
-package artillects.drone.client.render;
+package artillects.client.render;
 
+import artillects.client.model.ModelArtillect;
+import artillects.client.model.ModelCombatDrone;
+import artillects.core.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import artillects.core.Reference;
-import artillects.drone.client.model.ModelArtillect;
-import artillects.drone.client.model.ModelCombatWalker;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderDemolisher extends RenderLiving
+public class RenderCombatDrone extends RenderLiving
 {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "128x128Blank.png");
-	public static final ModelArtillect MODEL = new ModelCombatWalker();
+	public static final ModelArtillect MODEL = new ModelCombatDrone();
 
-	public RenderDemolisher()
+	public RenderCombatDrone()
 	{
-		super(MODEL, 1.0F);
+		super(new ModelCombatDrone(), 1.0F);
 	}
 
 	@Override

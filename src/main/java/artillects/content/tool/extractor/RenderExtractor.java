@@ -1,15 +1,13 @@
 package artillects.content.tool.extractor;
 
+import artillects.core.Reference;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
 import org.lwjgl.opengl.GL11;
-
 import resonant.lib.render.RenderTaggedTile;
 import resonant.lib.render.RenderUtility;
-import artillects.core.Reference;
 
 public class RenderExtractor extends RenderTaggedTile
 {

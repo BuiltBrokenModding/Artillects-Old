@@ -1,4 +1,4 @@
-package artillects.drone.client.model;
+package artillects.client.model;
 
 import net.minecraft.client.model.ModelBase;
 

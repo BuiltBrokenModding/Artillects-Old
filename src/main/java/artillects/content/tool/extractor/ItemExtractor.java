@@ -1,13 +1,13 @@
 package artillects.content.tool.extractor;
 
-import java.util.HashMap;
-
+import artillects.content.tool.ItemPlaceableTool;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import artillects.content.tool.ItemPlaceableTool;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.transform.vector.Vector3;
+
+import java.util.HashMap;
 
 public class ItemExtractor extends ItemPlaceableTool
 {

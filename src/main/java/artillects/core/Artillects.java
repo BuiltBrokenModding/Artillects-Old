@@ -1,25 +1,7 @@
 package artillects.core;
 
-import java.io.File;
-import java.util.Arrays;
-
-import net.minecraft.block.Block;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import resonant.content.loader.ModManager;
-import resonant.lib.recipe.UniversalRecipe;
-import resonant.lib.utility.LanguageUtility;
-import resonant.lib.utility.nbt.SaveManager;
 import artillects.content.blocks.door.BlockLockedDoor;
 import artillects.content.blocks.door.ItemLockedDoor;
-import artillects.content.blocks.door.TileLockedDoor;
 import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemSchematicCreator;
@@ -30,19 +12,31 @@ import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
 import artillects.drone.commands.CommandTool;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModMetadata;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.command.ICommandManager;
+import net.minecraft.command.ServerCommandManager;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import resonant.content.loader.ModManager;
+import resonant.lib.recipe.UniversalRecipe;
+import resonant.lib.utility.LanguageUtility;
+import resonant.lib.utility.nbt.SaveManager;
+
+import java.io.File;
+import java.util.Arrays;
 
 /** @author DarkGuardsman */
 @Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:ResonantEngine;")

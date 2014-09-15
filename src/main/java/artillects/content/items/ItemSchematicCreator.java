@@ -1,16 +1,16 @@
 package artillects.content.items;
 
-import java.util.List;
-
+import artillects.core.Reference;
+import artillects.drone.commands.PlayerSelectionHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import artillects.core.Reference;
-import artillects.drone.commands.PlayerSelectionHandler;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.util.List;
 
 public class ItemSchematicCreator extends Item
 {

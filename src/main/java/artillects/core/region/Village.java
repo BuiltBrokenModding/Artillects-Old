@@ -1,11 +1,11 @@
 package artillects.core.region;
 
-import java.io.File;
-
 import net.minecraft.world.World;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.io.File;
 
 /** Small area of buildings grouped together into an area of living.
  * 

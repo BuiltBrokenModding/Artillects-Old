@@ -1,9 +1,8 @@
 package artillects.content.blocks.door;
 
-import org.w3c.dom.Document;
-
-import resonant.content.loader.ModManager;
 import artillects.core.creation.content.Product;
+import org.w3c.dom.Document;
+import resonant.content.loader.ModManager;
 
 public class DoorProduct extends Product<DoorProduct>
 {

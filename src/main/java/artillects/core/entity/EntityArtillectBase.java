@@ -1,19 +1,11 @@
-package artillects.drone.entity;
+package artillects.core.entity;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
+import artillects.core.Artillects;
+import artillects.core.zone.Zone;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import artillects.core.Artillects;
-import artillects.drone.HiveComplex;
-import artillects.core.zone.Zone;
-
 import universalelectricity.core.transform.vector.IVector3;
 import universalelectricity.core.transform.vector.IVectorWorld;
 import universalelectricity.core.transform.vector.Vector3;

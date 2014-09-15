@@ -1,12 +1,12 @@
 package artillects.content.blocks.door;
 
+import artillects.core.Artillects;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import artillects.core.Artillects;
 
 public class ItemLockedDoor extends ItemDoor
 {

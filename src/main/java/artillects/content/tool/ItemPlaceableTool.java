@@ -1,16 +1,15 @@
 package artillects.content.tool;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
-import org.lwjgl.input.Keyboard;
-
-import resonant.lib.render.EnumColor;
-import resonant.lib.utility.LanguageUtility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.lwjgl.input.Keyboard;
+import resonant.lib.render.EnumColor;
+import resonant.lib.utility.LanguageUtility;
+
+import java.util.List;
 
 public class ItemPlaceableTool extends ItemBlock
 {

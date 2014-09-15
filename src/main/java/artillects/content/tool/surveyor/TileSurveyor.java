@@ -1,7 +1,7 @@
 package artillects.content.tool.surveyor;
 
-import java.awt.Color;
-
+import artillects.content.tool.TilePlaceableTool;
+import artillects.core.Artillects;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,11 +11,9 @@ import resonant.engine.ResonantEngine;
 import resonant.lib.network.discriminator.PacketTile;
 import resonant.lib.network.discriminator.PacketType;
 import resonant.lib.network.handle.IPacketIDReceiver;
-import artillects.content.tool.TilePlaceableTool;
-import artillects.core.Artillects;
-
-import com.google.common.io.ByteArrayDataInput;
 import universalelectricity.core.transform.vector.Vector3;
+
+import java.awt.*;
 
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 

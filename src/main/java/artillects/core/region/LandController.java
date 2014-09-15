@@ -1,9 +1,9 @@
 package artillects.core.region;
 
-import java.util.HashMap;
-
 import artillects.core.interfaces.IID;
 import net.minecraft.world.World;
+
+import java.util.HashMap;
 
 /** Section of land that contains dozens of sub land areas. All sub land must be contained with in
  * the controllers area.
