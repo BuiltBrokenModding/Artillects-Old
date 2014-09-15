@@ -1,5 +1,6 @@
 package artillects.content.tool.surveyor;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import artillects.content.tool.ItemPlaceableTool;
@@ -10,11 +11,10 @@ import artillects.content.tool.ItemPlaceableTool;
  * @author Darkguardsman */
 public class ItemSurveyor extends ItemPlaceableTool
 {
-    public ItemSurveyor(int id)
-    {
-        super(id);
+    public ItemSurveyor(Block block) {
+        super(block);
     }
-    
+
     @Override
     public boolean used(EntityPlayer player, World world, int x, int y, int z, int side)
     {

@@ -39,7 +39,7 @@ public class TargetSelector implements IEntitySelector
                         return false;
                     }
                 }
-                if (players && entity instanceof EntityPlayer && entity.worldObj.difficultySetting > 0)
+                if (players && entity instanceof EntityPlayer && entity.worldObj.difficultySetting.ordinal() > 0)
                 {
                     if (!((EntityPlayer) entity).capabilities.isCreativeMode)
                     {

@@ -11,16 +11,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import artillects.core.Artillects;
-import artillects.drone.hive.HiveComplex;
-import artillects.drone.hive.zone.Zone;
+import artillects.drone.HiveComplex;
+import artillects.core.zone.Zone;
 
-import com.google.common.io.ByteArrayDataInput;
-import resonant.lib.network.handle.IPacketReceiver;
 import universalelectricity.core.transform.vector.IVector3;
 import universalelectricity.core.transform.vector.IVectorWorld;
 import universalelectricity.core.transform.vector.Vector3;
 
-public class EntityArtillectBase extends EntityCreature implements IArtillect, IRangedAttackMob, IVectorWorld
+public class EntityArtillectBase extends EntityCreature implements IRangedAttackMob, IVectorWorld
 {
     private Zone assignedZone;
     private Object owner;
@@ -81,50 +79,9 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     }
 
     @Override
-    public void setDead()
-    {
-        if (this.getOwner() instanceof HiveComplex)
-        {
-            ((HiveComplex) this.getOwner()).removeDrone(this);
-        }
-        super.setDead();
-    }
-
-    @Override
     protected boolean canDespawn()
     {
         return false;
-    }
-
-    @Override
-    public void setOwner(Object hive)
-    {
-        this.owner = hive;
-    }
-
-    @Override
-    public Object getOwner()
-    {
-        return this.owner;
-    }
-
-    @Override
-    public Zone getZone()
-    {
-        return this.assignedZone;
-    }
-
-    @Override
-    public void setZone(Zone zone)
-    {
-        this.assignedZone = zone;
-    }
-
-    @Override
-    public IInventory getInventory()
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
 
     @Override
@@ -132,10 +89,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     {
         super.writeEntityToNBT(nbt);
         nbt.setBoolean("playerOwned", this.isPlayerOwned);
-        if (this.getOwner() instanceof HiveComplex)
-        {
-            nbt.setString("hiveID", ((HiveComplex) this.getOwner()).getName());
-        }
     }
 
     @Override
@@ -182,20 +135,6 @@ public class EntityArtillectBase extends EntityCreature implements IArtillect, I
     @Override
     public boolean isOnSameTeam(EntityLivingBase entity)
     {
-        if (entity instanceof IArtillect && ((IArtillect) entity).getOwner() instanceof HiveComplex)
-        {
-            if (((HiveComplex) ((IArtillect) entity).getOwner()) == this.getOwner())
-            {
-                return true;
-            }
-        }
-        if (entity instanceof EntityPlayer)
-        {
-            if (this.getOwner() instanceof HiveComplex)
-            {
-                //TODO when access list is added to hive check for username
-            }
-        }
         return this.isOnTeam(entity.getTeam());
     }
 

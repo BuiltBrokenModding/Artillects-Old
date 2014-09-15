@@ -3,6 +3,7 @@ package artillects.content.tool;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,7 @@ import artillects.core.Artillects;
 import com.google.common.io.ByteArrayDataInput;
 import resonant.engine.ResonantEngine;
 import resonant.lib.network.discriminator.PacketTile;
+import resonant.lib.network.discriminator.PacketType;
 import resonant.lib.network.handle.IPacketIDReceiver;
 import universalelectricity.core.transform.rotation.EulerAngle;
 import universalelectricity.core.transform.vector.Vector3;
@@ -79,14 +81,14 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     {
         lastRayHit = null;
         sideHit = null;
-        angle.yaw = EulerAngle.clampAngleTo360(angle.yaw);
-        angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);
+        angle.yaw_$eq(EulerAngle.clampAngleTo360(angle.yaw()));
+        angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(this).translate(offset);
+            loc = new Vector3(this).add(offset);
 
         MovingObjectPosition hit = getRayHit();
-        if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
+        if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
             lastRayHit = new Vector3(hit.hitVec);
             sideHit = ForgeDirection.getOrientation(hit.sideHit);
@@ -96,14 +98,14 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     public MovingObjectPosition getRayHit()
     {
         Vector3 surveyor = new Vector3(this);
-        Vector3 destination = new Vector3(angle);
+        Vector3 destination = angle.toVector();
 
         surveyor.add(destination);
-        surveyor.translate(offset);
-        destination.scale(rayDistance);
+        surveyor.add(offset);
+        destination.multiply(rayDistance);
         destination.add(surveyor);
 
-        return surveyor.rayTraceBlocks(world(), destination, true);
+        return surveyor.rayTraceBlocks(world(), destination);
     }
 
     @Override
@@ -116,7 +118,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     public ArrayList<ItemStack> getDrops(int metadata, int fortune)
     {
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-        ItemStack stack = new ItemStack(this.blockID(), 1, 0);
+        ItemStack stack = new ItemStack(this.block(), 1, 0);
         drops.add(stack);
         return drops;
     }
@@ -129,35 +131,35 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
 
     public void sendAngles()
     {
-        PacketHandler.sendPacketToClients(Artillects.PACKET_TILE.getPacketWithID(ROTATION_ID, this, this.angle.yaw, this.angle.pitch), world(), new Vector3(this), 100);
+        sendPacket(new PacketTile(this, ROTATION_ID, this.angle.yaw(), this.angle.pitch()));
     }
 
     public void setRotation(double yaw, double pitch)
     {
-        if (this.angle.yaw != yaw || this.angle.pitch != pitch)
+        if (this.angle.yaw() != yaw || this.angle.pitch() != pitch)
         {
-            this.angle.yaw = yaw;
-            this.angle.pitch = pitch;
+            this.angle.yaw_$eq(yaw);
+            this.angle.pitch_$eq(pitch);
             if (world().isRemote)
             {
-                Packet packet = Artillects.PACKET_TILE.getPacketWithID(ROTATION_ID, this, yaw, pitch);
-                PacketDispatcher.sendPacketToServer(packet);
+                PacketTile packet = new PacketTile(this, ROTATION_ID, yaw, pitch);
+                sendPacket(packet);
             }
         }
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public PacketTile getDescPacket()
     {
-        return Artillects.PACKET_TILE.getPacketWithID(DESC_ID, this, this.angle.yaw, this.angle.pitch, this.enabled);
+        return new PacketTile(this, DESC_ID, this.angle.yaw(), this.angle.pitch(), this.enabled);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
-        angle.yaw = nbt.getDouble("yaw");
-        angle.pitch = nbt.getDouble("pitch");
+        angle.yaw_$eq(nbt.getDouble("yaw"));
+        angle.pitch_$eq(nbt.getDouble("pitch"));
         if (nbt.hasKey("enabled"))
             this.enabled = nbt.getBoolean("enabled");
     }
@@ -172,18 +174,18 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     }
 
     @Override
-    public boolean onReceivePacket(int id, ByteArrayDataInput data, EntityPlayer player, Object... extra)
+    public boolean read(ByteBuf data, int id,  EntityPlayer player, PacketType type)
     {
         if (id == ROTATION_ID)
         {
-            angle.yaw = data.readDouble();
-            angle.pitch = data.readDouble();
+            angle.yaw_$eq(data.readDouble());
+            angle.pitch_$eq(data.readDouble());
             return true;
         }
         else if (id == DESC_ID)
         {
-            angle.yaw = data.readDouble();
-            angle.pitch = data.readDouble();
+            angle.yaw_$eq(data.readDouble());
+            angle.pitch_$eq(data.readDouble());
             enabled = data.readBoolean();
             return true;
         }
@@ -198,8 +200,8 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     @Override
     public ForgeDirection getDirection()
     {
-        double yaw = angle.yaw;
-        double pitch = angle.pitch;
+        double yaw = angle.yaw();
+        double pitch = angle.pitch();
         if (pitch == 90)
             return ForgeDirection.UP;
         if (pitch == -90)
@@ -226,22 +228,22 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
         switch (direction)
         {
             case SOUTH:
-                this.angle.yaw = 0;
+                this.angle.yaw_$eq(0);
                 break;
             case EAST:
-                this.angle.yaw = 90;
+                this.angle.yaw_$eq(90);
                 break;
             case NORTH:
-                this.angle.yaw = 180;
+                this.angle.yaw_$eq(180);
                 break;
             case WEST:
-                this.angle.yaw = 270;
+                this.angle.yaw_$eq(270);
                 break;
             case DOWN:
-                this.angle.pitch = -90;
+                this.angle.pitch_$eq(-90);
                 break;
             case UP:
-                this.angle.pitch = 90;
+                this.angle.pitch_$eq(90);
                 break;
         }
     }

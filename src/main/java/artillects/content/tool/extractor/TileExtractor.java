@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -11,37 +12,41 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import resonant.api.IExternalInventory;
+import resonant.api.IInventoryProvider;
 import resonant.lib.utility.inventory.ExternalInventory;
 import resonant.lib.utility.inventory.InventoryUtility;
 import artillects.content.tool.TilePlaceableTool;
 import universalelectricity.core.UniversalElectricity;
+import universalelectricity.core.transform.rotation.EulerAngle;
+import universalelectricity.core.transform.vector.Vector3;
 
 /** Used to pick up blocks without mining them. Has the option to exact only one block type. As well
  * has the option to extract in an area.
  * 
  * @author Darkguardsman */
-public class TileExtractor extends TilePlaceableTool implements IExternalInventory, ISidedInventory
+public class TileExtractor extends TilePlaceableTool implements IInventoryProvider, ISidedInventory
 {
     public static int MAX_RANGE = 4;
     public static int COOLDOWN = 100;
     protected int range = 1;
     protected int cooldownTicks = 0;
-    protected IExternalInventoryBox inventory;
+    protected IExternalInventory inventory;
 
     public TileExtractor()
     {
-        super(UniversalElectricity.machine);
-        itemBlock = ItemExtractor.class;
-        isOpaqueCube = false;
-        normalRender = false;
-        customItemRender = true;
+        super(Material.anvil);
+        itemBlock(ItemExtractor.class);
+        isOpaqueCube(false);
+        normalRender(false);
+        customItemRender(true);
         this.doRayTrace = true;
         this.rayDistance = 10;
     }
 
     @Override
-    public IExternalInventoryBox getInventory()
+    public IExternalInventory getInventory()
     {
         if (inventory == null)
         {
@@ -51,9 +56,9 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
+        super.update();
         if (cooldownTicks > 0)
             cooldownTicks--;
         
@@ -69,14 +74,14 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
     {
         lastRayHit = null;
         sideHit = null;
-        angle.yaw = EulerAngle.clampAngleTo360(angle.yaw);
-        angle.pitch = EulerAngle.clampAngleTo360(angle.pitch);
+        angle.yaw_$eq(EulerAngle.clampAngleTo360(angle.yaw()));
+        angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(this).translate(offset);
+            loc = new Vector3(this).add(offset);
 
         MovingObjectPosition hit = getRayHit();
-        if (hit != null && hit.typeOfHit == EnumMovingObjectType.TILE)
+        if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
             lastRayHit = new Vector3(hit.blockX, hit.blockY, hit.blockZ);
             sideHit = ForgeDirection.getOrientation(hit.sideHit);
@@ -93,12 +98,11 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
         List<Vector3> hits = getBlocksHit(world, hit, side, range);
         for (Vector3 h : hits)
         {
-            int id = h.getBlockID(world);
-            Block block = Block.blocksList[id];
+            Block block = h.getBlock(world);
             if (block != null)
             {
-                ArrayList<ItemStack> drops = block.getBlockDropped(world, h.intX(), h.intY(), h.intZ(), h.getBlockMetadata(world), 0);
-                h.setBlock(world, 0);
+                ArrayList<ItemStack> drops = block.getDrops(world, h.xi(), h.yi(), h.zi(), h.getBlockMetadata(world), 0);
+                h.setBlockToAir(world);
                 for (ItemStack stack : drops)
                 {
                     for (int slot = 0; slot < inv.getSizeInventory() - (inv instanceof InventoryPlayer ? 4 : 0); slot++)
@@ -138,7 +142,7 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
                 }
             }
         }
-        inv.onInventoryChanged();
+        //TODO onInventoryChanged();
     }
 
     public static List<Vector3> getBlocksHit(World world, Vector3 hit, ForgeDirection side, int range)
@@ -161,12 +165,12 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
                 dx = 0;
                 break;
         }
-
-        for (int x = hit.intX() - dx; x <= hit.intX() + dx; x++)
+        //TODO replace with helper method for getting radius
+        for (int x = hit.xi() - dx; x <= hit.xi() + dx; x++)
         {
-            for (int y = hit.intY() - dy; y <= hit.intY() + dy; y++)
+            for (int y = hit.yi() - dy; y <= hit.yi() + dy; y++)
             {
-                for (int z = hit.intZ() - dz; z <= hit.intZ() + dz; z++)
+                for (int z = hit.zi() - dz; z <= hit.zi() + dz; z++)
                 {
                     Vector3 vec = new Vector3(x, y, z);
                     if (canGrab(world, vec))
@@ -179,16 +183,15 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
 
     public static boolean canGrab(World world, Vector3 vec)
     {
-        return canGrab(world, vec.intX(), vec.intY(), vec.intZ());
+        return canGrab(world, vec.xi(), vec.yi(), vec.zi());
     }
 
     public static boolean canGrab(World world, int x, int y, int z)
     {
-        int id = world.getBlockId(x, y, z);
-        Block block = Block.blocksList[id];
-        if (block != null && block.getBlockHardness(world, x, y, z) >= 0 && !block.isAirBlock(world, x, y, z) && world.getBlockTileEntity(x, y, z) == null)
+        Block block = world.getBlock(x, y, z);
+        if (block != null && block.getBlockHardness(world, x, y, z) >= 0 && !block.isAir(world, x, y, z) && world.getTileEntity(x, y, z) == null)
         {
-            ArrayList<ItemStack> drops = block.getBlockDropped(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+            ArrayList<ItemStack> drops = block.getDrops(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
             if (drops != null & !drops.isEmpty())
                 return true;
         }
@@ -238,15 +241,13 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
     }
 
     @Override
-    public String getInvName()
-    {
-        return getBlockType().getLocalizedName();
+    public String getInventoryName() {
+        return null;
     }
 
     @Override
-    public boolean isInvNameLocalized()
-    {
-        return true;
+    public boolean hasCustomInventoryName() {
+        return false;
     }
 
     @Override
@@ -262,16 +263,13 @@ public class TileExtractor extends TilePlaceableTool implements IExternalInvento
     }
 
     @Override
-    public void openChest()
-    {
-        this.getInventory().openChest();
+    public void openInventory() {
 
     }
 
     @Override
-    public void closeChest()
-    {
-        this.getInventory().closeChest();
+    public void closeInventory() {
+
     }
 
     @Override

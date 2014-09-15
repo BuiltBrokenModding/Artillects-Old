@@ -1,4 +1,4 @@
-package artillects.drone.hive;
+package artillects.drone;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,9 +18,8 @@ import resonant.lib.utility.nbt.SaveManager;
 import artillects.core.building.BuildingPart;
 import artillects.core.building.EnumStructurePeaces;
 import artillects.core.building.GhostObject;
-import artillects.drone.entity.IArtillect;
-import artillects.drone.hive.zone.Zone;
-import artillects.drone.hive.zone.ZoneBuilding;
+import artillects.core.zone.Zone;
+import artillects.core.zone.ZoneBuilding;
 import universalelectricity.core.transform.vector.VectorWorld;
 
 /** Hive village in other words. This represents a single location in the hive. Each hive complex has
@@ -38,8 +37,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     public final List<BuildingPart> damagedPeaces = new ArrayList<BuildingPart>();
 
     protected ZoneBuilding buildZone;
-
-    private HashSet<IArtillect> artillects = new HashSet<IArtillect>();
 
     public HashSet<Zone> zones = new HashSet<Zone>();
 
@@ -74,24 +71,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     {
         this("PlayerZone", new VectorWorld(WorldProvider.getProviderForDimension(0).worldObj, 0, 255, 0));
         this.playerZone = true;
-    }
-
-    /** Called when a drone is created or activated. Then needs to be loaded into the hive collection */
-    public void addDrone(IArtillect drone)
-    {
-        artillects.add(drone);
-        drone.setOwner(this);
-    }
-
-    /** Called to remove a drone from the hive. Normal when it dies or gets unloaded by the world */
-    public void removeDrone(IArtillect drone)
-    {
-        artillects.remove(drone);
-    }
-
-    public HashSet<IArtillect> getArtillects()
-    {
-        return this.artillects;
     }
 
     public void addZone(Zone zone)

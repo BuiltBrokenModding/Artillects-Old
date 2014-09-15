@@ -2,13 +2,11 @@ package artillects.drone.entity;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import artillects.core.Artillects;
-import artillects.drone.hive.HiveComplex;
 import net.minecraftforge.common.util.ForgeDirection;
 import universalelectricity.core.transform.vector.IVector3;
 import universalelectricity.core.transform.vector.Vector3;

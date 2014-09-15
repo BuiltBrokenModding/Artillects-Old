@@ -13,7 +13,7 @@ import artillects.core.Reference;
 
 public class RenderExtractor extends RenderTaggedTile
 {
-    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(Reference.MODEL_DIRECTORY + "ExtractorTool.tcn");
+    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "ExtractorTool.tcn"));
     public final static ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "ExtractorTool.png");
     public final static String[] YAW_ONLY = {"base", "left", "right"};
     

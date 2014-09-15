@@ -1,16 +1,15 @@
-package artillects.drone.hive.zone;
+package artillects.core.zone;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
 import resonant.lib.type.Pair;
-import universalelectricity.api.vector.Vector3;
-import universalelectricity.api.vector.VectorWorld;
 import artillects.core.building.BuildingPart;
-import artillects.drone.entity.IArtillect;
-import artillects.drone.entity.workers.EntityFabricator;
-import artillects.drone.hive.HiveComplex;
+import artillects.drone.HiveComplex;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /** Zone designed for drone to build a construct
  * 
@@ -23,13 +22,13 @@ public class ZoneBuilding extends Zone
 
     public ZoneBuilding(HiveComplex complex, Vector3 start, Vector3 end)
     {
-        super(complex.location.world, start, end);
+        super(complex.location.world(), start, end);
         this.complex = complex;
     }
 
     public ZoneBuilding(HiveComplex hiveComplex, int i)
     {
-        this(hiveComplex, hiveComplex.location.clone().translate(i), hiveComplex.location.clone().translate(-i));
+        this(hiveComplex, hiveComplex.location.clone().add(i), hiveComplex.location.clone().add(-i));
     }
 
     @Override
@@ -48,12 +47,12 @@ public class ZoneBuilding extends Zone
 
     public Pair<Vector3, ItemStack> getClosestBlock(VectorWorld vec)
     {
-        if (!buildPosition.isEmpty() && vec.world == this.world)
+        if (!buildPosition.isEmpty() && vec.world() == this.world)
         {
             Vector3 location = null;
             ItemStack stack = null;
 
-            for (Entry<Vector3, Pair<ItemStack, BuildingPart>> entry : buildPosition.entrySet())
+            for (Map.Entry<Vector3, Pair<ItemStack, BuildingPart>> entry : buildPosition.entrySet())
             {
                 if (location == null || entry.getKey().distance(vec) < vec.distance(location))
                 {
@@ -85,12 +84,6 @@ public class ZoneBuilding extends Zone
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean canAssignDrone(IArtillect drone)
-    {
-        return drone instanceof EntityFabricator;
     }
 
     @Override

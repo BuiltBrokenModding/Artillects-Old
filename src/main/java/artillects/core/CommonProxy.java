@@ -7,9 +7,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import resonant.lib.gui.ContainerDummy;
 import artillects.content.tool.surveyor.TileSurveyor;
+import resonant.lib.prefab.AbstractProxy;
 import universalelectricity.core.transform.vector.Vector3;
 
-public class CommonProxy extends ProxyBase
+public class CommonProxy extends AbstractProxy
 {
 
     @Override

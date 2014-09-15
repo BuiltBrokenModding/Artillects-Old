@@ -20,7 +20,7 @@ public class GuiSurveyor extends GuiPlacedTool
     public void initGui()
     {
         super.initGui();
-        this.color_field = new TextField(fontRenderer, 110, 67, 45, 12).setLength(5);
+        this.color_field = new TextField(fontRendererObj, 110, 67, 45, 12).setLength(5);
         color_field.setText(TileSurveyor.rgb2hex(((TileSurveyor) tile).beamColor));
         add(color_field);
     }
@@ -30,8 +30,8 @@ public class GuiSurveyor extends GuiPlacedTool
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
     {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        this.fontRenderer.drawString("\u00a77" + LanguageUtility.getLocal("gui.field.name"), 30, 6, 4210752);
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.color"), 25, 67, 4210752);
+        this.fontRendererObj.drawString("\u00a77" + LanguageUtility.getLocal("gui.field.name"), 30, 6, 4210752);
+        this.fontRendererObj.drawString(LanguageUtility.getLocal("gui.field.color"), 25, 67, 4210752);
     }
 
     @Override

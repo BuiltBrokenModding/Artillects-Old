@@ -2,44 +2,45 @@ package artillects.content.tool.surveyor;
 
 import java.awt.Color;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
 import resonant.api.IRemovable.ISneakPickup;
-import resonant.lib.network.IPacketReceiverWithID;
-import universalelectricity.api.UniversalElectricity;
-import universalelectricity.api.vector.Vector3;
+import resonant.engine.ResonantEngine;
+import resonant.lib.network.discriminator.PacketTile;
+import resonant.lib.network.discriminator.PacketType;
+import resonant.lib.network.handle.IPacketIDReceiver;
 import artillects.content.tool.TilePlaceableTool;
 import artillects.core.Artillects;
 
 import com.google.common.io.ByteArrayDataInput;
-
-import cpw.mods.fml.common.network.PacketDispatcher;
+import universalelectricity.core.transform.vector.Vector3;
 
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
  * @author Darkguardsman */
-public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWithID, ISneakPickup
+public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver, ISneakPickup
 {
     protected Color beamColor = Color.cyan;
 
     public TileSurveyor()
     {
-        super(UniversalElectricity.machine);
+        super(Material.anvil);
         rayDistance = 1000;
         doRayTrace = true;
-        isOpaqueCube = false;
-        normalRender = false;
-        customItemRender = true;
-        itemBlock = ItemSurveyor.class;
-        textureName = "material_steel";
+        isOpaqueCube(false);
+        normalRender(false);
+        customItemRender(true);
+        itemBlock(ItemSurveyor.class);
+        //textureName("material_steel");
     }
 
     @Override
-    public void updateEntity()
+    public void update()
     {
-        super.updateEntity();
-        if (this.ticks % 3 == 0)
+        super.update();
+        if (this.ticks() % 3 == 0)
         {
             //TODO render distance above tile
             if (lastRayHit != null && world().isRemote && enabled)
@@ -48,7 +49,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
     }
 
     @Override
-    protected boolean use(EntityPlayer player, int side, Vector3 hit)
+    public boolean use(EntityPlayer player, int side, Vector3 hit)
     {
         if (!player.isSneaking())
         {
@@ -62,7 +63,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
     {
         if (lastRayHit != null)
         {
-            return lastRayHit.distance(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5);
+            return lastRayHit.distance(new Vector3(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5));
         }
         return -1;
     }
@@ -87,21 +88,21 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
         colorBeamTag.setInteger("red", beamColor.getRed());
         colorBeamTag.setInteger("blue", beamColor.getBlue());
         colorBeamTag.setInteger("green", beamColor.getGreen());
-        nbt.setCompoundTag("beamColor", colorBeamTag);
+        nbt.setTag("beamColor", colorBeamTag);
     }
 
     @Override
-    public boolean onReceivePacket(int id, ByteArrayDataInput data, EntityPlayer player, Object... extra)
+    public boolean read(ByteBuf data, int id,  EntityPlayer player, PacketType type)
     {
         if (id == DESC_ID)
         {
-            this.angle.yaw = data.readDouble();
-            this.angle.pitch = data.readDouble();
+            this.angle.yaw_$eq(data.readDouble());
+            this.angle.pitch_$eq(data.readDouble());
             this.enabled = data.readBoolean();
             this.beamColor = new Color(data.readInt(), data.readInt(), data.readInt());
             return true;
         }
-        else if (super.onReceivePacket(id, data, player, extra))
+        else if (super.read(data, id, player, type))
         {
             return true;
         }
@@ -114,17 +115,17 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketReceiverWi
     }
 
     @Override
-    public Packet getDescriptionPacket()
+    public PacketTile getDescPacket()
     {
-        return Artillects.PACKET_TILE.getPacketWithID(DESC_ID, this, this.angle.yaw, this.angle.pitch, this.enabled, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
+        return new PacketTile(this, DESC_ID, this.angle.yaw(), this.angle.pitch(), this.enabled, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
     }
 
     public void setColor(Color color)
     {
         this.beamColor = color;
-        Packet packet = Artillects.PACKET_TILE.getPacketWithID(3, this, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
+        PacketTile packet = new PacketTile(this, 3, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
         if (world().isRemote)
-            PacketDispatcher.sendPacketToServer(packet);
+            ResonantEngine.instance.packetHandler.sendToServer(packet);
     }
 
     public void setColor(String color)
