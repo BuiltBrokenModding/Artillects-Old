@@ -11,6 +11,7 @@ buildscript {
     }
 }
 
+apply plugin: "curseforge"
 apply plugin: 'forge'
 
 def ENV = System.getenv()
@@ -41,6 +42,18 @@ minecraft {
 		replace "@BUILD@", 1
 	}
 }
+
+curse {
+    apiKey = project.curseforge_key // saved in my gradle.properties file.  http://minecraft.curseforge.com/my-api-tokens
+    projectId = "59652" // my project url is http://minecraft.curseforge.com/mc-mods/59652-seretroomsmod/
+    changelog = """
+    Yay for groovy mutline strings
+    This is a testing thing. please remove entirely.
+    lalalala
+    """
+    releaseType = "alpha"
+
+} 
 
 if (System.getenv("BUILD_NUMBER") != null)
     version += ".${System.getenv("BUILD_NUMBER")}"
