@@ -14,9 +14,16 @@ buildscript {
 apply plugin: "curseforge"
 apply plugin: 'forge'
 
-def ENV = System.getenv()
+
 
 ext.buildProps = file "build.properties"
+
+if (System.getenv("BUILD_NUMBER") != null) {
+	build = "${System.getenv("BUILD_NUMBER")}"
+}
+ else {
+	build = "NIGHTLY"
+}
 
 buildProps.withReader {
     def prop = new Properties()
@@ -54,9 +61,6 @@ curse {
     releaseType = "alpha"
 
 } 
-
-if (System.getenv("BUILD_NUMBER") != null)
-    version += ".${System.getenv("BUILD_NUMBER")}"
 
 
 processResources {
