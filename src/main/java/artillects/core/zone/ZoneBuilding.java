@@ -1,6 +1,7 @@
 package artillects.core.zone;
 
 
+import artillects.core.building.BuildingBlock;
 import artillects.core.building.BuildingPart;
 import artillects.drone.HiveComplex;
 import net.minecraft.item.ItemStack;
@@ -8,7 +9,9 @@ import resonant.lib.type.Pair;
 import universalelectricity.core.transform.vector.Vector3;
 import universalelectricity.core.transform.vector.VectorWorld;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /** Zone designed for drone to build a construct
@@ -45,24 +48,32 @@ public class ZoneBuilding extends Zone
         }
     }
 
-    public Pair<Vector3, ItemStack> getClosestBlock(VectorWorld vec)
+    /**
+     * Gets the first closest block for building
+     * @param vec - location to search from
+     * @return BuildBlock instance containing the placement stack and location to place the block
+     */
+    public BuildingBlock getClosestBlock(VectorWorld vec)
     {
+        List<BuildingBlock> list = getClosestBlocks(vec, 1);
+        return list.get(0);
+    }
+
+    /**
+     * Gets the closest n count of blocks to the location
+     * @param vec - location to search from
+     * @param num - n count
+     * @return list of blocks, never null but can be empty
+     */
+    public List<BuildingBlock> getClosestBlocks(VectorWorld vec, int num)
+    {
+        List<BuildingBlock> blocks = new ArrayList();
         if (!buildPosition.isEmpty() && vec.world() == this.world)
         {
-            Vector3 location = null;
-            ItemStack stack = null;
-
-            for (Map.Entry<Vector3, Pair<ItemStack, BuildingPart>> entry : buildPosition.entrySet())
-            {
-                if (location == null || entry.getKey().distance(vec) < vec.distance(location))
-                {
-                    location = entry.getKey();
-                    stack = entry.getValue().left();
-                }
-            }
-            return new Pair<Vector3, ItemStack>(location, stack);
+                //TODO sort collection of all build positions by distance to vec
+                //TODO then return first n count of positions
         }
-        return null;
+        return blocks;
     }
 
     /** Called by a builder to place a block.

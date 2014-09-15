@@ -1,4 +1,4 @@
-package artillects.drone.commands;
+package artillects.core.commands;
 
 import artillects.core.building.BuildFile;
 import net.minecraft.entity.player.EntityPlayer;

@@ -42,17 +42,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     public boolean playerZone = false;
 
-    private static HiveComplex playerHiveComplex;
-
-    public static HiveComplex getPlayerHive()
-    {
-        if (playerHiveComplex == null)
-        {
-            playerHiveComplex = new HiveComplex(true);
-        }
-        return playerHiveComplex;
-    }
-
     public HiveComplex()
     {
         SaveManager.register(this);
@@ -196,15 +185,6 @@ public class HiveComplex extends GhostObject implements IVirtualObject
             {
                 str.worldGen();
             }
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            //EntityFabricator fab = new EntityFabricator(this.location.world);
-            //fab.setPosition(this.location.x + 0.5, this.location.y + (i * 0.5), this.location.z + 0.5);
-            //fab.setOwner(HiveComplexManager.instance());
-            //this.buildZone.assignArtillect(fab);
-            //this.location.world.spawnEntityInWorld(fab);
         }
     }
 

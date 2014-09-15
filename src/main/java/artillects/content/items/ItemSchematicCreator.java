@@ -1,7 +1,7 @@
 package artillects.content.items;
 
 import artillects.core.Reference;
-import artillects.drone.commands.PlayerSelectionHandler;
+import artillects.core.commands.PlayerSelectionHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

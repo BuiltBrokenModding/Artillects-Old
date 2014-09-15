@@ -1,4 +1,4 @@
-package artillects.drone.commands;
+package artillects.core.commands;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;

@@ -11,7 +11,7 @@ import artillects.content.tool.surveyor.TileSurveyor;
 import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
-import artillects.drone.commands.CommandTool;
+import artillects.core.commands.CommandTool;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
