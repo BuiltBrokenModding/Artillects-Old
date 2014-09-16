@@ -23,10 +23,10 @@ apply plugin: 'forge'
 ext.buildProps = file "build.properties"
 
 if (System.getenv("BUILD_NUMBER") != null) {
-	build = "${System.getenv("BUILD_NUMBER")}"
+	pack_version = "${System.getenv("BUILD_NUMBER")}"
 }
  else {
-	build = "NIGHTLY"
+	pack_version = "NIGHTLY"
 }
 
 buildProps.withReader {
