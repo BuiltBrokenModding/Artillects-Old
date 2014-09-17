@@ -23,10 +23,10 @@ apply plugin: 'forge'
 ext.buildProps = file "build.properties"
 
 if (System.getenv("BUILD_NUMBER") != null) {
-	pack_version = "${System.getenv("BUILD_NUMBER")}"
+	version = "${System.getenv("BUILD_NUMBER")}"
 }
  else {
-	pack_version = "NIGHTLY"
+	version = "NIGHTLY"
 }
 
 buildProps.withReader {
@@ -35,7 +35,8 @@ buildProps.withReader {
     ext.config = new ConfigSlurper().parse prop
 }
 
-version = "${config.version.minecraft}-${config.version.mod.major}.${config.version.mod.minor}.${config.version.mod.revis}"
+version = "${config.version.minecraft}-${config.version.mod.major}.${config.version.mod.minor}.${config.version.mod.revis.}.{version}"
+
 group = "artillects"
 archivesBaseName = "${System.getenv().JOB_NAME}"
 
