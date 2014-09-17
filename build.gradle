@@ -86,7 +86,8 @@ repositories {
 				url "http://calclavia.com/maven"
 			}
 		}
-dependencies {
-                compile group: 'com.calclavia.universalelectricity', name: 'universal-electricity', version: "${rootProject.config.version.universalelectricity}", classifier: "dev"
-		compile group: 'com.calclavia.resonantengine', name: 'resonant-engine', version: "${config.version.resonantengine}", classifier: "dev"
+dependencies 	{
+        compile group: 'dev.calclavia.universalelectricity', name: 'universal-electricity', version: "${rootProject.config.version.universalelectricity}", classifier: "dev"
+	compile group: 'dev.calclavia.resonantengine', name: 'resonant-engine', version: "${config.version.resonantengine}", classifier: "dev"
+        //compile "li.cil.oc:OpenComputers:MC1.7.10-1.3.4.+:dev"
 }
