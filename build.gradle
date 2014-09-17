@@ -5,17 +5,29 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
 
+apply plugin: "curseforge"
 apply plugin: 'forge'
 
-def ENV = System.getenv()
+
 
 ext.buildProps = file "build.properties"
+
+if (System.getenv("BUILD_NUMBER") != null) {
+	pack_version = "${System.getenv("BUILD_NUMBER")}"
+}
+ else {
+	pack_version = "NIGHTLY"
+}
 
 buildProps.withReader {
     def prop = new Properties()
@@ -41,9 +53,6 @@ minecraft {
 		replace "@BUILD@", 1
 	}
 }
-
-if (System.getenv("BUILD_NUMBER") != null)
-    version += ".${System.getenv("BUILD_NUMBER")}"
 
 
 processResources {
@@ -77,10 +86,8 @@ repositories {
 				url "http://calclavia.com/maven"
 			}
 		}
-dependencies {
-	compile group: 'universalelectricity', name: 'Universal-Electricity', version: "${config.version.universalelectricity}", classifier: "dev"
-    if (System.getenv().JOB_NAME != null && System.getenv().JOB_NAME == "ICBM-Development")
-        compile group: 'resonant-engine-development', name: 'resonant-engine', version: "${config.version.resonantengine}", classifier: "dev"
-    else
-        compile group: 'resonant-engine', name: 'resonant-engine', version: "${config.version.resonantengine}", classifier: "dev"
+dependencies 	{
+        compile group: 'dev.calclavia.universalelectricity', name: 'universal-electricity', version: "${rootProject.config.version.universalelectricity}", classifier: "dev"
+	compile group: 'dev.calclavia.resonantengine', name: 'resonant-engine', version: "${config.version.resonantengine}", classifier: "dev"
+        //compile "li.cil.oc:OpenComputers:MC1.7.10-1.3.4.+:dev"
 }
