@@ -1,14 +1,14 @@
 package artillects.core.region;
 
-import java.util.HashMap;
-
+import artillects.core.interfaces.IFactionMember;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import artillects.core.interfaces.IFactionMember;
 import universalelectricity.core.transform.vector.IVector2;
 import universalelectricity.core.transform.vector.IVector3;
 import universalelectricity.core.transform.vector.IVectorWorld;
+
+import java.util.HashMap;
 
 /** Manager that handles everything related to faction control, setup, and interaction
  * 

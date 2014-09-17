@@ -1,26 +1,23 @@
 package artillects.core.creation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-
+import artillects.core.creation.content.BlockProduct;
+import artillects.core.creation.content.ItemProduct;
+import artillects.core.creation.content.Product;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import artillects.core.creation.content.BlockProduct;
-import artillects.core.creation.content.ItemProduct;
-import artillects.core.creation.content.Product;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class RecipeFactory
 {

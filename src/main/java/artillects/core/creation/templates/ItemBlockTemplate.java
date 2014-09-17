@@ -1,17 +1,16 @@
 package artillects.core.creation.templates;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.lwjgl.input.Keyboard;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Keyboard;
 import resonant.lib.render.EnumColor;
 import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.TooltipUtility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ItemBlockTemplate extends ItemBlock
 {

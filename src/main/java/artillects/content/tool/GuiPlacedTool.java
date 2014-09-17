@@ -1,18 +1,10 @@
 package artillects.content.tool;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
-import resonant.lib.gui.ContainerDummy;
-import resonant.lib.gui.GuiContainerBase;
-import resonant.lib.utility.LanguageUtility;
-import artillects.core.Reference;
 import artillects.core.prefab.gui.GuiTile;
 import artillects.core.prefab.gui.NumericField;
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
+import resonant.lib.utility.LanguageUtility;
 
 /** Gui for any tool that is placed on the ground. Which also include the ability to rotate on the
  * yaw and pitch axis
@@ -38,11 +30,11 @@ public class GuiPlacedTool extends GuiTile
     public void initGui()
     {
         super.initGui();
-        yaw_field = (NumericField) new NumericField(fontRenderer, 110, 37, 45, 12).setLength(10);
-        pitch_field = (NumericField) new NumericField(fontRenderer, 110, 52, 45, 12).setLength(10);
+        yaw_field = (NumericField) new NumericField(fontRendererObj, 110, 37, 45, 12).setLength(10);
+        pitch_field = (NumericField) new NumericField(fontRendererObj, 110, 52, 45, 12).setLength(10);
 
-        yaw_field.setText("" + tile.angle.yaw);
-        pitch_field.setText("" + tile.angle.pitch);
+        yaw_field.setText("" + tile.angle.yaw());
+        pitch_field.setText("" + tile.angle.pitch());
 
         apply_button = new GuiButton(0, this.guiLeft + 40, this.guiTop + 130, 50, 20, LanguageUtility.getLocal("gui.field.apply"));
 
@@ -56,8 +48,8 @@ public class GuiPlacedTool extends GuiTile
     {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.yaw"), 25, 40, 4210752);
-        this.fontRenderer.drawString(LanguageUtility.getLocal("gui.field.pitch"), 25, 55, 4210752);
+        this.fontRendererObj.drawString(LanguageUtility.getLocal("gui.field.yaw"), 25, 40, 4210752);
+        this.fontRendererObj.drawString(LanguageUtility.getLocal("gui.field.pitch"), 25, 55, 4210752);
     }   
 
     @Override

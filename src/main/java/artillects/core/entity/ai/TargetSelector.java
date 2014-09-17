@@ -1,5 +1,7 @@
 package artillects.core.entity.ai;
 
+import artillects.core.interfaces.IEntity;
+import artillects.core.interfaces.IFactionMember;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
@@ -8,8 +10,6 @@ import net.minecraft.entity.INpc;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
-import artillects.core.interfaces.IEntity;
-import artillects.core.interfaces.IFactionMember;
 
 public class TargetSelector implements IEntitySelector
 {
@@ -39,7 +39,7 @@ public class TargetSelector implements IEntitySelector
                         return false;
                     }
                 }
-                if (players && entity instanceof EntityPlayer && entity.worldObj.difficultySetting > 0)
+                if (players && entity instanceof EntityPlayer && entity.worldObj.difficultySetting.ordinal() > 0)
                 {
                     if (!((EntityPlayer) entity).capabilities.isCreativeMode)
                     {

@@ -1,9 +1,9 @@
 package artillects.core.prefab;
 
-import java.awt.Color;
-
 import resonant.lib.render.RenderUtility;
 import universalelectricity.core.transform.vector.Vector3;
+
+import java.awt.*;
 
 public class RenderText
 {

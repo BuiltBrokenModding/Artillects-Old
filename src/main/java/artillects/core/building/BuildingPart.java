@@ -1,14 +1,14 @@
 package artillects.core.building;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import resonant.lib.type.Pair;
 import universalelectricity.core.transform.vector.Vector3;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /** Entity that represents a structure peace in a hive complex
  * 

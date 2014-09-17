@@ -1,8 +1,8 @@
 package artillects.core.entity.passive;
 
+import artillects.core.entity.EntityHumanoid;
 import net.minecraft.entity.INpc;
 import net.minecraft.world.World;
-import artillects.core.entity.EntityHumanoid;
 
 /** Prefab for all NPC that artillects will contain including crafters and fighters
  * 

@@ -1,9 +1,7 @@
 package artillects.core.creation.content;
 
 import net.minecraft.item.Item;
-
 import org.w3c.dom.Document;
-
 import resonant.content.loader.ModManager;
 
 public class ItemProduct extends Product<Item>

@@ -1,19 +1,17 @@
 package artillects.core.creation.content;
 
 import artillects.core.ArtillectsTab;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import resonant.content.loader.ModManager;
 import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
 import artillects.core.creation.templates.ItemBlockTemplate;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import resonant.content.loader.ModManager;
 
 /** Creation system and data storage for creating new basic blocks from xml data
  * 

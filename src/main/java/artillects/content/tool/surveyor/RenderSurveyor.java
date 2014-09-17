@@ -1,23 +1,21 @@
 package artillects.content.tool.surveyor;
 
-import java.awt.Color;
-import java.util.List;
-
+import artillects.core.Reference;
+import artillects.core.prefab.RenderTaggedTile;
+import artillects.core.prefab.RenderText;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
-
 import org.lwjgl.opengl.GL11;
-
 import resonant.lib.render.RenderUtility;
-import artillects.core.Reference;
-import artillects.core.prefab.RenderTaggedTile;
-import artillects.core.prefab.RenderText;
+
+import java.awt.*;
+import java.util.List;
 
 public class RenderSurveyor extends RenderTaggedTile
 {
-    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(Reference.MODEL_DIRECTORY + "SurveyorCam.tcn");
+    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "SurveyorCam.tcn"));
     public final static ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "SurveyorCam.png");
     public final static String[] YAW_ONLY = { "base", "left", "right" };
 

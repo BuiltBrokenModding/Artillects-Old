@@ -1,10 +1,9 @@
 package artillects.core.prefab.gui;
 
+import net.minecraft.client.gui.FontRenderer;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import scala.Char;
-import net.minecraft.client.gui.FontRenderer;
 
 @SuppressWarnings("unchecked")
 public class NumericField extends TextField

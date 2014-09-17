@@ -1,16 +1,16 @@
 package artillects.core.building;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import resonant.lib.type.Pair;
 import universalelectricity.core.transform.vector.Vector3;
 import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /** Collection of structure peaces that forms a building. Essential in code this acts as a contain
  * for several structure peaces so its easier to manage larger HiveComplexs.

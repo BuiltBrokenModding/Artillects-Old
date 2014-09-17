@@ -1,8 +1,7 @@
 package artillects.core.region;
 
-import java.io.File;
-import java.util.HashMap;
-
+import artillects.core.interfaces.IFaction;
+import artillects.core.interfaces.IFactionMember;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -10,9 +9,10 @@ import resonant.lib.access.java.AccessProfile;
 import resonant.lib.access.java.IProfileContainer;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import artillects.core.interfaces.IFaction;
-import artillects.core.interfaces.IFactionMember;
 import universalelectricity.core.transform.vector.IVector2;
+
+import java.io.File;
+import java.util.HashMap;
 
 /** Faction is more of a container for all settings and data related to a faction.
  * 
