@@ -22,19 +22,6 @@ apply plugin: 'forge'
 
 ext.buildProps = file "build.properties"
 
-if (System.getenv("BUILD_NUMBER") != null) {
-	version = "${System.getenv("BUILD_NUMBER")}"
-}
- else {
-	version = "NIGHTLY"
-}
-
-buildProps.withReader {
-    def prop = new Properties()
-    prop.load(it)
-    ext.config = new ConfigSlurper().parse prop
-}
-
 version = "${config.version.minecraft}-${config.version.mod.major}.${config.version.mod.minor}.${config.version.mod.revis}.${System.getenv().BUILD_NUMBER}"
 
 group = "artillects"
