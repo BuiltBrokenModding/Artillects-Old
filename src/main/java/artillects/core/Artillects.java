@@ -1,5 +1,6 @@
 package artillects.core;
 
+import artillects.content.blocks.BlockMuffinButton;
 import artillects.content.blocks.door.BlockLockedDoor;
 import artillects.content.blocks.door.ItemLockedDoor;
 import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
@@ -64,6 +65,7 @@ public class Artillects
     public static Block blockExtractor;
     public static Block blockTeleporter;
     public static Block blockLockedDoor;
+    public static Block blockButton;
 
     public static ContentFactory contentFactory;
 
@@ -100,6 +102,7 @@ public class Artillects
         blockExtractor = contentRegistry.newBlock(TileExtractor.class);
         blockTeleporter = contentRegistry.newBlock(BlockTeleporterAnchor.class);
         blockLockedDoor = contentRegistry.newBlock("CustomLockedDoor", new BlockLockedDoor(), ItemBlock.class);
+        blockButton = contentRegistry.newBlock("CustomLButton", new BlockMuffinButton(false), ItemBlock.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 

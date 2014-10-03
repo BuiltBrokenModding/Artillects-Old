@@ -4,9 +4,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import universalelectricity.core.transform.vector.IVectorWorld;
+import universalelectricity.core.transform.vector.Vector2;
+import universalelectricity.core.transform.vector.Vector3;
+import universalelectricity.core.transform.vector.VectorWorld;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /** Base entity class for all entities created by artillect mod
  * 
@@ -27,6 +34,10 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
     }
 
+    //--------------------------------
+    //--------Update methods----------
+    //--------------------------------
+
     @Override
     public void onLivingUpdate()
     {
@@ -39,6 +50,10 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         super.onUpdate();
     }
 
+    //--------------------------------
+    //--------Attack methods----------
+    //--------------------------------
+
     @Override
     public boolean attackEntityAsMob(Entity target)
     {
@@ -49,6 +64,40 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         }
         return didAttack;
     }
+
+    /**
+     * Gets all entities within the two radius(Cylinder Search)
+     * @param clazzes - all entities classes to search by
+     * @param range - range x & z(NORTH/EAST/SOUTH/WEST)
+     * @param rangeY - range y (UP/DOWN)
+     * @return null if clazzes is null, or a list(can be empty) of all entities within the range
+     */
+    public List<Entity> getAllEntities(Iterable<Class< ? extends Entity>> clazzes, double range, double rangeY)
+    {
+        if(clazzes != null)
+        {
+            List entities = world().getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x() + range, y() + rangeY, z() + range, x() - range, y() - rangeY, z() - range));
+            List<Entity> actual = new ArrayList<Entity>();
+            for(Object obj : entities)
+            {
+                Entity ent = (Entity) obj;
+                for (Class<? extends Entity> clazz : clazzes)
+                {
+                    if(clazz.isAssignableFrom(ent.getClass()))
+                    {
+                        actual.add(ent);
+                        break;
+                    }
+                }
+            }
+            return actual;
+        }
+        return null;
+    }
+
+    //--------------------------------
+    //--------Data(Read/Write) methods----------
+    //--------------------------------
 
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt)
@@ -63,7 +112,11 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         super.readEntityFromNBT(nbt);
         this.setPlayerOwned(nbt.getBoolean("playerOwned"));
     }
-    
+
+    //--------------------------------
+    //--------Owner methods----------
+    //--------------------------------
+
     public boolean isPlayerOwned()
     {
         return this.playerOwned;
@@ -73,6 +126,10 @@ public class EntityBase extends EntityCreature implements IVectorWorld
     {
         this.playerOwned = b;
     }
+
+    //--------------------------------
+    //--------Location methods----------
+    //--------------------------------
 
     @Override
     public double z()
@@ -92,10 +149,40 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         return this.posY;
     }
 
+    public int zi()
+    {
+        return (int)this.posZ;
+    }
+
+    public int xi()
+    {
+        return (int)this.posX;
+    }
+
+    public int yi()
+    {
+        return (int)this.posY;
+    }
+
     @Override
     public World world()
     {
         return this.worldObj;
+    }
+
+    public Vector2 asVector2()
+    {
+        return new Vector2(x(), z());
+    }
+
+    public Vector3 asVector3()
+    {
+        return new Vector3(x(), y(), z());
+    }
+
+    public VectorWorld asVectorWorld()
+    {
+        return new VectorWorld(world(), x(), y(), z());
     }
     
     //--------------------------------
