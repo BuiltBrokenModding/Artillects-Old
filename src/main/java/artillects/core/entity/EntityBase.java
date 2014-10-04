@@ -3,6 +3,7 @@ package artillects.core.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
@@ -65,8 +66,8 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         return didAttack;
     }
 
-    /**
-     * Gets all entities within the two radius(Cylinder Search)
+    /** Gets all entities within the radius(Cylinder Search)
+     *
      * @param clazzes - all entities classes to search by
      * @param range - range x & z(NORTH/EAST/SOUTH/WEST)
      * @param rangeY - range y (UP/DOWN)
@@ -94,6 +95,43 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         }
         return null;
     }
+
+
+    /** Gets all entities within the radius(Cylinder Search) that are hostile
+     *
+     * @param range - range x & z(NORTH/EAST/SOUTH/WEST)
+     * @param rangeY - range y (UP/DOWN)
+     * @return a list(can be empty) of all entities within the range
+     */
+    public List<Entity> getHostileEntities(double range, double rangeY)
+    {
+            List entities = world().getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(x() + range, y() + rangeY, z() + range, x() - range, y() - rangeY, z() - range));
+            List<Entity> actual = new ArrayList<Entity>();
+            for(Object obj : entities)
+            {
+                Entity ent = (Entity) obj;
+                if(isHostile(ent))
+                {
+                    actual.add(ent);
+                }
+            }
+            return actual;
+    }
+
+    /** Does this entity consider the other entity hostile
+     *
+     * @param entity - entity to check against, can't be null
+     * @return true if its hostile
+     */
+    public boolean isHostile(Entity entity)
+    {
+        if(entity instanceof IMob)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     //--------------------------------
     //--------Data(Read/Write) methods----------
