@@ -28,6 +28,8 @@ item.artillects\:droneParts.meltedCircuits2.name=Advanced Melted Circuits
 item.artillects\:droneParts.meltedCircuits3.name=Elite Melted Circuits
 item.artillects\:droneParts.metalPlate.name=Metal Plate
 
+item.artillects\:bandage.name = Bandage
+
 item.artillects\:schematicCreator.name=Schematic Creator
 item.artillects\:buildingGenerator.name=Building Generator 
 item.artillects\:plasmaLauncher.name=Plasma Launcher
