@@ -7,6 +7,7 @@ import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemSchematicCreator;
 import artillects.content.items.claim.ItemClaimFlag;
+import artillects.content.items.med.ItemBandage;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import artillects.core.commands.CommandTool;
@@ -60,12 +61,15 @@ public class Artillects
     public static Item itemClaimFlag;
     public static Item itemSchematicCreator;
     public static Item itemLockedDoor;
+    public static Item itemBandage;
 
     public static Block blockSurveyor;
     public static Block blockExtractor;
     public static Block blockTeleporter;
     public static Block blockLockedDoor;
     public static Block blockButton;
+
+    public static int bleedingPotionID = 70;
 
     public static ContentFactory contentFactory;
 
@@ -97,6 +101,7 @@ public class Artillects
         itemClaimFlag = contentRegistry.newItem(ItemClaimFlag.class);
         itemSchematicCreator = contentRegistry.newItem(ItemSchematicCreator.class);
         itemLockedDoor = contentRegistry.newItem(ItemLockedDoor.class);
+        itemBandage = contentRegistry.newItem(ItemBandage.class);
 
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         blockExtractor = contentRegistry.newBlock(TileExtractor.class);
