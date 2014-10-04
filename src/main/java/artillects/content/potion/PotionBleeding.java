@@ -23,9 +23,13 @@ public class PotionBleeding extends CustomPotion
     @Override
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
+        if(ent.worldObj.difficultySetting.getDifficultyId() == 0)
+        {
+            ent.removePotionEffect(INSTANCE.getId());
+        }
         if (ent.worldObj.rand.nextFloat() > 0.9 - (amplifier * 0.07))
         {
-            ent.setHealth(ent.getHealth() - 0.25f);
+            ent.setHealth(ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
         }
     }
@@ -33,7 +37,7 @@ public class PotionBleeding extends CustomPotion
     @Override
     public boolean isReady(int duration, int amplifier)
     {
-        if (duration % 10 == 0)
+        if (duration % 2 == 0)
         {
             return true;
         }
