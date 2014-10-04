@@ -1,10 +1,14 @@
 package artillects.content.items.med;
 
 import artillects.core.Reference;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import resonant.lib.utility.inventory.InventoryUtility;
 import universalelectricity.core.transform.vector.VectorWorld;
@@ -16,6 +20,9 @@ import universalelectricity.core.transform.vector.VectorWorld;
  */
 public class ItemMedical extends Item
 {
+    @SideOnly(Side.CLIENT)
+    IIcon[] icons;
+
     public ItemMedical()
     {
         super();
@@ -41,6 +48,27 @@ public class ItemMedical extends Item
         }
         return itemStack;
     }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int meta)
+    {
+        if(meta < icons.length)
+        {
+            return icons[meta];
+        }
+        return this.itemIcon;
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister reg)
+    {
+        this.icons = new IIcon[MedItem.values().length];
+        for(MedItem item : MedItem.values())
+        {
+            icons[item.ordinal()] = reg.registerIcon(Reference.PREFIX + "medical_" + item.name().toLowerCase());
+        }
+    }
+
     @Override
     public String getUnlocalizedName(ItemStack stack)
     {
