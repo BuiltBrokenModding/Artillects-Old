@@ -13,6 +13,8 @@ import net.minecraft.world.World;
 import resonant.lib.utility.inventory.InventoryUtility;
 import universalelectricity.core.transform.vector.VectorWorld;
 
+import java.util.HashMap;
+
 /** WW1 style bandage
  *
  * Created on 10/3/2014.
@@ -20,6 +22,8 @@ import universalelectricity.core.transform.vector.VectorWorld;
  */
 public class ItemMedical extends Item
 {
+    public static HashMap<EntityPlayer, Long> useDelay = new HashMap();
+
     @SideOnly(Side.CLIENT)
     IIcon[] icons;
 
@@ -33,16 +37,20 @@ public class ItemMedical extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
     {
-        if(MedItem.canHeal(itemStack, player))
+        if(!useDelay.containsKey(player) || System.currentTimeMillis() - useDelay.get(player) >= 15000)
         {
-            MedItem item = MedItem.values()[itemStack.getItemDamage()];
-            player.heal(item.healBy);
-            itemStack.stackSize--;
-            if(item.returnStack != null)
+            if (MedItem.canHeal(itemStack, player))
             {
-                if(!player.inventory.addItemStackToInventory(item.returnStack))
+                MedItem item = MedItem.values()[itemStack.getItemDamage()];
+                player.heal(item.healBy);
+                itemStack.stackSize--;
+                useDelay.put(player, System.currentTimeMillis());
+                if (item.returnStack != null)
                 {
-                    InventoryUtility.dropItemStack(new VectorWorld(player), item.returnStack);
+                    if (!player.inventory.addItemStackToInventory(item.returnStack))
+                    {
+                        InventoryUtility.dropItemStack(new VectorWorld(player), item.returnStack);
+                    }
                 }
             }
         }
