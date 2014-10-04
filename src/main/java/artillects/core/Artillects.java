@@ -7,7 +7,7 @@ import artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import artillects.content.items.ItemSchematicCreator;
 import artillects.content.items.claim.ItemClaimFlag;
-import artillects.content.items.med.ItemBandage;
+import artillects.content.items.med.ItemMedical;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import artillects.core.commands.CommandTool;
@@ -101,7 +101,7 @@ public class Artillects
         itemClaimFlag = contentRegistry.newItem(ItemClaimFlag.class);
         itemSchematicCreator = contentRegistry.newItem(ItemSchematicCreator.class);
         itemLockedDoor = contentRegistry.newItem(ItemLockedDoor.class);
-        itemBandage = contentRegistry.newItem(ItemBandage.class);
+        itemBandage = contentRegistry.newItem(ItemMedical.class);
 
         blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
         blockExtractor = contentRegistry.newBlock(TileExtractor.class);

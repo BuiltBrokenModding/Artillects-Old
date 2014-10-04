@@ -35,7 +35,7 @@ public enum MedItem
             {
                 if(((EntityPlayer) ent).capabilities.isCreativeMode)
                     return false;
-                if(((EntityPlayer) ent).getHealth() < ((EntityPlayer) ent).getMaxHealth())
+                if(((EntityPlayer) ent).getHealth() >= ((EntityPlayer) ent).getMaxHealth())
                     return false;
             }
             //TODO add event mods to use and hook for races to change heal method

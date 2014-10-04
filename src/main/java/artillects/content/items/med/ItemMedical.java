@@ -14,12 +14,13 @@ import universalelectricity.core.transform.vector.VectorWorld;
  * Created on 10/3/2014.
  * @author TheCowGod
  */
-public class ItemBandage extends Item
+public class ItemMedical extends Item
 {
-    public ItemBandage()
+    public ItemMedical()
     {
         super();
-        this.setUnlocalizedName(Reference.PREFIX + "bandage");
+        this.setUnlocalizedName(Reference.PREFIX + "medical");
+        this.setHasSubtypes(true);
     }
 
     @Override
@@ -39,5 +40,15 @@ public class ItemBandage extends Item
             }
         }
         return itemStack;
+    }
+    @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        if(stack.getItemDamage()<MedItem.values().length)
+        {
+            MedItem item = MedItem.values()[stack.getItemDamage()];
+            return super.getUnlocalizedName()+ item.name().toLowerCase();
+        }
+        return super.getUnlocalizedName();
     }
 }
