@@ -47,9 +47,12 @@ public class ItemMedical extends Item
                 useDelay.put(player, System.currentTimeMillis());
                 if (item.returnStack != null)
                 {
-                    if (!player.inventory.addItemStackToInventory(item.returnStack))
+                    for(ItemStack stack : item.returnStack)
                     {
-                        InventoryUtility.dropItemStack(new VectorWorld(player), item.returnStack);
+                        if (!player.inventory.addItemStackToInventory(stack))
+                        {
+                            InventoryUtility.dropItemStack(new VectorWorld(player), stack);
+                        }
                     }
                 }
             }

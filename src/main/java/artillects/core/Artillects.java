@@ -30,6 +30,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import resonant.content.loader.ModManager;
@@ -38,6 +39,8 @@ import resonant.lib.utility.LanguageUtility;
 import resonant.lib.utility.nbt.SaveManager;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /** @author DarkGuardsman */
@@ -74,7 +77,7 @@ public class Artillects
     public static ContentFactory contentFactory;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent evt)
+    public void preInit(FMLPreInitializationEvent evt) throws NoSuchFieldException
     {
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         SaveManager.registerClass("Faction", Faction.class);
@@ -113,12 +116,38 @@ public class Artillects
 
         proxy.preInit();
         setModMetadata();
+
+        if(Potion.potionTypes.length >= 256)
+        {
+            Potion[] potions = new Potion[256];
+
+            for (int i = 0; i < Potion.potionTypes.length; i++)
+            {
+                potions[i] = Potion.potionTypes[i];
+            }
+
+            try
+            {
+                Field field = Potion.class.getField("field_76425_a");
+                if (field == null)
+                {
+                    field = Potion.class.getField("potionTypes");
+                }
+                setFinalStatic(field, potions);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     @EventHandler
     public void init(FMLInitializationEvent evt)
     {
         proxy.init();
+
+
     }
 
     @EventHandler
@@ -149,5 +178,16 @@ public class Artillects
         ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
+    }
+
+    static void setFinalStatic(Field field, Object newValue) throws Exception
+    {
+        field.setAccessible(true);
+
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+        field.set(null, newValue);
     }
 }
