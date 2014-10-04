@@ -1,5 +1,6 @@
 package artillects.core;
 
+import artillects.Settings;
 import artillects.content.blocks.BlockMuffinButton;
 import artillects.content.blocks.door.BlockLockedDoor;
 import artillects.content.blocks.door.ItemLockedDoor;
@@ -9,12 +10,14 @@ import artillects.content.items.ItemSchematicCreator;
 import artillects.content.items.claim.ItemClaimFlag;
 import artillects.content.items.med.ItemBleedingTest;
 import artillects.content.items.med.ItemMedical;
+import artillects.content.potion.PotionBleeding;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import artillects.core.commands.CommandTool;
 import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
+import com.google.common.eventbus.Subscribe;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -22,17 +25,26 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.eventhandler.EventBus;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import resonant.content.loader.ModManager;
 import resonant.lib.recipe.UniversalRecipe;
@@ -43,6 +55,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Random;
 
 /** @author DarkGuardsman */
 @Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:ResonantEngine;")
@@ -81,6 +94,7 @@ public class Artillects
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt) throws NoSuchFieldException
     {
+        MinecraftForge.EVENT_BUS.register(this);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         SaveManager.registerClass("Faction", Faction.class);
         SaveManager.registerClass("Village", Village.class);
@@ -192,5 +206,32 @@ public class Artillects
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
 
         field.set(null, newValue);
+    }
+
+    @SubscribeEvent
+    public void onHurtEvent(LivingAttackEvent event)
+    {
+        if(event.source != null)
+        {
+            Entity ent = event.source.getSourceOfDamage();
+            if(ent instanceof EntityLivingBase)
+            {
+                EntityLivingBase entity = ((EntityLivingBase) ent);
+                ItemStack stack = entity.getHeldItem();
+                if(stack != null && (stack.getUnlocalizedName().contains("sword") || stack.getUnlocalizedName().contains("ax")))
+                {
+                    //TODO detect for armor and reduce chance by armor type
+                    float chance = 0.13f;
+                    if(event.entity.worldObj.difficultySetting == EnumDifficulty.HARD)
+                    {
+                        chance = 0.24f;
+                    }
+                    if(Settings.ENABLE_BLEEDING && entity.worldObj.rand.nextFloat() <= chance)
+                    {
+                        event.entityLiving.addPotionEffect(new PotionEffect(PotionBleeding.INSTANCE.getId(), 6000));
+                    }
+                }
+            }
+        }
     }
 }

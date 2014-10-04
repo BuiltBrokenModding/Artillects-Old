@@ -1,5 +1,6 @@
 package artillects.content.potion;
 
+import artillects.Settings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import resonant.lib.prefab.poison.PoisonRadiation;
@@ -23,7 +24,7 @@ public class PotionBleeding extends CustomPotion
     @Override
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
-        if(ent.worldObj.difficultySetting.getDifficultyId() == 0)
+        if(ent.worldObj.difficultySetting.getDifficultyId() == 0 || !Settings.ENABLE_BLEEDING)
         {
             ent.removePotionEffect(INSTANCE.getId());
         }
