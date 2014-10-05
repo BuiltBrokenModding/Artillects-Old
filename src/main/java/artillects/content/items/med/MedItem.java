@@ -11,17 +11,23 @@ import net.minecraft.item.ItemStack;
 public enum MedItem
 {
     //Single bandage
-    /* 0 */BANDAGE(2, new ItemStack(Artillects.itemBandage, 1, 1)),
-    /* 1 */USED_BANDAGE,
+    /* 0 */BANDAGE(4, new ItemStack(Artillects.itemBandage, 1, 1)),
+    /* 1 */USED_BANDAGE(3, new ItemStack(Artillects.itemBandage, 8, 1)),
 
     //Package of bandages
-    /* 2 */BANDAGE_PACK_SIX(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 3, 1)),
-    /* 3 */BANDAGE_PACK_FIVE(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 4, 1)),
-    /* 4 */BANDAGE_PACK_FOUR(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 5, 1)),
-    /* 5 */BANDAGE_PACK_THREE(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 6, 1)),
-    /* 6 */BANDAGE_PACK_TWO(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 7, 1)),
-    /* 7 */BANDAGE_PACK_ONE(2, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 8, 1)),
-    /* 8 */BANDAGE_PACK_ZERO;
+    /* 2 */BANDAGE_PACK_SIX(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 3, 1)),
+    /* 3 */BANDAGE_PACK_FIVE(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 4, 1)),
+    /* 4 */BANDAGE_PACK_FOUR(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 5, 1)),
+    /* 5 */BANDAGE_PACK_THREE(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 6, 1)),
+    /* 6 */BANDAGE_PACK_TWO(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 7, 1)),
+    /* 7 */BANDAGE_PACK_ONE(4, new ItemStack(Artillects.itemBandage, 1, 1), new ItemStack(Artillects.itemBandage, 8, 1)),
+    /* 8 */BANDAGE_PACK_ZERO,
+
+    /* 8 */USED_BANDAGE_2(3, new ItemStack(Artillects.itemBandage, 9, 1)),
+    /* 9 */USED_BANDAGE_3(3, new ItemStack(Artillects.itemBandage, 10, 1)),
+    /* 10 */USED_BANDAGE_4,
+    /* 11 */CLEANED_BANDAGE(4, new ItemStack(Artillects.itemBandage, 1, 1)),
+    /* 12 */BLEACHED_BANDAGE(4, new ItemStack(Artillects.itemBandage, 1, 1));
 
     float healBy = 2;
     ItemStack[] returnStack = null;
