@@ -24,9 +24,15 @@ public class PotionBleeding extends CustomPotion
     @Override
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
-        if(ent.worldObj.difficultySetting.getDifficultyId() == 0 || !Settings.ENABLE_BLEEDING)
+        if(ent instanceof EntityPlayer && ((EntityPlayer)ent).capabilities.isCreativeMode)
         {
             ent.removePotionEffect(INSTANCE.getId());
+            return;
+        }
+        if(ent.worldObj.difficultySetting.getDifficultyId() == 0 || !Settings.ENABLE_BLEEDING || ent.getHealth() <= 0)
+        {
+            ent.removePotionEffect(INSTANCE.getId());
+            return;
         }
         if (ent.worldObj.rand.nextFloat() > 0.9 - (amplifier * 0.07))
         {

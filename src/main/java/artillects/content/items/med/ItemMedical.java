@@ -1,5 +1,6 @@
 package artillects.content.items.med;
 
+import artillects.content.potion.PotionBleeding;
 import artillects.core.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -42,6 +43,7 @@ public class ItemMedical extends Item
             if (MedItem.canHeal(itemStack, player))
             {
                 MedItem item = MedItem.values()[itemStack.getItemDamage()];
+                player.removePotionEffect(PotionBleeding.INSTANCE.getId());
                 player.heal(item.healBy);
                 itemStack.stackSize--;
                 useDelay.put(player, System.currentTimeMillis());
