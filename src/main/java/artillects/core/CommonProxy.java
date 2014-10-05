@@ -1,5 +1,6 @@
 package artillects.core;
 
+import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -17,7 +18,7 @@ public class CommonProxy extends AbstractProxy
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
     {
         TileEntity tile = world.getTileEntity(x, y, z);
-        if (tile instanceof TileSurveyor)
+        if (tile instanceof TileExtractor || tile instanceof TileSurveyor)
         {
             if (ID == 0)
                 return new ContainerDummy(player, tile);

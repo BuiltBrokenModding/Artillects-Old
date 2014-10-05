@@ -34,20 +34,13 @@ public class PotionBleeding extends CustomPotion
             ent.removePotionEffect(INSTANCE.getId());
             return;
         }
-        if (ent.worldObj.rand.nextFloat() > 0.9 - (amplifier * 0.07))
-        {
-            ent.setHealth(ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
-            ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
-        }
+        ent.setHealth(ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
+        ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
     }
 
     @Override
     public boolean isReady(int duration, int amplifier)
     {
-        if (duration % 2 == 0)
-        {
-            return true;
-        }
-        return false;
+        return duration % 20 == 0;
     }
 }

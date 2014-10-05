@@ -13,9 +13,10 @@ import net.minecraft.world.World;
 public class ItemBleedingTest extends Item
 {
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
-        player.addPotionEffect(new PotionEffect(PotionBleeding.INSTANCE.getId(), 500));
-        return itemStack;
+        if (!world.isRemote && !player.isPotionActive(PotionBleeding.INSTANCE.getId()))
+            player.addPotionEffect(new PotionEffect(PotionBleeding.INSTANCE.getId(), 500));
+        return true;
     }
 }
