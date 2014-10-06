@@ -5,6 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import resonant.lib.prefab.damage.CustomDamageSource;
 import resonant.lib.prefab.poison.PoisonRadiation;
 import resonant.lib.prefab.poison.PotionRadiation;
 import resonant.lib.prefab.potion.CustomPotion;
@@ -18,6 +20,8 @@ public class PotionBleeding extends CustomPotion
     public static final PotionBleeding INSTANCE = new PotionBleeding(33);
     public static final PotionBleeding INFECTION = new PotionBleeding(34);
     public static final PotionBleeding BLOOD_POISONING = new PotionBleeding(34);
+
+    public static final DamageSource BLEED_DAMAGE = new CustomDamageSource("BleedOut").setDamageBypassesArmor().setDamageIsAbsolute();
 
     public PotionBleeding(int id)
     {
@@ -62,7 +66,7 @@ public class PotionBleeding extends CustomPotion
         }
         else if(this.getId() == INSTANCE.getId())
         {
-            ent.setHealth(ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
+            ent.attackEntityFrom(BLEED_DAMAGE, ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
         }
     }
