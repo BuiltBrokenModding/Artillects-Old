@@ -19,7 +19,7 @@ public class PotionBleeding extends CustomPotion
 {
     public static final PotionBleeding INSTANCE = new PotionBleeding(33);
     public static final PotionBleeding INFECTION = new PotionBleeding(34);
-    public static final PotionBleeding BLOOD_POISONING = new PotionBleeding(34);
+    public static final PotionBleeding BLOOD_POISONING = new PotionBleeding(34); //septicemia
 
     public static final DamageSource BLEED_DAMAGE = new CustomDamageSource("BleedOut").setDamageBypassesArmor().setDamageIsAbsolute();
 
@@ -48,9 +48,17 @@ public class PotionBleeding extends CustomPotion
             {
                 ent.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 1200));
             }
-            if(ent.worldObj.rand.nextFloat() <= 0.3f)
+            if(ent.worldObj.rand.nextFloat() <= 0.05f)
             {
                 ent.removePotionEffect(INFECTION.getId());
+            }
+            else if(ent.worldObj.rand.nextFloat() <= 0.03f)
+            {
+                if(!ent.isPotionActive(BLOOD_POISONING))
+                {
+                    ent.removePotionEffect(INFECTION.getId());
+                    ent.addPotionEffect(new PotionEffect(BLOOD_POISONING.getId(), 50000, 2));
+                }
             }
         }
         else if(this.getId() == BLOOD_POISONING.getId())
