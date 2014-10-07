@@ -5,6 +5,7 @@ import artillects.core.Reference;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -16,6 +17,7 @@ import resonant.lib.utility.inventory.InventoryUtility;
 import universalelectricity.core.transform.vector.VectorWorld;
 
 import java.util.HashMap;
+import java.util.List;
 
 /** WW1 style bandage
  *
@@ -34,6 +36,7 @@ public class ItemMedical extends Item
         super();
         this.setUnlocalizedName(Reference.PREFIX + "medical");
         this.setHasSubtypes(true);
+        this.setMaxStackSize(10);
     }
 
     @Override
@@ -138,5 +141,13 @@ public class ItemMedical extends Item
             return super.getUnlocalizedName()+ item.name().toLowerCase();
         }
         return super.getUnlocalizedName();
+    }
+
+    public void getSubItems(Item item_, CreativeTabs tab, List list)
+    {
+        for(MedItem item : MedItem.values())
+        {
+            list.add(new ItemStack(item_, item.ordinal(), 0));
+        }
     }
 }
