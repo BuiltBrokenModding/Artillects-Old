@@ -18,11 +18,20 @@ Artillects is a mod that adds: Drones! Hive Bases! Gadgets and Futuristic Gismos
 * Dmod - Support, Dev in training
 
 ### Credits
-* Calclavia     - Early Drone Logic
-* Hangcow       - Assets
-* Archadia      - Assets
-* Morton        - Assets
-* Zerotheliger  - Code
+* Hangcow               - Assets
+* Archadia              - Assets
+* Morton                - Assets
+* wdtod                 - Assets
+* Archelf               - Assets
+* Comply_cat_Ed         - Assets
+* DryTaste              - Assets
+* Archadia              - Assets, Code Contribution
+* Calclavia             - Code Contribution
+* Zerotheliger          - Code Contribution
+* Maxwolf               - Code Consulting
+* CovertJaguar          - Code Consulting
+* Doppelgangerous       - Ideas
+* Vexatos               - German Translations
 
 ### Downloads
 http://minecraft.curseforge.com/mc-mods/224319-artillects
