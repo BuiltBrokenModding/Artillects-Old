@@ -147,7 +147,7 @@ public class ItemMedical extends Item
     {
         for(MedItem item : MedItem.values())
         {
-            list.add(new ItemStack(item_, item.ordinal(), 0));
+            list.add(new ItemStack(item_, 1, item.ordinal()));
         }
     }
 }
