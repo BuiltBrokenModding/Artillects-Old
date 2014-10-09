@@ -7,8 +7,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import resonant.lib.prefab.damage.CustomDamageSource;
-import resonant.lib.prefab.poison.PoisonRadiation;
-import resonant.lib.prefab.poison.PotionRadiation;
 import resonant.lib.prefab.potion.CustomPotion;
 
 /** Potion effect designed to cause the entity to bleed out slowly
@@ -17,7 +15,7 @@ import resonant.lib.prefab.potion.CustomPotion;
  */
 public class PotionBleeding extends CustomPotion
 {
-    public static final PotionBleeding INSTANCE = new PotionBleeding(33);
+    public static final PotionBleeding BLEEDING = new PotionBleeding(33);
     public static final PotionBleeding INFECTION = new PotionBleeding("Infection", 34);
     public static final PotionBleeding BLOOD_POISONING = new PotionBleeding("Blood_Poisoning", 35); //septicemia
 
@@ -39,12 +37,12 @@ public class PotionBleeding extends CustomPotion
     {
         if(ent instanceof EntityPlayer && ((EntityPlayer)ent).capabilities.isCreativeMode)
         {
-            ent.removePotionEffect(INSTANCE.getId());
+            ent.removePotionEffect(BLEEDING.getId());
             return;
         }
         if(ent.worldObj.difficultySetting.getDifficultyId() == 0 || !Settings.ENABLE_BLEEDING || ent.getHealth() <= 0)
         {
-            ent.removePotionEffect(INSTANCE.getId());
+            ent.removePotionEffect(BLEEDING.getId());
             return;
         }
         if(this.getId() == INFECTION.getId())
@@ -77,10 +75,14 @@ public class PotionBleeding extends CustomPotion
                 ent.setHealth(ent.getMaxHealth() * .2f);
             }
         }
-        else if(this.getId() == INSTANCE.getId())
+        else if(this.getId() == BLEEDING.getId())
         {
             ent.attackEntityFrom(BLEED_DAMAGE, ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
+            if(ent.worldObj.rand.nextFloat() <= 0.005f)
+            {
+                ent.removePotionEffect(BLEEDING.getId());
+            }
         }
     }
 

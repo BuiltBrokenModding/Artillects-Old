@@ -7,7 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -51,7 +50,7 @@ public class ItemMedical extends Item
                     MedItem item = MedItem.values()[itemStack.getItemDamage()];
 
                     //Remove bleeding effect
-                    player.removePotionEffect(PotionBleeding.INSTANCE.getId());
+                    player.removePotionEffect(PotionBleeding.BLEEDING.getId());
                     float infectionChance = 0f;
                     float bloodPosioningChance = 0f;
                     if(item == MedItem.USED_BANDAGE)

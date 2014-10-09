@@ -17,7 +17,6 @@ import artillects.core.commands.CommandTool;
 import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
-import com.google.common.eventbus.Subscribe;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -25,7 +24,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.EventBus;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -40,7 +38,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -55,7 +52,6 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
-import java.util.Random;
 
 /** @author DarkGuardsman */
 @Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:ResonantEngine;")
@@ -228,7 +224,7 @@ public class Artillects
                     }
                     if(Settings.ENABLE_BLEEDING && entity.worldObj.rand.nextFloat() <= chance)
                     {
-                        event.entityLiving.addPotionEffect(new PotionEffect(PotionBleeding.INSTANCE.getId(), 6000));
+                        event.entityLiving.addPotionEffect(new PotionEffect(PotionBleeding.BLEEDING.getId(), 6000));
                     }
                 }
             }
