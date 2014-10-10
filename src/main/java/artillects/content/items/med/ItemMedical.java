@@ -104,6 +104,7 @@ public class ItemMedical extends Item
                                 InventoryUtility.dropItemStack(new VectorWorld(player), stack);
                             }
                         }
+                        player.inventoryContainer.detectAndSendChanges();
                     }
                 }
             }

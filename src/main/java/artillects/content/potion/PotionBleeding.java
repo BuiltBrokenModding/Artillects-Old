@@ -1,94 +1,44 @@
 package artillects.content.potion;
 
-import artillects.Settings;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
 import resonant.lib.prefab.damage.CustomDamageSource;
-import resonant.lib.prefab.potion.CustomPotion;
 
-/** Potion effect designed to cause the entity to bleed out slowly
+/**
+ * Potion effect designed to cause the entity to bleed out slowly
  * Created on 10/4/2014.
+ *
  * @author Darkguardsman
  */
-public class PotionBleeding extends CustomPotion
+public class PotionBleeding extends PotionMedical
 {
-    public static final PotionBleeding BLEEDING = new PotionBleeding(33);
-    public static final PotionBleeding INFECTION = new PotionBleeding("Infection", 34);
-    public static final PotionBleeding BLOOD_POISONING = new PotionBleeding("Blood_Poisoning", 35); //septicemia
-
     public static final DamageSource BLEED_DAMAGE = new CustomDamageSource("BleedOut").setDamageBypassesArmor().setDamageIsAbsolute();
 
-    public PotionBleeding(int id)
+    public PotionBleeding()
     {
-        this("Bleeding", id);
-    }
-
-    public PotionBleeding(String name, int id)
-    {
-        super(id, true, 8271127, name);
+        super(true, 8271127, "Bleeding");
         this.setIconIndex(6, 0);
     }
 
     @Override
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
-        if(ent instanceof EntityPlayer && ((EntityPlayer)ent).capabilities.isCreativeMode)
+        super.performEffect(ent, amplifier);
+        if (ent.isPotionActive(this))
         {
-            ent.removePotionEffect(BLEEDING.getId());
-            return;
-        }
-        if(ent.worldObj.difficultySetting.getDifficultyId() == 0 || !Settings.ENABLE_BLEEDING || ent.getHealth() <= 0)
-        {
-            ent.removePotionEffect(BLEEDING.getId());
-            return;
-        }
-        if(this.getId() == INFECTION.getId())
-        {
-            if(!ent.isPotionActive(Potion.weakness))
-            {
-                ent.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 1200));
-            }
-            if(ent.worldObj.rand.nextFloat() <= 0.005f)
-            {
-                ent.removePotionEffect(INFECTION.getId());
-            }
-            else if(ent.worldObj.rand.nextFloat() <= 0.003f)
-            {
-                if(!ent.isPotionActive(BLOOD_POISONING))
-                {
-                    ent.removePotionEffect(INFECTION.getId());
-                    ent.addPotionEffect(new PotionEffect(BLOOD_POISONING.getId(), 50000, 2));
-                }
-            }
-        }
-        else if(this.getId() == BLOOD_POISONING.getId())
-        {
-            if(!ent.isPotionActive(Potion.weakness))
-            {
-                ent.addPotionEffect(new PotionEffect(Potion.weakness.getId(), 1200, 2));
-            }
-            if(ent.getHealth() > (ent.getMaxHealth() * .2f))
-            {
-                ent.setHealth(ent.getMaxHealth() * .2f);
-            }
-        }
-        else if(this.getId() == BLEEDING.getId())
-        {
-            ent.attackEntityFrom(BLEED_DAMAGE, ent.getHealth() - 0.5f * ent.worldObj.difficultySetting.getDifficultyId());
+            ((EntityPlayer) ent).addChatComponentMessage( new ChatComponentText("Bleeding..."));
+            ent.attackEntityFrom(BLEED_DAMAGE, 0.5f + 0.125f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
-            if(ent.worldObj.rand.nextFloat() <= 0.005f)
+            if (ent.worldObj.rand.nextFloat() <= 0.005f)
             {
+                if(ent instanceof EntityPlayer)
+                {
+                    ((EntityPlayer) ent).addChatComponentMessage( new ChatComponentText("Bleeding has stopped"));
+                }
                 ent.removePotionEffect(BLEEDING.getId());
             }
         }
-    }
-
-    @Override
-    public boolean isReady(int duration, int amplifier)
-    {
-        return duration % 20 == 0;
     }
 }
