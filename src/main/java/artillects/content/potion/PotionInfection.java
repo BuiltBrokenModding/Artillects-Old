@@ -30,7 +30,7 @@ public class PotionInfection extends PotionMedical
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
         super.performEffect(ent, amplifier);
-        if (ent.isPotionActive(this))
+        if (ent != null && ent.isPotionActive(this))
         {
             // Always apply weakness to simulator the character is sick
             if (!ent.isPotionActive(Potion.weakness))

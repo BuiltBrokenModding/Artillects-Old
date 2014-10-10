@@ -18,7 +18,7 @@ public class PotionBloodPoisoning extends PotionInfection
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
         super.performEffect(ent, amplifier);
-        if (ent.isPotionActive(this))
+        if (ent != null && ent.isPotionActive(this))
         {
             if (ent.getHealth() > (ent.getMaxHealth() * .2f))
             {

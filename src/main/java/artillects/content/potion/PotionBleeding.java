@@ -26,9 +26,12 @@ public class PotionBleeding extends PotionMedical
     public void performEffect(EntityLivingBase ent, int amplifier)
     {
         super.performEffect(ent, amplifier);
-        if (ent.isPotionActive(this))
+        if (ent != null && ent.isPotionActive(this))
         {
-            ((EntityPlayer) ent).addChatComponentMessage( new ChatComponentText("Bleeding..."));
+            if(ent instanceof EntityPlayer)
+            {
+                ((EntityPlayer) ent).addChatComponentMessage(new ChatComponentText("Bleeding..."));
+            }
             ent.attackEntityFrom(BLEED_DAMAGE, 0.5f + 0.125f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
             if (ent.worldObj.rand.nextFloat() <= 0.005f)
