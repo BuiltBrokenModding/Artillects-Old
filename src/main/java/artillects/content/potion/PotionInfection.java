@@ -15,9 +15,6 @@ public class PotionInfection extends PotionMedical
     protected boolean canEntityKillInfection = true;
     protected boolean canDevelopeIntoBloodPoisoning = true;
 
-    protected float chanceToKillInfection = 0.005f;
-    protected float chanceToCauseBloodPoisoning = 0.003f;
-
     protected DiceRoller infection_roller = new DiceRoller(6, 6, 5, 6, 6);
     protected DiceRoller poisoning_roller = new DiceRoller(10, 6, 5, 6, 10);
 
