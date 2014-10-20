@@ -14,7 +14,9 @@ import resonant.lib.content.prefab.java.TileElectric;
 import resonant.lib.network.discriminator.PacketTile;
 import resonant.lib.network.discriminator.PacketType;
 import resonant.lib.network.handle.IPacketIDReceiver;
+import resonant.lib.network.netty.AbstractPacket;
 import universalelectricity.core.transform.rotation.EulerAngle;
+import universalelectricity.core.transform.vector.IVectorWorld;
 import universalelectricity.core.transform.vector.Vector3;
 
 import java.util.ArrayList;
@@ -65,7 +67,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
         if (player.isSneaking())
             this.enabled = !this.enabled;
         else
-            player.openGui(Artillects.INSTANCE, 0, world(), x(), y(), z());
+            player.openGui(Artillects.INSTANCE, 0, world(), xi(), yi(), zi());
         return true;
     }
 
@@ -83,7 +85,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
         angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(this).add(offset);
+            loc = new Vector3(x(), y(), z()).add(offset);
 
         MovingObjectPosition hit = getRayHit();
         if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
@@ -95,7 +97,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
 
     public MovingObjectPosition getRayHit()
     {
-        Vector3 surveyor = new Vector3(this);
+        Vector3 surveyor = new Vector3(x(), y(), z());
         Vector3 destination = angle.toVector();
 
         surveyor.add(destination);
@@ -129,7 +131,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
 
     public void sendAngles()
     {
-        sendPacket(new PacketTile(this, ROTATION_ID, this.angle.yaw(), this.angle.pitch()));
+        sendPacket(new PacketTile(xi(), yi(), zi(), ROTATION_ID, this.angle.yaw(), this.angle.pitch()));
     }
 
     public void setRotation(double yaw, double pitch)
@@ -246,4 +248,25 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
         }
     }
 
+    /** Sends the desc packet to all players around this tile */
+    public void sendDescPacket()
+    {
+        sendPacket(getDescPacket());
+    }
+
+    /** Sends the packet to all players around this tile
+     * @param packet - packet to send */
+    public void sendPacket(AbstractPacket packet)
+    {
+        sendPacket(packet, 64);
+    }
+
+    /** Sends the packet to all players around this tile
+     * @param packet - packet to send
+     * @param distance - distance in blocks to search for players
+     */
+    public void sendPacket(AbstractPacket packet, double distance)
+    {
+        ResonantEngine.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
+    }
 }

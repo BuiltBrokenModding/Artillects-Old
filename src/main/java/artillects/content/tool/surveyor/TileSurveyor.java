@@ -51,7 +51,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
     {
         if (!player.isSneaking())
         {
-            player.openGui(Artillects.INSTANCE, 0, world(), x(), y(), z());
+            player.openGui(Artillects.INSTANCE, 0, world(), xi(), yi(), zi());
             return true;
         }
         return super.use(player, side, hit);

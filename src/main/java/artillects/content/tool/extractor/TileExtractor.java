@@ -61,7 +61,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         if (cooldownTicks > 0)
             cooldownTicks--;
         
-        if (world().isBlockIndirectlyGettingPowered(x(), y(), z()) && cooldownTicks <= 0)
+        if (world().isBlockIndirectlyGettingPowered(xi(), yi(), zi()) && cooldownTicks <= 0)
         {
             cooldownTicks = COOLDOWN;
             extractBlocks();
@@ -77,7 +77,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(this).add(offset);
+            loc = new Vector3(x(), y(), z()).add(offset);
 
         MovingObjectPosition hit = getRayHit();
         if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
