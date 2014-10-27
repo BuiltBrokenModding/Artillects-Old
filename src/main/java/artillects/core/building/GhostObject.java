@@ -4,8 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import resonant.lib.utility.nbt.ISaveObj;
-import universalelectricity.core.transform.vector.IVector3;
-import universalelectricity.core.transform.vector.IVectorWorld;
+import resonant.lib.transform.vector.IVector3;
+import resonant.lib.transform.vector.IVectorWorld;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 

@@ -4,7 +4,7 @@ import artillects.core.building.GhostObject;
 import artillects.core.interfaces.IWorker;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import universalelectricity.core.transform.vector.Vector3;
+import resonant.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.Iterator;

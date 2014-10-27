@@ -9,7 +9,7 @@ import resonant.lib.access.java.AccessProfile;
 import resonant.lib.access.java.IProfileContainer;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.core.transform.vector.IVector2;
+import resonant.lib.transform.vector.IVector2;
 
 import java.io.File;
 import java.util.HashMap;

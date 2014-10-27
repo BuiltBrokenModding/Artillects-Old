@@ -15,8 +15,8 @@ import resonant.api.IExternalInventory;
 import resonant.api.IInventoryProvider;
 import resonant.lib.utility.inventory.ExternalInventory;
 import resonant.lib.utility.inventory.InventoryUtility;
-import universalelectricity.core.transform.rotation.EulerAngle;
-import universalelectricity.core.transform.vector.Vector3;
+import resonant.lib.transform.rotation.EulerAngle;
+import resonant.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;

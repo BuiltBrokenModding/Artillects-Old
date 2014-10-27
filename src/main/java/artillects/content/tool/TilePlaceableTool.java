@@ -15,9 +15,9 @@ import resonant.lib.network.discriminator.PacketTile;
 import resonant.lib.network.discriminator.PacketType;
 import resonant.lib.network.handle.IPacketIDReceiver;
 import resonant.lib.network.netty.AbstractPacket;
-import universalelectricity.core.transform.rotation.EulerAngle;
-import universalelectricity.core.transform.vector.IVectorWorld;
-import universalelectricity.core.transform.vector.Vector3;
+import resonant.lib.transform.rotation.EulerAngle;
+import resonant.lib.transform.vector.IVectorWorld;
+import resonant.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;

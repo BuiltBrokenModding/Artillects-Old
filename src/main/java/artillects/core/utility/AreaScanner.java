@@ -1,8 +1,8 @@
 package artillects.core.utility;
 
 import net.minecraft.world.World;
-import universalelectricity.core.transform.vector.Vector3;
-import universalelectricity.core.transform.vector.VectorWorld;
+import resonant.lib.transform.vector.Vector3;
+import resonant.lib.transform.vector.VectorWorld;
 
 public class AreaScanner
 {

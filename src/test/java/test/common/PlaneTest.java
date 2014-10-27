@@ -1,7 +1,7 @@
 package test.common;
 
 import artillects.core.region.Plane;
-import universalelectricity.core.transform.vector.Vector2;
+import resonant.lib.transform.vector.Vector2;
 
 public class PlaneTest
 {

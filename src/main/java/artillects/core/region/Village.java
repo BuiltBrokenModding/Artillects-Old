@@ -3,7 +3,7 @@ package artillects.core.region;
 import net.minecraft.world.World;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
-import universalelectricity.core.transform.vector.VectorWorld;
+import resonant.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 

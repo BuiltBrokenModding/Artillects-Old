@@ -6,9 +6,9 @@ import net.minecraft.entity.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import universalelectricity.core.transform.vector.IVector3;
-import universalelectricity.core.transform.vector.IVectorWorld;
-import universalelectricity.core.transform.vector.Vector3;
+import resonant.lib.transform.vector.IVector3;
+import resonant.lib.transform.vector.IVectorWorld;
+import resonant.lib.transform.vector.Vector3;
 
 public class EntityArtillectBase extends EntityCreature implements IRangedAttackMob, IVectorWorld
 {

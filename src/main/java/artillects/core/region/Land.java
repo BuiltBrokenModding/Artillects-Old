@@ -2,8 +2,8 @@ package artillects.core.region;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import universalelectricity.core.transform.vector.IVector2;
-import universalelectricity.core.transform.vector.Vector2;
+import resonant.lib.transform.vector.IVector2;
+import resonant.lib.transform.vector.Vector2;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import resonant.lib.access.java.AccessUser;
-import universalelectricity.core.transform.vector.IVector2;
-import universalelectricity.core.transform.vector.Vector2;
+import resonant.lib.transform.vector.IVector2;
+import resonant.lib.transform.vector.Vector2;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

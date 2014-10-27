@@ -14,7 +14,7 @@ import net.minecraftforge.event.world.WorldEvent.Unload;
 import resonant.lib.utility.nbt.IVirtualObject;
 import resonant.lib.utility.nbt.NBTUtility;
 import resonant.lib.utility.nbt.SaveManager;
-import universalelectricity.core.transform.vector.VectorWorld;
+import resonant.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.util.ArrayList;
