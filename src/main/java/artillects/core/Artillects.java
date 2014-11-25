@@ -27,6 +27,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import javafx.scene.effect.Reflection;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -44,8 +45,10 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import resonant.content.loader.ModManager;
+import resonant.engine.ResonantEngine;
 import resonant.lib.recipe.UniversalRecipe;
 import resonant.lib.utility.LanguageUtility;
+import resonant.lib.utility.ReflectionUtility;
 import resonant.lib.utility.nbt.SaveManager;
 
 import java.io.File;
@@ -94,6 +97,10 @@ public class Artillects
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         SaveManager.registerClass("Faction", Faction.class);
         SaveManager.registerClass("Village", Village.class);
+
+        //Request content from RE
+        ResonantEngine.requestAllOres();
+
         //Create config 
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));
 
@@ -129,38 +136,12 @@ public class Artillects
 
         proxy.preInit();
         setModMetadata();
-
-        if(Potion.potionTypes.length >= 256)
-        {
-            Potion[] potions = new Potion[256];
-
-            for (int i = 0; i < Potion.potionTypes.length; i++)
-            {
-                potions[i] = Potion.potionTypes[i];
-            }
-
-            try
-            {
-                Field field = Potion.class.getField("field_76425_a");
-                if (field == null)
-                {
-                    field = Potion.class.getField("potionTypes");
-                }
-                setFinalStatic(field, potions);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 
     @EventHandler
     public void init(FMLInitializationEvent evt)
     {
         proxy.init();
-
-
     }
 
     @EventHandler
@@ -191,17 +172,6 @@ public class Artillects
         ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
-    }
-
-    static void setFinalStatic(Field field, Object newValue) throws Exception
-    {
-        field.setAccessible(true);
-
-        Field modifiersField = Field.class.getDeclaredField("modifiers");
-        modifiersField.setAccessible(true);
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-
-        field.set(null, newValue);
     }
 
     @SubscribeEvent
