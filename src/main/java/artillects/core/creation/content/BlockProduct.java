@@ -1,6 +1,6 @@
 package artillects.core.creation.content;
 
-import artillects.core.ArtillectsTab;
+import artillects.core.Reference;
 import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
@@ -138,7 +138,7 @@ public class BlockProduct extends Product<Block>
         product.setBlockName(unlocalizedName);
         product.setHardness(this.hardness);
         product.setResistance(this.resistance);
-        product.setCreativeTab(ArtillectsTab.instance());
+        product.setCreativeTab(Reference.CREATIVE_TAB);
         creator.newBlock(unlocalizedName, product, ItemBlockTemplate.class);
         ((BlockTemplate) product).content = this;
 

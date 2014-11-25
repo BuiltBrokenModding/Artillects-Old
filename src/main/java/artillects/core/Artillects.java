@@ -108,7 +108,7 @@ public class Artillects
         CONFIG.load();
 
         //create content registry
-        contentRegistry = new ModManager().setPrefix(Reference.PREFIX).setTab(ArtillectsTab.instance());
+        contentRegistry = new ModManager().setPrefix(Reference.PREFIX).setTab(Reference.CREATIVE_TAB);
 
         contentFactory = new ContentFactory(contentRegistry);
         try
