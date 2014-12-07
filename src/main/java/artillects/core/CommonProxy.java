@@ -5,7 +5,7 @@ import artillects.content.tool.surveyor.TileSurveyor;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import resonant.lib.gui.ContainerDummy;
+import resonant.lib.prefab.gui.ContainerDummy;
 import resonant.lib.prefab.AbstractProxy;
 import resonant.lib.transform.vector.Vector3;
 
