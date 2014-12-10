@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import resonant.content.loader.ModManager;
+import resonant.lib.mod.content.ModManager;
 
 /** Creation system and data storage for creating new basic blocks from xml data
  * 

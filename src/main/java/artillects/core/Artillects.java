@@ -42,7 +42,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import resonant.content.loader.ModManager;
+import resonant.lib.mod.content.ModManager;
 import resonant.engine.ResonantEngine;
 import resonant.lib.utility.recipe.UniversalRecipe;
 import resonant.lib.utility.LanguageUtility;

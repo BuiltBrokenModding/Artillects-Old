@@ -8,7 +8,7 @@ import artillects.core.creation.content.ProductType;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.w3c.dom.Document;
-import resonant.content.loader.ModManager;
+import resonant.lib.mod.content.ModManager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
