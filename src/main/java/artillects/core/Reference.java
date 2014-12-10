@@ -1,6 +1,6 @@
 package artillects.core;
 
-import resonant.lib.prefab.ModCreativeTab;
+import resonant.lib.mod.ModCreativeTab;
 
 /** A class for static references.
  * 

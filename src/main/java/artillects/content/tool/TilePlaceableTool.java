@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.api.IRemovable.ISneakPickup;
+import resonant.api.tile.IRemovable.ISneakPickup;
 import resonant.engine.ResonantEngine;
 import resonant.lib.content.prefab.java.TileElectric;
 import resonant.engine.network.discriminator.PacketTile;

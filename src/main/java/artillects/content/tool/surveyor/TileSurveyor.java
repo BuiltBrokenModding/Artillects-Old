@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import resonant.api.IRemovable.ISneakPickup;
+import resonant.api.tile.IRemovable.ISneakPickup;
 import resonant.engine.ResonantEngine;
 import resonant.engine.network.discriminator.PacketTile;
 import resonant.engine.network.discriminator.PacketType;

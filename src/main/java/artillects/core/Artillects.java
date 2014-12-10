@@ -27,7 +27,6 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import javafx.scene.effect.Reflection;
 import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -37,7 +36,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,14 +44,11 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import resonant.content.loader.ModManager;
 import resonant.engine.ResonantEngine;
-import resonant.lib.recipe.UniversalRecipe;
+import resonant.lib.utility.recipe.UniversalRecipe;
 import resonant.lib.utility.LanguageUtility;
-import resonant.lib.utility.ReflectionUtility;
 import resonant.lib.utility.nbt.SaveManager;
 
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /** @author DarkGuardsman */
