@@ -3,7 +3,7 @@ package artillects.content.tool;
 import artillects.core.Artillects;
 import com.builtbroken.mc.api.tile.IRemovable;
 import com.builtbroken.mc.api.tile.IRotatable;
-import com.builtbroken.mc.core.BBL;
+import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.AbstractPacket;
 import com.builtbroken.mc.core.network.packet.PacketTile;
@@ -127,7 +127,7 @@ public class TilePlaceableTool extends Tile implements IPacketIDReceiver, IRemov
     public void sendOnStatus()
     {
         if (world().isRemote)
-            BBL.instance.packetHandler.sendToServer(new PacketTile(this, ENABLE_ID, this.enabled));
+            Engine.instance.packetHandler.sendToServer(new PacketTile(this, ENABLE_ID, this.enabled));
     }
 
     public void sendAngles()
@@ -268,6 +268,6 @@ public class TilePlaceableTool extends Tile implements IPacketIDReceiver, IRemov
      */
     public void sendPacket(AbstractPacket packet, double distance)
     {
-        BBL.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
+        Engine.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
     }
 }

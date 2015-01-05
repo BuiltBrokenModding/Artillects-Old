@@ -17,9 +17,9 @@ import artillects.core.commands.CommandTool;
 import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
-import com.builtbroken.mc.core.BBL;
+import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.lib.helper.LanguageUtility;
-import com.builtbroken.mc.lib.helper.nbt.SaveManager;
+import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.helper.recipe.UniversalRecipe;
 import com.builtbroken.mc.lib.mod.content.ModManager;
 import cpw.mods.fml.common.*;
@@ -94,7 +94,7 @@ public class Artillects
         SaveManager.registerClass("Village", Village.class);
 
         //Request content from RE
-        BBL.requestAllOres();
+        Engine.requestAllOres();
 
         //Create config 
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));

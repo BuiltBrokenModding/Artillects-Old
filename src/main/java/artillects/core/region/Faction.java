@@ -5,7 +5,7 @@ import artillects.core.interfaces.IFactionMember;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.access.AccessProfile;
 import com.builtbroken.mc.lib.access.IProfileContainer;
-import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.lib.transform.vector.IVector2;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

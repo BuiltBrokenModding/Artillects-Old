@@ -2,7 +2,7 @@ package artillects.content.items.med;
 
 import artillects.content.potion.PotionBleeding;
 import artillects.core.Reference;
-import com.builtbroken.mc.lib.helper.inventory.InventoryUtility;
+import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

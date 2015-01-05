@@ -3,7 +3,7 @@ package artillects.content.tool.surveyor;
 import artillects.content.tool.TilePlaceableTool;
 import artillects.core.Artillects;
 import com.builtbroken.mc.api.tile.IRemovable;
-import com.builtbroken.mc.core.BBL;
+import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.PacketTile;
 import com.builtbroken.mc.core.network.packet.PacketType;
@@ -121,7 +121,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
         this.beamColor = color;
         PacketTile packet = new PacketTile(this, 3, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
         if (world().isRemote)
-            BBL.instance.packetHandler.sendToServer(packet);
+            Engine.instance.packetHandler.sendToServer(packet);
     }
 
     public void setColor(String color)

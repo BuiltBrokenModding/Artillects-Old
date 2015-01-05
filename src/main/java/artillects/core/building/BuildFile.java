@@ -2,7 +2,7 @@ package artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
 import com.builtbroken.mc.api.ISave;
-import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.lib.transform.vector.Vector3;
 import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import com.builtbroken.mc.lib.world.schematic.Schematic;

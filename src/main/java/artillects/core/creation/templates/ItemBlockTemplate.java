@@ -2,7 +2,6 @@ package artillects.core.creation.templates;
 
 import com.builtbroken.jlib.data.Colors;
 import com.builtbroken.mc.lib.helper.LanguageUtility;
-import com.builtbroken.mc.lib.helper.TooltipUtility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -42,20 +41,8 @@ public class ItemBlockTemplate extends ItemBlock
                 list.addAll(LanguageUtility.splitStringPerWord(tooltip, 5));
             }
         }
+        list.add(LanguageUtility.getLocal("info.recipes.tooltip").replace("%0", Colors.AQUA.toString()).replace("%1", Colors.GREY.toString()));
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_J))
-        {
-            List<String> recipeList = new ArrayList<String>();
-            TooltipUtility.addTooltip(itemStack, recipeList);
-            if(recipeList.size() > 1 || !recipeList.get(0).contains(itemStack.getDisplayName()))
-            {
-                list.addAll(recipeList);
-            }
-        }
-        else
-        {
-            list.add(LanguageUtility.getLocal("info.recipes.tooltip").replace("%0", Colors.AQUA.toString()).replace("%1", Colors.GREY.toString()));
-        }
     }
 
     @Override

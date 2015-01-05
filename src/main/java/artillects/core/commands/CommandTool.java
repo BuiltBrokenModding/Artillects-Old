@@ -1,6 +1,6 @@
 package artillects.core.commands;
 
-import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
