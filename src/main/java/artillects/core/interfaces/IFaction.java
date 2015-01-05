@@ -1,7 +1,8 @@
 package artillects.core.interfaces;
 
-import com.builtbroken.lib.access.IProfileContainer;
-import com.builtbroken.lib.utility.nbt.IVirtualObject;
+
+import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.lib.access.IProfileContainer;
 
 /** Interface applied to objects that will become a faction
  * 

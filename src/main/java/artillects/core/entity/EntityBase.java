@@ -1,5 +1,9 @@
 package artillects.core.entity;
 
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Vector2;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -8,10 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
-import com.builtbroken.lib.transform.vector.Vector2;
-import com.builtbroken.lib.transform.vector.Vector3;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.ArrayList;
 import java.util.List;

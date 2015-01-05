@@ -5,12 +5,12 @@ import artillects.content.tool.TilePlaceableTool;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.GuiSurveyor;
 import artillects.content.tool.surveyor.TileSurveyor;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 public class ClientProxy extends CommonProxy
 {

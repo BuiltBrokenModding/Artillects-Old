@@ -1,11 +1,11 @@
 package artillects.content.tool.extractor;
 
 import artillects.content.tool.ItemPlaceableTool;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.HashMap;
 

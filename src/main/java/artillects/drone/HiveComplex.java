@@ -5,16 +5,16 @@ import artillects.core.building.EnumStructurePeaces;
 import artillects.core.building.GhostObject;
 import artillects.core.zone.Zone;
 import artillects.core.zone.ZoneBuilding;
+import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.helper.nbt.SaveManager;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import com.builtbroken.lib.utility.nbt.IVirtualObject;
-import com.builtbroken.lib.utility.nbt.NBTUtility;
-import com.builtbroken.lib.utility.nbt.SaveManager;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -394,10 +394,11 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
         nbt.setString("name", this.getName());
+        return nbt;
     }
 
     @Override

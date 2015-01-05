@@ -5,13 +5,13 @@ import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
 import artillects.core.creation.templates.ItemBlockTemplate;
+import com.builtbroken.mc.lib.mod.content.ModManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import com.builtbroken.lib.mod.content.ModManager;
 
 /** Creation system and data storage for creating new basic blocks from xml data
  * 

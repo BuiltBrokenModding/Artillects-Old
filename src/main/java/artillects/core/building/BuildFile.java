@@ -1,5 +1,11 @@
 package artillects.core.building;
 
+import com.builtbroken.jlib.type.Pair;
+import com.builtbroken.mc.api.ISave;
+import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.world.schematic.Schematic;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -9,12 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.lib.world.schematic.Schematic;
-import com.builtbroken.lib.type.Pair;
-import com.builtbroken.lib.utility.nbt.ISaveObj;
-import com.builtbroken.lib.utility.nbt.NBTUtility;
-import com.builtbroken.lib.transform.vector.Vector3;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.net.URL;
@@ -25,7 +25,7 @@ import java.util.Map.Entry;
 /** File that represents all the data loaded from a schematic data file
  * 
  * @author DarkGuardsman */
-public class BuildFile extends Schematic implements ISaveObj
+public class BuildFile extends Schematic implements ISave
 {
     //TODO save the schematics using block names, include a reference sheet to match block names to IDs instead of saving each block as a string
 
@@ -133,7 +133,7 @@ public class BuildFile extends Schematic implements ISaveObj
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         if (!init)
         {
@@ -173,7 +173,7 @@ public class BuildFile extends Schematic implements ISaveObj
         }
         blockNBT.setInteger("count", i);
         nbt.setTag(BLOCK_LIST_SAVE_NAME, blockNBT);
-
+        return nbt;
     }
 
     @Override

@@ -1,13 +1,13 @@
 package artillects.content.tool;
 
+import com.builtbroken.jlib.data.Colors;
+import com.builtbroken.mc.lib.helper.LanguageUtility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.lwjgl.input.Keyboard;
-import com.builtbroken.lib.render.EnumColor;
-import com.builtbroken.lib.utility.LanguageUtility;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ItemPlaceableTool extends ItemBlock
             {
                 if (tooltipSmall != null)
                     list.addAll(LanguageUtility.splitStringPerWord(tooltipSmall, 5));
-                list.add(LanguageUtility.getLocal("tooltip.noShift").replace("%0", EnumColor.AQUA.toString()).replace("%1", EnumColor.GREY.toString()));
+                list.add(LanguageUtility.getLocal("tooltip.noShift").replace("%0", Colors.AQUA.toString()).replace("%1", Colors.GREY.toString()));
             }
             else
             {

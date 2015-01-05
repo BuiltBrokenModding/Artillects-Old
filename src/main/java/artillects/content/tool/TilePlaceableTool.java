@@ -1,7 +1,17 @@
 package artillects.content.tool;
 
 import artillects.core.Artillects;
-import com.builtbroken.mod.BBL;
+import com.builtbroken.mc.api.tile.IRemovable;
+import com.builtbroken.mc.api.tile.IRotatable;
+import com.builtbroken.mc.core.BBL;
+import com.builtbroken.mc.core.network.IPacketIDReceiver;
+import com.builtbroken.mc.core.network.packet.AbstractPacket;
+import com.builtbroken.mc.core.network.packet.PacketTile;
+import com.builtbroken.mc.core.network.packet.PacketType;
+import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.prefab.tile.Tile;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,15 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.api.tile.IRemovable.ISneakPickup;
-import com.builtbroken.lib.prefab.tile.TileElectric;
-import com.builtbroken.lib.network.discriminator.PacketTile;
-import com.builtbroken.lib.network.discriminator.PacketType;
-import com.builtbroken.lib.network.handle.IPacketIDReceiver;
-import com.builtbroken.lib.network.netty.AbstractPacket;
-import com.builtbroken.lib.transform.rotation.EulerAngle;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 /** Prefab for tools that can be place and function while placed
  * 
  * @author Darkguardsman */
-public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver, ISneakPickup
+public class TilePlaceableTool extends Tile implements IPacketIDReceiver, IRemovable.ISneakPickup, IRotatable
 {
     public EulerAngle angle;
 
@@ -55,7 +56,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     public void update()
     {
         super.update();
-        if (doRayTrace && this.ticks() % rayTiming == 0)
+        if (doRayTrace && this.ticks % rayTiming == 0)
         {
             doRayTrace();
         }
@@ -118,7 +119,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     public ArrayList<ItemStack> getDrops(int metadata, int fortune)
     {
         ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-        ItemStack stack = new ItemStack(this.block(), 1, 0);
+        ItemStack stack = new ItemStack(this.getBlockType(), 1, 0);
         drops.add(stack);
         return drops;
     }

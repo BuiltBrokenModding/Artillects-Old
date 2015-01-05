@@ -1,7 +1,7 @@
 package artillects.core.prefab;
 
-import com.builtbroken.lib.render.RenderUtility;
-import com.builtbroken.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.render.RenderUtility;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 
 import java.awt.*;
 

@@ -1,9 +1,9 @@
 package artillects.core.entity.ai;
 
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 /** Task prefab
  * 

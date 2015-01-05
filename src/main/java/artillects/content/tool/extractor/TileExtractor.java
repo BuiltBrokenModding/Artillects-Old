@@ -1,6 +1,12 @@
 package artillects.content.tool.extractor;
 
 import artillects.content.tool.TilePlaceableTool;
+import com.builtbroken.mc.api.tile.IInventoryProvider;
+import com.builtbroken.mc.api.tile.node.IExternalInventory;
+import com.builtbroken.mc.lib.helper.inventory.ExternalInventory;
+import com.builtbroken.mc.lib.helper.inventory.InventoryUtility;
+import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,12 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.api.tile.node.IExternalInventory;
-import com.builtbroken.api.tile.IInventoryProvider;
-import com.builtbroken.lib.utility.inventory.ExternalInventory;
-import com.builtbroken.lib.utility.inventory.InventoryUtility;
-import com.builtbroken.lib.transform.rotation.EulerAngle;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +36,10 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
     public TileExtractor()
     {
         super(Material.anvil);
-        itemBlock(ItemExtractor.class);
-        isOpaqueCube(false);
-        normalRender(false);
-        customItemRender(true);
+        itemBlock = ItemExtractor.class;
+        isOpaque = false;
+        renderNormalBlock = false;
+        renderTileEntity = false;
         this.doRayTrace = true;
         this.rayDistance = 10;
     }

@@ -5,10 +5,10 @@ import artillects.core.creation.content.BlockProduct;
 import artillects.core.creation.content.ItemProduct;
 import artillects.core.creation.content.Product;
 import artillects.core.creation.content.ProductType;
+import com.builtbroken.mc.lib.mod.content.ModManager;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.w3c.dom.Document;
-import com.builtbroken.lib.mod.content.ModManager;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

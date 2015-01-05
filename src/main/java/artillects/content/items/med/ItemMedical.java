@@ -2,6 +2,8 @@ package artillects.content.items.med;
 
 import artillects.content.potion.PotionBleeding;
 import artillects.core.Reference;
+import com.builtbroken.mc.lib.helper.inventory.InventoryUtility;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -12,8 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import com.builtbroken.lib.utility.inventory.InventoryUtility;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.HashMap;
 import java.util.List;

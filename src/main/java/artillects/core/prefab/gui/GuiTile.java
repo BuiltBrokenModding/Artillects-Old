@@ -1,6 +1,8 @@
 package artillects.core.prefab.gui;
 
 import artillects.core.Reference;
+import com.builtbroken.mc.prefab.gui.ContainerDummy;
+import com.builtbroken.mc.prefab.gui.GuiContainerBase;
 import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -10,8 +12,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import com.builtbroken.lib.prefab.gui.ContainerDummy;
-import com.builtbroken.lib.prefab.gui.GuiContainerBase;
 
 import java.util.ArrayList;
 import java.util.List;

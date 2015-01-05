@@ -1,6 +1,7 @@
 package artillects.content.potion;
 
-import com.builtbroken.lib.prefab.potion.CustomPotion;
+import com.builtbroken.mc.prefab.potion.CustomPotion;
+import net.minecraft.potion.Potion;
 
 /** Prefab for all medical based potion effects
  *

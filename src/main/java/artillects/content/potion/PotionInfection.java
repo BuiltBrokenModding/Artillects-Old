@@ -1,11 +1,11 @@
 package artillects.content.potion;
 
+import com.builtbroken.jlib.math.dice.DiceRoller;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ChatComponentText;
-import com.builtbroken.lib.utility.dice.DiceRoller;
 
 /**
  * Created by robert on 10/9/2014.

@@ -2,23 +2,23 @@ package artillects.content.tool.surveyor;
 
 import artillects.content.tool.TilePlaceableTool;
 import artillects.core.Artillects;
-import com.builtbroken.mod.BBL;
+import com.builtbroken.mc.api.tile.IRemovable;
+import com.builtbroken.mc.core.BBL;
+import com.builtbroken.mc.core.network.IPacketIDReceiver;
+import com.builtbroken.mc.core.network.packet.PacketTile;
+import com.builtbroken.mc.core.network.packet.PacketType;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import com.builtbroken.api.tile.IRemovable.ISneakPickup;
-import com.builtbroken.lib.network.discriminator.PacketTile;
-import com.builtbroken.lib.network.discriminator.PacketType;
-import com.builtbroken.lib.network.handle.IPacketIDReceiver;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.awt.*;
 
 /** Small camera looking block that can deploy laser lines, gauge distances, and do other utilities.
  * 
  * @author Darkguardsman */
-public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver, ISneakPickup
+public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver, IRemovable.ISneakPickup
 {
     protected Color beamColor = Color.cyan;
 
@@ -27,18 +27,16 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
         super(Material.anvil);
         rayDistance = 1000;
         doRayTrace = true;
-        isOpaqueCube(false);
-        normalRender(false);
-        customItemRender(true);
-        itemBlock(ItemSurveyor.class);
-        //textureName("material_steel");
+        isOpaque = false;
+        renderNormalBlock = false;
+        itemBlock = ItemSurveyor.class;
     }
 
     @Override
     public void update()
     {
         super.update();
-        if (this.ticks() % 3 == 0)
+        if (this.ticks % 3 == 0)
         {
             //TODO render distance above tile
             if (lastRayHit != null && world().isRemote && enabled)

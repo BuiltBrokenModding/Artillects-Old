@@ -2,9 +2,9 @@ package artillects.content.tool;
 
 import artillects.core.prefab.gui.GuiTile;
 import artillects.core.prefab.gui.NumericField;
+import com.builtbroken.mc.lib.helper.LanguageUtility;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import com.builtbroken.lib.utility.LanguageUtility;
 
 /** Gui for any tool that is placed on the ground. Which also include the ability to rotate on the
  * yaw and pitch axis

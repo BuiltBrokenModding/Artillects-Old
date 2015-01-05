@@ -1,11 +1,11 @@
 package artillects.core.building;
 
+import com.builtbroken.jlib.type.Pair;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import com.builtbroken.lib.type.Pair;
-import com.builtbroken.lib.transform.vector.Vector3;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -84,7 +84,7 @@ public class Building extends GhostObject
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
         if (peaces.size() > 0)
@@ -98,6 +98,7 @@ public class Building extends GhostObject
             }
             nbt.setTag("Structures", list);
         }
+        return nbt;
     }
 
     @Override

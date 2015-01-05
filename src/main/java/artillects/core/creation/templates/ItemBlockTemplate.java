@@ -1,13 +1,13 @@
 package artillects.core.creation.templates;
 
+import com.builtbroken.jlib.data.Colors;
+import com.builtbroken.mc.lib.helper.LanguageUtility;
+import com.builtbroken.mc.lib.helper.TooltipUtility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
-import com.builtbroken.lib.render.EnumColor;
-import com.builtbroken.lib.utility.LanguageUtility;
-import com.builtbroken.lib.utility.TooltipUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ItemBlockTemplate extends ItemBlock
         {
             if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
             {
-                list.add(LanguageUtility.getLocal("tooltip.noShift").replace("%0", EnumColor.AQUA.toString()).replace("%1", EnumColor.GREY.toString()));
+                list.add(LanguageUtility.getLocal("tooltip.noShift").replace("%0", Colors.AQUA.toString()).replace("%1", Colors.GREY.toString()));
             }
             else
             {
@@ -54,7 +54,7 @@ public class ItemBlockTemplate extends ItemBlock
         }
         else
         {
-            list.add(LanguageUtility.getLocal("info.recipes.tooltip").replace("%0", EnumColor.AQUA.toString()).replace("%1", EnumColor.GREY.toString()));
+            list.add(LanguageUtility.getLocal("info.recipes.tooltip").replace("%0", Colors.AQUA.toString()).replace("%1", Colors.GREY.toString()));
         }
     }
 

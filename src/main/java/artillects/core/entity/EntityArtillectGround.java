@@ -1,6 +1,8 @@
 package artillects.core.entity;
 
 import artillects.core.Artillects;
+import com.builtbroken.mc.lib.transform.vector.IVector3;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -8,8 +10,6 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.lib.transform.vector.IVector3;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 /** Prefab for ground based drones
  * 

@@ -1,8 +1,8 @@
 package artillects.core.creation.content;
 
+import com.builtbroken.mc.lib.mod.content.ModManager;
 import net.minecraft.item.Item;
 import org.w3c.dom.Document;
-import com.builtbroken.lib.mod.content.ModManager;
 
 public class ItemProduct extends Product<Item>
 {

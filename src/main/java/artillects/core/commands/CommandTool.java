@@ -1,11 +1,11 @@
 package artillects.core.commands;
 
+import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import com.builtbroken.lib.utility.nbt.NBTUtility;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.util.List;

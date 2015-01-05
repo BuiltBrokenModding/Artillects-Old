@@ -1,9 +1,9 @@
 package artillects.core.region;
 
+import com.builtbroken.mc.lib.transform.vector.IVector2;
+import com.builtbroken.mc.lib.transform.vector.Vector2;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.IVector2;
-import com.builtbroken.lib.transform.vector.Vector2;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -89,7 +89,7 @@ public class Land extends FactionObject
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         super.save(nbt);
         nbt.setString("name", this.name);
@@ -103,6 +103,7 @@ public class Land extends FactionObject
             }
             nbt.setTag("oldnames", oldNames);
         }
+        return nbt;
     }
 
     @Override

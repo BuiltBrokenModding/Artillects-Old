@@ -1,5 +1,6 @@
 package artillects.core.prefab;
 
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -9,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;

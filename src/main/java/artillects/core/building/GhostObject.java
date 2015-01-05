@@ -1,16 +1,16 @@
 package artillects.core.building;
 
+import com.builtbroken.mc.api.ISave;
+import com.builtbroken.mc.lib.transform.vector.IVector3;
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import com.builtbroken.lib.utility.nbt.ISaveObj;
-import com.builtbroken.lib.transform.vector.IVector3;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 
  * @author DarkGuardsman */
-public class GhostObject implements ISaveObj, IVectorWorld
+public class GhostObject implements ISave, IVectorWorld
 {
     protected boolean isInvalid = false;
     protected long ticks = 0;
@@ -90,14 +90,14 @@ public class GhostObject implements ISaveObj, IVectorWorld
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         nbt.setDouble("x", x());
         nbt.setDouble("y", y());
         nbt.setDouble("z", z());
         if (this.world() != null)
             nbt.setInteger("d", world().provider.dimensionId);
-
+        return nbt;
     }
 
     @Override

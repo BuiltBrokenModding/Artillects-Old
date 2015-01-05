@@ -1,6 +1,7 @@
 package artillects.content.blocks.teleporter;
 
 import artillects.core.Reference;
+import com.builtbroken.mc.lib.helper.LanguageUtility;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -13,7 +14,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import com.builtbroken.lib.utility.LanguageUtility;
 
 import java.util.Random;
 

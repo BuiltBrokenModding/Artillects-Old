@@ -2,12 +2,12 @@ package artillects.core;
 
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
+import com.builtbroken.mc.lib.mod.AbstractProxy;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.prefab.gui.ContainerDummy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import com.builtbroken.lib.prefab.gui.ContainerDummy;
-import com.builtbroken.lib.mod.AbstractProxy;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.awt.*;
 

@@ -1,10 +1,10 @@
 package artillects.content.blocks.teleporter;
 
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 /** @author Archadia */
 public class TileEntityTeleporterAnchor extends TileEntity

@@ -2,13 +2,13 @@ package artillects.core.entity;
 
 import artillects.core.Artillects;
 import artillects.core.zone.Zone;
+import com.builtbroken.mc.lib.transform.vector.IVector3;
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.IVector3;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 public class EntityArtillectBase extends EntityCreature implements IRangedAttackMob, IVectorWorld
 {

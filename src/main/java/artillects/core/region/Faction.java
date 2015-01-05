@@ -2,14 +2,14 @@ package artillects.core.region;
 
 import artillects.core.interfaces.IFaction;
 import artillects.core.interfaces.IFactionMember;
+import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.lib.access.AccessProfile;
+import com.builtbroken.mc.lib.access.IProfileContainer;
+import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.transform.vector.IVector2;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import com.builtbroken.lib.access.AccessProfile;
-import com.builtbroken.lib.access.IProfileContainer;
-import com.builtbroken.lib.utility.nbt.IVirtualObject;
-import com.builtbroken.lib.utility.nbt.NBTUtility;
-import com.builtbroken.lib.transform.vector.IVector2;
 
 import java.io.File;
 import java.util.HashMap;
@@ -71,10 +71,10 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         // TODO Auto-generated method stub
-
+        return nbt;
     }
 
     @Override

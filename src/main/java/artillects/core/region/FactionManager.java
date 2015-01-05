@@ -1,12 +1,12 @@
 package artillects.core.region;
 
 import artillects.core.interfaces.IFactionMember;
+import com.builtbroken.mc.lib.transform.vector.IVector2;
+import com.builtbroken.mc.lib.transform.vector.IVector3;
+import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.IVector2;
-import com.builtbroken.lib.transform.vector.IVector3;
-import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 import java.util.HashMap;
 

@@ -2,9 +2,9 @@ package artillects.core.zone;
 
 import artillects.core.building.GhostObject;
 import artillects.core.interfaces.IWorker;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.Iterator;

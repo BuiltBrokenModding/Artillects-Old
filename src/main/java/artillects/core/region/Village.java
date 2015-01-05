@@ -1,9 +1,9 @@
 package artillects.core.region;
 
+import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.lib.helper.nbt.NBTUtility;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.world.World;
-import com.builtbroken.lib.utility.nbt.IVirtualObject;
-import com.builtbroken.lib.utility.nbt.NBTUtility;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 

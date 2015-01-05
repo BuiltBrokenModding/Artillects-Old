@@ -1,13 +1,13 @@
 package artillects.content.blocks.door;
 
+import com.builtbroken.mc.prefab.tile.Tile;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import com.builtbroken.lib.prefab.tile.TileAdvanced;
 
-@SuppressWarnings("deprecation")
-public class TileLockedDoor extends TileAdvanced
+
+public class TileLockedDoor extends Tile
 {
     public boolean isOpen = false;
     public boolean allowRedstone = false;
@@ -27,7 +27,7 @@ public class TileLockedDoor extends TileAdvanced
     public void update()
     {
         super.update();
-        if (this.ticks() % 20 == 0)
+        if (this.ticks % 20 == 0)
         {
             //TODO add upgrade to auto shut a door using a spring like item
             if (autoClose)

@@ -1,8 +1,8 @@
 package artillects.core.utility;
 
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.world.World;
-import com.builtbroken.lib.transform.vector.Vector3;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 public class AreaScanner
 {

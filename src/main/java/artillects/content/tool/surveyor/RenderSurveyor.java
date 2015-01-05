@@ -3,12 +3,12 @@ package artillects.content.tool.surveyor;
 import artillects.core.Reference;
 import artillects.core.prefab.RenderTaggedTile;
 import artillects.core.prefab.RenderText;
+import com.builtbroken.mc.lib.render.RenderUtility;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
-import com.builtbroken.lib.render.RenderUtility;
 
 import java.awt.*;
 import java.util.List;

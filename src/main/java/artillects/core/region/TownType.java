@@ -1,6 +1,6 @@
 package artillects.core.region;
 
-import com.builtbroken.lib.utility.LanguageUtility;
+import com.builtbroken.mc.lib.helper.LanguageUtility;
 
 /** Types of towns
  * 

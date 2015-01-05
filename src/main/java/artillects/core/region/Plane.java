@@ -1,9 +1,9 @@
 package artillects.core.region;
 
 
+import com.builtbroken.mc.lib.transform.vector.IVector2;
+import com.builtbroken.mc.lib.transform.vector.Vector2;
 import net.minecraftforge.common.util.ForgeDirection;
-import com.builtbroken.lib.transform.vector.IVector2;
-import com.builtbroken.lib.transform.vector.Vector2;
 
 /** 2D area of space
  * 

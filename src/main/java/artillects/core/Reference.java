@@ -1,6 +1,6 @@
 package artillects.core;
 
-import com.builtbroken.lib.mod.ModCreativeTab;
+import com.builtbroken.mc.lib.mod.ModCreativeTab;
 
 /** A class for static references.
  * 

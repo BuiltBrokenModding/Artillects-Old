@@ -1,11 +1,11 @@
 package artillects.core.building;
 
+import com.builtbroken.jlib.type.Pair;
+import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.VectorWorld;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import com.builtbroken.lib.type.Pair;
-import com.builtbroken.lib.transform.vector.Vector3;
-import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -101,10 +101,11 @@ public class BuildingPart extends GhostObject
     }
 
     @Override
-    public void save(NBTTagCompound nbt)
+    public NBTTagCompound save(NBTTagCompound nbt)
     {
         nbt.setInteger("buildingID", building.ordinal());
         nbt.setTag("location", this.location.writeNBT(new NBTTagCompound()));
+        return nbt;
     }
 
     @Override

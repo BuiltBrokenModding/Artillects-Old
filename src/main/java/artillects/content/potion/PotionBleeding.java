@@ -1,10 +1,9 @@
 package artillects.content.potion;
 
+import com.builtbroken.mc.prefab.damage.DamageSources;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.DamageSource;
-import com.builtbroken.lib.prefab.damage.CustomDamageSource;
 
 /**
  * Potion effect designed to cause the entity to bleed out slowly
@@ -14,8 +13,6 @@ import com.builtbroken.lib.prefab.damage.CustomDamageSource;
  */
 public class PotionBleeding extends PotionMedical
 {
-    public static final DamageSource BLEED_DAMAGE = new CustomDamageSource("BleedOut").setDamageBypassesArmor().setDamageIsAbsolute();
-
     public PotionBleeding()
     {
         super(true, 8271127, "Bleeding");
@@ -32,7 +29,7 @@ public class PotionBleeding extends PotionMedical
             {
                 ((EntityPlayer) ent).addChatComponentMessage(new ChatComponentText("Bleeding..."));
             }
-            ent.attackEntityFrom(BLEED_DAMAGE, 0.5f + 0.125f * ent.worldObj.difficultySetting.getDifficultyId());
+            ent.attackEntityFrom(DamageSources.BLEEDING.getSource(), 0.5f + 0.125f * ent.worldObj.difficultySetting.getDifficultyId());
             ent.worldObj.spawnParticle("reddust", ent.posX, ent.posY, ent.posZ, 0, -0.1, 0);
             if (ent.worldObj.rand.nextFloat() <= 0.005f)
             {
