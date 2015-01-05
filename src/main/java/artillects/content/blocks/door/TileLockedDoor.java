@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import resonant.lib.prefab.tile.TileAdvanced;
+import com.builtbroken.lib.prefab.tile.TileAdvanced;
 
 @SuppressWarnings("deprecation")
 public class TileLockedDoor extends TileAdvanced

@@ -3,9 +3,9 @@ package artillects.core.building;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import resonant.lib.type.Pair;
-import resonant.lib.transform.vector.Vector3;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.type.Pair;
+import com.builtbroken.lib.transform.vector.Vector3;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.HashMap;
 import java.util.Map.Entry;

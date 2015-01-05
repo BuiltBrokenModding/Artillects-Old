@@ -3,8 +3,8 @@ package artillects.content.blocks.teleporter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
-import resonant.lib.transform.vector.Vector3;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.Vector3;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.*;
 

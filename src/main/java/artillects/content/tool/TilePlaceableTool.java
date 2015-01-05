@@ -1,6 +1,7 @@
 package artillects.content.tool;
 
 import artillects.core.Artillects;
+import com.builtbroken.mod.BBL;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,16 +9,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.api.tile.IRemovable.ISneakPickup;
-import resonant.engine.ResonantEngine;
-import resonant.lib.prefab.tile.TileElectric;
-import resonant.lib.network.discriminator.PacketTile;
-import resonant.lib.network.discriminator.PacketType;
-import resonant.lib.network.handle.IPacketIDReceiver;
-import resonant.lib.network.netty.AbstractPacket;
-import resonant.lib.transform.rotation.EulerAngle;
-import resonant.lib.transform.vector.IVectorWorld;
-import resonant.lib.transform.vector.Vector3;
+import com.builtbroken.api.tile.IRemovable.ISneakPickup;
+import com.builtbroken.lib.prefab.tile.TileElectric;
+import com.builtbroken.lib.network.discriminator.PacketTile;
+import com.builtbroken.lib.network.discriminator.PacketType;
+import com.builtbroken.lib.network.handle.IPacketIDReceiver;
+import com.builtbroken.lib.network.netty.AbstractPacket;
+import com.builtbroken.lib.transform.rotation.EulerAngle;
+import com.builtbroken.lib.transform.vector.IVectorWorld;
+import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +126,7 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
     public void sendOnStatus()
     {
         if (world().isRemote)
-            ResonantEngine.instance.packetHandler.sendToServer(new PacketTile(this, ENABLE_ID, this.enabled));
+            BBL.instance.packetHandler.sendToServer(new PacketTile(this, ENABLE_ID, this.enabled));
     }
 
     public void sendAngles()
@@ -267,6 +267,6 @@ public class TilePlaceableTool extends TileElectric implements IPacketIDReceiver
      */
     public void sendPacket(AbstractPacket packet, double distance)
     {
-        ResonantEngine.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
+        BBL.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
     }
 }

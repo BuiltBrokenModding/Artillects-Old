@@ -3,9 +3,9 @@ package artillects.core.building;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
-import resonant.lib.utility.nbt.ISaveObj;
-import resonant.lib.transform.vector.IVector3;
-import resonant.lib.transform.vector.IVectorWorld;
+import com.builtbroken.lib.utility.nbt.ISaveObj;
+import com.builtbroken.lib.transform.vector.IVector3;
+import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 

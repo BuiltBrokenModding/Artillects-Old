@@ -4,7 +4,7 @@ import artillects.content.tool.GuiPlacedTool;
 import artillects.core.prefab.gui.TextField;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import resonant.lib.utility.LanguageUtility;
+import com.builtbroken.lib.utility.LanguageUtility;
 
 public class GuiSurveyor extends GuiPlacedTool
 {

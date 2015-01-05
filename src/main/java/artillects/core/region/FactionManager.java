@@ -4,9 +4,9 @@ import artillects.core.interfaces.IFactionMember;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import resonant.lib.transform.vector.IVector2;
-import resonant.lib.transform.vector.IVector3;
-import resonant.lib.transform.vector.IVectorWorld;
+import com.builtbroken.lib.transform.vector.IVector2;
+import com.builtbroken.lib.transform.vector.IVector3;
+import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 import java.util.HashMap;
 

@@ -17,6 +17,7 @@ import artillects.core.commands.CommandTool;
 import artillects.core.creation.ContentFactory;
 import artillects.core.region.Faction;
 import artillects.core.region.Village;
+import com.builtbroken.mod.BBL;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -42,11 +43,10 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import resonant.lib.mod.content.ModManager;
-import resonant.engine.ResonantEngine;
-import resonant.lib.utility.recipe.UniversalRecipe;
-import resonant.lib.utility.LanguageUtility;
-import resonant.lib.utility.nbt.SaveManager;
+import com.builtbroken.lib.mod.content.ModManager;
+import com.builtbroken.lib.utility.recipe.UniversalRecipe;
+import com.builtbroken.lib.utility.LanguageUtility;
+import com.builtbroken.lib.utility.nbt.SaveManager;
 
 import java.io.File;
 import java.util.Arrays;
@@ -94,7 +94,7 @@ public class Artillects
         SaveManager.registerClass("Village", Village.class);
 
         //Request content from RE
-        ResonantEngine.requestAllOres();
+        BBL.requestAllOres();
 
         //Create config 
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));

@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import resonant.lib.utility.LanguageUtility;
+import com.builtbroken.lib.utility.LanguageUtility;
 
 import java.util.Random;
 

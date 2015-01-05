@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import resonant.lib.utility.inventory.InventoryUtility;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.utility.inventory.InventoryUtility;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.HashMap;
 import java.util.List;

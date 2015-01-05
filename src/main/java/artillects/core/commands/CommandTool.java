@@ -4,8 +4,8 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
-import resonant.lib.utility.nbt.NBTUtility;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.utility.nbt.NBTUtility;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.util.List;

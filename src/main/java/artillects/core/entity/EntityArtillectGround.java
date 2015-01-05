@@ -8,8 +8,8 @@ import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.lib.transform.vector.IVector3;
-import resonant.lib.transform.vector.Vector3;
+import com.builtbroken.lib.transform.vector.IVector3;
+import com.builtbroken.lib.transform.vector.Vector3;
 
 /** Prefab for ground based drones
  * 

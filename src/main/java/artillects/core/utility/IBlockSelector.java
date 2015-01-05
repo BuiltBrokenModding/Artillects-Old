@@ -1,6 +1,6 @@
 package artillects.core.utility;
 
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 /** Call back interface for AreaScanner when it looks at each block
  * 

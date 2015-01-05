@@ -5,11 +5,11 @@ import artillects.core.interfaces.IFactionMember;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import resonant.lib.access.java.AccessProfile;
-import resonant.lib.access.java.IProfileContainer;
-import resonant.lib.utility.nbt.IVirtualObject;
-import resonant.lib.utility.nbt.NBTUtility;
-import resonant.lib.transform.vector.IVector2;
+import com.builtbroken.lib.access.AccessProfile;
+import com.builtbroken.lib.access.IProfileContainer;
+import com.builtbroken.lib.utility.nbt.IVirtualObject;
+import com.builtbroken.lib.utility.nbt.NBTUtility;
+import com.builtbroken.lib.transform.vector.IVector2;
 
 import java.io.File;
 import java.util.HashMap;

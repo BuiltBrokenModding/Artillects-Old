@@ -1,7 +1,7 @@
 package artillects.core.creation.content;
 
 import org.w3c.dom.Document;
-import resonant.lib.mod.content.ModManager;
+import com.builtbroken.lib.mod.content.ModManager;
 
 public abstract class Product<N>
 {

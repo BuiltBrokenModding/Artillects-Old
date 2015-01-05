@@ -11,12 +11,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.api.tile.node.IExternalInventory;
-import resonant.api.tile.IInventoryProvider;
-import resonant.lib.utility.inventory.ExternalInventory;
-import resonant.lib.utility.inventory.InventoryUtility;
-import resonant.lib.transform.rotation.EulerAngle;
-import resonant.lib.transform.vector.Vector3;
+import com.builtbroken.api.tile.node.IExternalInventory;
+import com.builtbroken.api.tile.IInventoryProvider;
+import com.builtbroken.lib.utility.inventory.ExternalInventory;
+import com.builtbroken.lib.utility.inventory.InventoryUtility;
+import com.builtbroken.lib.transform.rotation.EulerAngle;
+import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;

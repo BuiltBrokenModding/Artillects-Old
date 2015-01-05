@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.List;
 

@@ -6,8 +6,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
 import org.lwjgl.opengl.GL11;
-import resonant.lib.render.RenderTaggedTile;
-import resonant.lib.render.RenderUtility;
+import com.builtbroken.lib.render.RenderTaggedTile;
+import com.builtbroken.lib.render.RenderUtility;
 
 public class RenderExtractor extends RenderTaggedTile
 {

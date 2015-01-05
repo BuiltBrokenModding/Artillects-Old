@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 /** @author Archadia */
 public class TileEntityTeleporterAnchor extends TileEntity

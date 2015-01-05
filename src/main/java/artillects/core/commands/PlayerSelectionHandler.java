@@ -4,7 +4,7 @@ import artillects.core.building.BuildFile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatComponentText;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.text.DateFormat;

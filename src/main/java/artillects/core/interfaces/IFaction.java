@@ -1,7 +1,7 @@
 package artillects.core.interfaces;
 
-import resonant.lib.access.java.IProfileContainer;
-import resonant.lib.utility.nbt.IVirtualObject;
+import com.builtbroken.lib.access.IProfileContainer;
+import com.builtbroken.lib.utility.nbt.IVirtualObject;
 
 /** Interface applied to objects that will become a faction
  * 

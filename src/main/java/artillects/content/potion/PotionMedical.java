@@ -1,8 +1,6 @@
 package artillects.content.potion;
 
-import resonant.lib.prefab.potion.CustomPotion;
-
-import java.util.Random;
+import com.builtbroken.lib.prefab.potion.CustomPotion;
 
 /** Prefab for all medical based potion effects
  *

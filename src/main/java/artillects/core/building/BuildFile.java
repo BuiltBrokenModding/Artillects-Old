@@ -9,12 +9,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.lib.world.schematic.Schematic;
-import resonant.lib.type.Pair;
-import resonant.lib.utility.nbt.ISaveObj;
-import resonant.lib.utility.nbt.NBTUtility;
-import resonant.lib.transform.vector.Vector3;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.world.schematic.Schematic;
+import com.builtbroken.lib.type.Pair;
+import com.builtbroken.lib.utility.nbt.ISaveObj;
+import com.builtbroken.lib.utility.nbt.NBTUtility;
+import com.builtbroken.lib.transform.vector.Vector3;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 import java.net.URL;

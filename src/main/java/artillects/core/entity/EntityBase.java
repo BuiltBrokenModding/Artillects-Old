@@ -8,10 +8,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
-import resonant.lib.transform.vector.IVectorWorld;
-import resonant.lib.transform.vector.Vector2;
-import resonant.lib.transform.vector.Vector3;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.transform.vector.IVectorWorld;
+import com.builtbroken.lib.transform.vector.Vector2;
+import com.builtbroken.lib.transform.vector.Vector3;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.util.ArrayList;
 import java.util.List;

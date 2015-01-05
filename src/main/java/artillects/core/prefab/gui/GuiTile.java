@@ -10,8 +10,8 @@ import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
-import resonant.lib.prefab.gui.ContainerDummy;
-import resonant.lib.prefab.gui.GuiContainerBase;
+import com.builtbroken.lib.prefab.gui.ContainerDummy;
+import com.builtbroken.lib.prefab.gui.GuiContainerBase;
 
 import java.util.ArrayList;
 import java.util.List;

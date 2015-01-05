@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
-import resonant.lib.prefab.damage.CustomDamageSource;
+import com.builtbroken.lib.prefab.damage.CustomDamageSource;
 
 /**
  * Potion effect designed to cause the entity to bleed out slowly

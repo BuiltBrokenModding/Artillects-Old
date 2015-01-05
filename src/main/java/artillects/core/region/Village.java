@@ -1,9 +1,9 @@
 package artillects.core.region;
 
 import net.minecraft.world.World;
-import resonant.lib.utility.nbt.IVirtualObject;
-import resonant.lib.utility.nbt.NBTUtility;
-import resonant.lib.transform.vector.VectorWorld;
+import com.builtbroken.lib.utility.nbt.IVirtualObject;
+import com.builtbroken.lib.utility.nbt.NBTUtility;
+import com.builtbroken.lib.transform.vector.VectorWorld;
 
 import java.io.File;
 

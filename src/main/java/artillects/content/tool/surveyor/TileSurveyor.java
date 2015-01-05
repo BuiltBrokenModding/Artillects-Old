@@ -2,16 +2,16 @@ package artillects.content.tool.surveyor;
 
 import artillects.content.tool.TilePlaceableTool;
 import artillects.core.Artillects;
+import com.builtbroken.mod.BBL;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import resonant.api.tile.IRemovable.ISneakPickup;
-import resonant.engine.ResonantEngine;
-import resonant.lib.network.discriminator.PacketTile;
-import resonant.lib.network.discriminator.PacketType;
-import resonant.lib.network.handle.IPacketIDReceiver;
-import resonant.lib.transform.vector.Vector3;
+import com.builtbroken.api.tile.IRemovable.ISneakPickup;
+import com.builtbroken.lib.network.discriminator.PacketTile;
+import com.builtbroken.lib.network.discriminator.PacketType;
+import com.builtbroken.lib.network.handle.IPacketIDReceiver;
+import com.builtbroken.lib.transform.vector.Vector3;
 
 import java.awt.*;
 
@@ -123,7 +123,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
         this.beamColor = color;
         PacketTile packet = new PacketTile(this, 3, this.beamColor.getRed(), this.beamColor.getGreen(), this.beamColor.getBlue());
         if (world().isRemote)
-            ResonantEngine.instance.packetHandler.sendToServer(packet);
+            BBL.instance.packetHandler.sendToServer(packet);
     }
 
     public void setColor(String color)

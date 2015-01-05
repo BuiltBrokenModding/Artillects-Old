@@ -1,6 +1,6 @@
 package artillects.core.region;
 
-import resonant.lib.utility.LanguageUtility;
+import com.builtbroken.lib.utility.LanguageUtility;
 
 /** Types of towns
  * 

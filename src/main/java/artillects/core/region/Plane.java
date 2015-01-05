@@ -2,8 +2,8 @@ package artillects.core.region;
 
 
 import net.minecraftforge.common.util.ForgeDirection;
-import resonant.lib.transform.vector.IVector2;
-import resonant.lib.transform.vector.Vector2;
+import com.builtbroken.lib.transform.vector.IVector2;
+import com.builtbroken.lib.transform.vector.Vector2;
 
 /** 2D area of space
  * 

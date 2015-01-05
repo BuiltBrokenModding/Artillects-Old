@@ -2,8 +2,8 @@ package artillects.core.region;
 
 import artillects.core.building.GhostObject;
 import net.minecraft.world.World;
-import resonant.lib.transform.vector.IVector3;
-import resonant.lib.transform.vector.IVectorWorld;
+import com.builtbroken.lib.transform.vector.IVector3;
+import com.builtbroken.lib.transform.vector.IVectorWorld;
 
 /** Extended version of the ghost object with faction related info */
 public class FactionObject extends GhostObject
