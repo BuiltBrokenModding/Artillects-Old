@@ -26,7 +26,7 @@ import java.util.List;
 /** Prefab for tools that can be place and function while placed
  * 
  * @author Darkguardsman */
-public class TilePlaceableTool extends Tile implements IPacketIDReceiver, IRemovable.ISneakPickup, IRotatable
+public abstract class TilePlaceableTool extends Tile implements IPacketIDReceiver, IRemovable.ISneakPickup, IRotatable
 {
     public EulerAngle angle;
 

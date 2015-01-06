@@ -7,6 +7,7 @@ import com.builtbroken.mc.prefab.inventory.ExternalInventory;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
 import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.prefab.tile.Tile;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,6 +43,12 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         renderTileEntity = false;
         this.doRayTrace = true;
         this.rayDistance = 10;
+    }
+
+    @Override
+    public Tile newTile()
+    {
+        return new TileExtractor();
     }
 
     @Override

@@ -24,6 +24,12 @@ public class TileLockedDoor extends Tile
     }
 
     @Override
+    public Tile newTile()
+    {
+        return new TileLockedDoor();
+    }
+
+    @Override
     public void update()
     {
         super.update();

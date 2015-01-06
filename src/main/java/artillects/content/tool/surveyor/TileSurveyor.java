@@ -8,6 +8,7 @@ import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.PacketTile;
 import com.builtbroken.mc.core.network.packet.PacketType;
 import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.prefab.tile.Tile;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,6 +31,12 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
         isOpaque = false;
         renderNormalBlock = false;
         itemBlock = ItemSurveyor.class;
+    }
+
+    @Override
+    public Tile newTile()
+    {
+        return new TileSurveyor();
     }
 
     @Override
