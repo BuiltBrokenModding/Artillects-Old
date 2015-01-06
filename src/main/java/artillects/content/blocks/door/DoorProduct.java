@@ -1,7 +1,7 @@
 package artillects.content.blocks.door;
 
 import artillects.core.creation.content.Product;
-import com.builtbroken.mc.lib.mod.content.ModManager;
+import com.builtbroken.mc.core.registry.ModManager;
 import org.w3c.dom.Document;
 
 public class DoorProduct extends Product<DoorProduct>

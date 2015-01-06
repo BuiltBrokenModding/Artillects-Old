@@ -5,7 +5,7 @@ import artillects.core.creation.MaterialData;
 import artillects.core.creation.Subblock;
 import artillects.core.creation.templates.BlockTemplate;
 import artillects.core.creation.templates.ItemBlockTemplate;
-import com.builtbroken.mc.lib.mod.content.ModManager;
+import com.builtbroken.mc.core.registry.ModManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import org.w3c.dom.Document;

@@ -21,7 +21,7 @@ import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.lib.helper.LanguageUtility;
 import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.helper.recipe.UniversalRecipe;
-import com.builtbroken.mc.lib.mod.content.ModManager;
+import com.builtbroken.mc.core.registry.ModManager;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;

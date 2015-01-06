@@ -1,6 +1,6 @@
 package artillects.core.creation.content;
 
-import com.builtbroken.mc.lib.mod.content.ModManager;
+import com.builtbroken.mc.core.registry.ModManager;
 import org.w3c.dom.Document;
 
 public abstract class Product<N>
