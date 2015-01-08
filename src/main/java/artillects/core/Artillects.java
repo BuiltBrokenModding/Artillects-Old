@@ -52,7 +52,7 @@ import java.io.File;
 import java.util.Arrays;
 
 /** @author DarkGuardsman */
-@Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:ResonantEngine;")
+@Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:VoltzEngine;")
 public class Artillects
 {
 
