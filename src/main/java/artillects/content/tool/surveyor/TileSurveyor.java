@@ -52,14 +52,14 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
     }
 
     @Override
-    public boolean use(EntityPlayer player, int side, Vector3 hit)
+    public boolean onPlayerRightClick(EntityPlayer player, int side, Vector3 hit)
     {
         if (!player.isSneaking())
         {
             player.openGui(Artillects.INSTANCE, 0, world(), xi(), yi(), zi());
             return true;
         }
-        return super.use(player, side, hit);
+        return super.onPlayerRightClick(player, side, hit);
     }
 
     public double distance()

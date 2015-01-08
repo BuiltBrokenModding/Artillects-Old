@@ -63,7 +63,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     }
 
     @Override
-    public boolean use(EntityPlayer player, int side, Vector3 hit)
+    public boolean onPlayerRightClick(EntityPlayer player, int side, Vector3 hit)
     {
         if (player.isSneaking())
             this.enabled = !this.enabled;
