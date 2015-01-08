@@ -248,26 +248,4 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
                 break;
         }
     }
-
-    /** Sends the desc packet to all players around this tile */
-    public void sendDescPacket()
-    {
-        sendPacket(getDescPacket());
-    }
-
-    /** Sends the packet to all players around this tile
-     * @param packet - packet to send */
-    public void sendPacket(AbstractPacket packet)
-    {
-        sendPacket(packet, 64);
-    }
-
-    /** Sends the packet to all players around this tile
-     * @param packet - packet to send
-     * @param distance - distance in blocks to search for players
-     */
-    public void sendPacket(AbstractPacket packet, double distance)
-    {
-        Engine.instance.packetHandler.sendToAllAround(packet, ((IVectorWorld)this), distance);
-    }
 }
