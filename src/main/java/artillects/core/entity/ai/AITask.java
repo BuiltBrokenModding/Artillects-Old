@@ -1,6 +1,6 @@
 package artillects.core.entity.ai;
 
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 /** Task prefab
  * 
  * @author Darkguardsman */
-public abstract class AITask extends EntityAIBase implements IPosWorld
+public abstract class AITask extends EntityAIBase implements IWorldPosition
 {
     private Entity entity;
     

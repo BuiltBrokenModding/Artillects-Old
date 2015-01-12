@@ -1,6 +1,6 @@
 package artillects.content.potion;
 
-import com.builtbroken.mc.prefab.damage.DamageSources;
+import com.builtbroken.mc.core.content.damage.DamageSources;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;

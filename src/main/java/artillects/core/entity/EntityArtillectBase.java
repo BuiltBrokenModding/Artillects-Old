@@ -3,14 +3,14 @@ package artillects.core.entity;
 import artillects.core.Artillects;
 import artillects.core.zone.Zone;
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
-public class EntityArtillectBase extends EntityCreature implements IRangedAttackMob, IPosWorld
+public class EntityArtillectBase extends EntityCreature implements IRangedAttackMob, IWorldPosition
 {
     private Zone assignedZone;
     private Object owner;

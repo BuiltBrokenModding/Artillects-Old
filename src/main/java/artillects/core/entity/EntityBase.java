@@ -1,6 +1,6 @@
 package artillects.core.entity;
 
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.lib.transform.vector.Point;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.lib.transform.vector.Location;
@@ -19,7 +19,7 @@ import java.util.List;
 /** Base entity class for all entities created by artillect mod
  * 
  * @author Darkguardsman */
-public class EntityBase extends EntityCreature implements IPosWorld
+public class EntityBase extends EntityCreature implements IWorldPosition
 {
     private boolean playerOwned = false;
     

@@ -2,7 +2,7 @@ package artillects.core.region;
 
 import artillects.core.building.GhostObject;
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
 import net.minecraft.world.World;
 
 /** Extended version of the ghost object with faction related info */
@@ -20,7 +20,7 @@ public class FactionObject extends GhostObject
         this.faction_id = id;
     }
 
-    public FactionObject(IPosWorld vec)
+    public FactionObject(IWorldPosition vec)
     {
         super(vec);
     }

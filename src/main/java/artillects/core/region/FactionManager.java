@@ -3,7 +3,8 @@ package artillects.core.region;
 import artillects.core.interfaces.IFactionMember;
 import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
+import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -51,9 +52,9 @@ public class FactionManager
         return neutralFaction;
     }
 
-    public static Faction getFaction(IPosWorld vec)
+    public static Faction getFaction(IWorldPosition vec)
     {
-        return getFaction(vec.world(), vec);
+        return getFaction(vec.world(), new Point(vec.x(), vec.z()));
     }
 
     public static Faction getFaction(World world, IPos3D vec)

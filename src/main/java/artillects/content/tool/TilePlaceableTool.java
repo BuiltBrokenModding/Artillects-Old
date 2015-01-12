@@ -5,8 +5,8 @@ import com.builtbroken.mc.api.tile.IRemovable;
 import com.builtbroken.mc.api.tile.IRotatable;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
+import com.builtbroken.mc.core.network.packet.AbstractPacket;
 import com.builtbroken.mc.core.network.packet.PacketTile;
-import com.builtbroken.mc.core.network.packet.PacketType;
 import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.tile.Tile;
@@ -130,7 +130,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
 
     public void sendAngles()
     {
-        sendPacket(new PacketTile(xi(), yi(), zi(), ROTATION_ID, this.angle.yaw(), this.angle.pitch()));
+        sendPacket(new PacketTile(this, ROTATION_ID, this.angle.yaw(), this.angle.pitch()));
     }
 
     public void setRotation(double yaw, double pitch)
@@ -173,7 +173,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     }
 
     @Override
-    public boolean read(ByteBuf data, int id,  EntityPlayer player, PacketType type)
+    public boolean read(ByteBuf data, int id,  EntityPlayer player, AbstractPacket type)
     {
         if (id == ROTATION_ID)
         {

@@ -1,7 +1,7 @@
 package artillects.core.building;
 
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.api.ISave;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -10,7 +10,7 @@ import net.minecraftforge.common.DimensionManager;
 /** Base class for all object that the hive uses that are ghosts for world based objects
  * 
  * @author DarkGuardsman */
-public class GhostObject implements ISave, IPosWorld
+public class GhostObject implements ISave, IWorldPosition
 {
     protected boolean isInvalid = false;
     protected long ticks = 0;
@@ -23,9 +23,9 @@ public class GhostObject implements ISave, IPosWorld
         
     }
     
-    public GhostObject(IPosWorld vec)
+    public GhostObject(IWorldPosition vec)
     {
-        this(vec.world(), vec);
+        this(vec.world(), vec.x(), vec.y(), vec.z());
     }
     
     public GhostObject(World world, IPos3D vec)
