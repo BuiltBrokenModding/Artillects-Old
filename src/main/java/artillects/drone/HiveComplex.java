@@ -8,7 +8,7 @@ import artillects.core.zone.ZoneBuilding;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.core.handler.SaveManager;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.WorldProvider;
@@ -30,7 +30,7 @@ import java.util.List;
  * @author Dark */
 public class HiveComplex extends GhostObject implements IVirtualObject
 {
-    public VectorWorld location;
+    public Location location;
     private String name;
 
     protected final List<BuildingPart> peaces = new ArrayList<BuildingPart>();
@@ -48,7 +48,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public HiveComplex(String name, VectorWorld location)
+    public HiveComplex(String name, Location location)
     {
         this();
         this.setName(name);
@@ -58,7 +58,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     public HiveComplex(boolean player)
     {
-        this("PlayerZone", new VectorWorld(WorldProvider.getProviderForDimension(0).worldObj, 0, 255, 0));
+        this("PlayerZone", new Location(WorldProvider.getProviderForDimension(0).worldObj, 0, 255, 0));
         this.playerZone = true;
     }
 
@@ -88,7 +88,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         final int tunnelSpacing = 18;
         for (int floor = 0; floor <= height; floor++)
         {
-            VectorWorld floorBase = this.location.clone().add(0, 8 * floor, 0);
+            Location floorBase = this.location.clone().add(0, 8 * floor, 0);
             // Center room
             peaces.add(new BuildingPart(EnumStructurePeaces.NODE, floorBase.clone()));
             if (floor == 0)
@@ -188,7 +188,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
         }
     }
 
-    public void load3x3Room(VectorWorld start, int center)
+    public void load3x3Room(Location start, int center)
     {
         // Center
         if (center == 0)
@@ -232,7 +232,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     }
 
-    public void load5x5Room(VectorWorld start, int center)
+    public void load5x5Room(Location start, int center)
     {
         // Center
         if (center == 0)
@@ -300,11 +300,11 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     }
 
-    public void loadTunnel(VectorWorld start, ForgeDirection direction, int tunnelPeaces)
+    public void loadTunnel(Location start, ForgeDirection direction, int tunnelPeaces)
     {
         for (int i = 0; i < tunnelPeaces; i++)
         {
-            VectorWorld spot = start.clone().add(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
+            Location spot = start.clone().add(direction.offsetX * (6 * i), direction.offsetY * (6 * i), direction.offsetZ * (6 * i));
             if (direction == ForgeDirection.NORTH || direction == ForgeDirection.SOUTH)
             {
                 peaces.add(new BuildingPart(EnumStructurePeaces.TUNNELZ, spot));
@@ -404,7 +404,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     @Override
     public void load(NBTTagCompound nbt)
     {
-        this.location = new VectorWorld(nbt.getCompoundTag("location"));
+        this.location = new Location(nbt.getCompoundTag("location"));
         this.loadGeneralBuilding(false);
     }
 

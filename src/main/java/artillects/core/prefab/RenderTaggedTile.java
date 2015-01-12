@@ -1,6 +1,6 @@
 package artillects.core.prefab;
 
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -50,7 +50,7 @@ public abstract class RenderTaggedTile extends TileEntitySpecialRenderer
 
                     for (RenderText text : list)
                     {
-                        text.render(new Vector3(x, y, z).add(0.5, i * 0.25f + tagRenderHeight, 0.5f));
+                        text.render(new Pos(x, y, z).add(0.5, i * 0.25f + tagRenderHeight, 0.5f));
                         i++;
                     }
                 }

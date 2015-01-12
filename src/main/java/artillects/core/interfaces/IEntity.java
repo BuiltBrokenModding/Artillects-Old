@@ -1,12 +1,12 @@
 package artillects.core.interfaces;
 
 
-import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
+import com.builtbroken.mc.api.IPosWorld;
 
 /** Used with the AI tasks so the same task can be applied to any object regardless of what it
  * actually is
  * 
  * @author Darkguardsman */
-public interface IEntity extends IVectorWorld
+public interface IEntity extends IPosWorld
 {
 }

@@ -1,7 +1,7 @@
 package test.common;
 
 import artillects.core.region.Plane;
-import com.builtbroken.mc.lib.transform.vector.Vector2;
+import com.builtbroken.mc.lib.transform.vector.Pos2D;
 
 public class PlaneTest
 {
@@ -9,8 +9,8 @@ public class PlaneTest
     {
         System.out.println("Doing unit test of Plane.class\n");
         System.out.println("==Setup Test==");
-        Vector2 start = new Vector2(-5, -5);
-        Vector2 end = new Vector2(5, 5);
+        Pos2D start = new Pos2D(-5, -5);
+        Pos2D end = new Pos2D(5, 5);
         Plane plane = new Plane(start, end);
 
         System.out.println("Start: " + start);

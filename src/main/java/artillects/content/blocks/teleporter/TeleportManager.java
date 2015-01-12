@@ -1,7 +1,7 @@
 package artillects.content.blocks.teleporter;
 
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
@@ -56,7 +56,7 @@ public class TeleportManager
 		return teleporters.contains(anch);
 	}
 
-	public static TileEntityTeleporterAnchor getClosestWithFrequency(VectorWorld vec, int frequency, TileEntityTeleporterAnchor... anchors)
+	public static TileEntityTeleporterAnchor getClosestWithFrequency(Location vec, int frequency, TileEntityTeleporterAnchor... anchors)
 	{
 		TileEntityTeleporterAnchor tele = null;
 		List<TileEntityTeleporterAnchor> ignore = new ArrayList<TileEntityTeleporterAnchor>();
@@ -70,7 +70,7 @@ public class TeleportManager
 			TileEntityTeleporterAnchor teleporter = it.next();
 			if (!ignore.contains(teleporter) && teleporter.getFrequency() == frequency)
 			{
-				if (tele == null || new Vector3(tele).distance(vec) > new Vector3(teleporter).distance(vec))
+				if (tele == null || new Pos(tele).distance(vec) > new Pos(teleporter).distance(vec))
 				{
 					tele = teleporter;
 				}
@@ -79,7 +79,7 @@ public class TeleportManager
 		return tele;
 	}
 
-	protected static void moveEntity(Entity entity, VectorWorld location)
+	protected static void moveEntity(Entity entity, Location location)
 	{
 		if (entity != null && location != null)
 		{

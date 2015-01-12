@@ -2,7 +2,7 @@ package artillects.core.zone;
 
 import artillects.core.building.GhostObject;
 import artillects.core.interfaces.IWorker;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
@@ -17,14 +17,14 @@ public class Zone extends GhostObject
 {
     /** Start is always the min point; end is always the largest point. */
     public World world;
-    public Vector3 start, end;
+    public Pos start, end;
 
     public List<IWorker> assignedArtillects = new ArrayList<IWorker>();
 
-    public Zone(World world, Vector3 start, Vector3 end)
+    public Zone(World world, Pos start, Pos end)
     {
-        this.start = new Vector3(Math.min(start.x(), end.x()), Math.min(start.y(), end.y()), Math.min(start.z(), end.z()));
-        this.end = new Vector3(Math.max(start.x(), end.x()), Math.max(start.y(), end.y()), Math.max(start.z(), end.z()));
+        this.start = new Pos(Math.min(start.x(), end.x()), Math.min(start.y(), end.y()), Math.min(start.z(), end.z()));
+        this.end = new Pos(Math.max(start.x(), end.x()), Math.max(start.y(), end.y()), Math.max(start.z(), end.z()));
         this.world = world;
     }
 

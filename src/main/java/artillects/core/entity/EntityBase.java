@@ -1,9 +1,9 @@
 package artillects.core.entity;
 
-import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
-import com.builtbroken.mc.lib.transform.vector.Vector2;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.api.IPosWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos2D;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -19,7 +19,7 @@ import java.util.List;
 /** Base entity class for all entities created by artillect mod
  * 
  * @author Darkguardsman */
-public class EntityBase extends EntityCreature implements IVectorWorld
+public class EntityBase extends EntityCreature implements IPosWorld
 {
     private boolean playerOwned = false;
     
@@ -208,19 +208,19 @@ public class EntityBase extends EntityCreature implements IVectorWorld
         return this.worldObj;
     }
 
-    public Vector2 asVector2()
+    public Pos2D asVector2()
     {
-        return new Vector2(x(), z());
+        return new Pos2D(x(), z());
     }
 
-    public Vector3 asVector3()
+    public Pos asVector3()
     {
-        return new Vector3(x(), y(), z());
+        return new Pos(x(), y(), z());
     }
 
-    public VectorWorld asVectorWorld()
+    public Location asVectorWorld()
     {
-        return new VectorWorld(world(), x(), y(), z());
+        return new Location(world(), x(), y(), z());
     }
     
     //--------------------------------

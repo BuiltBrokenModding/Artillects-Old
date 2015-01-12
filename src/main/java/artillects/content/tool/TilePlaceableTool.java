@@ -5,12 +5,10 @@ import com.builtbroken.mc.api.tile.IRemovable;
 import com.builtbroken.mc.api.tile.IRotatable;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
-import com.builtbroken.mc.core.network.packet.AbstractPacket;
 import com.builtbroken.mc.core.network.packet.PacketTile;
 import com.builtbroken.mc.core.network.packet.PacketType;
 import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
-import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.tile.Tile;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.material.Material;
@@ -31,9 +29,9 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     public EulerAngle angle;
 
     protected ForgeDirection sideHit;
-    protected Vector3 lastRayHit;
-    protected Vector3 loc;
-    protected Vector3 offset;
+    protected Pos lastRayHit;
+    protected Pos loc;
+    protected Pos offset;
 
     protected double rayDistance = 10;
     protected boolean doRayTrace = false;
@@ -48,7 +46,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     public TilePlaceableTool(Material material)
     {
         super(material);
-        offset = new Vector3(0.5, 0.5, 0.5);
+        offset = new Pos(0.5, 0.5, 0.5);
         angle = new EulerAngle(ForgeDirection.NORTH);
     }
 
@@ -63,7 +61,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     }
 
     @Override
-    public boolean onPlayerRightClick(EntityPlayer player, int side, Vector3 hit)
+    public boolean onPlayerRightClick(EntityPlayer player, int side, Pos hit)
     {
         if (player.isSneaking())
             this.enabled = !this.enabled;
@@ -86,20 +84,20 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
         angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(x(), y(), z()).add(offset);
+            loc = new Pos(x(), y(), z()).add(offset);
 
         MovingObjectPosition hit = getRayHit();
         if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            lastRayHit = new Vector3(hit.hitVec);
+            lastRayHit = new Pos(hit.hitVec);
             sideHit = ForgeDirection.getOrientation(hit.sideHit);
         }
     }
 
     public MovingObjectPosition getRayHit()
     {
-        Vector3 surveyor = new Vector3(x(), y(), z());
-        Vector3 destination = angle.toVector();
+        Pos surveyor = new Pos(x(), y(), z());
+        Pos destination = angle.toVector();
 
         surveyor.add(destination);
         surveyor.add(offset);

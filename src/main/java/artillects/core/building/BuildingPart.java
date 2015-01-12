@@ -1,8 +1,8 @@
 package artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,13 +16,13 @@ import java.util.Map.Entry;
 public class BuildingPart extends GhostObject
 {
     public EnumStructurePeaces building;
-    protected VectorWorld location;
+    protected Location location;
 
     protected boolean isDamaged = false;
 
-    HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
+    HashMap<Pos, ItemStack> missingBlocks = new HashMap<Pos, ItemStack>();
 
-    public BuildingPart(EnumStructurePeaces building, VectorWorld location)
+    public BuildingPart(EnumStructurePeaces building, Location location)
     {
         this.building = building;
         this.location = location;
@@ -52,7 +52,7 @@ public class BuildingPart extends GhostObject
         /** Tick is setup to make sure that only a few structures update per tick */
         if (this.ticks % (60 + location.x() + location.y() + location.z()) == 0)
         {
-            HashMap<Vector3, ItemStack> missingBlocks = new HashMap<Vector3, ItemStack>();
+            HashMap<Pos, ItemStack> missingBlocks = new HashMap<Pos, ItemStack>();
             building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true, true);
             if (!missingBlocks.isEmpty())
             {
@@ -74,7 +74,7 @@ public class BuildingPart extends GhostObject
      * @param location - placed location
      * @param stack - stack to place, stack size is ignored
      * @return */
-    public boolean addBlock(Vector3 location, ItemStack stack)
+    public boolean addBlock(Pos location, ItemStack stack)
     {
         if (stack != null)
         {
@@ -111,7 +111,7 @@ public class BuildingPart extends GhostObject
     @Override
     public void load(NBTTagCompound nbt)
     {
-        this.location = new VectorWorld(nbt.getCompoundTag("location"));
+        this.location = new Location(nbt.getCompoundTag("location"));
         building = EnumStructurePeaces.values()[nbt.getInteger("buildingID")];
     }
 
@@ -120,9 +120,9 @@ public class BuildingPart extends GhostObject
         return isDamaged;
     }
 
-    public void loadBuildingRequest(HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildMap)
+    public void loadBuildingRequest(HashMap<Pos, Pair<ItemStack, BuildingPart>> buildMap)
     {
-        for (Entry<Vector3, ItemStack> entry : this.missingBlocks.entrySet())
+        for (Entry<Pos, ItemStack> entry : this.missingBlocks.entrySet())
         {
             buildMap.put(entry.getKey(), new Pair<ItemStack, BuildingPart>(entry.getValue(), this));
         }

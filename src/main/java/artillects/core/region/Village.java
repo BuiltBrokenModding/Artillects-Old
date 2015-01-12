@@ -2,7 +2,7 @@ package artillects.core.region;
 
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.helper.NBTUtility;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.world.World;
 
 import java.io.File;
@@ -20,13 +20,13 @@ public class Village extends LandController implements IVirtualObject
 
     }
 
-    public Village(TownType type, VectorWorld vec, int radius)
+    public Village(TownType type, Location vec, int radius)
     {
         this(vec, radius);
         this.townType = type;
     }
 
-    public Village(VectorWorld vec, int radius)
+    public Village(Location vec, int radius)
     {
         this(vec.world(), vec.xi(), vec.yi(), vec.zi(), radius);
     }

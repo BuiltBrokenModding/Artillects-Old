@@ -1,7 +1,7 @@
 package artillects.core.prefab;
 
 import com.builtbroken.mc.lib.render.RenderUtility;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 
 import java.awt.*;
 
@@ -26,7 +26,7 @@ public class RenderText
         return color;
     }
     
-    public void render(Vector3 pos)
+    public void render(Pos pos)
     {
         RenderUtility.renderFloatingText(text, pos, color.getRGB());
     }

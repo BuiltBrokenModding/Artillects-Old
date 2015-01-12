@@ -6,7 +6,7 @@ import com.builtbroken.mc.api.tile.node.IExternalInventory;
 import com.builtbroken.mc.prefab.inventory.ExternalInventory;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.tile.Tile;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -84,12 +84,12 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
 
         if (this.loc == null)
-            loc = new Vector3(x(), y(), z()).add(offset);
+            loc = new Pos(x(), y(), z()).add(offset);
 
         MovingObjectPosition hit = getRayHit();
         if (hit != null && hit.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
         {
-            lastRayHit = new Vector3(hit.blockX, hit.blockY, hit.blockZ);
+            lastRayHit = new Pos(hit.blockX, hit.blockY, hit.blockZ);
             sideHit = ForgeDirection.getOrientation(hit.sideHit);
         }
     }
@@ -99,10 +99,10 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         extractBlocks(this, world(), lastRayHit, sideHit, range);
     }
 
-    public static void extractBlocks(IInventory inv, World world, Vector3 hit, ForgeDirection side, int range)
+    public static void extractBlocks(IInventory inv, World world, Pos hit, ForgeDirection side, int range)
     {
-        List<Vector3> hits = getBlocksHit(world, hit, side, range);
-        for (Vector3 h : hits)
+        List<Pos> hits = getBlocksHit(world, hit, side, range);
+        for (Pos h : hits)
         {
             Block block = h.getBlock(world);
             if (block != null)
@@ -151,9 +151,9 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         //TODO onInventoryChanged();
     }
 
-    public static List<Vector3> getBlocksHit(World world, Vector3 hit, ForgeDirection side, int range)
+    public static List<Pos> getBlocksHit(World world, Pos hit, ForgeDirection side, int range)
     {
-        List<Vector3> list = new ArrayList<Vector3>();
+        List<Pos> list = new ArrayList<Pos>();
         int dx, dy, dz;
         dx = dy = dz = range;
         switch (side)
@@ -178,7 +178,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
             {
                 for (int z = hit.zi() - dz; z <= hit.zi() + dz; z++)
                 {
-                    Vector3 vec = new Vector3(x, y, z);
+                    Pos vec = new Pos(x, y, z);
                     if (canGrab(world, vec))
                         list.add(vec);
                 }
@@ -187,7 +187,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
         return list;
     }
 
-    public static boolean canGrab(World world, Vector3 vec)
+    public static boolean canGrab(World world, Pos vec)
     {
         return canGrab(world, vec.xi(), vec.yi(), vec.zi());
     }

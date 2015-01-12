@@ -1,8 +1,8 @@
 package artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -18,11 +18,11 @@ import java.util.Set;
  * @author DarkGuardsman */
 public class Building extends GhostObject
 {
-    private VectorWorld location;
+    private Location location;
     private final Set<BuildingPart> peaces = new LinkedHashSet<BuildingPart>();
     private boolean isDamaged = false;
 
-    public Building(VectorWorld location)
+    public Building(Location location)
     {
         this.location = location;
     }
@@ -72,7 +72,7 @@ public class Building extends GhostObject
     /** Loads any peaces that this building request be placed. Calls to each str peace
      * 
      * @param buildMap - hashMap to load the block placement requests into */
-    public void loadBuildingRequest(HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildMap)
+    public void loadBuildingRequest(HashMap<Pos, Pair<ItemStack, BuildingPart>> buildMap)
     {
         if (peaces.size() > 0)
         {
@@ -104,7 +104,7 @@ public class Building extends GhostObject
     @Override
     public void load(NBTTagCompound nbt)
     {
-        this.location = new VectorWorld(nbt.getCompoundTag("location"));
+        this.location = new Location(nbt.getCompoundTag("location"));
         NBTTagList nbttaglist = nbt.getTagList("Structures", 0);
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {

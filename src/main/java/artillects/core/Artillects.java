@@ -94,7 +94,7 @@ public class Artillects
         SaveManager.registerClass("Village", Village.class);
 
         //Request content from RE
-        Engine.requestAllOres();
+        Engine.requestOres();
 
         //Create config 
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));

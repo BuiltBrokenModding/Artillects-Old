@@ -1,7 +1,7 @@
 package artillects.core.utility;
 
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.world.World;
 
 public class AreaScanner
@@ -12,13 +12,13 @@ public class AreaScanner
      * @param selector - selector to return information to
      * @param s - starting point normally lowest corner(-,-,-)
      * @param e - end point normally highest corner(+,+,+) */
-    public static void scanArea(World world, IBlockSelector selector, Vector3 s, Vector3 e)
+    public static void scanArea(World world, IBlockSelector selector, Pos s, Pos e)
     {
         if (world != null && selector != null && s != null && e != null)
         {
-            Vector3 start = new Vector3(Math.min(s.x(), e.x()), Math.min(s.y(), e.y()), Math.min(s.z(), e.z()));
-            Vector3 end = new Vector3(Math.max(s.x(), e.x()), Math.max(s.y(), e.y()), Math.max(s.z(), e.z()));
-            VectorWorld loc = new VectorWorld(world, start);
+            Pos start = new Pos(Math.min(s.x(), e.x()), Math.min(s.y(), e.y()), Math.min(s.z(), e.z()));
+            Pos end = new Pos(Math.max(s.x(), e.x()), Math.max(s.y(), e.y()), Math.max(s.z(), e.z()));
+            Location loc = new Location(world, start);
             for (int x = (int) start.x(); x < (int) end.x(); x++)
             {
                 for (int y = (int) start.y(); y < (int) end.y(); y++)

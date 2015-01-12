@@ -2,7 +2,7 @@ package artillects.content.items;
 
 import artillects.core.Reference;
 import artillects.core.commands.PlayerSelectionHandler;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -43,11 +43,11 @@ public class ItemSchematicCreator extends Item
             {
                 if (!PlayerSelectionHandler.hasPointOne(player))
                 {
-                    PlayerSelectionHandler.setPointOne(player, new VectorWorld(world, x, y, z));
+                    PlayerSelectionHandler.setPointOne(player, new Location(world, x, y, z));
                 }
                 else if (!PlayerSelectionHandler.hasPointTwo(player))
                 {
-                    PlayerSelectionHandler.setPointTwo(player, new VectorWorld(world, x, y, z));
+                    PlayerSelectionHandler.setPointTwo(player, new Location(world, x, y, z));
                 }
             }
             else

@@ -1,7 +1,7 @@
 package artillects.core.commands;
 
 import artillects.core.building.BuildFile;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatComponentText;
@@ -14,28 +14,28 @@ import java.util.HashMap;
 
 public class PlayerSelectionHandler
 {
-	private static HashMap<String, VectorWorld[]> playerPointSelection = new HashMap<String, VectorWorld[]>();
+	private static HashMap<String, Location[]> playerPointSelection = new HashMap<String, Location[]>();
 	private static HashMap<String, BuildFile> playerSchematic = new HashMap<String, BuildFile>();
 
-	public static VectorWorld getPointOne(EntityPlayer player)
+	public static Location getPointOne(EntityPlayer player)
 	{
 		return playerPointSelection.get(player.getCommandSenderName()) != null ? playerPointSelection.get(player.getCommandSenderName())[0] : null;
 	}
 
-	public static VectorWorld getPointTwo(EntityPlayer player)
+	public static Location getPointTwo(EntityPlayer player)
 	{
 		return playerPointSelection.get(player.getCommandSenderName()) != null ? playerPointSelection.get(player.getCommandSenderName())[1] : null;
 	}
 
-	public static void setPointOne(EntityPlayer player, VectorWorld point)
+	public static void setPointOne(EntityPlayer player, Location point)
 	{
 		if (player != null)
 		{
-			VectorWorld b = null;
+			Location b = null;
 			if (playerPointSelection.get(player.getCommandSenderName()) != null)
 				b = playerPointSelection.get(player.getCommandSenderName())[1];
 
-			playerPointSelection.put(player.getCommandSenderName(), new VectorWorld[] { point, b });
+			playerPointSelection.put(player.getCommandSenderName(), new Location[] { point, b });
 			if (point != null)
 				player.addChatComponentMessage(new ChatComponentText("Pos one set to " + point.toString()));
 		}
@@ -46,15 +46,15 @@ public class PlayerSelectionHandler
 		return playerPointSelection.get(player.getCommandSenderName()) != null && playerPointSelection.get(player.getCommandSenderName())[0] != null;
 	}
 
-	public static void setPointTwo(EntityPlayer player, VectorWorld point)
+	public static void setPointTwo(EntityPlayer player, Location point)
 	{
 		if (player != null)
 		{
-			VectorWorld a = null;
+			Location a = null;
 			if (playerPointSelection.get(player.getCommandSenderName()) != null)
 				a = playerPointSelection.get(player.getCommandSenderName())[0];
 
-			playerPointSelection.put(player.getCommandSenderName(), new VectorWorld[] { a, point });
+			playerPointSelection.put(player.getCommandSenderName(), new Location[] { a, point });
 
 			if (point != null)
 				player.addChatComponentMessage(new ChatComponentText("Pos two set to " + point.toString()));
@@ -75,8 +75,8 @@ public class PlayerSelectionHandler
 	{
 		if (hasBothPoints(player))
 		{
-			VectorWorld pointOne = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[0];
-			VectorWorld pointTwo = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[1];
+			Location pointOne = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[0];
+			Location pointTwo = PlayerSelectionHandler.playerPointSelection.get(player.getCommandSenderName())[1];
 			if (pointOne.world() == pointTwo.world())
 			{
 

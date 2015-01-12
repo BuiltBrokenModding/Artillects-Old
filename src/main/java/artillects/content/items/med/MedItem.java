@@ -34,7 +34,7 @@ public enum MedItem
 
     private MedItem()
     {
-        this(0, null);
+        this(0, new ItemStack[0]);
     }
 
     private MedItem(float healBy, ItemStack... used)

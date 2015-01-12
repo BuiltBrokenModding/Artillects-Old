@@ -1,7 +1,7 @@
 package artillects.core.commands;
 
 import com.builtbroken.mc.lib.helper.NBTUtility;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -109,7 +109,7 @@ public class CommandTool extends CommandBase
                                     int y = Integer.parseInt(args[3]);
                                     int z = Integer.parseInt(args[4]);
                                     player.addChatComponentMessage(new ChatComponentText("Building schematic at " + x + "x " + y + "y " + z + "z "));
-                                    PlayerSelectionHandler.getSchematic(player).build(new VectorWorld(player.worldObj, x, y, z), false);
+                                    PlayerSelectionHandler.getSchematic(player).build(new Location(player.worldObj, x, y, z), false);
                                 }
                                 catch (IllegalArgumentException e)
                                 {

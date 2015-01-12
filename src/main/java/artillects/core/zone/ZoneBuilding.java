@@ -5,8 +5,8 @@ import artillects.core.building.BuildingBlock;
 import artillects.core.building.BuildingPart;
 import artillects.drone.HiveComplex;
 import com.builtbroken.jlib.type.Pair;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class ZoneBuilding extends Zone
 {
     HiveComplex complex;
 
-    public HashMap<Vector3, Pair<ItemStack, BuildingPart>> buildPosition = new HashMap<Vector3, Pair<ItemStack, BuildingPart>>();
+    public HashMap<Pos, Pair<ItemStack, BuildingPart>> buildPosition = new HashMap<Pos, Pair<ItemStack, BuildingPart>>();
 
-    public ZoneBuilding(HiveComplex complex, Vector3 start, Vector3 end)
+    public ZoneBuilding(HiveComplex complex, Pos start, Pos end)
     {
         super(complex.location.world(), start, end);
         this.complex = complex;
@@ -52,7 +52,7 @@ public class ZoneBuilding extends Zone
      * @param vec - location to search from
      * @return BuildBlock instance containing the placement stack and location to place the block
      */
-    public BuildingBlock getClosestBlock(VectorWorld vec)
+    public BuildingBlock getClosestBlock(Location vec)
     {
         List<BuildingBlock> list = getClosestBlocks(vec, 1);
         return list.get(0);
@@ -64,7 +64,7 @@ public class ZoneBuilding extends Zone
      * @param num - n count
      * @return list of blocks, never null but can be empty
      */
-    public List<BuildingBlock> getClosestBlocks(VectorWorld vec, int num)
+    public List<BuildingBlock> getClosestBlocks(Location vec, int num)
     {
         List<BuildingBlock> blocks = new ArrayList();
         if (!buildPosition.isEmpty() && vec.world() == this.world)
@@ -80,7 +80,7 @@ public class ZoneBuilding extends Zone
      * @param location - location in the zone's world
      * @param stack - item stack, stack size is ignored
      * @return true if the block was placed */
-    public boolean placeBlock(Vector3 location, ItemStack stack)
+    public boolean placeBlock(Pos location, ItemStack stack)
     {
         if (this.buildPosition.get(location) != null)
         {

@@ -1,6 +1,6 @@
 package artillects.content.blocks.teleporter;
 
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -44,10 +44,10 @@ public class TileEntityTeleporterAnchor extends TileEntity
     {
         if (this.getFrequency() > -1)
         {
-            TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new VectorWorld(this), this.getFrequency(), this);
+            TileEntityTeleporterAnchor teleporter = TeleportManager.getClosestWithFrequency(new Location(this), this.getFrequency(), this);
             if (teleporter != null)
             {
-                TeleportManager.moveEntity(entity, new VectorWorld(teleporter).add(0.5, 2, 0.5));
+                TeleportManager.moveEntity(entity, new Location(teleporter).add(0.5, 2, 0.5));
             }
         }
     }
@@ -62,7 +62,7 @@ public class TileEntityTeleporterAnchor extends TileEntity
             int s = 0;
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
             {
-                VectorWorld pos = (VectorWorld) new VectorWorld(this).add(direction);
+                Location pos = (Location) new Location(this).add(direction);
 
                 Block block = pos.getBlock();
 

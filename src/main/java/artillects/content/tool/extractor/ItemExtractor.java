@@ -1,7 +1,7 @@
 package artillects.content.tool.extractor;
 
 import artillects.content.tool.ItemPlaceableTool;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -24,7 +24,7 @@ public class ItemExtractor extends ItemPlaceableTool
     {
         if (!world.isRemote && (!lastUsed.containsKey(player.getCommandSenderName()) || System.currentTimeMillis() - lastUsed.get(player.getCommandSenderName()) >= COOLDOWN))
         {
-            TileExtractor.extractBlocks(player.inventory, world, new Vector3(x, y, z), ForgeDirection.getOrientation(side), 3);
+            TileExtractor.extractBlocks(player.inventory, world, new Pos(x, y, z), ForgeDirection.getOrientation(side), 3);
             player.inventoryContainer.detectAndSendChanges();            
             //TODO drain power
         }

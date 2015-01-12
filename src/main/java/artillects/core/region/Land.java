@@ -1,7 +1,7 @@
 package artillects.core.region;
 
-import com.builtbroken.mc.lib.transform.vector.IVector2;
-import com.builtbroken.mc.lib.transform.vector.Vector2;
+import com.builtbroken.jlib.data.IPos2D;
+import com.builtbroken.mc.lib.transform.vector.Pos2D;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
@@ -35,7 +35,7 @@ public class Land extends FactionObject
         this.x = x;
         this.y = y;
         this.z = z;
-        area = new Plane(new Vector2(x - size, z - size), new Vector2(x + size, z + size));
+        area = new Plane(new Pos2D(x - size, z - size), new Pos2D(x + size, z + size));
     }
 
     protected String newID()
@@ -123,7 +123,7 @@ public class Land extends FactionObject
     }
 
     /** Does this land control this area */
-    public boolean controls(IVector2 vec)
+    public boolean controls(IPos2D vec)
     {
         return this.area.contains(vec);
     }

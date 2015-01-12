@@ -1,9 +1,9 @@
 package artillects.core.region;
 
 import artillects.core.interfaces.IFactionMember;
-import com.builtbroken.mc.lib.transform.vector.IVector2;
-import com.builtbroken.mc.lib.transform.vector.IVector3;
-import com.builtbroken.mc.lib.transform.vector.IVectorWorld;
+import com.builtbroken.jlib.data.IPos2D;
+import com.builtbroken.jlib.data.IPos3D;
+import com.builtbroken.mc.api.IPosWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -51,17 +51,17 @@ public class FactionManager
         return neutralFaction;
     }
 
-    public static Faction getFaction(IVectorWorld vec)
+    public static Faction getFaction(IPosWorld vec)
     {
         return getFaction(vec.world(), vec);
     }
 
-    public static Faction getFaction(World world, IVector3 vec)
+    public static Faction getFaction(World world, IPos3D vec)
     {
-        return getFaction(world, (IVector2) vec);
+        return getFaction(world, (IPos2D) vec);
     }
 
-    public static Faction getFaction(World world, IVector2 vec)
+    public static Faction getFaction(World world, IPos2D vec)
     {
         for (Faction faction : factions.values())
         {

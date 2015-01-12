@@ -1,8 +1,8 @@
 package artillects.core.region;
 
 
-import com.builtbroken.mc.lib.transform.vector.IVector2;
-import com.builtbroken.mc.lib.transform.vector.Vector2;
+import com.builtbroken.jlib.data.IPos2D;
+import com.builtbroken.mc.lib.transform.vector.Pos2D;
 import net.minecraftforge.common.util.ForgeDirection;
 
 /** 2D area of space
@@ -11,14 +11,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class Plane
 {
     /** -x -z */
-    public Vector2 negNegCorner;
+    public Pos2D negNegCorner;
     /** -x +z */
-    public Vector2 negPosCorner;
+    public Pos2D negPosCorner;
 
     /** +x +z */
-    public Vector2 posPosCorner;
+    public Pos2D posPosCorner;
     /** +x -z */
-    public Vector2 posNegCorner;
+    public Pos2D posNegCorner;
 
     /** Area covered by the plane */
     private double area = -1;
@@ -31,10 +31,10 @@ public class Plane
 
     public Plane(double nx, double nz, double px, double pz)
     {
-        this(new Vector2(nx, nz), new Vector2(px, pz));
+        this(new Pos2D(nx, nz), new Pos2D(px, pz));
     }
 
-    public Plane(Vector2 start, Vector2 end)
+    public Plane(Pos2D start, Pos2D end)
     {
         this.negNegCorner = start;
         this.posPosCorner = end;
@@ -46,8 +46,8 @@ public class Plane
         this.deltaX = negNegCorner.x() - posPosCorner.x();
         this.deltaZ = negNegCorner.y() - posPosCorner.y();
         this.area = deltaX * deltaZ;
-        negPosCorner = new Vector2(negNegCorner.x(), posPosCorner.y());
-        posNegCorner = new Vector2(posPosCorner.x(), negNegCorner.y());
+        negPosCorner = new Pos2D(negNegCorner.x(), posPosCorner.y());
+        posNegCorner = new Pos2D(posPosCorner.x(), negNegCorner.y());
     }
 
     public Plane expand(ForgeDirection direction, double by)
@@ -141,8 +141,8 @@ public class Plane
     {
         if (canAddTo(other))
         {
-            Vector2 newStart = new Vector2(other.negNegCorner.x() < negNegCorner.x() ? other.negNegCorner.x() : negNegCorner.x(), other.negNegCorner.y() < negNegCorner.y() ? other.negNegCorner.y() : negNegCorner.y());
-            Vector2 newEnd = new Vector2(other.posPosCorner.x() > posPosCorner.x() ? other.posPosCorner.x() : posPosCorner.x(), other.posPosCorner.y() > posPosCorner.y() ? other.posPosCorner.y() : posPosCorner.y());
+            Pos2D newStart = new Pos2D(other.negNegCorner.x() < negNegCorner.x() ? other.negNegCorner.x() : negNegCorner.x(), other.negNegCorner.y() < negNegCorner.y() ? other.negNegCorner.y() : negNegCorner.y());
+            Pos2D newEnd = new Pos2D(other.posPosCorner.x() > posPosCorner.x() ? other.posPosCorner.x() : posPosCorner.x(), other.posPosCorner.y() > posPosCorner.y() ? other.posPosCorner.y() : posPosCorner.y());
             this.negNegCorner = newStart;
             this.posPosCorner = newEnd;
         }
@@ -180,7 +180,7 @@ public class Plane
     }
 
     /** Is the point contained with in this area */
-    public boolean contains(IVector2 vec)
+    public boolean contains(IPos2D vec)
     {
         return contains(vec.x(), vec.y());
     }
@@ -203,26 +203,26 @@ public class Plane
     }
 
     /** Gets the starting point */
-    public Vector2 getStart()
+    public Pos2D getStart()
     {
         return negNegCorner;
     }
 
     /** sets starting point */
-    public void setStart(Vector2 start)
+    public void setStart(Pos2D start)
     {
         this.negNegCorner = start;
         update();
     }
 
     /** Gets the ending point */
-    public Vector2 getEnd()
+    public Pos2D getEnd()
     {
         return posPosCorner;
     }
 
     /** Sets the ending point */
-    public void setEnd(Vector2 end)
+    public void setEnd(Pos2D end)
     {
         this.posPosCorner = end;
         update();

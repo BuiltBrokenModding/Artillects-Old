@@ -1,8 +1,8 @@
 package artillects.core.entity;
 
 import artillects.core.Artillects;
-import com.builtbroken.mc.lib.transform.vector.IVector3;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.jlib.data.IPos3D;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -52,7 +52,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
         return true;
     }  
 
-    public boolean tryToWalkNextTo(Vector3 position, double moveSpeed)
+    public boolean tryToWalkNextTo(Pos position, double moveSpeed)
     {
         for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
         {
@@ -72,7 +72,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Vector3((IVector3)this).add(0, 0.2, 0), new Vector3(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
+        Artillects.proxy.renderLaser(this.worldObj, new Pos((IPos3D)this).add(0, 0.2, 0), new Pos(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
 
     }
 

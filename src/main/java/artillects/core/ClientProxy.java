@@ -5,7 +5,7 @@ import artillects.content.tool.TilePlaceableTool;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.GuiSurveyor;
 import artillects.content.tool.surveyor.TileSurveyor;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +34,7 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b, int ticks)
+    public void renderLaser(World world, Pos start, Pos end, float r, float g, float b, int ticks)
     {
         EntityLivingBase renderentity = Minecraft.getMinecraft().renderViewEntity;
         if (renderentity != null)

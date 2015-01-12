@@ -3,7 +3,7 @@ package artillects.content.items.med;
 import artillects.content.potion.PotionBleeding;
 import artillects.core.Reference;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
-import com.builtbroken.mc.lib.transform.vector.VectorWorld;
+import com.builtbroken.mc.lib.transform.vector.Location;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -101,7 +101,7 @@ public class ItemMedical extends Item
                         {
                             if (!player.inventory.addItemStackToInventory(stack))
                             {
-                                InventoryUtility.dropItemStack(new VectorWorld(player), stack);
+                                InventoryUtility.dropItemStack(new Location(player), stack);
                             }
                         }
                         player.inventoryContainer.detectAndSendChanges();

@@ -3,7 +3,7 @@ package artillects.core;
 import artillects.content.tool.extractor.TileExtractor;
 import artillects.content.tool.surveyor.TileSurveyor;
 import com.builtbroken.mc.lib.mod.AbstractProxy;
-import com.builtbroken.mc.lib.transform.vector.Vector3;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.gui.ContainerDummy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -26,17 +26,17 @@ public class CommonProxy extends AbstractProxy
         return null;
     }
     
-    public void renderLaser(World world, Vector3 start, Vector3 end, Color color, int ticks)
+    public void renderLaser(World world, Pos start, Pos end, Color color, int ticks)
     {
         renderLaser(world, start, end, color.getRed(), color.getGreen(), color.getBlue(), ticks);
     }
 
-    public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b)
+    public void renderLaser(World world, Pos start, Pos end, float r, float g, float b)
     {
         renderLaser(world, start, end, r, g, b, 20);
     }
 
-    public void renderLaser(World world, Vector3 start, Vector3 end, float r, float g, float b, int ticks)
+    public void renderLaser(World world, Pos start, Pos end, float r, float g, float b, int ticks)
     {
 
     }
