@@ -1,8 +1,8 @@
 package artillects.core.region;
 
 
-import com.builtbroken.jlib.data.IPos2D;
-import com.builtbroken.mc.lib.transform.vector.Pos2D;
+import com.builtbroken.jlib.data.vector.IPos2D;
+import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraftforge.common.util.ForgeDirection;
 
 /** 2D area of space
@@ -11,14 +11,14 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class Plane
 {
     /** -x -z */
-    public Pos2D negNegCorner;
+    public Point negNegCorner;
     /** -x +z */
-    public Pos2D negPosCorner;
+    public Point negPosCorner;
 
     /** +x +z */
-    public Pos2D posPosCorner;
+    public Point posPosCorner;
     /** +x -z */
-    public Pos2D posNegCorner;
+    public Point posNegCorner;
 
     /** Area covered by the plane */
     private double area = -1;
@@ -31,10 +31,10 @@ public class Plane
 
     public Plane(double nx, double nz, double px, double pz)
     {
-        this(new Pos2D(nx, nz), new Pos2D(px, pz));
+        this(new Point(nx, nz), new Point(px, pz));
     }
 
-    public Plane(Pos2D start, Pos2D end)
+    public Plane(Point start, Point end)
     {
         this.negNegCorner = start;
         this.posPosCorner = end;
@@ -46,8 +46,8 @@ public class Plane
         this.deltaX = negNegCorner.x() - posPosCorner.x();
         this.deltaZ = negNegCorner.y() - posPosCorner.y();
         this.area = deltaX * deltaZ;
-        negPosCorner = new Pos2D(negNegCorner.x(), posPosCorner.y());
-        posNegCorner = new Pos2D(posPosCorner.x(), negNegCorner.y());
+        negPosCorner = new Point(negNegCorner.x(), posPosCorner.y());
+        posNegCorner = new Point(posPosCorner.x(), negNegCorner.y());
     }
 
     public Plane expand(ForgeDirection direction, double by)
@@ -141,8 +141,8 @@ public class Plane
     {
         if (canAddTo(other))
         {
-            Pos2D newStart = new Pos2D(other.negNegCorner.x() < negNegCorner.x() ? other.negNegCorner.x() : negNegCorner.x(), other.negNegCorner.y() < negNegCorner.y() ? other.negNegCorner.y() : negNegCorner.y());
-            Pos2D newEnd = new Pos2D(other.posPosCorner.x() > posPosCorner.x() ? other.posPosCorner.x() : posPosCorner.x(), other.posPosCorner.y() > posPosCorner.y() ? other.posPosCorner.y() : posPosCorner.y());
+            Point newStart = new Point(other.negNegCorner.x() < negNegCorner.x() ? other.negNegCorner.x() : negNegCorner.x(), other.negNegCorner.y() < negNegCorner.y() ? other.negNegCorner.y() : negNegCorner.y());
+            Point newEnd = new Point(other.posPosCorner.x() > posPosCorner.x() ? other.posPosCorner.x() : posPosCorner.x(), other.posPosCorner.y() > posPosCorner.y() ? other.posPosCorner.y() : posPosCorner.y());
             this.negNegCorner = newStart;
             this.posPosCorner = newEnd;
         }
@@ -203,26 +203,26 @@ public class Plane
     }
 
     /** Gets the starting point */
-    public Pos2D getStart()
+    public Point getStart()
     {
         return negNegCorner;
     }
 
     /** sets starting point */
-    public void setStart(Pos2D start)
+    public void setStart(Point start)
     {
         this.negNegCorner = start;
         update();
     }
 
     /** Gets the ending point */
-    public Pos2D getEnd()
+    public Point getEnd()
     {
         return posPosCorner;
     }
 
     /** Sets the ending point */
-    public void setEnd(Pos2D end)
+    public void setEnd(Point end)
     {
         this.posPosCorner = end;
         update();

@@ -1,8 +1,8 @@
 package artillects.core.region;
 
 import artillects.core.interfaces.IFactionMember;
-import com.builtbroken.jlib.data.IPos2D;
-import com.builtbroken.jlib.data.IPos3D;
+import com.builtbroken.jlib.data.vector.IPos2D;
+import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IPosWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

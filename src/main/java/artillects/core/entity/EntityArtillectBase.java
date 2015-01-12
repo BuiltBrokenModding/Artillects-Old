@@ -2,7 +2,7 @@ package artillects.core.entity;
 
 import artillects.core.Artillects;
 import artillects.core.zone.Zone;
-import com.builtbroken.jlib.data.IPos3D;
+import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IPosWorld;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.*;

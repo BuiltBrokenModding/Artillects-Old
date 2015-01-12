@@ -1,7 +1,7 @@
 package artillects.core.region;
 
-import com.builtbroken.jlib.data.IPos2D;
-import com.builtbroken.mc.lib.transform.vector.Pos2D;
+import com.builtbroken.jlib.data.vector.IPos2D;
+import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
@@ -35,7 +35,7 @@ public class Land extends FactionObject
         this.x = x;
         this.y = y;
         this.z = z;
-        area = new Plane(new Pos2D(x - size, z - size), new Pos2D(x + size, z + size));
+        area = new Plane(new Point(x - size, z - size), new Point(x + size, z + size));
     }
 
     protected String newID()

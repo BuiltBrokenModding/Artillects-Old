@@ -1,7 +1,7 @@
 package artillects.core.entity;
 
 import com.builtbroken.mc.api.IPosWorld;
-import com.builtbroken.mc.lib.transform.vector.Pos2D;
+import com.builtbroken.mc.lib.transform.vector.Point;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.entity.Entity;
@@ -208,9 +208,9 @@ public class EntityBase extends EntityCreature implements IPosWorld
         return this.worldObj;
     }
 
-    public Pos2D asVector2()
+    public Point asVector2()
     {
-        return new Pos2D(x(), z());
+        return new Point(x(), z());
     }
 
     public Pos asVector3()

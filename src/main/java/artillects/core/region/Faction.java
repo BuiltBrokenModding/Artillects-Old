@@ -2,7 +2,7 @@ package artillects.core.region;
 
 import artillects.core.interfaces.IFaction;
 import artillects.core.interfaces.IFactionMember;
-import com.builtbroken.jlib.data.IPos2D;
+import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.access.AccessProfile;
 import com.builtbroken.mc.lib.access.IProfileContainer;

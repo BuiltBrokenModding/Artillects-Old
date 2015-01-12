@@ -2,9 +2,9 @@ package artillects.core.region;
 
 import artillects.core.FactionPerms;
 import artillects.core.interfaces.IFaction;
-import com.builtbroken.jlib.data.IPos2D;
+import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.mc.lib.access.AccessUser;
-import com.builtbroken.mc.lib.transform.vector.Pos2D;
+import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
@@ -36,7 +36,7 @@ public class LandManager
      * @param start - starting point
      * @param end - ending point
      * @return true if it was claimed */
-    public boolean claim(EntityPlayer player, Pos2D start, Pos2D end)
+    public boolean claim(EntityPlayer player, Point start, Point end)
     {
         if (faction != null)
         {
@@ -65,7 +65,7 @@ public class LandManager
      * @param start - starting point
      * @param end - ending point
      * @return true if it was claimed */
-    public boolean claim(List<String> log, Pos2D start, Pos2D end)
+    public boolean claim(List<String> log, Point start, Point end)
     {
         if (world != null)
         {

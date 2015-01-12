@@ -1,7 +1,7 @@
 package artillects.core.region;
 
 import artillects.core.building.GhostObject;
-import com.builtbroken.jlib.data.IPos3D;
+import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IPosWorld;
 import net.minecraft.world.World;
 
