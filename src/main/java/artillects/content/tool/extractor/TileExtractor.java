@@ -32,11 +32,11 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
     public static int COOLDOWN = 100;
     protected int range = 1;
     protected int cooldownTicks = 0;
-    protected IExternalInventory inventory;
+    protected ExternalInventory inventory;
 
     public TileExtractor()
     {
-        super(Material.anvil);
+        super("extractor", Material.anvil);
         itemBlock = ItemExtractor.class;
         isOpaque = false;
         renderNormalBlock = false;
@@ -52,7 +52,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
     }
 
     @Override
-    public IExternalInventory getInventory()
+    public ExternalInventory getInventory()
     {
         if (inventory == null)
         {

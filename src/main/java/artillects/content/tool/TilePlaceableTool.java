@@ -43,9 +43,9 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     public static final int ENABLE_ID = 1;
     public static final int DESC_ID = 2;
 
-    public TilePlaceableTool(Material material)
+    public TilePlaceableTool(String name, Material material)
     {
-        super(material);
+        super(name, material);
         offset = new Pos(0.5, 0.5, 0.5);
         angle = new EulerAngle(ForgeDirection.NORTH);
     }

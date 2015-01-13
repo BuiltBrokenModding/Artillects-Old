@@ -20,7 +20,7 @@ public class TileLockedDoor extends Tile
 
     public TileLockedDoor()
     {
-        super(Material.rock);
+        super("lookedDoor", Material.rock);
     }
 
     @Override

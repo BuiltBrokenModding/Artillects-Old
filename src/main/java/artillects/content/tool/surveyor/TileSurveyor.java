@@ -25,7 +25,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
 
     public TileSurveyor()
     {
-        super(Material.anvil);
+        super("surveyor", Material.anvil);
         rayDistance = 1000;
         doRayTrace = true;
         isOpaque = false;
