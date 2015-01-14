@@ -1,11 +1,11 @@
 package artillects.core.creation;
 
-import artillects.core.building.BuildFile;
 import artillects.core.creation.content.BlockProduct;
 import artillects.core.creation.content.ItemProduct;
 import artillects.core.creation.content.Product;
 import artillects.core.creation.content.ProductType;
 import com.builtbroken.mc.core.registry.ModManager;
+import com.builtbroken.mc.lib.world.schematic.SchematicMap;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import org.w3c.dom.Document;
@@ -38,7 +38,7 @@ public class ContentFactory
 
     public void load() throws Exception
     {
-        URL url = BuildFile.class.getResource("/assets/artillects/content/");
+        URL url = SchematicMap.class.getResource("/assets/artillects/content/");
         if (url == null)
         {
             throw new RuntimeException("[Artillects] failed to load content folder");

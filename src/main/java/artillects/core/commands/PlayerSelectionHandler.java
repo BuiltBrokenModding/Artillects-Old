@@ -1,7 +1,8 @@
 package artillects.core.commands;
 
-import artillects.core.building.BuildFile;
+
 import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.lib.world.schematic.SchematicMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.util.ChatComponentText;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 public class PlayerSelectionHandler
 {
 	private static HashMap<String, Location[]> playerPointSelection = new HashMap<String, Location[]>();
-	private static HashMap<String, BuildFile> playerSchematic = new HashMap<String, BuildFile>();
+	private static HashMap<String, SchematicMap> playerSchematic = new HashMap<String, SchematicMap>();
 
 	public static Location getPointOne(EntityPlayer player)
 	{
@@ -80,7 +81,7 @@ public class PlayerSelectionHandler
 			if (pointOne.world() == pointTwo.world())
 			{
 
-				BuildFile schematic = new BuildFile().loadWorldSelection(pointOne.world(), pointOne, pointTwo);
+				SchematicMap schematic = new SchematicMap().loadWorldSelection(pointOne.world(), pointOne, pointTwo);
 				playerSchematic.put(player.getCommandSenderName(), schematic);
 
 				player.addChatComponentMessage(new ChatComponentText("Loaded selection into memory"));
@@ -115,7 +116,7 @@ public class PlayerSelectionHandler
 		return player != null && playerSchematic.get(player.getCommandSenderName()) != null;
 	}
 
-	public static BuildFile getSchematic(EntityPlayer player)
+	public static SchematicMap getSchematic(EntityPlayer player)
 	{
 		return player != null ? playerSchematic.get(player.getCommandSenderName()) : null;
 	}
@@ -127,7 +128,7 @@ public class PlayerSelectionHandler
 		{
 			try
 			{
-				BuildFile schematic = new BuildFile();
+                SchematicMap schematic = new SchematicMap();
 				schematic.load(CompressedStreamTools.readCompressed(file.toURL().openStream()));
 				playerSchematic.put(player.getCommandSenderName(), schematic);
 			}

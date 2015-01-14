@@ -1,5 +1,7 @@
 package artillects.core.building;
 
+import com.builtbroken.mc.lib.world.schematic.SchematicMap;
+
 public enum EnumStructurePeaces
 {
     TEST("", "[Laggy]Hive complex Test [A]"),
@@ -18,7 +20,7 @@ public enum EnumStructurePeaces
     SMALL_ROOM("smallRoom");
 
     public String saveName, toolName;
-    public BuildFile schematic;
+    public SchematicMap schematic;
     public boolean makeTool = false;
 
     private EnumStructurePeaces(String name)
@@ -33,11 +35,11 @@ public enum EnumStructurePeaces
         this.makeTool = true;
     }
 
-    public BuildFile getSchematic()
+    public SchematicMap getSchematic()
     {
         if (schematic == null)
         {
-            schematic = new BuildFile();
+            schematic = new SchematicMap();
             schematic.getFromResourceFolder(saveName);
         }
         return schematic;

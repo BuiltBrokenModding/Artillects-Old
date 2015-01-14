@@ -25,9 +25,7 @@ public class AreaScanner
                 {
                     for (int z = (int) start.z(); z < (int) end.z(); z++)
                     {
-                        loc.x_$eq(x);
-                        loc.y_$eq(y);
-                        loc.z_$eq(z);
+                        loc = loc.add(x, y, z);
                         selector.onScan(loc);
                     }
                 }

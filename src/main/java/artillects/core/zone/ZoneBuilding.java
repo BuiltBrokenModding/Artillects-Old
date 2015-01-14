@@ -30,7 +30,7 @@ public class ZoneBuilding extends Zone
 
     public ZoneBuilding(HiveComplex hiveComplex, int i)
     {
-        this(hiveComplex, hiveComplex.location.clone().add(i), hiveComplex.location.clone().add(-i));
+        this(hiveComplex, new Pos(hiveComplex.location.x() + i, hiveComplex.location.y() + i, hiveComplex.location.z() + i) , new Pos(hiveComplex.location.x() - i, hiveComplex.location.y() - i, hiveComplex.location.z() - i));
     }
 
     @Override
