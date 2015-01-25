@@ -7,6 +7,7 @@ import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.AbstractPacket;
 import com.builtbroken.mc.core.network.packet.PacketTile;
+import com.builtbroken.mc.core.network.packet.PacketType;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.tile.Tile;
 import io.netty.buffer.ByteBuf;
@@ -95,7 +96,7 @@ public class TileSurveyor extends TilePlaceableTool implements IPacketIDReceiver
     }
 
     @Override
-    public boolean read(ByteBuf data, int id,  EntityPlayer player, AbstractPacket type)
+    public boolean read(ByteBuf data, int id, EntityPlayer player, PacketType type)
     {
         if (id == DESC_ID)
         {
