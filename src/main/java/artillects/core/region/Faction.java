@@ -96,6 +96,12 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     }
 
     @Override
+    public boolean shouldSaveForWorld(World world)
+    {
+        return world != null && world.provider.dimensionId == 0;
+    }
+
+    @Override
     public Integer getID()
     {
         return id;

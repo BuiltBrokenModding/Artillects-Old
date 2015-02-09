@@ -69,4 +69,10 @@ public class Village extends LandController implements IVirtualObject
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public boolean shouldSaveForWorld(World world)
+    {
+        return world != null && world.provider.dimensionId == 0;
+    }
 }

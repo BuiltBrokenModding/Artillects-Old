@@ -11,6 +11,7 @@ import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.transform.vector.Location;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -429,6 +430,12 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public boolean shouldSaveForWorld(World world)
+    {
+        return world == location.world();
     }
 
     @SubscribeEvent
