@@ -4,6 +4,7 @@ import artillects.core.Reference;
 import artillects.core.prefab.RenderTaggedTile;
 import artillects.core.prefab.RenderText;
 import com.builtbroken.mc.lib.render.RenderUtility;
+import com.builtbroken.mc.lib.render.model.loader.EngineModelLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class RenderSurveyor extends RenderTaggedTile
 {
-    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "SurveyorCam.tcn"));
+    public final static IModelCustom MODEL = EngineModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "SurveyorCam.tcn"));
     public final static ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "SurveyorCam.png");
     public final static String[] YAW_ONLY = { "base", "left", "right" };
 

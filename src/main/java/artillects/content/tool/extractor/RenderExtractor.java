@@ -3,6 +3,7 @@ package artillects.content.tool.extractor;
 import artillects.core.Reference;
 import com.builtbroken.mc.lib.render.RenderTaggedTile;
 import com.builtbroken.mc.lib.render.RenderUtility;
+import com.builtbroken.mc.lib.render.model.loader.EngineModelLoader;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
@@ -11,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderExtractor extends RenderTaggedTile
 {
-    public final static IModelCustom MODEL = AdvancedModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "ExtractorTool.tcn"));
+    public final static IModelCustom MODEL = EngineModelLoader.loadModel(new ResourceLocation(Reference.DOMAIN, Reference.MODEL_PATH + "ExtractorTool.tcn"));
     public final static ResourceLocation TEXTURE = new ResourceLocation(Reference.DOMAIN, Reference.MODEL_TEXTURE_DIRECTORY + "ExtractorTool.png");
     public final static String[] YAW_ONLY = {"base", "left", "right"};
     
