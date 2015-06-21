@@ -7,5 +7,5 @@ import com.builtbroken.mc.lib.transform.vector.Location;
  * @author Darkguardsman */
 public interface IBlockSelector
 {
-    public void onScan(final Location loc);
+    void onScan(final Location loc);
 }

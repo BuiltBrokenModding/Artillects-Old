@@ -152,7 +152,7 @@ public class CommandTool extends CommandBase
     @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] args)
     {
-        return args.length == 1 ? getListOfStringsMatchingLastWord(args, new String[] { "help", "selection load <name>", "selection save [name]", "selection scan", "zone new <name>" }) : null;
+        return args.length == 1 ? getListOfStringsMatchingLastWord(args, "help", "selection load <name>", "selection save [name]", "selection scan", "zone new <name>") : null;
     }
 
 	@Override

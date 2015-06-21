@@ -311,10 +311,6 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
     @Override
     public boolean canRemove(ItemStack stack, int slot, ForgeDirection side)
     {
-        if (slot >= this.getSizeInventory())
-        {
-            return false;
-        }
-        return true;
+        return slot < this.getSizeInventory();
     }
 }

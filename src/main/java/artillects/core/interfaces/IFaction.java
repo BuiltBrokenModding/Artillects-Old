@@ -10,5 +10,5 @@ import com.builtbroken.mc.lib.access.IProfileContainer;
 public interface IFaction extends IVirtualObject, IProfileContainer, IID<Integer, IFaction>
 {
     /** Checks if the object is a memember of the faction */
-    public boolean isMember(Object obj);
+    boolean isMember(Object obj);
 }

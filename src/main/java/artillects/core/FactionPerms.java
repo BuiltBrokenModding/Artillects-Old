@@ -7,12 +7,12 @@ public enum FactionPerms
 
     private String node;
 
-    private FactionPerms()
+    FactionPerms()
     {
 
     }
 
-    private FactionPerms(String node)
+    FactionPerms(String node)
     {
         this.node = "faction." + node;
     }

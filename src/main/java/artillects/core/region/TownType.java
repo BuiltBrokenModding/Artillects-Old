@@ -25,13 +25,13 @@ public enum TownType
     private String description = "";
     private String unlocalizedName = "towntype.name";
 
-    private TownType()
+    TownType()
     {
         description = "towntype." + this.name().toLowerCase().replace("_", "") + ".description";
         unlocalizedName = "towntype." + this.name().toLowerCase().replace("_", "") + ".name";
     }
 
-    private TownType(int level, int population, int size)
+    TownType(int level, int population, int size)
     {
         this();
         this.level = level;

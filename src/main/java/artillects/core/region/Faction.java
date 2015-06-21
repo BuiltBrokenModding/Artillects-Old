@@ -138,9 +138,7 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
             faction = ((IFactionMember) obj).getFaction();
         else if (obj instanceof Entity)
             faction = FactionManager.getFaction((Entity) obj);
-        if (faction != null && faction.getID() == getID())
-            return true;
-        return false;
+        return faction != null && faction.getID() == getID();
     }
 
 }

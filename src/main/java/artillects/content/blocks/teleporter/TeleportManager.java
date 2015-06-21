@@ -86,10 +86,10 @@ public class TeleportManager
 			location.world().markBlockForUpdate((int) location.x(), (int) location.y(), (int) location.z());
 			if (entity instanceof EntityPlayerMP)
 			{
-				if (coolDown.get(((EntityPlayerMP) entity).getCommandSenderName()) == null || (System.currentTimeMillis() - coolDown.get(((EntityPlayerMP) entity).getCommandSenderName()) > 30))
+				if (coolDown.get(entity.getCommandSenderName()) == null || (System.currentTimeMillis() - coolDown.get(entity.getCommandSenderName()) > 30))
 				{
 					((EntityPlayerMP) entity).playerNetServerHandler.setPlayerLocation(location.x(), location.y(), location.z(), 0, 0);
-					coolDown.put(((EntityPlayerMP) entity).getCommandSenderName(), System.currentTimeMillis());
+					coolDown.put(entity.getCommandSenderName(), System.currentTimeMillis());
 				}
 			}
 			else

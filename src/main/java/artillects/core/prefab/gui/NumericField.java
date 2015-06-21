@@ -113,11 +113,11 @@ public class NumericField extends TextField
         return 0;
     }
 
-    public static enum NumericType
+    public enum NumericType
     {
         INT,
         DOUBLE,
-        FLOAT;
+        FLOAT
     }
 
 }

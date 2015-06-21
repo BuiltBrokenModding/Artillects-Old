@@ -30,7 +30,7 @@ public enum MaterialData
 
     public final Material material;
 
-    private MaterialData(Material material)
+    MaterialData(Material material)
     {
         this.material = material;
     }

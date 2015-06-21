@@ -41,13 +41,13 @@ public class FactionManager
         }
         if (entity instanceof EntityPlayer)
         {
-            if (playerToFaction.containsKey(((EntityPlayer) entity).getCommandSenderName()))
+            if (playerToFaction.containsKey(entity.getCommandSenderName()))
             {
-                int id = playerToFaction.get(((EntityPlayer) entity).getCommandSenderName());
+                int id = playerToFaction.get(entity.getCommandSenderName());
                 if(factions.containsKey(id))
                     return factions.get(id);
             }
-            playerToFaction.put(((EntityPlayer) entity).getCommandSenderName(), 0);
+            playerToFaction.put(entity.getCommandSenderName(), 0);
         }
         return neutralFaction;
     }

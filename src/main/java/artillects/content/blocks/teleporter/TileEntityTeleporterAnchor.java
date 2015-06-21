@@ -62,7 +62,7 @@ public class TileEntityTeleporterAnchor extends TileEntity
             int s = 0;
             for (ForgeDirection direction : ForgeDirection.VALID_DIRECTIONS)
             {
-                Location pos = (Location) new Location(this).add(direction);
+                Location pos = new Location(this).add(direction);
 
                 Block block = pos.getBlock();
 

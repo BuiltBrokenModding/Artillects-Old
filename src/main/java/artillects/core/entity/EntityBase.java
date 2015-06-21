@@ -125,11 +125,7 @@ public class EntityBase extends EntityCreature implements IWorldPosition
      */
     public boolean isHostile(Entity entity)
     {
-        if(entity instanceof IMob)
-        {
-            return true;
-        }
-        return false;
+        return entity instanceof IMob;
     }
 
 

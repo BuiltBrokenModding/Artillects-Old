@@ -7,8 +7,8 @@ import net.minecraft.world.World;
 public interface IEntityIndex
 {
     /** Called to register everything that needs to be registed for the entity to function */
-    public void register();
+    void register();
 
     /** Called to create a new instance of the entity */
-    public EntityLivingBase getNew(World world);
+    EntityLivingBase getNew(World world);
 }

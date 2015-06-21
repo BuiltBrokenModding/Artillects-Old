@@ -4,7 +4,7 @@ import artillects.core.region.Faction;
 
 public interface IFactionMember
 {
-    public Faction getFaction();
+    Faction getFaction();
 
-    public void setFaction(Faction faction);
+    void setFaction(Faction faction);
 }

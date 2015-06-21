@@ -25,7 +25,6 @@ public abstract class RenderTaggedTile extends TileEntitySpecialRenderer
     {
         double distance = this.getPlayer().getDistance(t.xCoord, t.yCoord, t.zCoord);
         EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-        ;
         if (distance <= RendererLivingEntity.NAME_TAG_RANGE && player.ridingEntity == null)
         {
             MovingObjectPosition objectPosition = player.rayTrace(8, 1);

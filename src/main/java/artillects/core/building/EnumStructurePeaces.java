@@ -23,12 +23,12 @@ public enum EnumStructurePeaces
     public SchematicMap schematic;
     public boolean makeTool = false;
 
-    private EnumStructurePeaces(String name)
+    EnumStructurePeaces(String name)
     {
         this.saveName = name;
     }
 
-    private EnumStructurePeaces(String name, String toolName)
+    EnumStructurePeaces(String name, String toolName)
     {
         this(name);
         this.toolName = toolName;

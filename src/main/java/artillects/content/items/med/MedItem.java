@@ -32,12 +32,12 @@ public enum MedItem
     float healBy = 2;
     ItemStack[] returnStack = null;
 
-    private MedItem()
+    MedItem()
     {
-        this(0, new ItemStack[0]);
+        this(0);
     }
 
-    private MedItem(float healBy, ItemStack... used)
+    MedItem(float healBy, ItemStack... used)
     {
         this.healBy = healBy;
         returnStack = used;

@@ -4,8 +4,8 @@ package artillects.core.interfaces;
 public interface IID<I, C extends Object>
 {
     /** String id */
-    public I getID();
+    I getID();
 
     /** Sets the id for the land */
-    public C setID(I id);
+    C setID(I id);
 }
