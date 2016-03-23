@@ -2,11 +2,9 @@ package artillects.content.tool.extractor;
 
 import artillects.content.tool.TilePlaceableTool;
 import com.builtbroken.mc.api.tile.IInventoryProvider;
-import com.builtbroken.mc.api.tile.node.IExternalInventory;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.inventory.ExternalInventory;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
-import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
-import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.prefab.tile.Tile;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -80,8 +78,7 @@ public class TileExtractor extends TilePlaceableTool implements IInventoryProvid
     {
         lastRayHit = null;
         sideHit = null;
-        angle.yaw_$eq(EulerAngle.clampAngleTo360(angle.yaw()));
-        angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
+        angle.clampTo360();
 
         if (this.loc == null)
             loc = new Pos(x(), y(), z()).add(offset);

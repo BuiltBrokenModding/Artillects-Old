@@ -12,7 +12,7 @@ public class TextField extends GuiTextField
 
     public TextField setLength(int length)
     {
-        super.setMaxStringLength(length);
+        setMaxStringLength(length);
         return this;
     }
 }

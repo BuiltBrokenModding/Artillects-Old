@@ -1,10 +1,10 @@
 package artillects.core.zone;
 
 
-import artillects.core.building.BuildingBlock;
 import artillects.core.building.BuildingPart;
 import artillects.drone.HiveComplex;
 import com.builtbroken.jlib.type.Pair;
+import com.builtbroken.mc.api.edit.IWorldEdit;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.item.ItemStack;
@@ -52,10 +52,10 @@ public class ZoneBuilding extends Zone
      * @param vec - location to search from
      * @return BuildBlock instance containing the placement stack and location to place the block
      */
-    public BuildingBlock getClosestBlock(Location vec)
+    public IWorldEdit getClosestBlock(Location vec)
     {
-        List<BuildingBlock> list = getClosestBlocks(vec, 1);
-        return list.get(0);
+        List<IWorldEdit> list = getClosestBlocks(vec, 1);
+        return list != null && list.size() > 0 ? list.get(0) : null;
     }
 
     /**
@@ -64,9 +64,9 @@ public class ZoneBuilding extends Zone
      * @param num - n count
      * @return list of blocks, never null but can be empty
      */
-    public List<BuildingBlock> getClosestBlocks(Location vec, int num)
+    public List<IWorldEdit> getClosestBlocks(Location vec, int num)
     {
-        List<BuildingBlock> blocks = new ArrayList();
+        List<IWorldEdit> blocks = new ArrayList();
         if (!buildPosition.isEmpty() && vec.world() == this.world)
         {
                 //TODO sort collection of all build positions by distance to vec

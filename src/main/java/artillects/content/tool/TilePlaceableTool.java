@@ -5,7 +5,6 @@ import com.builtbroken.mc.api.tile.IRemovable;
 import com.builtbroken.mc.api.tile.IRotatable;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
-import com.builtbroken.mc.core.network.packet.AbstractPacket;
 import com.builtbroken.mc.core.network.packet.PacketTile;
 import com.builtbroken.mc.core.network.packet.PacketType;
 import com.builtbroken.mc.lib.transform.rotation.EulerAngle;
@@ -101,8 +100,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     {
         lastRayHit = null;
         sideHit = null;
-        angle.yaw_$eq(EulerAngle.clampAngleTo360(angle.yaw()));
-        angle.pitch_$eq(EulerAngle.clampAngleTo360(angle.pitch()));
+        angle.clampTo360();
 
         if (this.loc == null)
             loc = new Pos(x(), y(), z()).add(offset);
@@ -118,7 +116,7 @@ public abstract class TilePlaceableTool extends Tile implements IPacketIDReceive
     public MovingObjectPosition getRayHit()
     {
         Pos surveyor = new Pos(x(), y(), z());
-        Pos destination = angle.toVector();
+        Pos destination = angle.toPos();
 
         surveyor.add(destination);
         surveyor.add(offset);

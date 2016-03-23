@@ -8,6 +8,7 @@ import com.builtbroken.mc.lib.access.AccessProfile;
 import com.builtbroken.mc.lib.access.IProfileContainer;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
@@ -62,6 +63,18 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
         {
             return this.getAccessProfile().getUserAccess(username).getGroup() != null;
         }
+        return false;
+    }
+
+    @Override
+    public boolean hasNode(EntityPlayer player, String node)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean hasNode(String username, String node)
+    {
         return false;
     }
 
