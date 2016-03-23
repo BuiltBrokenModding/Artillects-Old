@@ -1,6 +1,6 @@
 package test.common;
 
-import artillects.core.region.Plane;
+import com.builtbroken.artillects.core.region.Plane;
 import com.builtbroken.mc.lib.transform.vector.Point;
 
 public class PlaneTest
