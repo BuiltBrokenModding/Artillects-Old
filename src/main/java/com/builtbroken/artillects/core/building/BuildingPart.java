@@ -1,14 +1,15 @@
 package com.builtbroken.artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.api.edit.IWorldEdit;
 import com.builtbroken.mc.lib.transform.vector.Location;
-import net.minecraft.block.Block;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.List;
 
 /** Entity that represents a structure peace in a hive complex
  * 
@@ -20,7 +21,7 @@ public class BuildingPart extends GhostObject
 
     protected boolean isDamaged = false;
 
-    HashMap<Pos, ItemStack> missingBlocks = new HashMap<Pos, ItemStack>();
+    List<IWorldEdit> missingBlocks = new ArrayList();
 
     public BuildingPart(EnumStructurePeaces building, Location location)
     {
@@ -48,16 +49,17 @@ public class BuildingPart extends GhostObject
     @Override
     public void updateEntity()
     {
+        //TODO move to multi-threading
         super.updateEntity();
         /** Tick is setup to make sure that only a few structures update per tick */
         if (this.ticks % (60 + location.x() + location.y() + location.z()) == 0)
         {
-            HashMap<Pos, ItemStack> missingBlocks = new HashMap<Pos, ItemStack>();
+            List<IWorldEdit> missingBlocks = new ArrayList();
             building.getSchematic().getBlocksToPlace(this.location, missingBlocks, true, true);
             if (!missingBlocks.isEmpty())
             {
                 System.out.println(this.toString() + " found damage");
-                this.missingBlocks.putAll(missingBlocks);
+                this.missingBlocks.addAll(missingBlocks);
                 this.isDamaged = true;
             }
             else
@@ -76,27 +78,7 @@ public class BuildingPart extends GhostObject
      * @return */
     public boolean addBlock(Pos location, ItemStack stack)
     {
-        if (stack != null)
-        {
-            location.setBlock(this.location.world(), Block.getBlockFromItem(stack.getItem()), stack.getItemDamage());
-            if (this.missingBlocks.containsKey(location))
-            {
-                if (this.missingBlocks.get(location) != null)
-                {
-                    if (this.missingBlocks.get(location).isItemEqual(stack))
-                    {
-                        this.missingBlocks.remove(location);
-                        return true;
-                    }
-                }
-                else
-                {
-                    this.missingBlocks.remove(location);
-                    return true;
-                }
-
-            }
-        }
+        //TODO implement
         return false;
     }
 
@@ -120,11 +102,12 @@ public class BuildingPart extends GhostObject
         return isDamaged;
     }
 
+    @Deprecated
     public void loadBuildingRequest(HashMap<Pos, Pair<ItemStack, BuildingPart>> buildMap)
     {
-        for (Entry<Pos, ItemStack> entry : this.missingBlocks.entrySet())
+        for (IWorldEdit entry : this.missingBlocks)
         {
-            buildMap.put(entry.getKey(), new Pair<ItemStack, BuildingPart>(entry.getValue(), this));
+            buildMap.put(new Pos(entry.x(), entry.y(), entry.z()), new Pair<ItemStack, BuildingPart>(new ItemStack(entry.getNewBlock(), 1, entry.getNewMeta()), this));
         }
     }
 }

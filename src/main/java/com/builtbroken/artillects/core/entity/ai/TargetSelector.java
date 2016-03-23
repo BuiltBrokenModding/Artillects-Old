@@ -11,14 +11,27 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 
+/**
+ * Target selector geared towards filtering targets based on internal settings.
+ */
 public class TargetSelector implements IEntitySelector
 {
-    IEntity drone;
-    boolean monsters = true, animals = false, npcs = false, players = true, flying = true;
+    /** Host currently using this target selector */
+    public final IEntity hostEntity;
+    /** Target entities implementing {@link IMob} */
+    public boolean monsters = true;
+    /** Target entities implementing {@link IAnimals} */
+    public boolean animals = false;
+    /** Target entities implementing {@link INpc} */
+    public boolean npcs = false;
+    /** Target entities that extend {@link EntityPlayer}, only if difficulty is not easy mode */
+    public boolean players = true;
+    /** Target entities that extend {@link EntityFlying} */
+    public boolean flying = true;
 
     public TargetSelector(IEntity drone)
     {
-        this.drone = drone;
+        this.hostEntity = drone;
     }
 
     @Override
@@ -32,9 +45,9 @@ public class TargetSelector implements IEntitySelector
                 {
                     return flying;
                 }
-                if (drone instanceof IFactionMember)
+                if (hostEntity instanceof IFactionMember)
                 {
-                    if (((IFactionMember) drone).getFaction().isMember(entity))
+                    if (((IFactionMember) hostEntity).getFaction().isMember(entity))
                     {
                         return false;
                     }

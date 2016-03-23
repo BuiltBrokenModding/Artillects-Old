@@ -22,7 +22,7 @@ public class AIRangedAttack extends EntityAIBase
     private int targetTimeLost;
     private int minRangedAttackTime;
 
-    /** The maximum time the AI has to wait before peforming another ranged attack. */
+    /** The maximum time the AI has to wait before performing another ranged attack. */
     private int maxRangedAttackTime;
     private float attackRange;
     private float followDistance;

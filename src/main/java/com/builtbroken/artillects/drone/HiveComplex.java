@@ -4,7 +4,6 @@ import com.builtbroken.artillects.core.building.BuildingPart;
 import com.builtbroken.artillects.core.building.EnumStructurePeaces;
 import com.builtbroken.artillects.core.building.GhostObject;
 import com.builtbroken.artillects.core.zone.Zone;
-import com.builtbroken.artillects.core.zone.ZoneBuilding;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.core.handler.SaveManager;
@@ -37,7 +36,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
     protected final List<BuildingPart> peaces = new ArrayList<BuildingPart>();
     public final List<BuildingPart> damagedPeaces = new ArrayList<BuildingPart>();
 
-    protected ZoneBuilding buildZone;
+    //protected ZoneConstruction buildZone;
 
     public HashSet<Zone> zones = new HashSet<Zone>();
 
@@ -70,7 +69,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
 
     public void loadFabricatorDemo()
     {
-        buildZone = new ZoneBuilding(this, 50);
+        //buildZone = new ZoneConstruction(this, 50);
         this.load3x3Room(this.location.clone(), 2);
         for (int i = 0; i < 1; i++)
         {
@@ -178,7 +177,7 @@ public class HiveComplex extends GhostObject implements IVirtualObject
             }
         }
 
-        //this.buildZone = new ZoneBuilding(this, 80);
+        //this.buildZone = new ZoneConstruction(this, 80);
 
         if (worldGen)
         {
