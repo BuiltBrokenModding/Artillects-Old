@@ -2,29 +2,36 @@ package com.builtbroken.artillects.core.zone;
 
 import com.builtbroken.artillects.core.building.GhostObject;
 import com.builtbroken.artillects.core.interfaces.IWorker;
+import com.builtbroken.mc.lib.transform.region.Cube;
 import com.builtbroken.mc.lib.transform.vector.Pos;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/** Class used by the hive mind to ID an area by which a task is to be operated in
- * 
- * @author DarkGuardsman */
+/**
+ * Class used by the hive mind to ID an area by which a task is to be operated in
+ *
+ * @author DarkGuardsman
+ */
 public class Zone extends GhostObject
 {
     /** Start is always the min point; end is always the largest point. */
-    public World world;
-    public Pos start, end;
+    public final World world;
+    /** Main, or large box that covers the entire work area */
+    public Cube mainArea;
 
-    public List<IWorker> assignedArtillects = new ArrayList<IWorker>();
+    /** List of workers assigned to the zone */
+    public final List<IWorker> workers = new ArrayList();
 
     public Zone(World world, Pos start, Pos end)
     {
-        this.start = new Pos(Math.min(start.x(), end.x()), Math.min(start.y(), end.y()), Math.min(start.z(), end.z()));
-        this.end = new Pos(Math.max(start.x(), end.x()), Math.max(start.y(), end.y()), Math.max(start.z(), end.z()));
+        mainArea = new Cube(start, end);
         this.world = world;
     }
 
@@ -32,46 +39,84 @@ public class Zone extends GhostObject
     public void updateEntity()
     {
         super.updateEntity();
-        Iterator<IWorker> droneIt = assignedArtillects.iterator();
-        while (droneIt.hasNext())
+        Iterator<IWorker> it = workers.iterator();
+        while (it.hasNext())
         {
-            IWorker drone = droneIt.next();
-            if (drone.getWorkingZone() != this || ((EntityLivingBase) drone).isDead)
+            IWorker worker = it.next();
+            if (worker.getWorkingZone() != this || ((EntityLivingBase) worker).isDead)
             {
-                droneIt.remove();
+                it.remove();
             }
         }
     }
 
-    public boolean canAssignDrone(IWorker drone)
+    /**
+     * Checks if the worker can be assigned to the zone
+     *
+     * @param worker - entity being assigned
+     * @return true if the worker can be assigned
+     */
+    public boolean canAssignWorker(IWorker worker)
     {
-        return true;
+        return worker instanceof Entity && !((Entity) worker).isDead;
     }
 
-    public void assignArtillect(IWorker drone)
+    /**
+     * Assigns a worker to this zone
+     *
+     * @param worker - entity being assigned
+     */
+    public void assignWorker(IWorker worker)
     {
-        if (drone != null && !this.assignedArtillects.contains(drone))
+        if (worker instanceof Entity && !this.workers.contains(worker))
         {
-            this.assignedArtillects.add(drone);
-            drone.setWorkingZone(this);
+            this.workers.add(worker);
+            worker.setWorkingZone(this);
         }
     }
 
+    /**
+     * Does the zone need any workers
+     *
+     * @return true if zone needs workers
+     */
     public boolean doesZoneNeedWorkers()
     {
-        return assignedArtillects.isEmpty();
+        return workers.isEmpty();
     }
 
     @Override
     public void invalidate()
     {
         super.invalidate();
-        start = null;
-        end = null;
+        mainArea = null;
     }
 
-    public void scanForChests()
+    /**
+     * Gets a list of all tiles implementing {@link IInventory}
+     *
+     * @return list
+     */
+    public List<IInventory> getInventoryTiles()
     {
-        // TODO load IInventory tiles from chunks into a list for easy access
+        List<IInventory> inventories = new ArrayList();
+        for (TileEntity tile : getTilesInArea())
+        {
+            if (tile instanceof IInventory)
+            {
+                inventories.add((IInventory) tile);
+            }
+        }
+        return inventories;
+    }
+
+    /**
+     * Gets a list of all tiles in the defined area
+     *
+     * @return list of tiles
+     */
+    public List<TileEntity> getTilesInArea()
+    {
+        return mainArea.getTilesInArea(world);
     }
 }

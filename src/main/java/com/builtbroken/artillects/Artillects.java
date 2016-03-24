@@ -12,8 +12,13 @@ import com.builtbroken.artillects.content.tool.extractor.TileExtractor;
 import com.builtbroken.artillects.content.tool.surveyor.TileSurveyor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
+import com.builtbroken.artillects.core.integration.UsageManager;
+import com.builtbroken.artillects.core.integration.templates.UsageStorage;
+import com.builtbroken.artillects.core.integration.vanilla.UsageBrewing;
+import com.builtbroken.artillects.core.integration.vanilla.UsageFurnace;
 import com.builtbroken.artillects.core.region.Faction;
 import com.builtbroken.artillects.core.region.Village;
+import com.builtbroken.jlib.helpers.MathHelper;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.core.registry.ModManager;
@@ -39,6 +44,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntityBrewingStand;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -56,7 +64,7 @@ public class Artillects
     @Instance(Reference.NAME)
     public static Artillects INSTANCE;
 
-    @SidedProxy(clientSide = "artillects.client.ClientProxy", serverSide = "artillects.CommonProxy")
+    @SidedProxy(clientSide = "com.builtbroken.artillects.client.ClientProxy", serverSide = "com.builtbroken.artillects.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.Metadata(Reference.NAME)
@@ -129,6 +137,9 @@ public class Artillects
     @EventHandler
     public void init(FMLInitializationEvent evt)
     {
+        UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityChest.class, new UsageStorage("tile.usage.vanilla.chest", "tile.inventory.vanilla.chest", MathHelper.generateSqeuncedArray(0, 36)));
+        UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityBrewingStand.class, new UsageBrewing());
+        UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityFurnace.class, new UsageFurnace());
         proxy.init();
     }
 
@@ -165,22 +176,22 @@ public class Artillects
     @SubscribeEvent
     public void onHurtEvent(LivingAttackEvent event)
     {
-        if(event.source != null)
+        if (event.source != null)
         {
             Entity ent = event.source.getSourceOfDamage();
-            if(ent instanceof EntityLivingBase)
+            if (ent instanceof EntityLivingBase)
             {
                 EntityLivingBase entity = ((EntityLivingBase) ent);
                 ItemStack stack = entity.getHeldItem();
-                if(stack != null && (stack.getUnlocalizedName().contains("sword") || stack.getUnlocalizedName().contains("ax")))
+                if (stack != null && (stack.getUnlocalizedName().contains("sword") || stack.getUnlocalizedName().contains("ax")))
                 {
                     //TODO detect for armor and reduce chance by armor type
                     float chance = 0.13f;
-                    if(event.entity.worldObj.difficultySetting == EnumDifficulty.HARD)
+                    if (event.entity.worldObj.difficultySetting == EnumDifficulty.HARD)
                     {
                         chance = 0.24f;
                     }
-                    if(Settings.ENABLE_BLEEDING && entity.worldObj.rand.nextFloat() <= chance)
+                    if (Settings.ENABLE_BLEEDING && entity.worldObj.rand.nextFloat() <= chance)
                     {
                         event.entityLiving.addPotionEffect(new PotionEffect(PotionBleeding.BLEEDING.getId(), 6000));
                     }
