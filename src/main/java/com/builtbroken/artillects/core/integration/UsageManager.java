@@ -1,6 +1,7 @@
 package com.builtbroken.artillects.core.integration;
 
 import com.builtbroken.mc.core.Engine;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.HashMap;
@@ -34,5 +35,14 @@ public class UsageManager
         {
             Engine.logger().error("Attempted to register a usage object " + usage + " to " + clazz + " which is already registered", new RuntimeException());
         }
+    }
+
+    public UsageTile getUsageFor(IInventory inventory)
+    {
+        if (TILE_USAGE_MAP.containsKey(inventory.getClass()))
+        {
+            return TILE_USAGE_MAP.get(inventory.getClass());
+        }
+        return null;
     }
 }
