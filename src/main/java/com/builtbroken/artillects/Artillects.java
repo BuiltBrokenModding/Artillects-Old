@@ -1,28 +1,20 @@
 package com.builtbroken.artillects;
 
-import com.builtbroken.artillects.content.blocks.door.BlockLockedDoor;
-import com.builtbroken.artillects.content.blocks.door.ItemLockedDoor;
-import com.builtbroken.artillects.content.blocks.teleporter.BlockTeleporterAnchor;
 import com.builtbroken.artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.content.items.ItemSchematicCreator;
-import com.builtbroken.artillects.content.items.med.ItemBleedingTest;
-import com.builtbroken.artillects.content.items.med.ItemMedical;
-import com.builtbroken.artillects.content.potion.PotionBleeding;
-import com.builtbroken.artillects.content.tool.extractor.TileExtractor;
-import com.builtbroken.artillects.content.tool.surveyor.TileSurveyor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
+import com.builtbroken.artillects.core.faction.Faction;
+import com.builtbroken.artillects.core.faction.land.Land;
 import com.builtbroken.artillects.core.integration.UsageManager;
 import com.builtbroken.artillects.core.integration.templates.UsageStorage;
 import com.builtbroken.artillects.core.integration.vanilla.UsageBrewing;
 import com.builtbroken.artillects.core.integration.vanilla.UsageFurnace;
-import com.builtbroken.artillects.core.faction.Faction;
 import com.builtbroken.jlib.helpers.MathHelper;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.core.registry.ModManager;
 import com.builtbroken.mc.lib.helper.LanguageUtility;
-import com.builtbroken.mc.lib.helper.recipe.UniversalRecipe;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -30,27 +22,16 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntityBrewingStand;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import java.io.File;
 import java.util.Arrays;
@@ -74,16 +55,6 @@ public class Artillects
     /** Blocks and Items */
     public static ModManager contentRegistry;
     public static Item itemSchematicCreator;
-    public static Item itemLockedDoor;
-    public static Item itemBandage;
-    public static Item itemBleedTest;
-
-    public static Block blockSurveyor;
-    public static Block blockExtractor;
-    public static Block blockTeleporter;
-    public static Block blockLockedDoor;
-
-    public static int bleedingPotionID = 70;
 
     public static ContentFactory contentFactory;
 
@@ -93,7 +64,7 @@ public class Artillects
         MinecraftForge.EVENT_BUS.register(this);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         SaveManager.registerClass("Faction", Faction.class);
-        //SaveManager.registerClass("Village", Village.class);
+        SaveManager.registerClass("FactionLand", Land.class);
 
         //Request content from RE
         Engine.requestOres();
@@ -118,14 +89,6 @@ public class Artillects
             e.printStackTrace();
         }
         itemSchematicCreator = contentRegistry.newItem(ItemSchematicCreator.class);
-        itemLockedDoor = contentRegistry.newItem(ItemLockedDoor.class);
-        itemBandage = contentRegistry.newItem(ItemMedical.class);
-        itemBleedTest = contentRegistry.newItem(ItemBleedingTest.class);
-
-        blockSurveyor = contentRegistry.newBlock(TileSurveyor.class);
-        blockExtractor = contentRegistry.newBlock(TileExtractor.class);
-        blockTeleporter = contentRegistry.newBlock(BlockTeleporterAnchor.class);
-        blockLockedDoor = contentRegistry.newBlock("CustomLockedDoor", new BlockLockedDoor(), ItemBlock.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
 
@@ -145,7 +108,6 @@ public class Artillects
     @EventHandler
     public void postInit(FMLPostInitializationEvent evt)
     {
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSurveyor), "IGI", "ICI", "I I", 'G', Blocks.glass, 'C', UniversalRecipe.CIRCUIT_T2.get(), 'I', UniversalRecipe.PRIMARY_METAL.get()));
         //save configs
         CONFIG.save();
         proxy.postInit();
@@ -170,32 +132,5 @@ public class Artillects
         ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
-    }
-
-    @SubscribeEvent
-    public void onHurtEvent(LivingAttackEvent event)
-    {
-        if (event.source != null)
-        {
-            Entity ent = event.source.getSourceOfDamage();
-            if (ent instanceof EntityLivingBase)
-            {
-                EntityLivingBase entity = ((EntityLivingBase) ent);
-                ItemStack stack = entity.getHeldItem();
-                if (stack != null && (stack.getUnlocalizedName().contains("sword") || stack.getUnlocalizedName().contains("ax")))
-                {
-                    //TODO detect for armor and reduce chance by armor type
-                    float chance = 0.13f;
-                    if (event.entity.worldObj.difficultySetting == EnumDifficulty.HARD)
-                    {
-                        chance = 0.24f;
-                    }
-                    if (Settings.ENABLE_BLEEDING && entity.worldObj.rand.nextFloat() <= chance)
-                    {
-                        event.entityLiving.addPotionEffect(new PotionEffect(PotionBleeding.BLEEDING.getId(), 6000));
-                    }
-                }
-            }
-        }
     }
 }

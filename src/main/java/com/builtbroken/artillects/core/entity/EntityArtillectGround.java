@@ -1,7 +1,5 @@
 package com.builtbroken.artillects.core.entity;
 
-import com.builtbroken.artillects.Artillects;
-import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -72,8 +70,7 @@ public abstract class EntityArtillectGround extends EntityArtillectBase
     {
         entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
         entity.setFire(5);
-        Artillects.proxy.renderLaser(this.worldObj, new Pos((IPos3D)this).add(0, 0.2, 0), new Pos(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
-
+        //Artillects.proxy.renderLaser(this.worldObj, new Pos((IPos3D)this).add(0, 0.2, 0), new Pos(entity).add(entity.width / 2, entity.height / 2, entity.width / 2), 1, 0, 0);
     }
 
 }
