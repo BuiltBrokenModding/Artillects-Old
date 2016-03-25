@@ -1,6 +1,7 @@
 package com.builtbroken.artillects.core.faction.land;
 
 import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -17,11 +18,13 @@ import java.io.File;
  */
 public class Land extends Region implements IVirtualObject
 {
-    private String name;
+    private String id;
 
     private Land(World world, String name)
     {
         super(world, name);
+        id = "" + System.nanoTime(); //TODO Need a better id system
+        SaveManager.register(this);
     }
 
     private Land(NBTTagCompound tag)
@@ -32,12 +35,17 @@ public class Land extends Region implements IVirtualObject
         {
             name = "Land_" + System.currentTimeMillis();
         }
+        if (id == null)
+        {
+            id = "" + System.nanoTime();//TODO Need a better id system
+        }
+        SaveManager.register(this);
     }
 
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/land/Land_" + this.name);
+        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/land/Land_" + this.id);
     }
 
     @Override
@@ -49,18 +57,27 @@ public class Land extends Region implements IVirtualObject
     @Override
     public boolean shouldSaveForWorld(World world)
     {
-        return false;
+        return world == this.world;
     }
 
     @Override
     public void load(NBTTagCompound nbt)
     {
-
+        super.load(nbt);
+        if (nbt.hasKey("id"))
+        {
+            id = nbt.getString("id");
+        }
     }
 
     @Override
     public NBTTagCompound save(NBTTagCompound nbt)
     {
-        return null;
+        super.save(nbt);
+        if (id != null && !id.isEmpty())
+        {
+            nbt.setString("id", id);
+        }
+        return nbt;
     }
 }

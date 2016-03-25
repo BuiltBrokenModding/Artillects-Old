@@ -1,10 +1,11 @@
 package com.builtbroken.artillects;
 
-import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.content.items.ItemSchematicCreator;
+import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
 import com.builtbroken.artillects.core.faction.Faction;
+import com.builtbroken.artillects.core.faction.FactionManager;
 import com.builtbroken.artillects.core.faction.land.Land;
 import com.builtbroken.artillects.core.integration.UsageManager;
 import com.builtbroken.artillects.core.integration.templates.UsageStorage;
@@ -18,10 +19,7 @@ import com.builtbroken.mc.lib.helper.LanguageUtility;
 import cpw.mods.fml.common.*;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.ICommandManager;
@@ -32,6 +30,8 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.util.Arrays;
@@ -40,6 +40,7 @@ import java.util.Arrays;
 @Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:VoltzEngine;")
 public class Artillects
 {
+    public static Logger logger = LogManager.getLogger(Reference.NAME);
 
     @Instance(Reference.NAME)
     public static Artillects INSTANCE;
@@ -132,5 +133,12 @@ public class Artillects
         ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
         ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
         serverCommandManager.registerCommand(new CommandTool());
+        FactionManager.loadFromDisk();
+    }
+
+    @EventHandler
+    public void serverClosing(FMLServerStoppingEvent event)
+    {
+        FactionManager.saveData();
     }
 }

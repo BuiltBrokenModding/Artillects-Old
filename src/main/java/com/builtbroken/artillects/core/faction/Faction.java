@@ -23,16 +23,14 @@ import java.io.File;
  */
 public class Faction implements IFaction, IProfileContainer, IVirtualObject
 {
-    //vars
+    //TODO do check if needs saved, so it not saving every tick
+
+    /** Top most permission system used by the faction */
     private AccessProfile globalProfile;
-    //private HashMap<World, LandManager> worldLandManagers = new HashMap<World, LandManager>();
+    /** Display name of the faction */
     private String name;
+    /** Unique ID used to reference the faction */
     private String id;
-
-    private Faction()
-    {
-
-    }
 
     private Faction(String name)
     {

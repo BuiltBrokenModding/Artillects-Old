@@ -2,6 +2,7 @@ package com.builtbroken.artillects.core.faction;
 
 import com.builtbroken.artillects.core.faction.land.Land;
 import com.builtbroken.mc.api.IVirtualObject;
+import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -45,6 +46,7 @@ public class FactionMap implements IVirtualObject
     public FactionMap(int dimID)
     {
         this.dimID = dimID;
+        SaveManager.register(this);
     }
 
     public void claimChunk(String faction, Chunk chunk)

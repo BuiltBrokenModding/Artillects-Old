@@ -1,17 +1,24 @@
 package com.builtbroken.artillects.core.faction;
 
+import com.builtbroken.artillects.Artillects;
 import com.builtbroken.artillects.api.IFactionMember;
 import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.core.Engine;
+import com.builtbroken.mc.core.handler.SaveManager;
+import com.builtbroken.mc.lib.helper.NBTUtility;
 import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manager that handles everything related to faction control, setup, and interaction
@@ -22,7 +29,7 @@ public class FactionManager
 {
     /** Map of faction ids to faction instances */
     private static HashMap<String, Faction> factions = new HashMap();
-    /** Map of player names to factions */ //TODO replace with UUIDs
+    /** Map of player names to player's main faction */ //TODO replace with UUIDs
     private static HashMap<String, String> playerToFaction = new HashMap();
     /** Map of dims to faction maps */
     private static HashMap<Integer, FactionMap> dimToFactionMap = new HashMap();
@@ -168,6 +175,7 @@ public class FactionManager
         if (getFaction(faction.getID()) == null)
         {
             factions.put(faction.getID(), faction);
+            SaveManager.register(faction);
             return true;
         }
         return false;
@@ -221,5 +229,120 @@ public class FactionManager
             dimToFactionMap.put(dim, new FactionMap(dim));
         }
         return dimToFactionMap.get(dim);
+    }
+
+    /**
+     * Called at server start to load all faction data from disk. Only loads
+     * over all faction objects and players. Land claims are loaded and unloaded
+     * per world.
+     */
+    public static void loadFromDisk()
+    {
+        factions.clear();
+        playerToFaction.clear();
+        dimToFactionMap.clear();
+        File folder = new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/");
+        if (folder.exists())
+        {
+            for (File file : folder.listFiles())
+            {
+                if (file.isFile())
+                {
+                    String name = file.getName();
+                    if (name.endsWith(".dat"))
+                    {
+                        if (name.startsWith("Faction_"))
+                        {
+                            NBTTagCompound tag = NBTUtility.loadData(file);
+                            if (tag != null && !tag.hasNoTags())
+                            {
+                                Faction faction = Faction.loadFaction(tag);
+                                if (faction.getID() != null)
+                                {
+                                    if (addFaction(faction))
+                                    {
+                                        Artillects.logger.info("FactionManager: Loaded faction " + faction.getID() + " from disk");
+                                    }
+                                    else
+                                    {
+                                        Artillects.logger.error("FactionManager: Failed loading faction " + faction.getID() + " from disk as it is already loaded");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Artillects.logger.error("FactionManager: File " + file + " is named after a faction but is not an NBT save. Deleting to prevent issues....");
+                                try
+                                {
+                                    file.delete();
+                                }
+                                catch (SecurityException e)
+                                {
+                                    Artillects.logger.error("FactionManager: Failed to delete file " + file, e);
+                                }
+                            }
+                        }
+                        else if (name.startsWith("Players_"))
+                        {
+                            NBTTagCompound tag = NBTUtility.loadData(file);
+                            if (tag != null && !tag.hasNoTags())
+                            {
+                                NBTTagList players = tag.getTagList("players", 10);
+                                for (int i = 0; i < players.tagCount(); i++)
+                                {
+                                    NBTTagCompound playerTag = players.getCompoundTagAt(i);
+                                    if (playerTag.hasKey("username") && playerTag.hasKey("faction"))
+                                    {
+                                        playerToFaction.put(playerTag.getString("username"), playerTag.getString("faction"));
+                                    }
+                                    else
+                                    {
+                                        Artillects.logger.error("FactionManager: Failed to load player data[" + playerTag + "] as it didn't contain a both a faction and username");
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Artillects.logger.error("FactionManager: File " + file + " is named is labeled as a player data but is not an NBT save. Deleting to prevent issues....");
+                                try
+                                {
+                                    file.delete();
+                                }
+                                catch (SecurityException e)
+                                {
+                                    Artillects.logger.error("FactionManager: Failed to delete file " + file, e);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            folder.mkdirs();
+        }
+    }
+
+    /**
+     * Called to save all data not already saved by other handlers.
+     */
+    public static void saveData()
+    {
+        //Factions are saved by SaveManager so no need to save them
+        if (!playerToFaction.isEmpty())
+        {
+            NBTTagList list = new NBTTagList();
+            for (Map.Entry<String, String> entry : playerToFaction.entrySet())
+            {
+                NBTTagCompound tag = new NBTTagCompound();
+                tag.setString("username", entry.getKey());
+                tag.setString("faction", entry.getValue());
+                list.appendTag(tag);
+            }
+            NBTTagCompound save = new NBTTagCompound();
+            save.setTag("players", list);
+            NBTUtility.saveData(new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/PlayerData.dat"), save);
+        }
     }
 }
