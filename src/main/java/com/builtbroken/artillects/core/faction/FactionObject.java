@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.core.region;
+package com.builtbroken.artillects.core.faction;
 
 import com.builtbroken.artillects.core.building.GhostObject;
 import com.builtbroken.jlib.data.vector.IPos3D;

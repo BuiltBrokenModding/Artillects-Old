@@ -40,8 +40,6 @@ public class CommandTool extends CommandBase
                     player.addChatComponentMessage(new ChatComponentText("/tool slection build pointOne - build a schematic at first selection point"));
                     player.addChatComponentMessage(new ChatComponentText("/tool slection build pointTwo - build a schematic at second selection point"));
                     player.addChatComponentMessage(new ChatComponentText("/tool slection build x y z - builds a schematic at the location"));
-                    player.addChatComponentMessage(new ChatComponentText("/tool hive ls - gets the number of active hives"));
-                    player.addChatComponentMessage(new ChatComponentText("/tool hive get - gets the closest hive"));
                 }
                 else if (args.length >= 1 && args[0].equalsIgnoreCase("selection"))
                 {

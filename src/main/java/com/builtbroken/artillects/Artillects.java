@@ -16,8 +16,7 @@ import com.builtbroken.artillects.core.integration.UsageManager;
 import com.builtbroken.artillects.core.integration.templates.UsageStorage;
 import com.builtbroken.artillects.core.integration.vanilla.UsageBrewing;
 import com.builtbroken.artillects.core.integration.vanilla.UsageFurnace;
-import com.builtbroken.artillects.core.region.Faction;
-import com.builtbroken.artillects.core.region.Village;
+import com.builtbroken.artillects.core.faction.Faction;
 import com.builtbroken.jlib.helpers.MathHelper;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.handler.SaveManager;
@@ -94,7 +93,7 @@ public class Artillects
         MinecraftForge.EVENT_BUS.register(this);
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
         SaveManager.registerClass("Faction", Faction.class);
-        SaveManager.registerClass("Village", Village.class);
+        //SaveManager.registerClass("Village", Village.class);
 
         //Request content from RE
         Engine.requestOres();

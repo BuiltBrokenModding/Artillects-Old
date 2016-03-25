@@ -1,8 +1,7 @@
-package com.builtbroken.artillects.core.region;
+package com.builtbroken.artillects.core.faction;
 
 import com.builtbroken.artillects.core.interfaces.IFaction;
 import com.builtbroken.artillects.core.interfaces.IFactionMember;
-import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.lib.access.AccessProfile;
 import com.builtbroken.mc.lib.access.AccessUser;
@@ -14,7 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.io.File;
-import java.util.HashMap;
 
 /**
  * Faction is more of a container for all settings and data related to a faction.
@@ -25,26 +23,45 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
 {
     //vars
     private AccessProfile globalProfile;
-    private HashMap<World, AccessProfile> worldAccessProfiles = new HashMap<World, AccessProfile>();
-    private HashMap<World, LandManager> worldLandManagers = new HashMap<World, LandManager>();
+    //private HashMap<World, LandManager> worldLandManagers = new HashMap<World, LandManager>();
     private String name;
-    private int id;
-    private static int nextID = 0;
+    private String id;
 
-    public Faction()
+    private Faction()
     {
 
     }
 
-    public Faction(String name)
+    private Faction(String name)
     {
         this.name = name;
-        this.id = nextID++;
     }
 
-    public Faction(NBTTagCompound tag)
+    private Faction(NBTTagCompound tag)
     {
         this.load(tag);
+    }
+
+    public static Faction loadFaction(NBTTagCompound tag)
+    {
+        return new Faction(tag);
+    }
+
+    public static Faction newFaction(String name)
+    {
+        return new Faction(name).setID("World_" + System.currentTimeMillis());
+    }
+
+    public static Faction newFaction(String name, String id)
+    {
+        return new Faction(name).setID(id);
+    }
+
+    public static Faction newFaction(EntityPlayer player, String name)
+    {
+        Faction faction = new Faction(name).setID("player_" + System.currentTimeMillis());
+        faction.getAccessProfile().getOwnerGroup().addMember(player);
+        return faction;
     }
 
     @Override
@@ -113,7 +130,7 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "com/factions/Faction_" + this.name);
+        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/Faction_" + this.name);
     }
 
     @Override
@@ -128,13 +145,13 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     }
 
     @Override
-    public Integer getID()
+    public String getID()
     {
         return id;
     }
 
-    @Override
-    public Faction setID(Integer id)
+
+    protected Faction setID(String id)
     {
         this.id = id;
         return this;
@@ -144,16 +161,6 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    /** Does this faction control this land */
-    public boolean controls(World world, IPos2D vec)
-    {
-        if (worldLandManagers.containsKey(world) && worldLandManagers.get(world) != null)
-        {
-            worldLandManagers.get(world).controls(vec);
-        }
-        return false;
     }
 
     @Override

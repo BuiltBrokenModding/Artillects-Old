@@ -9,7 +9,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 
 import java.util.HashMap;
@@ -63,15 +62,6 @@ public class ZoneStock extends ZoneWorkplace
         {
             nextUpdateCheck = 20 + world().rand.nextInt(300);
             calculateValues();
-        }
-    }
-
-    @SubscribeEvent
-    public void blockEvent(BlockEvent event)
-    {
-        if (event instanceof BlockEvent.BreakEvent || event instanceof BlockEvent.PlaceEvent)
-        {
-            updateInventories = true;
         }
     }
 
