@@ -130,7 +130,7 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/Faction_" + this.name);
+        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/Faction_" + this.name  + ".dat");
     }
 
     @Override

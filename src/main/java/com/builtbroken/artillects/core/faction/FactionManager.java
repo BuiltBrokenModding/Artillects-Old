@@ -222,13 +222,81 @@ public class FactionManager
         return false;
     }
 
+    /**
+     * Gets the faction map for the dimension. Will generate a new
+     * map or load a map from disk if missing.
+     *
+     * @param dim - dimension to get a map for
+     * @return a map
+     */
     public static FactionMap getMapForDim(int dim)
     {
-        if (!dimToFactionMap.containsKey(dim))
+        return getMapForDim(dim, true);
+    }
+
+    /**
+     * Gets the faction map for the dimension.
+     *
+     * @param dim     - dimension to get a map for
+     * @param makeNew - will make a new faction map
+     * @return a map
+     */
+    public static FactionMap getMapForDim(int dim, boolean makeNew)
+    {
+        if (!dimToFactionMap.containsKey(dim) && makeNew)
         {
-            dimToFactionMap.put(dim, new FactionMap(dim));
+            FactionMap map = dimToFactionMap.get(dim);
+            if (map == null)
+            {
+                map = loadMapFromSave(dim);
+            }
+            if (map == null)
+            {
+                map = new FactionMap(dim);
+                dimToFactionMap.put(dim, map);
+            }
+            return map;
         }
         return dimToFactionMap.get(dim);
+    }
+
+    /**
+     * Loads a map save from disk
+     *
+     * @param dim - dim to load a map for
+     * @return map if the save exists
+     */
+    public static FactionMap loadMapFromSave(int dim)
+    {
+        //If null then there may be a save to load
+        File file = new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/maps/Faction_map_" + dim + ".dat");
+        if (file.exists())
+        {
+            NBTTagCompound tag = NBTUtility.loadData(file);
+            if (tag != null && !tag.hasNoTags())
+            {
+                FactionMap map = new FactionMap(dim, tag);
+                dimToFactionMap.put(dim, map);
+                return map;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Called to unload a map for a dimension
+     *
+     * @param dim
+     */
+    public static void unloadMapForDim(int dim)
+    {
+        //TODO maybe implement a delay to prevent spam loading and saving
+        if (dimToFactionMap.containsKey(dim))
+        {
+            FactionMap map = dimToFactionMap.get(dim);
+            map.unloadAll();
+            dimToFactionMap.put(dim, null);
+        }
     }
 
     /**

@@ -20,14 +20,14 @@ public class Land extends Region implements IVirtualObject
 {
     private String id;
 
-    private Land(World world, String name)
+    public Land(World world, String name)
     {
         super(world, name);
         id = "" + System.nanoTime(); //TODO Need a better id system
         SaveManager.register(this);
     }
 
-    private Land(NBTTagCompound tag)
+    public Land(NBTTagCompound tag)
     {
         super(null, null);
         load(tag);
@@ -45,7 +45,7 @@ public class Land extends Region implements IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/land/Land_" + this.id);
+        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/maps/dim" + world.provider.dimensionId + "/Land_" + this.id + ".dat");
     }
 
     @Override

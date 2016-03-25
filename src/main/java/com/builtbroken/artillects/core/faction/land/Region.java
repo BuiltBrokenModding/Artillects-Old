@@ -277,4 +277,19 @@ public abstract class Region implements ISave
     {
         this.name = name;
     }
+
+    /**
+     * Called to see if this region has any chunks claimed
+     *
+     * @return
+     */
+    public boolean isEmpty()
+    {
+        return controlledChunks.isEmpty();
+    }
+
+    public List<ChunkCoordIntPair> getChunks()
+    {
+        return controlledChunks;
+    }
 }

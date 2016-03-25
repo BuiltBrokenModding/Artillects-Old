@@ -33,6 +33,8 @@ public class FactionMap implements IVirtualObject
     protected HashMap<ChunkCoordIntPair, String> chunk_to_factions = new HashMap();
     /** Map of chunks to land's that control them */
     protected HashMap<ChunkCoordIntPair, Land> chunk_to_land = new HashMap();
+    /** List of all loaded land objects, mainly temp may move to another spot */
+    protected List<Land> landHoldings = new ArrayList();
 
     //TODO test memory usage of storing pairs and strings, eg look for memory growth, if growth is too high switch methods for storing chunks to faction ids
 
@@ -46,6 +48,13 @@ public class FactionMap implements IVirtualObject
     public FactionMap(int dimID)
     {
         this.dimID = dimID;
+        SaveManager.register(this);
+    }
+
+    public FactionMap(int dim, NBTTagCompound save)
+    {
+        this.dimID = dim;
+        loadFirst(save);
         SaveManager.register(this);
     }
 
@@ -155,7 +164,17 @@ public class FactionMap implements IVirtualObject
 
     public void unloadAll()
     {
+        SaveManager.saveObject(this);
+        SaveManager.unregister(this);
+        for(Land land : landHoldings)
+        {
+            SaveManager.saveObject(land);
+            SaveManager.unregister(land);
+        }
         chunk_to_factions.clear();
+        faction_to_chunks.clear();
+        chunk_to_land.clear();
+        landHoldings.clear();
     }
 
 
@@ -173,7 +192,7 @@ public class FactionMap implements IVirtualObject
     @Override
     public File getSaveFile()
     {
-        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/maps/Faction_map_" + this.dimID());
+        return new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/maps/Faction_map_" + this.dimID() + ".dat");
     }
 
     @Override
@@ -186,6 +205,43 @@ public class FactionMap implements IVirtualObject
     public boolean shouldSaveForWorld(World world)
     {
         return world != null && world.provider != null && world.provider.dimensionId == dimID;
+    }
+
+    /**
+     * Called on first load of the map
+     *
+     * @param nbt
+     */
+    public void loadFirst(NBTTagCompound nbt)
+    {
+        load(nbt);
+        File folder = new File(NBTUtility.getSaveDirectory(), "bbm/artillects/factions/maps/dim" + dimID + "/");
+        if (folder.exists())
+        {
+            for (File file : folder.listFiles())
+            {
+                if (file.isFile())
+                {
+                    String name = file.getName();
+                    if (name.endsWith(".dat") && name.startsWith("Land_"))
+                    {
+                        NBTTagCompound tag = NBTUtility.loadData(file);
+                        if (tag != null && !tag.hasNoTags())
+                        {
+                            Land land = new Land(tag);
+                            if (!land.isEmpty() && !landHoldings.contains(land))
+                            {
+                                landHoldings.add(land);
+                                for (ChunkCoordIntPair pair : land.getChunks())
+                                {
+                                    chunk_to_land.put(pair, land);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
