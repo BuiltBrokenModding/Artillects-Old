@@ -8,8 +8,8 @@ import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.lib.transform.vector.Point;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 
 import java.util.HashMap;
 
@@ -27,7 +27,7 @@ public class FactionManager
     /** Map of dims to faction maps */
     private static HashMap<Integer, FactionMap> dimToFactionMap = new HashMap();
     /** Default faction for all objects */
-    private static Faction neutralFaction;
+    public static Faction neutralFaction;
 
     static
     {
@@ -38,15 +38,14 @@ public class FactionManager
     /**
      * Gets the faction who owns the chunk location
      *
-     * @param chunk - chunk, converted to location
      * @return owner of the chunk
      */
-    public static Faction getFaction(Chunk chunk)
+    public static Faction getFaction(World world, ChunkCoordIntPair pair)
     {
-        if (chunk.worldObj != null && chunk.worldObj.provider != null && dimToFactionMap.containsKey(chunk.worldObj.provider.dimensionId))
+        if (world != null && world.provider != null && dimToFactionMap.containsKey(world.provider.dimensionId))
         {
-            FactionMap map = dimToFactionMap.get(chunk.worldObj.provider.dimensionId);
-            String name = map.getFactionForChunk(chunk);
+            FactionMap map = dimToFactionMap.get(world.provider.dimensionId);
+            String name = map.getFactionForChunk(pair);
             if (name != null && !name.isEmpty())
             {
                 if (factions.containsKey(name))
@@ -57,7 +56,7 @@ public class FactionManager
                 {
                     if (Engine.runningAsDev)
                     {
-                        Engine.logger().error("FactionManager: Error faction map for dim " + chunk.worldObj.provider.dimensionId + " contained entries for unknown faction " + name + ". Trigger remove call to clear faction entries for this unknown faction.");
+                        Engine.logger().error("FactionManager: Error faction map for dim " + world.provider.dimensionId + " contained entries for unknown faction " + name + ". Trigger remove call to clear faction entries for this unknown faction.");
                     }
                     map.onFactionRemoved(name);
                 }
@@ -202,5 +201,25 @@ public class FactionManager
         Faction faction = Faction.newFaction(name);
         addFaction(faction);
         return faction;
+    }
+
+    public static boolean claimChunk(World world, String faction, ChunkCoordIntPair pair)
+    {
+        if (factions.containsKey(faction))
+        {
+            FactionMap map = getMapForDim(world.provider.dimensionId);
+            map.claimChunk(faction, pair);
+            return true;
+        }
+        return false;
+    }
+
+    public static FactionMap getMapForDim(int dim)
+    {
+        if (!dimToFactionMap.containsKey(dim))
+        {
+            dimToFactionMap.put(dim, new FactionMap(dim));
+        }
+        return dimToFactionMap.get(dim);
     }
 }

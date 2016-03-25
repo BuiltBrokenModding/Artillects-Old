@@ -1,5 +1,7 @@
 package com.builtbroken.artillects.core.faction.land;
 
+import net.minecraft.world.World;
+
 /**
  * Generalized name for any collection of people resulting in a permanent series of structures
  *
@@ -9,7 +11,7 @@ package com.builtbroken.artillects.core.faction.land;
 public class Town extends Region
 {
     //TODO implement town levels
-    //TODO implement region control creep
+    //TODO implement region control creep(Slow expanding effort of the town to automatically claim more chunks for the faction)
     //TODO implement town value(point value of all items and builds, used for raiding by bandits... etc)
     //TODO implement power level(Military force + Political power + Cultural power)
     //TODO implement region control overtake if neighbor region power is too low, only if enemy region & not inside minimal control area
@@ -20,8 +22,8 @@ public class Town extends Region
     //TODO implement town center levels(Adds to town level but is not the only contributor to level)
     //TODO enforce at least one path to town center(Used by NPC spawning, and also prevents ignoring bandits)
 
-    protected Town(String name)
+    protected Town(World world, String name)
     {
-        super(name);
+        super(world, name);
     }
 }

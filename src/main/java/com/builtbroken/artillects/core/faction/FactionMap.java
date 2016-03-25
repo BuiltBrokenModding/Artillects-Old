@@ -64,6 +64,22 @@ public class FactionMap implements IVirtualObject
         }
     }
 
+    public void claimChunk(String faction, ChunkCoordIntPair pair)
+    {
+        if (!faction_to_chunks.containsKey(faction) || faction_to_chunks.get(faction) == null)
+        {
+            faction_to_chunks.put(faction, new ArrayList<ChunkCoordIntPair>());
+        }
+
+        List<ChunkCoordIntPair> list = faction_to_chunks.get(faction);
+        if (!list.contains(pair))
+        {
+            list.add(pair);
+            chunk_to_factions.put(pair, faction);
+            faction_to_chunks.put(faction, list);
+        }
+    }
+
     public String getFactionForChunk(Chunk chunk)
     {
         ChunkCoordIntPair pair = chunk.getChunkCoordIntPair();

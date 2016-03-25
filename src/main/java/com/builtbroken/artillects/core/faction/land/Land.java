@@ -19,14 +19,14 @@ public class Land extends Region implements IVirtualObject
 {
     private String name;
 
-    private Land(String name)
+    private Land(World world, String name)
     {
-        super(name);
+        super(world, name);
     }
 
     private Land(NBTTagCompound tag)
     {
-        super(null);
+        super(null, null);
         load(tag);
         if (name == null)
         {
