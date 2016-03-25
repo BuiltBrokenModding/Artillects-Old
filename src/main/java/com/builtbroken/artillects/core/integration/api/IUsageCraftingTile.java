@@ -4,7 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 /**
- * Applied to tile usage that can result in a crafting result
+ * Applied to tile usage that can result in a crafting result. Do not try to cache any values from a tile in the usage class or other system.
+ * Only cache values that will never change about a tile, for example slots.
  *
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 3/23/2016.

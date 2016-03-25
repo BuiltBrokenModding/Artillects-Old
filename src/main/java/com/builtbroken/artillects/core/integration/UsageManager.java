@@ -1,7 +1,6 @@
 package com.builtbroken.artillects.core.integration;
 
 import com.builtbroken.mc.core.Engine;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.tileentity.TileEntity;
 
 import java.util.HashMap;
@@ -37,7 +36,7 @@ public class UsageManager
         }
     }
 
-    public UsageTile getUsageFor(IInventory inventory)
+    public UsageTile getUsageFor(TileEntity inventory)
     {
         if (TILE_USAGE_MAP.containsKey(inventory.getClass()))
         {

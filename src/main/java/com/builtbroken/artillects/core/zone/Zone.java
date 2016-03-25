@@ -97,7 +97,7 @@ public class Zone extends GhostObject
      *
      * @return list
      */
-    public List<IInventory> getInventoryTiles()
+    public List<IInventory> getInventories()
     {
         List<IInventory> inventories = new ArrayList();
         for (TileEntity tile : getTilesInArea())
@@ -105,6 +105,19 @@ public class Zone extends GhostObject
             if (tile instanceof IInventory)
             {
                 inventories.add((IInventory) tile);
+            }
+        }
+        return inventories;
+    }
+
+    public List<TileEntity> getInventoryTiles()
+    {
+        List<TileEntity> inventories = new ArrayList();
+        for (TileEntity tile : getTilesInArea())
+        {
+            if (tile instanceof IInventory)
+            {
+                inventories.add(tile);
             }
         }
         return inventories;
