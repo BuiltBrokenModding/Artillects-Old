@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.content.blocks.teleporter;
+package com.builtbroken.artillects.content.teleporter;
 
 import com.builtbroken.mc.lib.transform.vector.Location;
 import net.minecraft.block.Block;

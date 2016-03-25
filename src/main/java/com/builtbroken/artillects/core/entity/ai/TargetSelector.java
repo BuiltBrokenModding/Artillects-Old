@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.entity.ai;
 
-import com.builtbroken.artillects.core.interfaces.IEntity;
-import com.builtbroken.artillects.core.interfaces.IFactionMember;
+import com.builtbroken.artillects.api.IEntity;
+import com.builtbroken.artillects.api.IFactionMember;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;

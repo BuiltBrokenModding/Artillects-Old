@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.zone;
 
 import com.builtbroken.artillects.core.building.GhostObject;
-import com.builtbroken.artillects.core.interfaces.IWorker;
+import com.builtbroken.artillects.api.IWorker;
 import com.builtbroken.mc.lib.transform.region.Cube;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.Entity;

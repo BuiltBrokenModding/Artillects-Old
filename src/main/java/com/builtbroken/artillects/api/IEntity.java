@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.core.interfaces;
+package com.builtbroken.artillects.api;
 
 
 import com.builtbroken.mc.api.IWorldPosition;

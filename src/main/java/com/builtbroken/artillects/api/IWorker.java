@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.core.interfaces;
+package com.builtbroken.artillects.api;
 
 import com.builtbroken.artillects.core.entity.passive.Profession;
 import com.builtbroken.artillects.core.zone.Zone;

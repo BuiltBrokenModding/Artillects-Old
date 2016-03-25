@@ -1,6 +1,6 @@
 package com.builtbroken.artillects;
 
-import com.builtbroken.artillects.content.blocks.teleporter.TileEntityTeleporterAnchor;
+import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.content.items.ItemSchematicCreator;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;

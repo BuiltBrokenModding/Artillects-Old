@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.content.blocks.teleporter;
+package com.builtbroken.artillects.content.teleporter;
 
 import com.builtbroken.artillects.Reference;
 import com.builtbroken.mc.lib.helper.LanguageUtility;

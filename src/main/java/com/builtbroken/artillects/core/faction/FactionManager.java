@@ -1,6 +1,6 @@
 package com.builtbroken.artillects.core.faction;
 
-import com.builtbroken.artillects.core.interfaces.IFactionMember;
+import com.builtbroken.artillects.api.IFactionMember;
 import com.builtbroken.jlib.data.vector.IPos2D;
 import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IWorldPosition;

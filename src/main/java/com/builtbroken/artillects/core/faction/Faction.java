@@ -1,11 +1,9 @@
 package com.builtbroken.artillects.core.faction;
 
-import com.builtbroken.artillects.core.interfaces.IFaction;
-import com.builtbroken.artillects.core.interfaces.IFactionMember;
+import com.builtbroken.artillects.api.IFaction;
+import com.builtbroken.artillects.api.IFactionMember;
 import com.builtbroken.mc.api.IVirtualObject;
-import com.builtbroken.mc.lib.access.AccessProfile;
-import com.builtbroken.mc.lib.access.AccessUser;
-import com.builtbroken.mc.lib.access.IProfileContainer;
+import com.builtbroken.mc.lib.access.*;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +13,11 @@ import net.minecraft.world.World;
 import java.io.File;
 
 /**
- * Faction is more of a container for all settings and data related to a faction.
+ * Data object for a faction and all of its settings. Does not track land claimed by
+ * a faction, use {@link FactionMap} to check claim data and land holdings. Maps can be
+ * accessed from {@link FactionManager} using various methods.
+ * <p/>
+ * Use {@link FactionManager} to generate new factions so data can be tracked correctly.
  *
  * @author Darkguardsman
  */
