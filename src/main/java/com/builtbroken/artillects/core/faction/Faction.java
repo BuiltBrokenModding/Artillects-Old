@@ -59,7 +59,7 @@ public class Faction implements IFaction, IProfileContainer, IVirtualObject
 
     public static Faction newFaction(EntityPlayer player, String name)
     {
-        Faction faction = new Faction(name).setID("player_" + System.currentTimeMillis());
+        Faction faction = new Faction(name).setID(name);
         faction.getAccessProfile().getOwnerGroup().addMember(player);
         return faction;
     }
