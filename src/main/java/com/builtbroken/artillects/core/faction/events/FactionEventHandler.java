@@ -13,16 +13,22 @@ public class FactionEventHandler
     @SubscribeEvent
     public void worldLoad(WorldEvent.Load event)
     {
-        if (FactionManager.getMapForDim(event.world.provider.dimensionId, false) == null)
+        if(!event.world.isRemote)
         {
-            FactionManager.loadMapFromSave(event.world.provider.dimensionId);
+            if (FactionManager.getMapForDim(event.world.provider.dimensionId, false) == null)
+            {
+                FactionManager.loadMapFromSave(event.world.provider.dimensionId);
+            }
         }
     }
 
     @SubscribeEvent
     public void worldUnload(WorldEvent.Unload event)
     {
-        FactionManager.unloadMapForDim(event.world.provider.dimensionId);
+        if(!event.world.isRemote)
+        {
+            FactionManager.unloadMapForDim(event.world.provider.dimensionId);
+        }
     }
 
     //@SubscribeEvent

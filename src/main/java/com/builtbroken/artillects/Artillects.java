@@ -16,9 +16,12 @@ import com.builtbroken.jlib.helpers.MathHelper;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.core.registry.ModManager;
-import cpw.mods.fml.common.*;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -59,10 +62,11 @@ public class Artillects
     public void preInit(FMLPreInitializationEvent evt) throws NoSuchFieldException
     {
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new FactionEventHandler());
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
+
         SaveManager.registerClass("Faction", Faction.class);
         SaveManager.registerClass("FactionLand", Land.class);
+        MinecraftForge.EVENT_BUS.register(new FactionEventHandler());
 
         //Request content from RE
         Engine.requestOres();
