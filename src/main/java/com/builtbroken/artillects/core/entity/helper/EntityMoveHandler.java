@@ -15,7 +15,6 @@ public class EntityMoveHandler
     /** The speed at which the entity should move */
     private double speed;
     private boolean update;
-    private static final String __OBFID = "CL_00001573";
 
     public EntityMoveHandler(EntityArtillect p_i1614_1_)
     {
@@ -49,7 +48,7 @@ public class EntityMoveHandler
 
     public void onUpdateMoveHelper()
     {
-        this.entity.setMoveForward(0.0F);
+        this.entity.setAIMoveSpeed(0.0f);
 
         if (this.update)
         {

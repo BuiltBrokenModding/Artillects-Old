@@ -7,66 +7,64 @@ import net.minecraft.util.MathHelper;
 public class EntityBodyHandler
 {
     /** Instance of EntityLiving. */
-    private EntityLivingBase theLiving;
-    private int field_75666_b;
-    private float field_75667_c;
-    private static final String __OBFID = "CL_00001570";
+    private EntityLivingBase host;
+    private int ticks;
+    private float previousYawHead;
 
-    public EntityBodyHandler(EntityLivingBase p_i1611_1_)
+    public EntityBodyHandler(EntityLivingBase host)
     {
-        this.theLiving = p_i1611_1_;
+        this.host = host;
     }
 
     public void func_75664_a()
     {
-        double d0 = this.theLiving.posX - this.theLiving.prevPosX;
-        double d1 = this.theLiving.posZ - this.theLiving.prevPosZ;
+        double deltaX = this.host.posX - this.host.prevPosX;
+        double deltaZ = this.host.posZ - this.host.prevPosZ;
 
-        if (d0 * d0 + d1 * d1 > 2.500000277905201E-7D)
+        if (deltaX * deltaX + deltaZ * deltaZ > 2.500000277905201E-7D)
         {
-            this.theLiving.renderYawOffset = this.theLiving.rotationYaw;
-            this.theLiving.rotationYawHead = this.func_75665_a(this.theLiving.renderYawOffset, this.theLiving.rotationYawHead, 75.0F);
-            this.field_75667_c = this.theLiving.rotationYawHead;
-            this.field_75666_b = 0;
+            this.host.renderYawOffset = this.host.rotationYaw;
+            this.host.rotationYawHead = this.clamp(this.host.renderYawOffset, this.host.rotationYawHead, 75.0F);
+            this.previousYawHead = this.host.rotationYawHead;
+            this.ticks = 0;
         }
         else
         {
-            float f = 75.0F;
+            float rotationLimit = 75.0F;
 
-            if (Math.abs(this.theLiving.rotationYawHead - this.field_75667_c) > 15.0F)
+            if (Math.abs(this.host.rotationYawHead - this.previousYawHead) > 15.0F)
             {
-                this.field_75666_b = 0;
-                this.field_75667_c = this.theLiving.rotationYawHead;
+                this.ticks = 0;
+                this.previousYawHead = this.host.rotationYawHead;
             }
             else
             {
-                ++this.field_75666_b;
-                boolean flag = true;
+                ++this.ticks;
 
-                if (this.field_75666_b > 10)
+                if (this.ticks > 10)
                 {
-                    f = Math.max(1.0F - (float)(this.field_75666_b - 10) / 10.0F, 0.0F) * 75.0F;
+                    rotationLimit = Math.max(1.0F - (float)(this.ticks - 10) / 10.0F, 0.0F) * 75.0F;
                 }
             }
 
-            this.theLiving.renderYawOffset = this.func_75665_a(this.theLiving.rotationYawHead, this.theLiving.renderYawOffset, f);
+            this.host.renderYawOffset = this.clamp(this.host.rotationYawHead, this.host.renderYawOffset, rotationLimit);
         }
     }
 
-    private float func_75665_a(float p_75665_1_, float p_75665_2_, float p_75665_3_)
+    private float clamp(float renderYawOffset, float rotationYawHead, float angleLimit)
     {
-        float f3 = MathHelper.wrapAngleTo180_float(p_75665_1_ - p_75665_2_);
+        float angle = MathHelper.wrapAngleTo180_float(renderYawOffset - rotationYawHead);
 
-        if (f3 < -p_75665_3_)
+        if (angle < -angleLimit)
         {
-            f3 = -p_75665_3_;
+            angle = -angleLimit;
         }
 
-        if (f3 >= p_75665_3_)
+        if (angle >= angleLimit)
         {
-            f3 = p_75665_3_;
+            angle = angleLimit;
         }
 
-        return p_75665_1_ - f3;
+        return renderYawOffset - angle;
     }
 }

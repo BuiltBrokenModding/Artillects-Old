@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
+//TODO replace with eular angle object
 @Deprecated
 public class EntityAimHandler
 {
@@ -18,7 +19,6 @@ public class EntityAimHandler
     public double posX;
     public double posY;
     public double posZ;
-    private static final String __OBFID = "CL_00001572";
 
     public EntityAimHandler(EntityArtillect p_i1613_1_)
     {

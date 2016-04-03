@@ -1,8 +1,12 @@
 package com.builtbroken.artillects.core.entity;
 
+import net.minecraft.inventory.IInventory;
 import net.minecraft.world.World;
 
-public class EntityHumanoid extends EntityBase
+/**
+ * Extends by all entities that are human in nature
+ */
+public abstract class EntityHumanoid<I extends IInventory> extends EntityArtillect<I>
 {
     public EntityHumanoid(World world)
     {
@@ -16,8 +20,10 @@ public class EntityHumanoid extends EntityBase
     }
 
     @Override
-    protected boolean canDespawn()
+    protected void onDeathUpdate()
     {
-        return false;
+        super.onDeathUpdate();
+        //TODO don't despawn body, leave it in order to do other things
+        //TODO or spawn in a dead body entity/block
     }
 }
