@@ -89,7 +89,7 @@ public class InventoryNPC extends BasicInventory
         {
             if (gear[i] != null && gear[i].getItem() != null && gear[i].stackSize > 0)
             {
-                gearTag.setTag("" + i, gear[i].getTagCompound());
+                gearTag.setTag("" + i, gear[i].writeToNBT(new NBTTagCompound()));
             }
         }
         if (!gearTag.hasNoTags())

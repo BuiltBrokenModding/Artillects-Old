@@ -42,7 +42,7 @@ public class EntityCombatTest extends EntityNpc
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.2D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.4D);
         this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
     }
 }
