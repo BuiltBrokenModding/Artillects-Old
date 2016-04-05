@@ -48,24 +48,25 @@ public class EntityMoveHandler
 
     public void onUpdateMoveHelper()
     {
-        this.entity.setAIMoveSpeed(0.0f);
-
+        //Reset move speed
+        this.entity.setMoveForward(0.0f);
         if (this.update)
         {
             this.update = false;
-            int i = MathHelper.floor_double(this.entity.boundingBox.minY + 0.5D);
-            double d0 = this.posX - this.entity.posX;
-            double d1 = this.posZ - this.entity.posZ;
-            double d2 = this.posY - (double)i;
-            double d3 = d0 * d0 + d2 * d2 + d1 * d1;
+            int yMidPoint = MathHelper.floor_double(this.entity.boundingBox.minY + 0.5D);
+            double deltaX = this.posX - this.entity.posX;
+            double deltaZ = this.posZ - this.entity.posZ;
+            double deltaY = this.posY - (double) yMidPoint;
+            double mag = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
 
-            if (d3 >= 2.500000277905201E-7D)
+            //If too far from move point, set speed and move
+            if (mag >= 2.500000277905201E-7D)
             {
-                float f = (float)(Math.atan2(d1, d0) * 180.0D / Math.PI) - 90.0F;
+                float f = (float) (Math.atan2(deltaZ, deltaX) * 180.0D / Math.PI) - 90.0F;
                 this.entity.rotationYaw = this.limitAngle(this.entity.rotationYaw, f, 30.0F);
-                this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
+                this.entity.setAIMoveSpeed((float) (this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()));
 
-                if (d2 > 0.0D && d0 * d0 + d1 * d1 < 1.0D)
+                if (deltaY > 0.0D && deltaX * deltaX + deltaZ * deltaZ < 1.0D)
                 {
                     this.entity.getJumpHelper().setJumping();
                 }

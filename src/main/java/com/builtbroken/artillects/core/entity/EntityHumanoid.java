@@ -16,6 +16,7 @@ public abstract class EntityHumanoid<I extends IInventory> extends EntityArtille
     @Override
     public void onLivingUpdate()
     {
+        super.onLivingUpdate();
         this.updateArmSwingProgress();
     }
 

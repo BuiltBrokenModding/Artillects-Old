@@ -7,9 +7,11 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Facing;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -17,6 +19,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 /**
+ * Simple item used to spawn entities from the mod
+ *
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 4/4/2016.
  */
@@ -28,10 +32,6 @@ public class ItemSpawnTool extends Item
         this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
-    /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-     */
     @Override
     public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
@@ -66,9 +66,6 @@ public class ItemSpawnTool extends Item
         }
     }
 
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
@@ -132,6 +129,10 @@ public class ItemSpawnTool extends Item
         {
             entity = EntityCombatTest.newEntity(world);
         }
+        else if (meta == 1)
+        {
+            entity = EntityWorkerTest.newEntity(world);
+        }
         if (entity != null)
         {
             entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
@@ -140,13 +141,23 @@ public class ItemSpawnTool extends Item
         return entity;
     }
 
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     */
+    @Override
+    public String getUnlocalizedName(ItemStack stack)
+    {
+        return getUnlocalizedName() + "." + stack.getItemDamage();
+    }
+
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int meta)
+    {
+        return Items.leather_helmet.getIconFromDamage(0);
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tab, List list)
     {
         list.add(new ItemStack(item, 1, 0));
+        list.add(new ItemStack(item, 1, 1));
     }
 }

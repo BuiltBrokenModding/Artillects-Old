@@ -2,6 +2,7 @@ package com.builtbroken.artillects;
 
 import com.builtbroken.artillects.content.items.ItemSchematicCreator;
 import com.builtbroken.artillects.content.npc.EntityCombatTest;
+import com.builtbroken.artillects.content.npc.EntityWorkerTest;
 import com.builtbroken.artillects.content.npc.ItemSpawnTool;
 import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.core.commands.CommandTool;
@@ -103,6 +104,9 @@ public class Artillects
 
         EntityRegistry.registerGlobalEntityID(EntityCombatTest.class, "ArtillectsCombatTest", EntityRegistry.findGlobalUniqueEntityId());
         EntityRegistry.registerModEntity(EntityCombatTest.class, "ArtillectsCombatTest", 46, this, 500, 1, true);
+
+        EntityRegistry.registerGlobalEntityID(EntityWorkerTest.class, "ArtillectsWorkerTest", EntityRegistry.findGlobalUniqueEntityId());
+        EntityRegistry.registerModEntity(EntityWorkerTest.class, "ArtillectsWorkerTest", 47, this, 500, 1, true);
 
         proxy.preInit();
     }

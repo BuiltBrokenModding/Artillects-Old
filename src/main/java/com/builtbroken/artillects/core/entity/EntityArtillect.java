@@ -2,6 +2,7 @@ package com.builtbroken.artillects.core.entity;
 
 import com.builtbroken.artillects.core.entity.ai.AITaskList;
 import com.builtbroken.artillects.core.entity.helper.*;
+import com.builtbroken.mc.api.ISave;
 import com.builtbroken.mc.api.tile.IInventoryProvider;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -54,9 +56,16 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     }
 
     @Override
+    protected boolean isAIEnabled()
+    {
+        return true;
+    }
+
+    @Override
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.followRange).setBaseValue(16.0D);
     }
 
@@ -67,37 +76,17 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
         this.dataWatcher.addObject(10, "");
     }
 
-    /**
-     * Gets called every tick from main Entity class
-     */
     @Override
-    public void onEntityUpdate()
+    public boolean attackEntityFrom(DamageSource source, float damage)
     {
-        super.onEntityUpdate();
-    }
-
-    /**
-     * Called to update the entity's position/logic.
-     */
-    @Override
-    public void onUpdate()
-    {
-        super.onUpdate();
-    }
-
-    /**
-     * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
-     * use this to react to sunlight and start to burn.
-     */
-    @Override
-    public void onLivingUpdate()
-    {
-        super.onLivingUpdate();
+        return super.attackEntityFrom(source, damage);
     }
 
     @Override
     protected void updateAITasks()
     {
+        super.updateAITasks();
+        System.out.println("" + moveStrafing + " " + moveForward + " " + limbSwing + "  " + limbSwingAmount);
         ++this.entityAge;
         this.tasks.onUpdateTasks();
         this.navigator.onUpdateNavigation();
@@ -131,6 +120,12 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     {
         super.writeEntityToNBT(nbt);
         nbt.setString("CustomName", this.getCustomNameTag());
+        if (inventory instanceof ISave)
+        {
+            NBTTagCompound tag = new NBTTagCompound();
+            ((ISave) inventory).save(tag);
+            nbt.setTag("inventory", tag);
+        }
     }
 
     /**
@@ -144,16 +139,25 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
         {
             this.setCustomNameTag(nbt.getString("CustomName"));
         }
+        if (inventory instanceof ISave && nbt.hasKey("inventory"))
+        {
+            ((ISave) inventory).load(nbt.getCompoundTag("inventory"));
+        }
+    }
+
+    @Override
+    public void setAIMoveSpeed(float p_70659_1_)
+    {
+        super.setAIMoveSpeed(p_70659_1_);
+        this.setMoveForward(p_70659_1_);
     }
 
     /**
      * set the movespeed used for the new AI system
      */
-    @Override
-    public void setAIMoveSpeed(float speed)
+    public void setMoveForward(float p_70657_1_)
     {
-        super.setAIMoveSpeed(speed);
-        this.moveForward = speed;
+        this.moveForward = p_70657_1_;
     }
 
 
@@ -360,5 +364,30 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
             return getHeldItem().getItem() instanceof ItemSword || getHeldItem().getItem() instanceof ItemBow || getHeldItem().getItem() instanceof ItemTool;
         }
         return false;
+    }
+
+    //------------------------------------------
+    //--------- OLD MC CODE, NOT USED ----------
+    //------------------------------------------
+    @Override
+    protected void updateEntityActionState()
+    {
+        super.updateEntityActionState();
+        this.moveStrafing = 0.0F;
+        this.moveForward = 0.0F;
+
+        boolean flag1 = this.isInWater();
+        boolean flag = this.handleLavaMovement();
+
+        if (flag1 || flag)
+        {
+            this.isJumping = this.rand.nextFloat() < 0.8F;
+        }
+    }
+
+    @Deprecated
+    public ItemStack func_130225_q(int slot)
+    {
+        return getEquipmentInSlot(slot + 1);
     }
 }

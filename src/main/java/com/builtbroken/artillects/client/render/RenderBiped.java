@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.content.render;
+package com.builtbroken.artillects.client.render;
 
 import com.builtbroken.artillects.core.entity.EntityArtillect;
 import com.google.common.collect.Maps;
@@ -30,33 +30,59 @@ public class RenderBiped extends RenderArtillect
 {
     public ModelBiped modelBipedMain;
     protected float field_77070_b;
-    protected ModelBiped modelArmorChest;
-    protected ModelBiped modelArmor;
+    protected ModelBiped field_82423_g;
+    protected ModelBiped field_82425_h;
     private static final Map field_110859_k = Maps.newHashMap();
     /** List of armor texture filenames. */
     public static String[] bipedArmorFilenamePrefix = new String[] {"leather", "chainmail", "iron", "diamond", "gold"};
-    private static final ResourceLocation steveTextures = new ResourceLocation("textures/entity/steve.png");
+    private static final String __OBFID = "CL_00001001";
 
     public RenderBiped(ModelBiped p_i1257_1_, float p_i1257_2_)
     {
         this(p_i1257_1_, p_i1257_2_, 1.0F);
     }
 
-    public RenderBiped(ModelBiped mainModel, float p_i1258_2_, float p_i1258_3_)
+    public RenderBiped(ModelBiped p_i1258_1_, float p_i1258_2_, float p_i1258_3_)
     {
-        super(mainModel, p_i1258_2_);
-        this.modelBipedMain = mainModel;
+        super(p_i1258_1_, p_i1258_2_);
+        this.modelBipedMain = p_i1258_1_;
         this.field_77070_b = p_i1258_3_;
-        this.modelArmorChest = new ModelBiped(1.0F);
-        this.modelArmor = new ModelBiped(0.5F);
+        this.func_82421_b();
+    }
+
+    protected void func_82421_b()
+    {
+        this.field_82423_g = new ModelBiped(1.0F);
+        this.field_82425_h = new ModelBiped(0.5F);
+    }
+
+    @Deprecated //Use the more sensitive version getArmorResource below
+    public static ResourceLocation func_110857_a(ItemArmor p_110857_0_, int p_110857_1_)
+    {
+        return func_110858_a(p_110857_0_, p_110857_1_, (String)null);
+    }
+
+    @Deprecated //Use the more sensitive version getArmorResource below
+    public static ResourceLocation func_110858_a(ItemArmor p_110858_0_, int p_110858_1_, String p_110858_2_)
+    {
+        String s1 = String.format("textures/models/armor/%s_layer_%d%s.png", new Object[] {bipedArmorFilenamePrefix[p_110858_0_.renderIndex], Integer.valueOf(p_110858_1_ == 2 ? 2 : 1), p_110858_2_ == null ? "" : String.format("_%s", new Object[]{p_110858_2_})});
+        ResourceLocation resourcelocation = (ResourceLocation)field_110859_k.get(s1);
+
+        if (resourcelocation == null)
+        {
+            resourcelocation = new ResourceLocation(s1);
+            field_110859_k.put(s1, resourcelocation);
+        }
+
+        return resourcelocation;
     }
 
     /**
      * Queries whether should render the specified pass or not.
      */
-    protected int shouldRenderPass(EntityArtillect entity, int p_77032_2_, float p_77032_3_)
+    protected int shouldRenderPass(EntityArtillect p_77032_1_, int p_77032_2_, float p_77032_3_)
     {
-        ItemStack itemstack = entity.getEquipmentInSlot(4 - p_77032_2_);
+        ItemStack itemstack = p_77032_1_.func_130225_q(3 - p_77032_2_);
 
         if (itemstack != null)
         {
@@ -65,8 +91,8 @@ public class RenderBiped extends RenderArtillect
             if (item instanceof ItemArmor)
             {
                 ItemArmor itemarmor = (ItemArmor)item;
-                this.bindTexture(getArmorResource(entity, itemstack, p_77032_2_, null));
-                ModelBiped modelbiped = p_77032_2_ == 2 ? this.modelArmor : this.modelArmorChest;
+                this.bindTexture(getArmorResource(p_77032_1_, itemstack, p_77032_2_, null));
+                ModelBiped modelbiped = p_77032_2_ == 2 ? this.field_82425_h : this.field_82423_g;
                 modelbiped.bipedHead.showModel = p_77032_2_ == 0;
                 modelbiped.bipedHeadwear.showModel = p_77032_2_ == 0;
                 modelbiped.bipedBody.showModel = p_77032_2_ == 1 || p_77032_2_ == 2;
@@ -74,7 +100,7 @@ public class RenderBiped extends RenderArtillect
                 modelbiped.bipedLeftArm.showModel = p_77032_2_ == 1;
                 modelbiped.bipedRightLeg.showModel = p_77032_2_ == 2 || p_77032_2_ == 3;
                 modelbiped.bipedLeftLeg.showModel = p_77032_2_ == 2 || p_77032_2_ == 3;
-                modelbiped = net.minecraftforge.client.ForgeHooksClient.getArmorModel(entity, itemstack, p_77032_2_, modelbiped);
+                modelbiped = net.minecraftforge.client.ForgeHooksClient.getArmorModel(p_77032_1_, itemstack, p_77032_2_, modelbiped);
                 this.setRenderPassModel(modelbiped);
                 modelbiped.onGround = this.mainModel.onGround;
                 modelbiped.isRiding = this.mainModel.isRiding;
@@ -113,7 +139,7 @@ public class RenderBiped extends RenderArtillect
 
     protected void func_82408_c(EntityArtillect p_82408_1_, int p_82408_2_, float p_82408_3_)
     {
-        ItemStack itemstack = p_82408_1_.getEquipmentInSlot(4 - p_82408_2_);
+        ItemStack itemstack = p_82408_1_.func_130225_q(3 - p_82408_2_);
 
         if (itemstack != null)
         {
@@ -134,7 +160,6 @@ public class RenderBiped extends RenderArtillect
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    @Override
     public void doRender(EntityArtillect p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
@@ -148,9 +173,9 @@ public class RenderBiped extends RenderArtillect
         }
 
         super.doRender(p_76986_1_, p_76986_2_, d3, p_76986_6_, p_76986_8_, p_76986_9_);
-        this.modelArmorChest.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = false;
-        this.modelArmorChest.isSneak = this.modelArmor.isSneak = this.modelBipedMain.isSneak = false;
-        this.modelArmorChest.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = 0;
+        this.field_82423_g.aimedBow = this.field_82425_h.aimedBow = this.modelBipedMain.aimedBow = false;
+        this.field_82423_g.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = false;
+        this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = 0;
     }
 
     /**
@@ -158,13 +183,13 @@ public class RenderBiped extends RenderArtillect
      */
     protected ResourceLocation getEntityTexture(EntityArtillect p_110775_1_)
     {
-        return steveTextures;
+        return null;
     }
 
     protected void func_82420_a(EntityArtillect p_82420_1_, ItemStack p_82420_2_)
     {
-        this.modelArmorChest.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = p_82420_2_ != null ? 1 : 0;
-        this.modelArmorChest.isSneak = this.modelArmor.isSneak = this.modelBipedMain.isSneak = p_82420_1_.isSneaking();
+        this.field_82423_g.heldItemRight = this.field_82425_h.heldItemRight = this.modelBipedMain.heldItemRight = p_82420_2_ != null ? 1 : 0;
+        this.field_82423_g.isSneak = this.field_82425_h.isSneak = this.modelBipedMain.isSneak = p_82420_1_.isSneaking();
     }
 
     protected void renderEquippedItems(EntityArtillect p_77029_1_, float p_77029_2_)
@@ -172,7 +197,7 @@ public class RenderBiped extends RenderArtillect
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
         super.renderEquippedItems(p_77029_1_, p_77029_2_);
         ItemStack itemstack = p_77029_1_.getHeldItem();
-        ItemStack itemstack1 = p_77029_1_.getEquipmentInSlot(4);
+        ItemStack itemstack1 = p_77029_1_.func_130225_q(3);
         Item item;
         float f1;
 
@@ -320,7 +345,6 @@ public class RenderBiped extends RenderArtillect
         GL11.glTranslatef(0.0F, 0.1875F, 0.0F);
     }
 
-    @Override
     protected void func_82408_c(EntityLivingBase p_82408_1_, int p_82408_2_, float p_82408_3_)
     {
         this.func_82408_c((EntityArtillect)p_82408_1_, p_82408_2_, p_82408_3_);
@@ -329,13 +353,11 @@ public class RenderBiped extends RenderArtillect
     /**
      * Queries whether should render the specified pass or not.
      */
-    @Override
     protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_)
     {
         return this.shouldRenderPass((EntityArtillect)p_77032_1_, p_77032_2_, p_77032_3_);
     }
 
-    @Override
     protected void renderEquippedItems(EntityLivingBase p_77029_1_, float p_77029_2_)
     {
         this.renderEquippedItems((EntityArtillect)p_77029_1_, p_77029_2_);
@@ -347,7 +369,6 @@ public class RenderBiped extends RenderArtillect
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    @Override
     public void doRender(EntityLivingBase p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
         this.doRender((EntityArtillect)p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
@@ -356,7 +377,6 @@ public class RenderBiped extends RenderArtillect
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    @Override
     protected ResourceLocation getEntityTexture(Entity p_110775_1_)
     {
         return this.getEntityTexture((EntityArtillect)p_110775_1_);
@@ -368,7 +388,6 @@ public class RenderBiped extends RenderArtillect
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,
      * double d2, float f, float f1). But JAD is pre 1.5 so doesn't do that.
      */
-    @Override
     public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_)
     {
         this.doRender((EntityArtillect)p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
