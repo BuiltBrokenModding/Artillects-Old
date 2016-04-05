@@ -264,6 +264,7 @@ public class EntityBase extends EntityCreature implements IWorldPosition
     /**
      * Spawns an explosion particle around the Entity's location
      */
+    @Override
     public void spawnExplosionParticle()
     {
         for (int i = 0; i < 20; ++i)

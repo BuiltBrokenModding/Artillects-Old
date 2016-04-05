@@ -1,6 +1,8 @@
 package com.builtbroken.artillects;
 
 import com.builtbroken.artillects.content.items.ItemSchematicCreator;
+import com.builtbroken.artillects.content.npc.EntityCombatTest;
+import com.builtbroken.artillects.content.npc.ItemSpawnTool;
 import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
@@ -24,6 +26,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -55,6 +58,7 @@ public class Artillects
     /** Blocks and Items */
     public static ModManager contentRegistry;
     public static Item itemSchematicCreator;
+    public static Item itemSpawnTool;
 
     public static ContentFactory contentFactory;
 
@@ -91,8 +95,14 @@ public class Artillects
             e.printStackTrace();
         }
         itemSchematicCreator = contentRegistry.newItem(ItemSchematicCreator.class);
+        itemSpawnTool = contentRegistry.newItem("ArtillectSpawnTool",ItemSpawnTool.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
+
+
+
+        EntityRegistry.registerGlobalEntityID(EntityCombatTest.class, "ArtillectsCombatTest", EntityRegistry.findGlobalUniqueEntityId());
+        EntityRegistry.registerModEntity(EntityCombatTest.class, "ArtillectsCombatTest", 46, this, 500, 1, true);
 
         proxy.preInit();
     }

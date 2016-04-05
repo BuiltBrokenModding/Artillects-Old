@@ -1,5 +1,6 @@
 package com.builtbroken.artillects.core.entity;
 
+import com.builtbroken.artillects.core.entity.ai.AITaskList;
 import com.builtbroken.artillects.core.entity.helper.*;
 import com.builtbroken.mc.api.tile.IInventoryProvider;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
@@ -7,8 +8,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -31,8 +36,6 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
 
     /** List of task to execute per tick */
     public final AITaskList tasks;
-    /** List of task to execute for combat */
-    public final AITaskList targetTasks;
     /** The active target the Task system uses for tracking */
     private EntityLivingBase attackTarget;
 
@@ -43,7 +46,6 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     {
         super(world);
         this.tasks = new AITaskList();
-        this.targetTasks = new AITaskList();
         this.lookHelper = new EntityAimHandler(this);
         this.moveHelper = new EntityMoveHandler(this);
         this.jumpHelper = new EntityJumpHandler(this);
@@ -97,7 +99,6 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     protected void updateAITasks()
     {
         ++this.entityAge;
-        this.targetTasks.onUpdateTasks();
         this.tasks.onUpdateTasks();
         this.navigator.onUpdateNavigation();
         this.updateAITick();
@@ -249,13 +250,18 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
         return super.interactFirst(player);
     }
 
+    @Override
+    public AxisAlignedBB getBoundingBox()
+    {
+        return boundingBox;
+    }
 
     //------------------------------------------
     //--------- Inventory Code -----------------
     //------------------------------------------
 
     @Override
-    public IInventory getInventory()
+    public I getInventory()
     {
         return inventory;
     }
@@ -317,5 +323,42 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     {
         //TODO implement in later classes
         return null;
+    }
+
+    /**
+     * Is the held item a ranged weapon
+     *
+     * @return true if the item is a ranged weapon, or can be used as a ranged weapon
+     */
+    public boolean isUsingRangedWeapon()
+    {
+        //TODO add handler for implementing modded weapons
+        return getHeldItem() != null && getHeldItem().getItem() instanceof ItemBow;
+    }
+
+    /**
+     * Is the held item a meele weapon
+     *
+     * @return
+     */
+    public boolean isUsingMeeleWeapon()
+    {
+        //TODO add handler for implementing modded weapons
+        return getHeldItem() != null && (getHeldItem().getItem() instanceof ItemSword || getHeldItem().getItem() instanceof ItemTool);
+    }
+
+    /**
+     * Is the item held a weapon
+     *
+     * @return true if the item is a weapon, and does damage when hitting entities. Exclude blocks and crafting items.
+     */
+    public boolean hasWeapon()
+    {
+        //TODO add handler for implementing modded weapons
+        if (getHeldItem() != null)
+        {
+            return getHeldItem().getItem() instanceof ItemSword || getHeldItem().getItem() instanceof ItemBow || getHeldItem().getItem() instanceof ItemTool;
+        }
+        return false;
     }
 }

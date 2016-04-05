@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.core.entity.ai;
+package com.builtbroken.artillects.core.entity.ai.combat;
 
 import com.builtbroken.artillects.api.IEntity;
 import com.builtbroken.artillects.api.IFactionMember;

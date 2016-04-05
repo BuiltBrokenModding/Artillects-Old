@@ -26,6 +26,7 @@ public class BlockProduct extends Product<Block>
     public String iconName;
 
     /** Called to load the content's data from an xml document */
+    @Override
     public BlockProduct loadData(Document doc)
     {
         subBlocks = new Subblock[16];

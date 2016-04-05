@@ -1,6 +1,4 @@
-package com.builtbroken.artillects.core.entity.helper;
-
-import net.minecraft.entity.ai.EntityAIBase;
+package com.builtbroken.artillects.core.entity.ai;
 
 /**
  * Copy of {@link net.minecraft.entity.ai.EntityAITasks.EntityAITaskEntry} with custom changes.
@@ -8,11 +6,11 @@ import net.minecraft.entity.ai.EntityAIBase;
 public class AITaskEntry
 {
     /** The EntityAIBase object. */
-    public EntityAIBase action;
+    public AITask action;
     /** Priority of the EntityAIBase */
     public int priority;
 
-    public AITaskEntry(int priority, EntityAIBase task)
+    public AITaskEntry(int priority, AITask task)
     {
         this.priority = priority;
         this.action = task;

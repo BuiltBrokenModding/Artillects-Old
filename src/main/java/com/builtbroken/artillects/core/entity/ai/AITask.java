@@ -2,54 +2,55 @@ package com.builtbroken.artillects.core.entity.ai;
 
 import com.builtbroken.mc.api.IWorldPosition;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.world.World;
 
 /** Task prefab
  * 
  * @author Darkguardsman */
-public abstract class AITask extends EntityAIBase implements IWorldPosition
+public abstract class AITask<E extends Entity> implements IWorldPosition
 {
-    private Entity entity;
+    protected final E host;
     
-    public AITask(Entity entity)
+    public AITask(E host)
     {
-        this.entity = entity;
+        this.host = host;
     }
+
+    public void updateTask() {}
     
     /** Entity hosting this task */
-    public Entity entity()
+    public E entity()
     {
-        return entity;
+        return host;
     }
     
     /** Is the entity hosting this task alive */
     public boolean isAlive()
     {
-        return !entity.isEntityAlive();
+        return !host.isEntityAlive();
     }
     
     @Override
     public World world()
     {
-        return entity.worldObj;
+        return host.worldObj;
     }
     
     @Override
     public double x()
     {
-        return entity.posX;
+        return host.posX;
     }
     
     @Override
     public double y()
     {
-        return entity.posY;
+        return host.posY;
     }
     
     @Override
     public double z()
     {
-        return entity.posZ;
+        return host.posZ;
     }
 }
