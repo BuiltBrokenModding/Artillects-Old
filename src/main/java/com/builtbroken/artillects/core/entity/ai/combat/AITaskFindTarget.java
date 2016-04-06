@@ -44,24 +44,23 @@ public class AITaskFindTarget<E extends EntityArtillect> extends AITask<E>
     @Override
     public void updateTask()
     {
-        //TODO keep track of who has what target, so target sharing is minimized to avoid several guards attacking one slime that is harmless
-        if (entity().getAttackTarget() == null || !entity().getAttackTarget().isEntityAlive() || !isSuitableTarget(entity().getAttackTarget()))
+        if (!entity().getAttackTarget().isEntityAlive() || !isSuitableTarget(entity().getAttackTarget()))
         {
-            searchTimer++;
-            //Check for new targets every second to avoid excess calls
-            if (searchTimer >= searchDelay())
+            entity().setAttackTarget(null);
+        }
+        //TODO keep track of who has what target, so target sharing is minimized to avoid several guards attacking one slime that is harmless
+        if (entity().getAttackTarget() == null && ++searchTimer >= searchDelay())
+        {
+            searchTimer = 0;
+            AxisAlignedBB bounds = host.getBoundingBox().expand(getTargetDistance(), getTargetDistance(), getTargetDistance());
+            List<Entity> list = world().getEntitiesWithinAABBExcludingEntity(entity(), bounds, getSelector());
+            Collections.sort(list, new EntityDistanceSorter(this, true));
+            for (Entity entity : list)
             {
-                searchTimer = 0;
-                AxisAlignedBB bounds = host.getBoundingBox().expand(getTargetDistance(), getTargetDistance(), getTargetDistance());
-                List<Entity> list = world().getEntitiesWithinAABBExcludingEntity(entity(), bounds, getSelector());
-                Collections.sort(list, new EntityDistanceSorter(this, true));
-                for (Entity entity : list)
+                if (entity instanceof EntityLivingBase && canEasilyReach(entity) && host.canEntityBeSeen(entity))
                 {
-                    if (entity instanceof EntityLivingBase && canEasilyReach(entity))
-                    {
-                        entity().setAttackTarget((EntityLivingBase) entity);
-                        return;
-                    }
+                    entity().setAttackTarget((EntityLivingBase) entity);
+                    return;
                 }
             }
         }
@@ -69,11 +68,12 @@ public class AITaskFindTarget<E extends EntityArtillect> extends AITask<E>
 
     /**
      * Amount of time to wait between target search checks
+     *
      * @return time in ticks
      */
     protected int searchDelay()
     {
-        return 20;
+        return 40;
     }
 
     /**

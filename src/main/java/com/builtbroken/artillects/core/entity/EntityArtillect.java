@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -474,5 +475,11 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     public ItemStack func_130225_q(int slot)
     {
         return getEquipmentInSlot(slot + 1);
+    }
+
+    public boolean canEntityBeSeen(Entity entity)
+    {
+        //TODO switch over to Pos system, and modify to do several points of check
+        return this.worldObj.rayTraceBlocks(Vec3.createVectorHelper(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double)entity.getEyeHeight(), entity.posZ)) == null;
     }
 }

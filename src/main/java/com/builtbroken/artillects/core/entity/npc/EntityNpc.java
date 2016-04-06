@@ -1,10 +1,11 @@
-package com.builtbroken.artillects.core.entity.passive;
+package com.builtbroken.artillects.core.entity.npc;
 
 import com.builtbroken.artillects.core.entity.EntityHumanoid;
 import com.builtbroken.artillects.core.entity.ai.AITaskSwimming;
 import com.builtbroken.artillects.core.entity.ai.combat.AITaskFindTarget;
 import com.builtbroken.artillects.core.entity.ai.combat.AITaskMeleeAttack;
 import com.builtbroken.artillects.core.entity.ai.combat.AITaskMoveTowardsTarget;
+import com.builtbroken.artillects.core.entity.ai.npc.NpcTaskReturnHome;
 import com.builtbroken.artillects.core.entity.profession.Profession;
 import com.builtbroken.artillects.core.entity.profession.ProfessionProvider;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
@@ -61,6 +62,7 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
         this.tasks.add(2, new AITaskFindTarget(this, new EntityLivingSelector().selectMobs()));
         this.tasks.add(3, new AITaskMoveTowardsTarget(this, 1.0f));
         this.tasks.add(4, new AITaskMeleeAttack(this));
+        this.tasks.add(7, new NpcTaskReturnHome(this));
     }
 
     @Override
@@ -81,7 +83,7 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
         getProfession().update();
         //Then run any other AI calls
         super.updateAITasks();
-        if(renderData)
+        if (renderData)
         {
             renderDataInWorld();
         }

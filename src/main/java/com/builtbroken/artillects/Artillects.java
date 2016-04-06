@@ -7,7 +7,7 @@ import com.builtbroken.artillects.content.npc.ItemSpawnTool;
 import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionProviderGuard;
 import com.builtbroken.artillects.core.faction.Faction;
 import com.builtbroken.artillects.core.faction.FactionManager;

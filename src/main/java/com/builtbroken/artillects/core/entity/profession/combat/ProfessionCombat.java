@@ -2,7 +2,7 @@ package com.builtbroken.artillects.core.entity.profession.combat;
 
 import com.builtbroken.artillects.core.entity.ai.npc.combat.NpcEntityTargetSelector;
 import com.builtbroken.artillects.core.entity.ai.npc.combat.NpcTaskFindTarget;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.artillects.core.entity.profession.Profession;
 
 /**

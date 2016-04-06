@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.entity.profession.combat;
 
 import com.builtbroken.artillects.core.entity.ai.npc.combat.NpcTaskGuardArea;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -24,6 +24,13 @@ public class ProfessionGuard extends ProfessionCombat
     {
         super(entity);
         entity.tasks.add(2, new NpcTaskGuardArea(entity, zoneDistance)); //TODO add getter so we can update the distance easier
+    }
+
+    @Override
+    public boolean hasActiveTask()
+    {
+        //TODO replace with zone, and zone task
+        return centerOfGuardZone != null;
     }
 
     @Override

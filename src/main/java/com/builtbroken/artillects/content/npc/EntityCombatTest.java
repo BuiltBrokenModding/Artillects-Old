@@ -1,6 +1,6 @@
 package com.builtbroken.artillects.content.npc;
 
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
 import com.builtbroken.mc.lib.transform.vector.Location;
 import com.builtbroken.mc.lib.transform.vector.Pos;

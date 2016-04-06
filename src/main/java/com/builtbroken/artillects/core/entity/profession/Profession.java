@@ -46,4 +46,14 @@ public abstract class Profession<E extends Entity> implements ISave
     {
         return nbt;
     }
+
+    /**
+     * Does the NPC have an active task assigned to complete
+     *
+     * @return true if there is at minimal something to do
+     */
+    public boolean hasActiveTask()
+    {
+        return false;
+    }
 }

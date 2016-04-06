@@ -2,7 +2,7 @@ package com.builtbroken.artillects.core.entity.ai.npc;
 
 import com.builtbroken.artillects.core.entity.ai.AITask;
 import com.builtbroken.artillects.core.entity.ai.PositionGenerator;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 

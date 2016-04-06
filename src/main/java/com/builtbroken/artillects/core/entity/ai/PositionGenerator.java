@@ -1,6 +1,6 @@
 package com.builtbroken.artillects.core.entity.ai;
 
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.Entity;
 

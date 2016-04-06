@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.content.npc;
 
 import com.builtbroken.artillects.core.entity.ai.AITaskSwimming;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

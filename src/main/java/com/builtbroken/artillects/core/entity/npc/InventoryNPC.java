@@ -1,4 +1,4 @@
-package com.builtbroken.artillects.core.entity.passive;
+package com.builtbroken.artillects.core.entity.npc;
 
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.packet.PacketEntity;

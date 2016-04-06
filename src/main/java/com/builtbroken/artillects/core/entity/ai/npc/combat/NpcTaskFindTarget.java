@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.entity.ai.npc.combat;
 
 import com.builtbroken.artillects.core.entity.ai.combat.AITaskFindTarget;
-import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionCombat;
 import net.minecraft.command.IEntitySelector;
 
