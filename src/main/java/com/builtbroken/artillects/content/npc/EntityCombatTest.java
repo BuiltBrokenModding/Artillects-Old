@@ -1,17 +1,15 @@
 package com.builtbroken.artillects.content.npc;
 
-import com.builtbroken.artillects.core.entity.ai.AITaskSwimming;
-import com.builtbroken.artillects.core.entity.ai.combat.AITaskFindTarget;
-import com.builtbroken.artillects.core.entity.ai.combat.AITaskMeleeAttack;
-import com.builtbroken.artillects.core.entity.ai.combat.AITaskMoveTowardsTarget;
 import com.builtbroken.artillects.core.entity.passive.EntityNpc;
-import com.builtbroken.mc.prefab.entity.selector.EntityLivingSelector;
+import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
+import com.builtbroken.mc.lib.transform.vector.Pos;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-/**
+/** Just a test object used to simplify processes needed to check if code works. The actual combat NPC will be created using
+ * the EntityNpc class with the profession id of guard or soldier.
  * @see <a href="https://github.com/BuiltBrokenModding/VoltzEngine/blob/development/license.md">License</a> for what you can and can't do with the code.
  * Created by Dark(DarkGuardsman, Robert) on 4/2/2016.
  */
@@ -20,11 +18,7 @@ public class EntityCombatTest extends EntityNpc
     public EntityCombatTest(World world)
     {
         super(world);
-        this.tasks.add(0, new AITaskSwimming(this));
-        this.tasks.add(2, new AITaskFindTarget(this, new EntityLivingSelector().selectMobs()));
-        this.tasks.add(3, new AITaskMoveTowardsTarget(this, 1.0f));
-        this.tasks.add(4, new AITaskMeleeAttack(this));
-        this.setSize(0.6F, 1.8F);
+        this.professionID = "guard";
     }
 
     public static EntityCombatTest newEntity(World world)
@@ -34,6 +28,16 @@ public class EntityCombatTest extends EntityNpc
         entity.getInventory().setChestArmor(new ItemStack(Items.leather_chestplate));
         entity.getInventory().setFootArmor(new ItemStack(Items.leather_boots));
         entity.getInventory().setHeldItem(new ItemStack(Items.iron_sword));
+
+        if(entity.profession == null)
+        {
+            entity.profession = new ProfessionGuard(entity);
+        }
+
+        if(entity.profession instanceof ProfessionGuard)
+        {
+            ((ProfessionGuard) entity.profession).centerOfGuardZone = new Pos(entity);
+        }
         return entity;
     }
 

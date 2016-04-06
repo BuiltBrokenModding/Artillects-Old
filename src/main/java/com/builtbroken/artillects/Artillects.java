@@ -7,6 +7,8 @@ import com.builtbroken.artillects.content.npc.ItemSpawnTool;
 import com.builtbroken.artillects.content.teleporter.TileEntityTeleporterAnchor;
 import com.builtbroken.artillects.core.commands.CommandTool;
 import com.builtbroken.artillects.core.creation.ContentFactory;
+import com.builtbroken.artillects.core.entity.passive.EntityNpc;
+import com.builtbroken.artillects.core.entity.profession.combat.ProfessionProviderGuard;
 import com.builtbroken.artillects.core.faction.Faction;
 import com.builtbroken.artillects.core.faction.FactionManager;
 import com.builtbroken.artillects.core.faction.events.FactionEventHandler;
@@ -96,10 +98,9 @@ public class Artillects
             e.printStackTrace();
         }
         itemSchematicCreator = contentRegistry.newItem(ItemSchematicCreator.class);
-        itemSpawnTool = contentRegistry.newItem("ArtillectSpawnTool",ItemSpawnTool.class);
+        itemSpawnTool = contentRegistry.newItem("ArtillectSpawnTool", ItemSpawnTool.class);
 
         GameRegistry.registerTileEntity(TileEntityTeleporterAnchor.class, "tileHiveTeleporterAnchor");
-
 
 
         EntityRegistry.registerGlobalEntityID(EntityCombatTest.class, "ArtillectsCombatTest", EntityRegistry.findGlobalUniqueEntityId());
@@ -117,6 +118,8 @@ public class Artillects
         UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityChest.class, new UsageStorage("tile.usage.vanilla.chest", "tile.inventory.vanilla.chest", MathHelper.generateSqeuncedArray(0, 36)));
         UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityBrewingStand.class, new UsageBrewing());
         UsageManager.GLOBAL_INSTANCE.registerUsage(TileEntityFurnace.class, new UsageFurnace());
+
+        EntityNpc.registeredProfessions.put("guard", new ProfessionProviderGuard());
         proxy.init();
     }
 

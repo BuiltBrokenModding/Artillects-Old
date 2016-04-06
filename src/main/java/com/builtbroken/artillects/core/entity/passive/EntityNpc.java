@@ -1,9 +1,18 @@
 package com.builtbroken.artillects.core.entity.passive;
 
 import com.builtbroken.artillects.core.entity.EntityHumanoid;
+import com.builtbroken.artillects.core.entity.ai.AITaskSwimming;
+import com.builtbroken.artillects.core.entity.ai.combat.AITaskFindTarget;
+import com.builtbroken.artillects.core.entity.ai.combat.AITaskMeleeAttack;
+import com.builtbroken.artillects.core.entity.ai.combat.AITaskMoveTowardsTarget;
+import com.builtbroken.artillects.core.entity.profession.Profession;
+import com.builtbroken.artillects.core.entity.profession.ProfessionProvider;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.PacketType;
+import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.prefab.entity.selector.EntityLivingSelector;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import io.netty.buffer.ByteBuf;
@@ -13,6 +22,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
+
 /**
  * Prefab for all NPC that artillects will contain including crafters and fighters
  *
@@ -20,10 +31,62 @@ import net.minecraft.world.World;
  */
 public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEntityAdditionalSpawnData, IPacketIDReceiver
 {
+    /** Map of profession ids to profession creation objects, for internal use only... will be moved to a handler later */
+    public static HashMap<String, ProfessionProvider> registeredProfessions = new HashMap();
+
+    /** Object that handles finer details of what the NPC is, and does */
+    public Profession profession;
+    /** ID to load NPC's profession from disk, also may be used for render and other references */
+    protected String professionID = "citizen"; //Default profession with zero tasks
+
+    /** Location of this NPCs home, defaults to spawn position. Is only used as a back up to an action home object point. */
+    private Location homeLocation;
+
     public EntityNpc(World world)
     {
         super(world);
         inventory = new InventoryNPC(this);
+
+        //AI tasks
+        this.tasks.add(0, new AITaskSwimming(this));
+        this.tasks.add(2, new AITaskFindTarget(this, new EntityLivingSelector().selectMobs()));
+        this.tasks.add(3, new AITaskMoveTowardsTarget(this, 1.0f));
+        this.tasks.add(4, new AITaskMeleeAttack(this));
+    }
+
+    @Override
+    public void writeEntityToNBT(NBTTagCompound nbt)
+    {
+        super.writeEntityToNBT(nbt);
+        nbt.setString("professionID", professionID);
+        if (profession != null)
+        {
+            NBTTagCompound tag = new NBTTagCompound();
+            profession.save(tag);
+            nbt.setTag("professionSave", tag);
+        }
+    }
+
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound nbt)
+    {
+        super.readEntityFromNBT(nbt);
+        if (nbt.hasKey("professionID"))
+        {
+            this.professionID = nbt.getString("professionID");
+        }
+        if (professionID != null && registeredProfessions.get(professionID) != null)
+        {
+            if (nbt.hasKey("professionSave"))
+            {
+                profession = registeredProfessions.get(professionID).loadFromSave(this, nbt.getCompoundTag("professionSave"));
+            }
+            else
+            {
+                profession = registeredProfessions.get(professionID).newProfession(this);
+            }
+        }
     }
 
     @Override
@@ -131,5 +194,21 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
                 ByteBufUtils.writeTag(buf, new NBTTagCompound());
             }
         }
+    }
+
+    /** Location of this NPCs home, defaults to spawn position */
+    public Location getHomeLocation()
+    {
+        return homeLocation;
+    }
+
+    public void setHomeLocation(Location homeLocation)
+    {
+        this.homeLocation = homeLocation;
+    }
+
+    public float getBlockPathWeight(Pos pos)
+    {
+        return 0.0F;
     }
 }

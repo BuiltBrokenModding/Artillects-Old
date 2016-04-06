@@ -23,6 +23,11 @@ public class AITaskMeleeAttack extends AITask<EntityArtillect>
     @Override
     public void updateTask()
     {
+        if(entity().ignoreWeaponCheck || !entity().isUsingMeleeWeapon())
+        {
+            return;
+        }
+
         if (entity().getAttackTarget() != null)
         {
             if (!entity().getAttackTarget().isEntityAlive())

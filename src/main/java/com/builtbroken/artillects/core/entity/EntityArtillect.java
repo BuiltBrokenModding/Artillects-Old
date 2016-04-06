@@ -47,6 +47,9 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     /** Internal inventory used by the entity */
     protected I inventory;
 
+    /** Used by AI task to ignore check for weapons, only set if AI needs to fight but has no weapon */
+    public boolean ignoreWeaponCheck = false;
+
     public EntityArtillect(World world)
     {
         super(world);
@@ -117,13 +120,13 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     @Override
     public boolean attackEntityAsMob(Entity p_70652_1_)
     {
-        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+        float f = (float) this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
         int i = 0;
 
         if (p_70652_1_ instanceof EntityLivingBase)
         {
-            f += EnchantmentHelper.getEnchantmentModifierLiving(this, (EntityLivingBase)p_70652_1_);
-            i += EnchantmentHelper.getKnockbackModifier(this, (EntityLivingBase)p_70652_1_);
+            f += EnchantmentHelper.getEnchantmentModifierLiving(this, (EntityLivingBase) p_70652_1_);
+            i += EnchantmentHelper.getKnockbackModifier(this, (EntityLivingBase) p_70652_1_);
         }
 
         boolean flag = p_70652_1_.attackEntityFrom(DamageSource.causeMobDamage(this), f);
@@ -132,7 +135,7 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
         {
             if (i > 0)
             {
-                p_70652_1_.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                p_70652_1_.addVelocity((double) (-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F));
                 this.motionX *= 0.6D;
                 this.motionZ *= 0.6D;
             }
@@ -146,7 +149,7 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
 
             if (p_70652_1_ instanceof EntityLivingBase)
             {
-                EnchantmentHelper.func_151384_a((EntityLivingBase)p_70652_1_, this);
+                EnchantmentHelper.func_151384_a((EntityLivingBase) p_70652_1_, this);
             }
 
             EnchantmentHelper.func_151385_b(this, p_70652_1_);
@@ -400,7 +403,7 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
      *
      * @return
      */
-    public boolean isUsingMeeleWeapon()
+    public boolean isUsingMeleeWeapon()
     {
         //TODO add handler for implementing modded weapons
         return getHeldItem() != null && (getHeldItem().getItem() instanceof ItemSword || getHeldItem().getItem() instanceof ItemTool);

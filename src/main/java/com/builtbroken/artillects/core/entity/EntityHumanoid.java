@@ -11,6 +11,7 @@ public abstract class EntityHumanoid<I extends IInventory> extends EntityArtille
     public EntityHumanoid(World world)
     {
         super(world);
+        this.setSize(0.6F, 1.8F);
     }
 
     @Override

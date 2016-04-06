@@ -1,5 +1,6 @@
 package com.builtbroken.artillects.core.entity.ai;
 
+import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.IWorldPosition;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
@@ -7,7 +8,7 @@ import net.minecraft.world.World;
 /** Task prefab
  * 
  * @author Darkguardsman */
-public abstract class AITask<E extends Entity> implements IWorldPosition
+public abstract class AITask<E extends Entity> implements IWorldPosition, IPos3D
 {
     protected final E host;
     
