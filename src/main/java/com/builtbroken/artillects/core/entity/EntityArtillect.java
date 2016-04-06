@@ -30,7 +30,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  * Recoded version of EntityLivingBase to act as the prefab for any
  * entity that has an AI like functionality.
  */
-public abstract class EntityArtillect<I extends IInventory> extends EntityLivingBase implements IInventoryProvider, IWorldPosition, IPos3D
+public abstract class EntityArtillect<I extends IInventory> extends EntityLivingBase implements IInventoryProvider, IWorldPosition, IPos3D, IInventory
 {
     /** The experience points the Entity gives. */
     protected int experienceValue;
@@ -453,6 +453,97 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     }
 
     //------------------------------------------
+    //------- IInventory Wrapper Code ----------
+    //------------------------------------------
+
+    @Override
+    public int getSizeInventory()
+    {
+        return getInventory() != null ? getInventory().getSizeInventory() : 0;
+    }
+
+    @Override
+    public ItemStack getStackInSlot(int p_70301_1_)
+    {
+        return getInventory() != null ? getInventory().getStackInSlot(p_70301_1_) : null;
+    }
+
+    @Override
+    public ItemStack decrStackSize(int p_70298_1_, int p_70298_2_)
+    {
+        return getInventory() != null ? getInventory().decrStackSize(p_70298_1_, p_70298_2_) : null;
+    }
+
+    @Override
+    public ItemStack getStackInSlotOnClosing(int p_70304_1_)
+    {
+        return getInventory() != null ? getInventory().getStackInSlotOnClosing(p_70304_1_) : null;
+    }
+
+    @Override
+    public void setInventorySlotContents(int p_70299_1_, ItemStack p_70299_2_)
+    {
+        if (getInventory() != null)
+        {
+            getInventory().setInventorySlotContents(p_70299_1_, p_70299_2_);
+        }
+    }
+
+    @Override
+    public String getInventoryName()
+    {
+        return getInventory() != null ? getInventoryName() : "inventory";
+    }
+
+    @Override
+    public boolean hasCustomInventoryName()
+    {
+        return getInventory() != null && getInventory().hasCustomInventoryName();
+    }
+
+    @Override
+    public int getInventoryStackLimit()
+    {
+        return getInventory() != null ? getInventory().getInventoryStackLimit() : 0;
+    }
+
+    @Override
+    public void markDirty()
+    {
+
+    }
+
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer p_70300_1_)
+    {
+        return getInventory() != null && getInventory().isUseableByPlayer(p_70300_1_);
+    }
+
+    @Override
+    public void openInventory()
+    {
+        if (getInventory() != null)
+        {
+            getInventory().openInventory();
+        }
+    }
+
+    @Override
+    public void closeInventory()
+    {
+        if (getInventory() != null)
+        {
+            getInventory().closeInventory();
+        }
+    }
+
+    @Override
+    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    {
+        return getInventory() != null && getInventory().isItemValidForSlot(p_94041_1_, p_94041_2_);
+    }
+
+    //------------------------------------------
     //--------- OLD MC CODE, NOT USED ----------
     //------------------------------------------
     @Override
@@ -480,6 +571,6 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     public boolean canEntityBeSeen(Entity entity)
     {
         //TODO switch over to Pos system, and modify to do several points of check
-        return this.worldObj.rayTraceBlocks(Vec3.createVectorHelper(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double)entity.getEyeHeight(), entity.posZ)) == null;
+        return this.worldObj.rayTraceBlocks(Vec3.createVectorHelper(this.posX, this.posY + (double) this.getEyeHeight(), this.posZ), Vec3.createVectorHelper(entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ)) == null;
     }
 }

@@ -23,7 +23,7 @@ public class AITaskMeleeAttack extends AITask<EntityArtillect>
     @Override
     public void updateTask()
     {
-        if(entity().ignoreWeaponCheck || !entity().isUsingMeleeWeapon())
+        if (entity().ignoreWeaponCheck || !entity().isUsingMeleeWeapon())
         {
             return;
         }
@@ -37,23 +37,27 @@ public class AITaskMeleeAttack extends AITask<EntityArtillect>
             }
             EntityLivingBase entitylivingbase = this.host.getAttackTarget();
             this.host.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F); //TODO ensure we are looking at target before attacking
-            double distanceSq = this.host.getDistanceSq(entitylivingbase.posX, entitylivingbase.boundingBox.minY, entitylivingbase.posZ);
-            double attackRange = (double) (this.host.width * 2.0F * this.host.width * 2.0F + entitylivingbase.width);
-
-            //Decrease attack timer
-            this.attackTick = Math.max(this.attackTick - 1, 0);
 
             //If close enough then attack
-            if (this.attackTick <= 0 && distanceSq <= attackRange)
+            if (--attackTick <= 0)
             {
-                this.attackTick = 20;
+                double distance = this.host.getDistance(entitylivingbase.posX, entitylivingbase.boundingBox.minY, entitylivingbase.posZ);
+                double attackRange = this.host.width + entitylivingbase.width;
 
-                if (this.host.getHeldItem() != null)
+                if (distance <= attackRange)
                 {
-                    this.host.swingItem();
-                }
+                    this.attackTick = 10 + this.host.worldObj.rand.nextInt(10);
+                    if (this.host.getHeldItem() != null)
+                    {
+                        this.host.swingItem();
+                    }
 
-                this.host.attackEntityAsMob(entitylivingbase);
+                    this.host.attackEntityAsMob(entitylivingbase);
+                    if (!entitylivingbase.isEntityAlive())
+                    {
+                        this.host.setAttackTarget(null);
+                    }
+                }
             }
         }
     }

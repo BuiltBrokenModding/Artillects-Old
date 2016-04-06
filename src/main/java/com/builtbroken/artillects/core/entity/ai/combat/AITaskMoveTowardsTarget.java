@@ -46,11 +46,14 @@ public class AITaskMoveTowardsTarget extends AITask<EntityArtillect>
     @Override
     public void updateTask()
     {
+        EntityLivingBase target = this.host.getAttackTarget();
+
         //Cleanup if target is null or dead
-        if (entity().getAttackTarget() == null || !entity().getAttackTarget().isEntityAlive())
+        if (target == null || !target.isEntityAlive())
         {
             hadTarget = false;
-            if (entity().getAttackTarget() != null)
+            targetPosition = null;
+            if (target != null)
             {
                 entity().setAttackTarget(null);
             }
@@ -64,18 +67,17 @@ public class AITaskMoveTowardsTarget extends AITask<EntityArtillect>
         }
 
         //Init if target is not null and previously we had no target
-        if (entity().getAttackTarget() != null && !hadTarget)
+        if (!hadTarget)
         {
             hadTarget = true;
-            entityPathEntity = this.host.getNavigator().getPathToEntityLiving(entity().getAttackTarget());
+            entityPathEntity = this.host.getNavigator().getPathToEntityLiving(target);
             this.host.getNavigator().setPath(this.entityPathEntity, this.speedTowardsTarget);
             this.navTimer = 0;
         }
 
-
-        EntityLivingBase target = this.host.getAttackTarget();
-        this.host.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F); //TODO ensure we are looking at target before attacking
         double distanceSq = this.host.getDistanceSq(target.posX, target.boundingBox.minY, target.posZ);
+        this.host.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F); //TODO ensure we are looking at target before attacking
+
         --this.navTimer;
 
         //TODO add can see code, move this to a separate method as it only updates navTimer
@@ -88,7 +90,7 @@ public class AITaskMoveTowardsTarget extends AITask<EntityArtillect>
 
             if (this.host.getNavigator().getPath() != null)
             {
-                //If path is for far from target, we failed to path?
+                //If path is to far from target, we failed to path?
                 PathPoint finalPathPoint = this.host.getNavigator().getPath().getFinalPathPoint();
                 if (finalPathPoint != null && target.getDistanceSq(finalPathPoint.xCoord, finalPathPoint.yCoord, finalPathPoint.zCoord) < 1)
                 {
@@ -105,7 +107,7 @@ public class AITaskMoveTowardsTarget extends AITask<EntityArtillect>
             }
 
             //Increase nav timer by distance(in 16 block segments) by 5 ticks
-            this.navTimer += (distanceSq % 256) * 5;
+            this.navTimer += (distanceSq / 256) * 5;
 
             //Update path to target, if path is not set increase timer
             if (!this.host.getNavigator().tryMoveToEntityLiving(target, this.speedTowardsTarget))

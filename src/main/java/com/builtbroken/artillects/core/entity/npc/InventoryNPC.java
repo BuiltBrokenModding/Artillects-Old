@@ -22,9 +22,8 @@ public class InventoryNPC extends BasicInventory
 
     public InventoryNPC(EntityNpc npc)
     {
-        super(10);
+        super(15); //TODO gear link added, update if gear size changes
         this.npc = npc;
-        this.shiftSlotStart = gear.length;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class InventoryNPC extends BasicInventory
             {
                 return gear[slot];
             }
-            return super.getStackInSlot(slot - gear.length);
+            return super.getStackInSlot(slot);
         }
         return null;
     }
@@ -55,7 +54,7 @@ public class InventoryNPC extends BasicInventory
                     markDirty();
                 }
             }
-            super.setInventorySlotContents(slot - gear.length, insertStack);
+            super.setInventorySlotContents(slot, insertStack);
         }
         else
         {

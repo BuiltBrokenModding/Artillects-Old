@@ -1,5 +1,6 @@
 package com.builtbroken.artillects.core.entity.npc;
 
+import com.builtbroken.artillects.Artillects;
 import com.builtbroken.artillects.core.entity.EntityHumanoid;
 import com.builtbroken.artillects.core.entity.ai.AITaskSwimming;
 import com.builtbroken.artillects.core.entity.ai.combat.AITaskFindTarget;
@@ -10,6 +11,7 @@ import com.builtbroken.artillects.core.entity.profession.Profession;
 import com.builtbroken.artillects.core.entity.profession.ProfessionProvider;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
 import com.builtbroken.mc.api.IWorldPosition;
+import com.builtbroken.mc.api.tile.IGuiTile;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.PacketSpawnParticle;
@@ -35,7 +37,7 @@ import java.util.HashMap;
  *
  * @author Darkguardsman
  */
-public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEntityAdditionalSpawnData, IPacketIDReceiver
+public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEntityAdditionalSpawnData, IPacketIDReceiver, IGuiTile
 {
     /** Map of profession ids to profession creation objects, for internal use only... will be moved to a handler later */
     public static HashMap<String, ProfessionProvider> registeredProfessions = new HashMap();
@@ -99,7 +101,8 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
                 renderData = !renderData;
                 return true;
             }
-            return false;
+            openGui(player, 0);
+            return true;
         }
         return true;
     }
@@ -327,5 +330,22 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
             profession.unloadAITask();
         }
         this.profession = profession;
+    }
+
+    @Override
+    public Object getServerGuiElement(int ID, EntityPlayer player)
+    {
+        return new ContainerNPC(player, this);
+    }
+
+    @Override
+    public Object getClientGuiElement(int ID, EntityPlayer player)
+    {
+        return new GuiNPC(player, this);
+    }
+
+    public void openGui(EntityPlayer player, int id)
+    {
+        player.openGui(Artillects.INSTANCE, 10001, world(), getEntityId(), id, 0);
     }
 }

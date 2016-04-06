@@ -44,7 +44,7 @@ public class AITaskFindTarget<E extends EntityArtillect> extends AITask<E>
     @Override
     public void updateTask()
     {
-        if (!entity().getAttackTarget().isEntityAlive() || !isSuitableTarget(entity().getAttackTarget()))
+        if (entity().getAttackTarget() != null && (!entity().getAttackTarget().isEntityAlive() || !isSuitableTarget(entity().getAttackTarget())))
         {
             entity().setAttackTarget(null);
         }
@@ -73,7 +73,7 @@ public class AITaskFindTarget<E extends EntityArtillect> extends AITask<E>
      */
     protected int searchDelay()
     {
-        return 40;
+        return 20;
     }
 
     /**
