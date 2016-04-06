@@ -23,7 +23,7 @@ public class NpcTaskFindTarget extends AITaskFindTarget<EntityNpc>
     {
         //TODO add priotization for some entities over others. Eg kill creepers, then skeletons, then zombies, then spiders. However, if zombie is close enough kill first. In other words need a weight system, that also keeps in mind other NPCs.
         //TODO keep track of which NPC is attack which entity. This way damage can be spread out evenly so not to waste resources on one target. Eg two swordsman to one zombie, one archer to one zombie, 3 arches to one creeper.
-        if (host.profession instanceof ProfessionCombat && ((ProfessionCombat) host.profession).findTargets)
+        if (host.getProfession() instanceof ProfessionCombat && ((ProfessionCombat) host.getProfession()).findTargets)
         {
             super.updateTask();
         }

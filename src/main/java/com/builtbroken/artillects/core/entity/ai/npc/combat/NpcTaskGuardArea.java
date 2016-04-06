@@ -19,6 +19,6 @@ public class NpcTaskGuardArea extends NpcTaskStayNearPos
     @Override
     public IPos3D getPoint()
     {
-        return host.profession instanceof ProfessionGuard ? ((ProfessionGuard) host.profession).centerOfGuardZone : super.getPoint();
+        return host.getProfession() instanceof ProfessionGuard ? ((ProfessionGuard) host.getProfession()).centerOfGuardZone : super.getPoint();
     }
 }

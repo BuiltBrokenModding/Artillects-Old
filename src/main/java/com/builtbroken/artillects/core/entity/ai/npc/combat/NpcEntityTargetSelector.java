@@ -42,17 +42,17 @@ public class NpcEntityTargetSelector extends EntitySelector
     //Segements to make things easier to read, handles distance checks to ensure NPC is not leaving his post
     private final boolean insideKillArea(Entity entity)
     {
-        if(host.profession instanceof ProfessionGuard && ((ProfessionGuard) host.profession).stayNearZone)
+        if(host.getProfession() instanceof ProfessionGuard && ((ProfessionGuard) host.getProfession()).stayNearZone)
         {
             //Targets outside of guard zones need to be ignores
             //TODO add check if entity enters a protection zone, override distance check if true
             //TODO add checks if entity is about to danger another NPC, override distance check if true
             //TODO ensure that the zone we are protecting is not left unprotected if we engage NPC, in other prioritization system is needed (setting to for player to adjust [always stay, maintain some protection, who cares])
-            if(((ProfessionGuard) host.profession).centerOfGuardZone != null)
+            if(((ProfessionGuard) host.getProfession()).centerOfGuardZone != null)
             {
-                double distance = ((ProfessionGuard) host.profession).centerOfGuardZone.distance(entity);
+                double distance = ((ProfessionGuard) host.getProfession()).centerOfGuardZone.distance(entity);
                 //TODO add motion check to see if entity is leaving the area, ignore entities that are going to be outside the zone. Especially if they leave by the time the NPC reaches them.
-                if(distance > ((ProfessionGuard) host.profession).zoneDistance - 1)
+                if(distance > ((ProfessionGuard) host.getProfession()).zoneDistance - 1)
                 {
                     return false;
                 }

@@ -2,7 +2,9 @@ package com.builtbroken.artillects.core.entity;
 
 import com.builtbroken.artillects.core.entity.ai.AITaskList;
 import com.builtbroken.artillects.core.entity.helper.*;
+import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.ISave;
+import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.api.tile.IInventoryProvider;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -27,7 +29,7 @@ import net.minecraftforge.common.util.ForgeDirection;
  * Recoded version of EntityLivingBase to act as the prefab for any
  * entity that has an AI like functionality.
  */
-public abstract class EntityArtillect<I extends IInventory> extends EntityLivingBase implements IInventoryProvider
+public abstract class EntityArtillect<I extends IInventory> extends EntityLivingBase implements IInventoryProvider, IWorldPosition, IPos3D
 {
     /** The experience points the Entity gives. */
     protected int experienceValue;
@@ -307,7 +309,7 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
      * First layer of player interaction
      */
     @Override
-    public final boolean interactFirst(EntityPlayer player)
+    public boolean interactFirst(EntityPlayer player)
     {
         return super.interactFirst(player);
     }
@@ -316,6 +318,30 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
     public AxisAlignedBB getBoundingBox()
     {
         return boundingBox;
+    }
+
+    @Override
+    public World world()
+    {
+        return worldObj;
+    }
+
+    @Override
+    public double x()
+    {
+        return posX;
+    }
+
+    @Override
+    public double y()
+    {
+        return posY;
+    }
+
+    @Override
+    public double z()
+    {
+        return posZ;
     }
 
     //------------------------------------------
@@ -367,6 +393,7 @@ public abstract class EntityArtillect<I extends IInventory> extends EntityLiving
                 {
                     InventoryUtility.dropItemStack(worldObj, posX, posY, posZ, itemstack, 10, 0);
                 }
+                this.getInventory().setInventorySlotContents(slot, null);
             }
         }
     }

@@ -3,6 +3,7 @@ package com.builtbroken.artillects.core.entity.profession.combat;
 import com.builtbroken.artillects.core.entity.ai.npc.combat.NpcTaskGuardArea;
 import com.builtbroken.artillects.core.entity.passive.EntityNpc;
 import com.builtbroken.mc.lib.transform.vector.Pos;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * NPC profession geared towards protected areas, not just fighting.
@@ -14,7 +15,7 @@ public class ProfessionGuard extends ProfessionCombat
 {
     /** Should we stay near our protection zone */
     public boolean stayNearZone = true;
-    public double zoneDistance = 50;
+    public double zoneDistance = 10;
 
     /** TEMP var will be replaced with guard task, used to track center of guard position */
     public Pos centerOfGuardZone;
@@ -35,5 +36,36 @@ public class ProfessionGuard extends ProfessionCombat
     public void unloadAITask()
     {
         super.unloadAITask();
+    }
+
+    @Override
+    public void load(NBTTagCompound nbt)
+    {
+        super.load(nbt);
+        if(nbt.hasKey("stayNearZone"))
+        {
+            stayNearZone = nbt.getBoolean("stayNearZone");
+        }
+        if(nbt.hasKey("zoneDistance"))
+        {
+            zoneDistance = nbt.getDouble("zoneDistance");
+        }
+        if(nbt.hasKey("centerOfGuardZone"))
+        {
+            centerOfGuardZone = new Pos(nbt.getCompoundTag("centerOfGuardZone"));
+        }
+    }
+
+    @Override
+    public NBTTagCompound save(NBTTagCompound nbt)
+    {
+        super.save(nbt);
+        nbt.setBoolean("stayNearZone", stayNearZone);
+        nbt.setDouble("zoneDistance", zoneDistance);
+        if(centerOfGuardZone != null)
+        {
+            nbt.setTag("centerOfGuardZone", centerOfGuardZone.toNBT());
+        }
+        return nbt;
     }
 }

@@ -24,6 +24,7 @@ public class InventoryNPC extends BasicInventory
     {
         super(10);
         this.npc = npc;
+        this.shiftSlotStart = gear.length;
     }
 
     @Override
@@ -31,11 +32,11 @@ public class InventoryNPC extends BasicInventory
     {
         if (slot >= 0)
         {
-            if (slot < 5)
+            if (slot < gear.length)
             {
                 return gear[slot];
             }
-            return super.getStackInSlot(slot - 5);
+            return super.getStackInSlot(slot - gear.length);
         }
         return null;
     }
@@ -45,7 +46,7 @@ public class InventoryNPC extends BasicInventory
     {
         if (slot >= 0)
         {
-            if (slot < 5)
+            if (slot < gear.length)
             {
                 ItemStack pre_stack = gear[slot];
                 gear[slot] = insertStack;
@@ -54,11 +55,11 @@ public class InventoryNPC extends BasicInventory
                     markDirty();
                 }
             }
-            super.setInventorySlotContents(slot - 5, insertStack);
+            super.setInventorySlotContents(slot - gear.length, insertStack);
         }
         else
         {
-            Engine.error("InventoryNPC: something tried to set " + insertStack + " into slot " + +slot + " which is bellow zero.");
+            Engine.error("InventoryNPC: something tried to set " + insertStack + " into slot " + slot + " which is bellow zero.");
         }
     }
 
@@ -69,7 +70,7 @@ public class InventoryNPC extends BasicInventory
         if (nbt.hasKey("gear"))
         {
             NBTTagCompound gearTag = nbt.getCompoundTag("gear");
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < gear.length; i++)
             {
                 gear[i] = null;
                 if (gearTag.hasKey("" + i))
@@ -85,7 +86,7 @@ public class InventoryNPC extends BasicInventory
     {
         super.save(nbt);
         NBTTagCompound gearTag = new NBTTagCompound();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < gear.length; i++)
         {
             if (gear[i] != null && gear[i].getItem() != null && gear[i].stackSize > 0)
             {
@@ -102,9 +103,12 @@ public class InventoryNPC extends BasicInventory
     @Override
     public void markDirty()
     {
-        PacketEntity packet = new PacketEntity(npc, 1);
-        npc.writeGearData(packet.data());
-        Engine.instance.packetHandler.sendToAllInDimension(packet, npc.worldObj);
+        if(!npc.world().isRemote)
+        {
+            PacketEntity packet = new PacketEntity(npc, 1);
+            npc.writeGearData(packet.data());
+            Engine.instance.packetHandler.sendToAllInDimension(packet, npc.worldObj);
+        }
     }
 
     /**
@@ -220,5 +224,18 @@ public class InventoryNPC extends BasicInventory
         ItemStack pre = gear[1];
         gear[1] = stack;
         return pre;
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        for(ItemStack stack : gear)
+        {
+            if(stack != null)
+            {
+                return false;
+            }
+        }
+        return super.isEmpty();
     }
 }

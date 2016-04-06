@@ -30,6 +30,11 @@ public abstract class Profession<E extends Entity> implements ISave
         return entity;
     }
 
+    public void update()
+    {
+
+    }
+
     @Override
     public void load(NBTTagCompound nbt)
     {

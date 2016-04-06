@@ -127,7 +127,7 @@ public class ItemSpawnTool extends Item
         Entity entity = null;
         if (meta == 0)
         {
-            entity = EntityCombatTest.newEntity(world);
+            entity = EntityCombatTest.newEntity(world, x, y, z);
         }
         else if (meta == 1)
         {
