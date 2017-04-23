@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.entity.ai.combat;
 
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.entity.Entity;
 
 import java.util.Comparator;

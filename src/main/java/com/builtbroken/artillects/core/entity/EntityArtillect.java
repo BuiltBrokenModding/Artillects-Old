@@ -5,7 +5,7 @@ import com.builtbroken.artillects.core.entity.helper.*;
 import com.builtbroken.jlib.data.vector.IPos3D;
 import com.builtbroken.mc.api.ISave;
 import com.builtbroken.mc.api.IWorldPosition;
-import com.builtbroken.mc.api.tile.IInventoryProvider;
+import com.builtbroken.mc.api.tile.provider.IInventoryProvider;
 import com.builtbroken.mc.prefab.inventory.InventoryUtility;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;

@@ -2,8 +2,8 @@ package com.builtbroken.artillects.core.zone;
 
 import com.builtbroken.artillects.core.building.GhostObject;
 import com.builtbroken.artillects.api.IWorker;
-import com.builtbroken.mc.lib.transform.region.Cube;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.region.Cube;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.IInventory;

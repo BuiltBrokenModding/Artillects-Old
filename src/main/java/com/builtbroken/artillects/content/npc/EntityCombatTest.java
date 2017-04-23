@@ -2,8 +2,8 @@ package com.builtbroken.artillects.content.npc;
 
 import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
-import com.builtbroken.mc.lib.transform.vector.Location;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.init.Items;

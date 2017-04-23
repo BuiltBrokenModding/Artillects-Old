@@ -2,7 +2,7 @@ package com.builtbroken.artillects.api;
 
 
 import com.builtbroken.mc.api.IVirtualObject;
-import com.builtbroken.mc.lib.access.IProfileContainer;
+import com.builtbroken.mc.framework.access.IProfileContainer;
 
 /**
  * Interface applied to objects that will become a faction

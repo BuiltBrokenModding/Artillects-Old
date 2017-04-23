@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.content.teleporter;
 
-import com.builtbroken.mc.lib.transform.vector.Pos;
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;

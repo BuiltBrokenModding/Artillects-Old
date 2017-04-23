@@ -2,7 +2,7 @@ package com.builtbroken.artillects.core.entity.profession.combat;
 
 import com.builtbroken.artillects.core.entity.ai.npc.combat.NpcTaskGuardArea;
 import com.builtbroken.artillects.core.entity.npc.EntityNpc;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**

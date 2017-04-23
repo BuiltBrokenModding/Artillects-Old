@@ -1,9 +1,9 @@
 package com.builtbroken.artillects.core.entity;
 
 import com.builtbroken.mc.api.IWorldPosition;
-import com.builtbroken.mc.lib.transform.vector.Point;
-import com.builtbroken.mc.lib.transform.vector.Pos;
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Point;
+import com.builtbroken.mc.imp.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Base entity class for all entities created by artillect mod
- * 
+ *
  * @author Darkguardsman */
 public class EntityBase extends EntityCreature implements IWorldPosition
 {
     private boolean playerOwned = false;
-    
+
     public EntityBase(World world)
     {
         super(world);
@@ -155,7 +155,7 @@ public class EntityBase extends EntityCreature implements IWorldPosition
     {
         return this.playerOwned;
     }
-    
+
     public void setPlayerOwned(boolean b)
     {
         this.playerOwned = b;
@@ -218,26 +218,26 @@ public class EntityBase extends EntityCreature implements IWorldPosition
     {
         return new Location(world(), x(), y(), z());
     }
-    
+
     //--------------------------------
     //--------Helper methods----------
     //--------------------------------
-    
+
     /** Causes the entity to blow up */
     public Explosion blowUp()
     {
         return blowUp(2);
     }
-    
+
     /** Causes the entity to blow up */
     public Explosion blowUp(double size)
     {
         return blowUp(size, true);
     }
-    
+
     /**
      * Causes the entity to blow up
-     * @param doDie - should the entity die 
+     * @param doDie - should the entity die
      */
     public Explosion blowUp(double size, boolean doDie)
     {
@@ -248,7 +248,7 @@ public class EntityBase extends EntityCreature implements IWorldPosition
         }
         return e;
     }
-    
+
     /**
      * Creates an explosion causes by this entity
      * @param x - x location

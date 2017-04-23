@@ -45,7 +45,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 
 /** @author DarkGuardsman */
-@Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:VoltzEngine;")
+@Mod(modid = Reference.NAME, name = Reference.NAME, version = Reference.VERSION, dependencies = "required-after:voltzengine;")
 public class Artillects
 {
     public static Logger logger = LogManager.getLogger(Reference.NAME);
@@ -78,7 +78,7 @@ public class Artillects
         //Request content from RE
         Engine.requestOres();
 
-        //Create config 
+        //Create config
         CONFIG = new Configuration(new File(Loader.instance().getConfigDir(), Reference.NAME + ".cfg"));
 
         //load configs

@@ -11,14 +11,14 @@ import com.builtbroken.artillects.core.entity.profession.Profession;
 import com.builtbroken.artillects.core.entity.profession.ProfessionProvider;
 import com.builtbroken.artillects.core.entity.profession.combat.ProfessionGuard;
 import com.builtbroken.mc.api.IWorldPosition;
-import com.builtbroken.mc.api.tile.IGuiTile;
+import com.builtbroken.mc.api.tile.access.IGuiTile;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.network.IPacketIDReceiver;
 import com.builtbroken.mc.core.network.packet.PacketSpawnParticle;
 import com.builtbroken.mc.core.network.packet.PacketSpawnParticleCircle;
 import com.builtbroken.mc.core.network.packet.PacketType;
-import com.builtbroken.mc.lib.transform.vector.Location;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import com.builtbroken.mc.prefab.entity.selector.EntityLivingSelector;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
@@ -344,8 +344,10 @@ public class EntityNpc extends EntityHumanoid<InventoryNPC> implements INpc, IEn
         return new GuiNPC(player, this);
     }
 
-    public void openGui(EntityPlayer player, int id)
+    @Override
+    public boolean openGui(EntityPlayer player, int id)
     {
         player.openGui(Artillects.INSTANCE, 10001, world(), getEntityId(), id, 0);
+        return true;
     }
 }

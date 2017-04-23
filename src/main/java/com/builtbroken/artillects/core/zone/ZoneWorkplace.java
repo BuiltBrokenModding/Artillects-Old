@@ -1,6 +1,6 @@
 package com.builtbroken.artillects.core.zone;
 
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.world.World;
 
 /**

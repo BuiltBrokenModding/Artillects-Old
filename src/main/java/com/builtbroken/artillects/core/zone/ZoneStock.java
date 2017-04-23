@@ -4,7 +4,7 @@ import com.builtbroken.artillects.core.integration.UsageManager;
 import com.builtbroken.artillects.core.integration.UsageTile;
 import com.builtbroken.artillects.core.integration.api.IUsageStorage;
 import com.builtbroken.mc.core.asm.ChunkSetBlockEvent;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;

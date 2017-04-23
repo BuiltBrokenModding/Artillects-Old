@@ -2,7 +2,7 @@ package com.builtbroken.artillects.core.entity.ai.combat;
 
 import com.builtbroken.artillects.core.entity.EntityArtillect;
 import com.builtbroken.artillects.core.entity.ai.AITask;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.pathfinding.PathEntity;
 import net.minecraft.pathfinding.PathPoint;

@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.task.military;
 
 import com.builtbroken.artillects.core.task.Task;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 
 import java.util.ArrayList;
 import java.util.List;

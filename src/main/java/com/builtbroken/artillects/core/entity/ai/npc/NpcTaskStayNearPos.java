@@ -4,7 +4,7 @@ import com.builtbroken.artillects.core.entity.ai.AITask;
 import com.builtbroken.artillects.core.entity.ai.PositionGenerator;
 import com.builtbroken.artillects.core.entity.npc.EntityNpc;
 import com.builtbroken.jlib.data.vector.IPos3D;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 
 /**
  * Used by NPCs to stay in a select area. Similar to {@link net.minecraft.entity.ai.EntityAIMoveTowardsRestriction} with more delay. Allowing the

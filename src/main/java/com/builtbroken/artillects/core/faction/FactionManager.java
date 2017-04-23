@@ -8,7 +8,7 @@ import com.builtbroken.mc.api.IWorldPosition;
 import com.builtbroken.mc.core.Engine;
 import com.builtbroken.mc.core.handler.SaveManager;
 import com.builtbroken.mc.lib.helper.NBTUtility;
-import com.builtbroken.mc.lib.transform.vector.Point;
+import com.builtbroken.mc.imp.transform.vector.Point;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

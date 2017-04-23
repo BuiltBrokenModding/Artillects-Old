@@ -1,8 +1,8 @@
 package com.builtbroken.artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
-import com.builtbroken.mc.lib.transform.vector.Pos;
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 /** Collection of structure peaces that forms a building. Essential in code this acts as a contain
  * for several structure peaces so its easier to manage larger HiveComplexs.
- * 
+ *
  * @author DarkGuardsman */
 public class Building extends GhostObject
 {
@@ -70,7 +70,7 @@ public class Building extends GhostObject
     }
 
     /** Loads any peaces that this building request be placed. Calls to each str peace
-     * 
+     *
      * @param buildMap - hashMap to load the block placement requests into */
     public void loadBuildingRequest(HashMap<Pos, Pair<ItemStack, BuildingPart>> buildMap)
     {

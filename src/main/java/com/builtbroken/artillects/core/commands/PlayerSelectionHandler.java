@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.commands;
 
 
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import com.builtbroken.mc.lib.world.schematic.SchematicMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.CompressedStreamTools;

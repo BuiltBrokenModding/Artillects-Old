@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.commands;
 
 import com.builtbroken.mc.lib.helper.NBTUtility;
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;

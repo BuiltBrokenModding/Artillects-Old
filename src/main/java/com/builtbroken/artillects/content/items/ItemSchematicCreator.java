@@ -2,7 +2,7 @@ package com.builtbroken.artillects.content.items;
 
 import com.builtbroken.artillects.Reference;
 import com.builtbroken.artillects.core.commands.PlayerSelectionHandler;
-import com.builtbroken.mc.lib.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Location;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

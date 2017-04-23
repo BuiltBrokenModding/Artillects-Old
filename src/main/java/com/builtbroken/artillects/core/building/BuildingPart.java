@@ -2,8 +2,8 @@ package com.builtbroken.artillects.core.building;
 
 import com.builtbroken.jlib.type.Pair;
 import com.builtbroken.mc.api.edit.IWorldEdit;
-import com.builtbroken.mc.lib.transform.vector.Location;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Location;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /** Entity that represents a structure peace in a hive complex
- * 
+ *
  * @author DarkGuardsman */
 public class BuildingPart extends GhostObject
 {
@@ -72,7 +72,7 @@ public class BuildingPart extends GhostObject
     /** Called by a fabricator drone to place a block into the structure. This is mainly used to
      * clear out the buildPosition map. This way the structure can become undamaged before an update
      * scan is needed
-     * 
+     *
      * @param location - placed location
      * @param stack - stack to place, stack size is ignored
      * @return */

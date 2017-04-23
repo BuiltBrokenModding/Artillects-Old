@@ -1,7 +1,7 @@
 package com.builtbroken.artillects.core.entity.ai;
 
 import com.builtbroken.artillects.core.entity.npc.EntityNpc;
-import com.builtbroken.mc.lib.transform.vector.Pos;
+import com.builtbroken.mc.imp.transform.vector.Pos;
 import net.minecraft.entity.Entity;
 
 import java.util.Random;
