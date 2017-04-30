@@ -5,7 +5,7 @@ import com.builtbroken.artillects.api.IFactionMember;
 import com.builtbroken.mc.api.IVirtualObject;
 import com.builtbroken.mc.framework.access.AccessProfile;
 import com.builtbroken.mc.framework.access.AccessUser;
-import com.builtbroken.mc.framework.access.IProfileContainer;
+import com.builtbroken.mc.framework.access.api.IProfileContainer;
 import com.builtbroken.mc.lib.helper.NBTUtility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

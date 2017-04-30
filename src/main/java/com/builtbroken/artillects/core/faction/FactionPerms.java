@@ -1,6 +1,6 @@
 package com.builtbroken.artillects.core.faction;
 
-import com.builtbroken.mc.framework.access.Permission;
+import com.builtbroken.mc.framework.access.perm.Permission;
 
 /**
  * Static class used to store all references to permission nodes used for faction features
